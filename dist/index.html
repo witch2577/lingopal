@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>语伴 LingoPal — 多语言翻译与方言学习</title>
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="./assets/manifest-F393rB81.json" />
+
+  <!-- Theme Colors -->
+  <meta name="theme-color" content="#6366F1" />
+  <meta name="msapplication-TileColor" content="#6366F1" />
+
+  <!-- iOS PWA Support -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="LingoPal" />
+
+  <!-- Android PWA -->
+  <meta name="mobile-web-app-capable" content="yes" />
+
+  <!-- Tailwind CSS (standalone browser build) -->
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'Noto Sans SC', 'system-ui', 'sans-serif'],
+            display: ['Poppins', 'Noto Sans SC', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50:  '#EEF2FF',
+              100: '#E0E7FF',
+              200: '#C7D2FE',
+              300: '#A5B4FC',
+              400: '#818CF8',
+              500: '#6366F1',
+              600: '#4F46E5',
+              700: '#4338CA',
+              800: '#3730A3',
+              900: '#312E81',
+            },
+            accent: {
+              500: '#F59E0B',
+              600: '#D97706',
+            },
+            mint: {
+              500: '#10B981',
+              600: '#059669',
+            },
+          },
+          animation: {
+            'pulse-slow': 'pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'bounce-soft': 'bounceSoft 2s ease-in-out infinite',
+            'float': 'float 3s ease-in-out infinite',
+            'shimmer': 'shimmer 2s linear infinite',
+          },
+          keyframes: {
+            bounceSoft: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-6px)' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0) rotate(0deg)' },
+              '50%': { transform: 'translateY(-10px) rotate(2deg)' },
+            },
+            shimmer: {
+              '0%': { backgroundPosition: '-200% 0' },
+              '100%': { backgroundPosition: '200% 0' },
+            },
+          },
+          backgroundImage: {
+            'brand-gradient': 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)',
+            'warm-gradient': 'linear-gradient(135deg, #F59E0B 0%, #EF4444 100%)',
+            'mint-gradient': 'linear-gradient(135deg, #10B981 0%, #3B82F6 100%)',
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Critical CSS inlined for fast first paint -->
+  <style>
+    :root { color-scheme: light; }
+    html, body, #root { height: 100%; }
+    body {
+      margin: 0;
+      font-family: 'Inter', 'Noto Sans SC', system-ui, sans-serif;
+      background: #F8FAFC;
+      color: #0F172A;
+      -webkit-font-smoothing: antialiased;
+    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+    }
+
+    .btn-press {
+      transition: transform .12s ease, box-shadow .12s ease, background-color .2s ease;
+    }
+    .btn-press:active { transform: scale(0.97); }
+
+    .tab-active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 24px;
+      height: 3px;
+      border-radius: 3px;
+      background: linear-gradient(135deg, #6366F1, #8B5CF6);
+    }
+
+    .confetti-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .wave-bar {
+      display: inline-block;
+      width: 3px;
+      margin: 0 2px;
+      background: #6366F1;
+      border-radius: 2px;
+      animation: wave 1s ease-in-out infinite;
+    }
+    @keyframes wave {
+      0%, 100% { height: 6px; }
+      50% { height: 24px; }
+    }
+
+    .no-select {
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    input[type=number]::-webkit-outer-spin-button,
+    input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    input[type=number] { -moz-appearance: textfield; }
+
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+
+    body.is-offline #app-main { padding-top: 36px; }
+
+    .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
+    .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+    .px-safe { padding-left: env(safe-area-inset-left, 0px); padding-right: env(safe-area-inset-right, 0px); }
+
+    .touch-target { min-width: 44px; min-height: 44px; }
+    .touch-target-sm { min-width: 36px; min-height: 36px; }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+      touch-action: manipulation;
+    }
+
+    button, a, [role="button"], input, textarea, select, label {
+      touch-action: manipulation;
+    }
+
+    .keyboard-pad { padding-bottom: env(keyboard-inset-height, 0px); }
+
+    .h-dvh { height: 100dvh; }
+    .min-h-dvh { min-height: 100dvh; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .wave-bar { animation: none !important; }
+    }
+
+    @media (max-width: 428px) {
+      .mobile-compact .text-xl { font-size: 1.125rem; line-height: 1.5rem; }
+      .mobile-compact .text-lg { font-size: 1rem; line-height: 1.5rem; }
+      .mobile-compact .text-base { font-size: 0.9375rem; line-height: 1.375rem; }
+      .mobile-compact .text-sm { font-size: 0.8125rem; line-height: 1.25rem; }
+      .mobile-compact .text-xs { font-size: 0.75rem; line-height: 1.125rem; }
+      .mobile-compact .p-4 { padding: 0.75rem; }
+      .mobile-compact .p-5 { padding: 1rem; }
+      .mobile-compact .p-6 { padding: 1rem; }
+      .mobile-compact .gap-4 { gap: 0.75rem; }
+      .mobile-compact .gap-3 { gap: 0.625rem; }
+      .mobile-compact .mb-4 { margin-bottom: 0.75rem; }
+      .mobile-compact .mb-6 { margin-bottom: 1rem; }
+      .mobile-compact .rounded-2xl { border-radius: 0.875rem; }
+      .mobile-compact .rounded-xl { border-radius: 0.75rem; }
+    }
+
+    @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+      .tablet-dual {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+    }
+
+    img[loading="lazy"] {
+      background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+      background-size: 200% 100%;
+    }
+
+    @keyframes ripple {
+      0% { transform: translate(-50%, -50%) scale(0); opacity: 0.6; }
+      100% { transform: translate(-50%, -50%) scale(300); opacity: 0; }
+    }
+    .animate-ripple { animation: ripple 0.6s ease-out forwards; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
+
+    @keyframes slideUp2 {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-slide-up { animation: slideUp2 0.4s ease-out forwards; }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
+    }
+    .animate-shake { animation: shake 0.4s ease-in-out; }
+
+    @keyframes skeletonShimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .skeleton-shimmer {
+      background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+      background-size: 200% 100%;
+      animation: skeletonShimmer 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0.8); opacity: 0; }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .animate-pop { animation: pop 0.3s ease-out forwards; }
+
+    .page-transition-enter {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    .page-transition-enter-active {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+    }
+    .page-transition-exit {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .page-transition-exit-active {
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity 0.15s ease-in, transform 0.15s ease-in;
+    }
+
+    /* Loading overlay for instant feedback before React hydrates */
+    #loading-overlay {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #F8FAFC;
+      z-index: 9999;
+      transition: opacity 0.3s ease;
+    }
+    #loading-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #E0E7FF;
+      border-top-color: #6366F1;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+  <script type="module" crossorigin src="./assets/main-DMWnhQju.js"></script>
+</head>
+<body>
+  <div id="loading-overlay">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+      <div class="spinner"></div>
+      <div style="font-size:14px;color:#64748B;">语伴 LingoPal 加载中...</div>
+    </div>
+  </div>
+  <div id="root"></div>
+  <script>
+    (function() {
+      var overlay = document.getElementById('loading-overlay');
+      if (!overlay) return;
+      // Hide overlay once React renders into #root
+      var observer = new MutationObserver(function() {
+        var root = document.getElementById('root');
+        if (root && root.childNodes.length > 0) {
+          overlay.classList.add('hidden');
+          observer.disconnect();
+        }
+      });
+      observer.observe(document.getElementById('root'), { childList: true });
+      // Fallback: auto-hide after 5s even if React hasn't mounted
+      setTimeout(function() { overlay.classList.add('hidden'); }, 5000);
+    })();
+  </script>
+</body>
+</html>
