@@ -1,0 +1,72 @@
+{
+  "name": "语伴 LingoPal — 多语言翻译与方言学习",
+  "short_name": "LingoPal",
+  "description": "多语言翻译与方言学习应用，支持翻译、闯关学习、口语训练、笔试练习等功能",
+  "lang": "zh-CN",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "orientation": "portrait",
+  "background_color": "#6366F1",
+  "theme_color": "#6366F1",
+  "categories": ["education", "lifestyle", "productivity"],
+  "icons": [
+    {
+      "src": "./thumbnail.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./thumbnail.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./thumbnail.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "./thumbnail.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "LingoPal 主界面"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "翻译",
+      "short_name": "翻译",
+      "description": "快速打开翻译功能",
+      "url": "./?tab=translation",
+      "icons": [
+        {
+          "src": "./thumbnail.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "学习闯关",
+      "short_name": "学习",
+      "description": "开始学习闯关",
+      "url": "./?tab=learning",
+      "icons": [
+        {
+          "src": "./thumbnail.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}

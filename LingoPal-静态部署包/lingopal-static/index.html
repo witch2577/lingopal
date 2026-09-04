@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="creative-medium" content="interactive-prototype" />
+  <title>语伴 LingoPal — 多语言翻译与方言学习</title>
+
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://sf3-scmcdn-cn.feishucdn.com" crossorigin />
+  <link rel="preconnect" href="https://unpkg.com" crossorigin />
+  <link rel="preconnect" href="https://miaoda.feishu.cn" crossorigin />
+
+  <!-- Preload critical resources -->
+  <link rel="preload" href="https://sf3-scmcdn-cn.feishucdn.com/obj/feishu-static/miaoda/coding-unpkg-sdk/react@18.3.1/umd/react.production.min.js" as="script" crossorigin />
+  <link rel="preload" href="https://sf3-scmcdn-cn.feishucdn.com/obj/feishu-static/miaoda/coding-unpkg-sdk/react-dom@18.3.1/umd/react-dom.production.min.js" as="script" crossorigin />
+  <link rel="preload" href="https://sf3-scmcdn-cn.feishucdn.com/obj/feishu-static/miaoda/coding-unpkg-sdk/@babel/standalone@7.29.0/babel.min.js" as="script" crossorigin />
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="./manifest.json" />
+
+  <!-- Theme Colors -->
+  <meta name="theme-color" content="#6366F1" />
+  <meta name="msapplication-TileColor" content="#6366F1" />
+
+  <!-- iOS PWA Support -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="LingoPal" />
+  <link rel="apple-touch-icon" href="./thumbnail.png" />
+
+  <!-- Splash screen background (iOS) -->
+  <meta name="apple-touch-startup-image" content="#6366F1" />
+
+  <!-- Android PWA -->
+  <meta name="mobile-web-app-capable" content="yes" />
+
+  <!-- Icons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="./thumbnail.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="./thumbnail.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="./thumbnail.png" />
+
+  <!-- Fonts with display=swap to prevent FOIT -->
+  <link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" />
+
+  <!-- Tailwind CSS (standalone browser build) -->
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'Noto Sans SC', 'system-ui', 'sans-serif'],
+            display: ['Poppins', 'Noto Sans SC', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50:  '#EEF2FF',
+              100: '#E0E7FF',
+              200: '#C7D2FE',
+              300: '#A5B4FC',
+              400: '#818CF8',
+              500: '#6366F1',
+              600: '#4F46E5',
+              700: '#4338CA',
+              800: '#3730A3',
+              900: '#312E81',
+            },
+            accent: {
+              500: '#F59E0B',
+              600: '#D97706',
+            },
+            mint: {
+              500: '#10B981',
+              600: '#059669',
+            },
+          },
+          animation: {
+            'pulse-slow': 'pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'bounce-soft': 'bounceSoft 2s ease-in-out infinite',
+            'float': 'float 3s ease-in-out infinite',
+            'shimmer': 'shimmer 2s linear infinite',
+          },
+          keyframes: {
+            bounceSoft: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-6px)' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0) rotate(0deg)' },
+              '50%': { transform: 'translateY(-10px) rotate(2deg)' },
+            },
+            shimmer: {
+              '0%': { backgroundPosition: '-200% 0' },
+              '100%': { backgroundPosition: '200% 0' },
+            },
+          },
+          backgroundImage: {
+            'brand-gradient': 'linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)',
+            'warm-gradient': 'linear-gradient(135deg, #F59E0B 0%, #EF4444 100%)',
+            'mint-gradient': 'linear-gradient(135deg, #10B981 0%, #3B82F6 100%)',
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- React (critical) -->
+  <script src="https://sf3-scmcdn-cn.feishucdn.com/obj/feishu-static/miaoda/coding-unpkg-sdk/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://sf3-scmcdn-cn.feishucdn.com/obj/feishu-static/miaoda/coding-unpkg-sdk/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://sf3-scmcdn-cn.feishucdn.com/obj/feishu-static/miaoda/coding-unpkg-sdk/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+
+  <!-- Libraries (UMD) - defer non-critical. Dexie is sync because db.jsx needs it immediately. -->
+  <script src="https://unpkg.com/dexie@3.2.7/dist/dexie.min.js"></script>
+  <script src="https://unpkg.com/framer-motion@11.0.8/dist/framer-motion.js" defer></script>
+  <script src="https://sf3-scmcdn-cn.feishucdn.com/obj/feishu-static/miaoda/coding-unpkg-sdk/echarts@5.6.0/dist/echarts.min.js" defer></script>
+  <script src="https://unpkg.com/tesseract.js@5.1.0/dist/tesseract.min.js" defer></script>
+
+  <!-- Critical CSS inlined for fast first paint -->
+  <style>
+    :root {
+      color-scheme: light;
+    }
+    html, body, #root { height: 100%; }
+    body {
+      margin: 0;
+      font-family: 'Inter', 'Noto Sans SC', system-ui, sans-serif;
+      background: #F8FAFC;
+      color: #0F172A;
+      -webkit-font-smoothing: antialiased;
+    }
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+    }
+
+    .btn-press {
+      transition: transform .12s ease, box-shadow .12s ease, background-color .2s ease;
+    }
+    .btn-press:active {
+      transform: scale(0.97);
+    }
+
+    .tab-active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 24px;
+      height: 3px;
+      border-radius: 3px;
+      background: linear-gradient(135deg, #6366F1, #8B5CF6);
+    }
+
+  /* Confetti canvas */
+  .confetti-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  /* PWA slide animations */
+  @keyframes slideDown {
+    from { transform: translateY(-100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  @keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+    /* Wave animation for voice */
+    .wave-bar {
+      display: inline-block;
+      width: 3px;
+      margin: 0 2px;
+      background: #6366F1;
+      border-radius: 2px;
+      animation: wave 1s ease-in-out infinite;
+    }
+    @keyframes wave {
+      0%, 100% { height: 6px; }
+      50% { height: 24px; }
+    }
+
+    .no-select {
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    /* Hide number input arrows */
+    input[type=number]::-webkit-outer-spin-button,
+    input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    input[type=number] { -moz-appearance: textfield; }
+
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+
+    /* Loading skeleton for faster perceived performance */
+    .skeleton {
+      background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+      background-size: 200% 100%;
+      animation: skeleton-loading 1.5s infinite;
+      border-radius: 4px;
+    }
+    @keyframes skeleton-loading {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* Offline mode: adjust layout so banner doesn't cover content */
+    body.is-offline #app-main {
+      padding-top: 36px;
+    }
+
+    /* ===== Mobile Optimizations ===== */
+    /* Safe area support */
+    .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
+    .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+    .px-safe { padding-left: env(safe-area-inset-left, 0px); padding-right: env(safe-area-inset-right, 0px); }
+
+    /* Minimum touch target 44x44px */
+    .touch-target {
+      min-width: 44px;
+      min-height: 44px;
+    }
+    .touch-target-sm {
+      min-width: 36px;
+      min-height: 36px;
+    }
+
+    /* Prevent text size adjustment on orientation change */
+    html {
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+      touch-action: manipulation;
+    }
+
+    /* Disable double-tap zoom globally via touch-action */
+    button, a, [role="button"], input, textarea, select, label {
+      touch-action: manipulation;
+    }
+
+    /* Keyboard-aware scroll padding */
+    .keyboard-pad {
+      padding-bottom: env(keyboard-inset-height, 0px);
+    }
+
+    /* Mobile viewport height fix */
+    .h-dvh { height: 100dvh; }
+    .min-h-dvh { min-height: 100dvh; }
+
+    /* Reduced motion support */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .wave-bar { animation: none !important; }
+    }
+
+    /* Mobile-specific layout adjustments */
+    @media (max-width: 428px) {
+      .mobile-compact .text-xl { font-size: 1.125rem; line-height: 1.5rem; }
+      .mobile-compact .text-lg { font-size: 1rem; line-height: 1.5rem; }
+      .mobile-compact .text-base { font-size: 0.9375rem; line-height: 1.375rem; }
+      .mobile-compact .text-sm { font-size: 0.8125rem; line-height: 1.25rem; }
+      .mobile-compact .text-xs { font-size: 0.75rem; line-height: 1.125rem; }
+      .mobile-compact .p-4 { padding: 0.75rem; }
+      .mobile-compact .p-5 { padding: 1rem; }
+      .mobile-compact .p-6 { padding: 1rem; }
+      .mobile-compact .gap-4 { gap: 0.75rem; }
+      .mobile-compact .gap-3 { gap: 0.625rem; }
+      .mobile-compact .mb-4 { margin-bottom: 0.75rem; }
+      .mobile-compact .mb-6 { margin-bottom: 1rem; }
+      .mobile-compact .rounded-2xl { border-radius: 0.875rem; }
+      .mobile-compact .rounded-xl { border-radius: 0.75rem; }
+    }
+
+    /* Tablet landscape dual-column support */
+    @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+      .tablet-dual {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+    }
+
+    /* Image lazy loading placeholder */
+    img[loading="lazy"] {
+      background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+      background-size: 200% 100%;
+    }
+
+    /* Ripple animation */
+    @keyframes ripple {
+      0% { transform: translate(-50%, -50%) scale(0); opacity: 0.6; }
+      100% { transform: translate(-50%, -50%) scale(300); opacity: 0; }
+    }
+    .animate-ripple {
+      animation: ripple 0.6s ease-out forwards;
+    }
+
+    /* Fade in */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.3s ease-out forwards;
+    }
+
+    /* Slide up */
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-slide-up {
+      animation: slideUp 0.4s ease-out forwards;
+    }
+
+    /* Shake for error feedback */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
+    }
+    .animate-shake {
+      animation: shake 0.4s ease-in-out;
+    }
+
+    /* Skeleton shimmer */
+    @keyframes skeletonShimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .skeleton-shimmer {
+      background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+      background-size: 200% 100%;
+      animation: skeletonShimmer 1.5s ease-in-out infinite;
+    }
+    /* Pop for correct feedback */
+    @keyframes pop {
+      0% { transform: scale(0.8); opacity: 0; }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .animate-pop {
+      animation: pop 0.3s ease-out forwards;
+    }
+
+    /* Page transition */
+    .page-transition-enter {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    .page-transition-enter-active {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+    }
+    .page-transition-exit {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .page-transition-exit-active {
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity 0.15s ease-in, transform 0.15s ease-in;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- ===== P0: Core modules (synchronous, required for first paint) ===== -->
+  <script type="text/babel" src="src/core/zustand-lite.jsx"></script>
+  <script type="text/babel" src="src/core/motion.jsx"></script>
+  <script type="text/babel" src="src/core/constants.jsx"></script>
+  <script src="src/core/newLangDict.js"></script>
+  <script type="text/babel" src="src/core/dictionary.jsx"></script>
+  <script type="text/babel" src="src/core/db.jsx"></script>
+  <script type="text/babel" src="src/core/mobile.jsx"></script>
+  <script type="text/babel" src="src/core/stores.jsx"></script>
+
+  <!-- Shared UI Components -->
+  <script type="text/babel" src="src/components/ui.jsx"></script>
+  <script type="text/babel" src="src/components/Skeleton.jsx"></script>
+  <script type="text/babel" src="src/components/EmptyState.jsx"></script>
+  <script type="text/babel" src="src/components/ErrorState.jsx"></script>
+  <script type="text/babel" src="src/components/AnswerFeedback.jsx"></script>
+  <script type="text/babel" src="src/components/LanguageSelector.jsx"></script>
+  <script type="text/babel" src="src/components/AudioPlayer.jsx"></script>
+  <script type="text/babel" src="src/components/BottomNav.jsx"></script>
+  <script type="text/babel" src="src/components/Confetti.jsx"></script>
+  <script type="text/babel" src="src/components/PWA.jsx"></script>
+
+  <!-- Translation Feature (first screen) -->
+  <script type="text/babel" src="src/services/translationService.jsx"></script>
+  <script type="text/babel" src="src/services/speechService.jsx"></script>
+  <script type="text/babel" src="src/services/ocrService.jsx"></script>
+  <script type="text/babel" src="src/features/translation/TextTranslator.jsx"></script>
+  <script type="text/babel" src="src/features/translation/VoiceTranslator.jsx"></script>
+  <script type="text/babel" src="src/features/translation/OCRTranslator.jsx"></script>
+  <script type="text/babel" src="src/pages/TranslationPage.jsx"></script>
+
+  <!-- App root -->
+  <script type="text/babel" src="src/App.jsx"></script>
+
+  <!-- ===== P1: Defer-loaded data and libraries ===== -->
+  <script src="src/core/newQuizData.js" defer></script>
+
+  <!-- ===== P2: Lazy-loaded modules (injected dynamically by App.jsx) ===== -->
+  <!-- Use data-src + data-type to avoid immediate Babel compilation -->
+
+  <!-- Learning -->
+  <script data-lazy="learning" data-src="src/core/contentPool.jsx" data-type="text/babel"></script>
+  <script data-lazy="learning" data-src="src/core/quizData.jsx" data-type="text/babel"></script>
+  <script data-lazy="learning" data-src="src/features/learning/useLearning.jsx" data-type="text/babel"></script>
+  <script data-lazy="learning" data-src="src/features/learning/LevelMap.jsx" data-type="text/babel"></script>
+  <script data-lazy="learning" data-src="src/features/learning/QuizEngine.jsx" data-type="text/babel"></script>
+  <script data-lazy="learning" data-src="src/features/learning/LevelResult.jsx" data-type="text/babel"></script>
+  <script data-lazy="learning" data-src="src/features/learning/Scenarios.jsx" data-type="text/babel"></script>
+  <script data-lazy="learning" data-src="src/features/learning/ScenarioPlayer.jsx" data-type="text/babel"></script>
+  <script data-lazy="learning" data-src="src/pages/LearningPage.jsx" data-type="text/babel"></script>
+
+  <!-- Oral -->
+  <script data-lazy="oral" data-src="src/services/aiDialogueService.jsx" data-type="text/babel"></script>
+  <script data-lazy="oral" data-src="src/services/pronunciationService.jsx" data-type="text/babel"></script>
+  <script data-lazy="oral" data-src="src/features/oral/oralData.jsx" data-type="text/babel"></script>
+  <script data-lazy="oral" data-src="src/features/oral/OralLearning.jsx" data-type="text/babel"></script>
+  <script data-lazy="oral" data-src="src/features/oral/OralTraining.jsx" data-type="text/babel"></script>
+  <script data-lazy="oral" data-src="src/features/oral/OralDialogue.jsx" data-type="text/babel"></script>
+  <script data-lazy="oral" data-src="src/features/oral/PronunciationCorrection.jsx" data-type="text/babel"></script>
+  <script data-lazy="oral" data-src="src/pages/OralPage.jsx" data-type="text/babel"></script>
+
+  <!-- Written -->
+  <script data-lazy="written" data-src="src/features/written/writtenData.jsx" data-type="text/babel"></script>
+  <script data-lazy="written" data-src="src/features/written/WordSpelling.jsx" data-type="text/babel"></script>
+  <script data-lazy="written" data-src="src/features/written/SentenceSelection.jsx" data-type="text/babel"></script>
+  <script data-lazy="written" data-src="src/features/written/TextDialogue.jsx" data-type="text/babel"></script>
+  <script data-lazy="written" data-src="src/pages/WrittenPage.jsx" data-type="text/babel"></script>
+
+  <!-- Content -->
+  <script data-lazy="content" data-src="src/features/content/ContentUpdater.jsx" data-type="text/babel"></script>
+  <script data-lazy="content" data-src="src/features/content/ShortVideoLesson.jsx" data-type="text/babel"></script>
+  <script data-lazy="content" data-src="src/features/content/GrammarClass.jsx" data-type="text/babel"></script>
+  <script data-lazy="content" data-src="src/features/content/CultureBits.jsx" data-type="text/babel"></script>
+  <script data-lazy="content" data-src="src/pages/ContentPage.jsx" data-type="text/babel"></script>
+
+  <!-- Social -->
+  <script data-lazy="social" data-src="src/features/social/Leaderboard.jsx" data-type="text/babel"></script>
+  <script data-lazy="social" data-src="src/features/social/StudyGroups.jsx" data-type="text/babel"></script>
+
+  <!-- Sync & Share -->
+  <script data-lazy="sync" data-src="src/features/sync/DeviceSync.jsx" data-type="text/babel"></script>
+  <script data-lazy="sync" data-src="src/features/sync/DailyReminder.jsx" data-type="text/babel"></script>
+  <script data-lazy="sync" data-src="src/features/share/ReportShare.jsx" data-type="text/babel"></script>
+
+  <!-- User -->
+  <script data-lazy="user" data-src="src/features/user/Profile.jsx" data-type="text/babel"></script>
+  <script data-lazy="user" data-src="src/features/user/Dashboard.jsx" data-type="text/babel"></script>
+  <script data-lazy="user" data-src="src/features/user/Achievements.jsx" data-type="text/babel"></script>
+  <script data-lazy="user" data-src="src/features/user/WordBook.jsx" data-type="text/babel"></script>
+  <script data-lazy="user" data-src="src/features/user/StreakCard.jsx" data-type="text/babel"></script>
+  <script data-lazy="user" data-src="src/features/user/XPLevel.jsx" data-type="text/babel"></script>
+  <script data-lazy="user" data-src="src/features/user/SmartSuggestions.jsx" data-type="text/babel"></script>
+  <script data-lazy="user" data-src="src/features/user/ProgressCompare.jsx" data-type="text/babel"></script>
+  <script data-lazy="user" data-src="src/pages/UserPage.jsx" data-type="text/babel"></script>
+
+  <!-- Login -->
+  <script data-lazy="login" data-src="src/pages/LoginPage.jsx" data-type="text/babel"></script>
+
+  <!-- Lazy-load orchestrator -->
+  <script>
+    // Lazy module loader: fetches JSX source, compiles with Babel, then evals inline.
+    // More reliable than deferring to Babel.transformScriptTags() which is async and
+    // does not provide a completion callback.
+    (function() {
+      window.__lazyLoaded = window.__lazyLoaded || {};
+
+      function fetchText(url) {
+        return fetch(url).then(function(r) { return r.text(); });
+      }
+
+      function compileAndEval(source, filename) {
+        if (!window.Babel || typeof Babel.transform !== 'function') {
+          console.warn('[LazyLoad] Babel not ready for', filename);
+          return;
+        }
+        var result = Babel.transform(source, {
+          presets: ['react'],
+          filename: filename,
+        });
+        // eval in global scope
+        var script = document.createElement('script');
+        script.text = result.code;
+        document.head.appendChild(script);
+        document.head.removeChild(script);
+      }
+
+      window.loadLazyModule = function(group) {
+        if (window.__lazyLoaded[group]) return Promise.resolve();
+        window.__lazyLoaded[group] = true;
+
+        var placeholders = document.querySelectorAll('script[data-lazy="' + group + '"]');
+        if (!placeholders.length) return Promise.resolve();
+
+        var srcs = Array.from(placeholders).map(function(ph) {
+          return ph.getAttribute('data-src');
+        }).filter(Boolean);
+
+        // Fetch all sources in parallel
+        return Promise.all(srcs.map(fetchText)).then(function(sources) {
+          // Compile sequentially to respect potential intra-group dependencies
+          sources.forEach(function(src, i) {
+            if (src) compileAndEval(src, srcs[i]);
+          });
+        }).catch(function(err) {
+          console.warn('[LazyLoad] Failed to load group', group, err);
+        });
+      };
+
+      // Preload next likely tab after first paint
+      if (window.addEventListener) {
+        window.addEventListener('load', function() {
+          setTimeout(function() {
+            window.loadLazyModule('learning');
+          }, 2500);
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
