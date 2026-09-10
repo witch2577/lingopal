@@ -30,7 +30,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="LingoPal" />
-  <link rel="apple-touch-icon" href="./thumbnail.png" />
+  <link rel="apple-touch-icon" href="/spark/app/app_17d09ak2r4b/runtime/api/v1/storage/object/bucket_aadksff6rraig_static/static%2Faadksfemp2qxg_ve_miaoda" />
 
   <!-- Splash screen background (iOS) -->
   <meta name="apple-touch-startup-image" content="#6366F1" />
@@ -39,9 +39,9 @@
   <meta name="mobile-web-app-capable" content="yes" />
 
   <!-- Icons -->
-  <link rel="icon" type="image/png" sizes="32x32" href="./thumbnail.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="./thumbnail.png" />
-  <link rel="icon" type="image/png" sizes="512x512" href="./thumbnail.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/spark/app/app_17d09ak2r4b/runtime/api/v1/storage/object/bucket_aadksff6rraig_static/static%2Faadksfemp2qxg_ve_miaoda" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/spark/app/app_17d09ak2r4b/runtime/api/v1/storage/object/bucket_aadksff6rraig_static/static%2Faadksfemp2qxg_ve_miaoda" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/spark/app/app_17d09ak2r4b/runtime/api/v1/storage/object/bucket_aadksff6rraig_static/static%2Faadksfemp2qxg_ve_miaoda" />
 
   <!-- Fonts with display=swap to prevent FOIT -->
   <link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" />
@@ -113,6 +113,9 @@
   <script src="https://sf3-scmcdn-cn.feishucdn.com/obj/feishu-static/miaoda/coding-unpkg-sdk/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
   <script src="https://sf3-scmcdn-cn.feishucdn.com/obj/feishu-static/miaoda/coding-unpkg-sdk/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
   <script src="https://sf3-scmcdn-cn.feishucdn.com/obj/feishu-static/miaoda/coding-unpkg-sdk/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+
+  <!-- Supabase JS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 
   <!-- Libraries (UMD) - defer non-critical. Dexie is sync because db.jsx needs it immediately. -->
   <script src="https://unpkg.com/dexie@3.2.7/dist/dexie.min.js"></script>
@@ -398,6 +401,8 @@
   <script type="text/babel" src="src/core/dictionary.jsx"></script>
   <script type="text/babel" src="src/core/db.jsx"></script>
   <script type="text/babel" src="src/core/mobile.jsx"></script>
+  <script type="text/babel" src="src/core/supabaseConfig.jsx"></script>
+  <script type="text/babel" src="src/core/authStore.jsx"></script>
   <script type="text/babel" src="src/core/stores.jsx"></script>
 
   <!-- Shared UI Components -->
@@ -421,6 +426,10 @@
   <script type="text/babel" src="src/features/translation/OCRTranslator.jsx"></script>
   <script type="text/babel" src="src/pages/TranslationPage.jsx"></script>
 
+  <!-- Home & Practice (new default + consolidated hub) -->
+  <script type="text/babel" src="src/pages/HomePage.jsx"></script>
+  <script type="text/babel" src="src/pages/PracticePage.jsx"></script>
+
   <!-- App root -->
   <script type="text/babel" src="src/App.jsx"></script>
 
@@ -441,22 +450,36 @@
   <script data-lazy="learning" data-src="src/features/learning/ScenarioPlayer.jsx" data-type="text/babel"></script>
   <script data-lazy="learning" data-src="src/pages/LearningPage.jsx" data-type="text/babel"></script>
 
-  <!-- Oral -->
-  <script data-lazy="oral" data-src="src/services/aiDialogueService.jsx" data-type="text/babel"></script>
-  <script data-lazy="oral" data-src="src/services/pronunciationService.jsx" data-type="text/babel"></script>
-  <script data-lazy="oral" data-src="src/features/oral/oralData.jsx" data-type="text/babel"></script>
-  <script data-lazy="oral" data-src="src/features/oral/OralLearning.jsx" data-type="text/babel"></script>
-  <script data-lazy="oral" data-src="src/features/oral/OralTraining.jsx" data-type="text/babel"></script>
-  <script data-lazy="oral" data-src="src/features/oral/OralDialogue.jsx" data-type="text/babel"></script>
-  <script data-lazy="oral" data-src="src/features/oral/PronunciationCorrection.jsx" data-type="text/babel"></script>
-  <script data-lazy="oral" data-src="src/pages/OralPage.jsx" data-type="text/babel"></script>
+  <!-- Practice hub: Oral + Written + Drama + Music (loaded together) -->
+  <script data-lazy="practice" data-src="src/services/aiDialogueService.jsx" data-type="text/babel"></script>
+  <script data-lazy="practice" data-src="src/services/pronunciationService.jsx" data-type="text/babel"></script>
+  <script data-lazy="practice" data-src="src/features/oral/oralData.jsx" data-type="text/babel"></script>
+  <script data-lazy="practice" data-src="src/features/oral/OralLearning.jsx" data-type="text/babel"></script>
+  <script data-lazy="practice" data-src="src/features/oral/OralTraining.jsx" data-type="text/babel"></script>
+  <script data-lazy="practice" data-src="src/features/oral/OralDialogue.jsx" data-type="text/babel"></script>
+  <script data-lazy="practice" data-src="src/features/oral/PronunciationCorrection.jsx" data-type="text/babel"></script>
+  <script data-lazy="practice" data-src="src/pages/OralPage.jsx" data-type="text/babel"></script>
 
-  <!-- Written -->
-  <script data-lazy="written" data-src="src/features/written/writtenData.jsx" data-type="text/babel"></script>
-  <script data-lazy="written" data-src="src/features/written/WordSpelling.jsx" data-type="text/babel"></script>
-  <script data-lazy="written" data-src="src/features/written/SentenceSelection.jsx" data-type="text/babel"></script>
-  <script data-lazy="written" data-src="src/features/written/TextDialogue.jsx" data-type="text/babel"></script>
-  <script data-lazy="written" data-src="src/pages/WrittenPage.jsx" data-type="text/babel"></script>
+  <script data-lazy="practice" data-src="src/features/written/writtenData.jsx" data-type="text/babel"></script>
+  <script data-lazy="practice" data-src="src/features/written/WordSpelling.jsx" data-type="text/babel"></script>
+  <script data-lazy="practice" data-src="src/features/written/SentenceSelection.jsx" data-type="text/babel"></script>
+  <script data-lazy="practice" data-src="src/features/written/TextDialogue.jsx" data-type="text/babel"></script>
+  <script data-lazy="practice" data-src="src/pages/WrittenPage.jsx" data-type="text/babel"></script>
+
+  <!-- Drama -->
+  <script data-lazy="practice" data-src="src/features/drama/dramaData.jsx" data-type="text/babel"></script>
+  <script data-lazy="practice" data-src="src/features/drama/DramaReader.jsx" data-type="text/babel"></script>
+  <script data-lazy="practice" data-src="src/features/drama/DramaRolePlay.jsx" data-type="text/babel"></script>
+  <script data-lazy="practice" data-src="src/features/drama/DramaQuiz.jsx" data-type="text/babel"></script>
+
+  <!-- Music -->
+  <script data-lazy="practice" data-src="src/features/music/musicData.jsx" data-type="text/babel"></script>
+  <script data-lazy="practice" data-src="src/features/music/LyricsPractice.jsx" data-type="text/babel"></script>
+  <script data-lazy="practice" data-src="src/features/music/LyricsImport.jsx" data-type="text/babel"></script>
+
+  <!-- Link Import -->
+  <script data-lazy="practice" data-src="src/features/import/LinkImport.jsx" data-type="text/babel"></script>
+  <script data-lazy="practice" data-src="src/features/import/ImportedMaterialViewer.jsx" data-type="text/babel"></script>
 
   <!-- Content -->
   <script data-lazy="content" data-src="src/features/content/ContentUpdater.jsx" data-type="text/babel"></script>
@@ -488,6 +511,12 @@
   <!-- Login -->
   <script data-lazy="login" data-src="src/pages/LoginPage.jsx" data-type="text/babel"></script>
 
+  <!-- Auth -->
+  <script data-lazy="auth" data-src="src/pages/AuthPage.jsx" data-type="text/babel"></script>
+
+  <!-- Admin -->
+  <script data-lazy="admin" data-src="src/pages/AdminPage.jsx" data-type="text/babel"></script>
+
   <!-- Lazy-load orchestrator -->
   <script>
     // Lazy module loader: fetches JSX source, compiles with Babel, then evals inline.
@@ -506,7 +535,7 @@
           return;
         }
         var result = Babel.transform(source, {
-          presets: ['react'],
+          presets: ['react', 'env'],
           filename: filename,
         });
         // eval in global scope
@@ -531,19 +560,27 @@
         return Promise.all(srcs.map(fetchText)).then(function(sources) {
           // Compile sequentially to respect potential intra-group dependencies
           sources.forEach(function(src, i) {
-            if (src) compileAndEval(src, srcs[i]);
+            if (!src) return;
+            try {
+              compileAndEval(src, srcs[i]);
+            } catch (e) {
+              console.warn('[LazyLoad] Compile failed for', srcs[i], e);
+            }
           });
         }).catch(function(err) {
           console.warn('[LazyLoad] Failed to load group', group, err);
         });
       };
 
-      // Preload next likely tab after first paint
+      // Preload next likely tabs after first paint
       if (window.addEventListener) {
         window.addEventListener('load', function() {
           setTimeout(function() {
             window.loadLazyModule('learning');
           }, 2500);
+          setTimeout(function() {
+            window.loadLazyModule('practice');
+          }, 4500);
         });
       }
     })();
