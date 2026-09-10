@@ -1,10 +1,12 @@
 // ========== App Root ==========
 
 const App = () => {
-  const [activeTab, setActiveTab] = useState('translation');
+  const [activeTab, setActiveTab] = useState('home');
   const [isInitialized, setIsInitialized] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [showAdmin, setShowAdmin] = useState(false);
   const [loadedModules, setLoadedModules] = useState({
+    home: true,
     translation: true,
     learning: false,
     oral: false,
@@ -12,8 +14,13 @@ const App = () => {
     content: false,
     user: false,
     login: false,
+    auth: false,
+    admin: false,
+    practice: false,
   });
-  const isLoggedIn = useUserStore(s => s.isLoggedIn);
+  const isLoggedIn = useAuthStore(s => s.isLoggedIn);
+  const isAdmin = useAuthStore(s => s.isAdmin);
+  const authLoading = useAuthStore(s => s.isLoading);
   const profile = useUserStore(s => s.profile);
   const { isMobile, isLandscape } = useMobileDetect();
   const { isOpen: keyboardOpen } = useKeyboard();
@@ -21,20 +28,44 @@ const App = () => {
 
   // Module loading map: which lazy group each tab needs
   const tabModuleMap = {
-    translation: null, // P0, already loaded
+    home: null,
+    translation: null,
     learning: 'learning',
-    oral: 'oral',
-    written: 'written',
+    practice: 'practice',
+    oral: 'practice',
+    written: 'practice',
     content: 'content',
     user: 'user',
   };
+
+  // Lazy-load auth module on first need
+  useEffect(() => {
+    if (!loadedModules.auth && window.loadLazyModule) {
+      window.loadLazyModule('auth').then(() => {
+        setLoadedModules(prev => ({ ...prev, auth: true }));
+      });
+    }
+  }, []);
+
+  // Lazy-load admin module when needed
+  useEffect(() => {
+    if (showAdmin && !loadedModules.admin && window.loadLazyModule) {
+      window.loadLazyModule('admin').then(() => {
+        setLoadedModules(prev => ({ ...prev, admin: true }));
+      });
+    }
+  }, [showAdmin]);
 
   // Lazy-load module when tab changes
   useEffect(() => {
     const group = tabModuleMap[activeTab];
     if (group && !loadedModules[group] && window.loadLazyModule) {
       window.loadLazyModule(group).then(() => {
-        setLoadedModules(prev => ({ ...prev, [group]: true }));
+        setLoadedModules(prev => ({
+          ...prev,
+          [group]: true,
+          ...(group === 'practice' ? { oral: true, written: true } : {}),
+        }));
       });
     }
   }, [activeTab]);
@@ -42,8 +73,16 @@ const App = () => {
   // Expose tab switcher for empty state actions
   useEffect(() => {
     window.setActiveTab = setActiveTab;
-    return () => { delete window.setActiveTab; };
-  }, []);
+    if (isLoggedIn && isAdmin) {
+      window.openAdmin = () => setShowAdmin(true);
+    } else {
+      delete window.openAdmin;
+    }
+    return () => {
+      delete window.setActiveTab;
+      delete window.openAdmin;
+    };
+  }, [isLoggedIn, isAdmin]);
 
   // Initialize app
   useEffect(() => {
@@ -52,23 +91,19 @@ const App = () => {
 
     const init = async () => {
       try {
-        // Load preferences (sync, fast)
         useUserStore.getState().loadPreferences();
-
-        // Init user and load history in parallel
-        const [userProfile] = await Promise.all([
+        const [authProfile, localProfile] = await Promise.all([
+          useAuthStore.getState().init(),
           useUserStore.getState().init(),
           useTranslationStore.getState().loadHistory(),
         ]);
 
         if (cancelled) return;
 
-        // Check weekly content rotation
         const weekChanged = hasWeekChanged();
         if (weekChanged) {
           const currentWeek = getCurrentWeekIndex();
           saveActiveWeek(currentWeek);
-          // Clear seeded flags so new weekly content gets loaded
           try {
             localStorage.removeItem('lingopal_content_week_0_dismissed');
             localStorage.removeItem('lingopal_content_week_1_dismissed');
@@ -77,9 +112,12 @@ const App = () => {
           } catch (e) {}
         }
 
-        // Check if onboarding needed (new user without nickname)
         const userState = useUserStore.getState();
-        if (!userState.profile?.nickname || userState.profile.nickname === '语言学习者') {
+        const authState = useAuthStore.getState();
+        const needsOnboarding = !IS_SUPABASE_CONFIGURED || !authState.isLoggedIn
+          ? (!userState.profile?.nickname || userState.profile.nickname === '语言学习者')
+          : (!authState.supabaseProfile?.nickname || authState.supabaseProfile.nickname === '语言学习者');
+        if (needsOnboarding) {
           const dismissed = localStorage.getItem('lingopal_onboarded');
           if (!dismissed) {
             setShowOnboarding(true);
@@ -94,7 +132,6 @@ const App = () => {
       }
     };
 
-    // 5 秒超时兜底：无论 init 成功/失败/挂起，5 秒内必须解除初始化状态
     timeoutId = setTimeout(() => {
       if (!cancelled) {
         console.warn('[LingoPal] 初始化超时（5秒），强制解除加载状态');
@@ -160,18 +197,25 @@ const App = () => {
     );
   }
 
-  // Animation config based on device capabilities
   const pageTransition = reducedMotion
     ? { duration: 0 }
     : isMobile
       ? { duration: 0.12 }
       : { duration: 0.15 };
 
+  const requireAuth = IS_SUPABASE_CONFIGURED && !isLoggedIn && !authLoading;
+
+  if (showAdmin && loadedModules.admin && isLoggedIn && isAdmin) {
+    return (
+      <div className="h-full">
+        <AdminPage onClose={() => setShowAdmin(false)} />
+      </div>
+    );
+  }
+
   return (
     <div className={`h-full flex flex-col bg-slate-50 ${isMobile ? 'mobile-compact' : ''}`}>
-      {/* PWA Manager: 离线状态、安装提示、更新检测 */}
       <PWAManager />
-      {/* Main content area (padding-top handled by offline banner spacing) */}
       <main className="flex-1 overflow-hidden relative" id="app-main">
         <div
           className={`mx-auto h-full overflow-y-auto hide-scrollbar ${
@@ -184,39 +228,69 @@ const App = () => {
           }}
         >
           <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 12, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -8, scale: 0.98 }}
-              transition={pageTransition}
-              className="h-full"
-            >
-              {activeTab === 'translation' && <TranslationPage />}
-              {activeTab === 'learning' && loadedModules.learning && <LearningPage />}
-              {activeTab === 'oral' && loadedModules.oral && <OralPage />}
-              {activeTab === 'written' && loadedModules.written && <WrittenPage />}
-              {activeTab === 'content' && loadedModules.content && <ContentPage />}
-              {activeTab === 'user' && loadedModules.user && <UserPage />}
-            </motion.div>
+            {requireAuth ? (
+              <motion.div
+                key="auth"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="h-full"
+              >
+                {loadedModules.auth ? <AuthPage /> : (
+                  <div className="h-full flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-xl bg-brand-gradient flex items-center justify-center text-white text-2xl animate-pulse">
+                      🌍
+                    </div>
+                  </div>
+                )}
+              </motion.div>
+            ) : (
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0, y: 12, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                transition={pageTransition}
+                className="h-full"
+              >
+                {activeTab === 'home' && <HomePage />}
+                {activeTab === 'translation' && <TranslationPage />}
+                {activeTab === 'learning' && loadedModules.learning && <LearningPage />}
+                {activeTab === 'practice' && loadedModules.practice && <PracticePage />}
+                {activeTab === 'oral' && loadedModules.practice && <PracticePage />}
+                {activeTab === 'written' && loadedModules.practice && <PracticePage />}
+                {activeTab === 'content' && loadedModules.content && <ContentPage />}
+                {activeTab === 'user' && loadedModules.user && <UserPage />}
+              </motion.div>
+            )}
           </AnimatePresence>
         </div>
       </main>
 
-      {/* Bottom navigation - hidden when keyboard is open on mobile */}
-      {(!isMobile || !keyboardOpen) && (
+      {/* Floating translate button (visible on non-translation pages) */}
+      {activeTab !== 'translation' && !requireAuth && (
+        <motion.button
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={() => setActiveTab('translation')}
+          className="fixed right-4 bottom-20 z-40 w-12 h-12 rounded-full bg-brand-500 text-white shadow-lg shadow-brand-500/30 flex items-center justify-center hover:bg-brand-600 transition-colors"
+          aria-label="快速翻译"
+        >
+          <Icon name="translate" size={20} />
+        </motion.button>
+      )}
+
+      {/* Bottom navigation */}
+      {(!isMobile || !keyboardOpen) && !requireAuth && (
         <BottomNav active={activeTab} onChange={setActiveTab} />
       )}
 
-      {/* Global notification */}
       <Notification />
-
-      {/* Confetti */}
       <ConfettiEffect />
 
-      {/* Onboarding Modal */}
       <AnimatePresence>
-        {showOnboarding && loadedModules.login && (
+        {showOnboarding && loadedModules.login && !requireAuth && (
           <div className="fixed inset-0 z-50 bg-slate-50 overflow-y-auto">
             <LoginPage onComplete={handleOnboardingComplete} />
           </div>
@@ -226,6 +300,5 @@ const App = () => {
   );
 };
 
-// Mount app
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);

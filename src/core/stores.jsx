@@ -181,7 +181,14 @@ const useUserStore = create((set, get) => ({
   currentLevel: null,
 
   init: async () => {
-    const userId = await window.ensureDefaultUser();
+    // If Supabase is configured and user is logged in, use Supabase user ID
+    const authState = useAuthStore.getState();
+    let userId = authState.supabaseUser?.id;
+
+    if (!userId) {
+      userId = await window.ensureDefaultUser();
+    }
+
     const profile = await db.userProfiles.get(userId);
     const achRecords = await db.achievements.where('userId').equals(userId).toArray();
 
@@ -484,7 +491,14 @@ const useWrittenStore = create((set, get) => ({
   reset: () => set({ score: 0, streak: 0, maxStreak: 0, totalAnswered: 0, correctCount: 0, isPlaying: false }),
 }));
 
+// ---- Practice Store (for consolidated practice hub) ----
+const usePracticeStore = create((set) => ({
+  activeTab: 'oral',
+  setActiveTab: (tab) => set({ activeTab: tab }),
+}));
+
 Object.assign(window, {
   useOralStore,
   useWrittenStore,
+  usePracticeStore,
 });

@@ -1,16 +1,15 @@
 // ========== Bottom Navigation ==========
+// 4 items: Home / Learning / Practice / Me
 
 const BottomNav = ({ active, onChange }) => {
   const { isMobile, windowWidth } = useMobileDetect();
-
-  // On very small screens, show fewer nav items or use compact mode
   const isCompact = isMobile && windowWidth < 360;
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 glass border-t border-slate-200/60 z-30 pb-safe">
       <div className="max-w-xl mx-auto flex justify-around items-center">
         {NAV_ITEMS.map(item => {
-          const isActive = active === item.key;
+          const isActive = active === item.key || (item.key === 'practice' && (active === 'oral' || active === 'written'));
           return (
             <button
               key={item.key}
@@ -43,7 +42,7 @@ const BottomNav = ({ active, onChange }) => {
               {isActive && (
                 <motion.div
                   layoutId="nav-indicator"
-                  className="absolute -top-0.5 w-1 h-1 rounded-full bg-brand-500"
+                  className="absolute -top-0.5 w-6 h-1 rounded-full bg-brand-500"
                 />
               )}
             </button>

@@ -1,26 +1,41 @@
 // ========== AI Dialogue Service ==========
-// Hybrid architecture: LLM API (primary) + Enhanced Rule Engine (fallback)
-// Supports user-configured API keys for zero-cost personal use
+// Edge Function proxy architecture: LLM via Supabase Edge Function (primary)
+// + Enhanced Rule Engine (fallback for errors / quota exhausted / offline)
+// No API Key in frontend — all LLM credentials live in Edge Function Secrets
 
 const AIDialogueService = {
   config: {
-    mode: 'enhanced-rule', // 'llm-api' | 'enhanced-rule'
-    apiKey: null,
-    apiBase: 'https://api.deepseek.com',
-    model: 'deepseek-chat',
-    maxTokens: 256,
-    temperature: 0.8,
+    mode: 'edge-function', // 'edge-function' | 'enhanced-rule'
   },
 
   _contexts: new Map(), // sessionId -> { messages: [], scenario: {}, language: '' }
 
-  // Load config from localStorage
+  // --- Config management (localStorage only for mode preference, no API Key) ---
+
   loadConfig() {
     try {
-      const saved = localStorage.getItem('lingopal_ai_config');
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        this.config = { ...this.config, ...parsed };
+      // Clean up old localStorage key that may contain API Key
+      const oldSaved = localStorage.getItem('lingopal_ai_config');
+      if (oldSaved) {
+        try {
+          const parsed = JSON.parse(oldSaved);
+          if (parsed.mode === 'llm-api') {
+            // Migrate old llm-api mode to edge-function
+            this.config.mode = 'edge-function';
+            this.saveConfig();
+          } else if (parsed.mode) {
+            this.config.mode = parsed.mode;
+          }
+          // Remove old config to prevent API Key leakage
+          localStorage.removeItem('lingopal_ai_config');
+        } catch (e) {
+          localStorage.removeItem('lingopal_ai_config');
+        }
+      }
+
+      const saved = localStorage.getItem('lingopal_ai_mode');
+      if (saved === 'enhanced-rule' || saved === 'edge-function') {
+        this.config.mode = saved;
       }
     } catch (e) {
       console.warn('[AIDialogueService] 加载配置失败:', e);
@@ -29,27 +44,33 @@ const AIDialogueService = {
 
   saveConfig() {
     try {
-      localStorage.setItem('lingopal_ai_config', JSON.stringify(this.config));
+      localStorage.setItem('lingopal_ai_mode', this.config.mode);
     } catch (e) {
       console.warn('[AIDialogueService] 保存配置失败:', e);
     }
   },
 
   setMode(mode) {
+    if (mode !== 'edge-function' && mode !== 'enhanced-rule') return;
     this.config.mode = mode;
     this.saveConfig();
   },
 
-  setApiKey(key) {
-    this.config.apiKey = key;
-    this.saveConfig();
+  // API Key management — REMOVED. Keys never touch frontend.
+  setApiKey(_key) {
+    console.warn('[AIDialogueService] setApiKey 已废弃，AI 调用走 Edge Function');
   },
 
+  // Edge Function is ready when user is logged in and Supabase is configured
   isLLMReady() {
-    return this.config.mode === 'llm-api' && !!this.config.apiKey;
+    if (this.config.mode === 'enhanced-rule') return false;
+    if (!IS_SUPABASE_CONFIGURED) return false;
+    const authState = window.useAuthStore?.getState?.();
+    return !!(authState?.isLoggedIn && authState?.supabaseUser);
   },
 
-  // Initialize a new dialogue session
+  // --- Session management ---
+
   initSession(sessionId, scenarioId, language = 'zh-CN') {
     const scenario = DIALOGUE_SCENARIOS[scenarioId];
     const context = {
@@ -61,12 +82,6 @@ const AIDialogueService = {
       turnCount: 0,
       startTime: Date.now(),
     };
-
-    // Add system prompt for LLM mode
-    if (scenario) {
-      context.systemPrompt = this._buildSystemPrompt(scenario, language);
-    }
-
     this._contexts.set(sessionId, context);
     return context;
   },
@@ -75,32 +90,8 @@ const AIDialogueService = {
     this._contexts.delete(sessionId);
   },
 
-  // Build system prompt for LLM
-  _buildSystemPrompt(scenario, language) {
-    const langNames = {
-      'zh-CN': '中文',
-      'en': '英语',
-      'ja': '日语',
-      'ko': '韩语',
-      'es': '西班牙语',
-    };
+  // --- Main entry: generate AI response ---
 
-    const targetLang = langNames[language] || language;
-
-    return `你是一位友好的${targetLang}口语练习伙伴。当前场景是：${scenario.name}。
-
-规则：
-1. 用${targetLang}回复，保持自然、口语化的表达
-2. 每次回复控制在2-3句话，适合口语练习
-3. 如果对方说错了，温和地纠正并继续对话
-4. 主动引导对话继续，不要一次性说完所有内容
-5. 角色设定：${scenario.opening}
-6. 回复要有互动性，可以提问或给出选择
-
-注意：你只扮演场景中的角色，不要解释规则或跳出角色。`;
-  },
-
-  // Main entry: generate AI response
   async generateResponse(sessionId, userInput) {
     const context = this._contexts.get(sessionId);
     if (!context) {
@@ -112,12 +103,18 @@ const AIDialogueService = {
 
     let response;
 
-    if (this.isLLMReady()) {
+    if (this.isLLMReady() && this.config.mode === 'edge-function') {
       try {
-        response = await this._callLLM(context);
+        response = await this._callEdgeFunction(context, userInput);
       } catch (e) {
-        console.warn('[AIDialogueService] LLM调用失败，降级到规则引擎:', e);
+        console.warn('[AIDialogueService] Edge Function 调用失败，降级到规则引擎:', e);
+        // Attach error code for caller inspection
+        const err = new Error(e.message || 'AI 服务暂时不可用');
+        err.code = e.code || 'LLM_ERROR';
+        err.isFallback = true;
         response = this._generateEnhancedRuleResponse(context, userInput);
+        err.fallbackResponse = response;
+        throw err;
       }
     } else {
       response = this._generateEnhancedRuleResponse(context, userInput);
@@ -127,94 +124,199 @@ const AIDialogueService = {
     return response;
   },
 
-  // Call LLM API (DeepSeek / OpenAI compatible)
-  async _callLLM(context) {
-    if (!this.config.apiKey) {
-      throw new Error('未配置API Key');
+  // --- Edge Function call ---
+
+  async _callEdgeFunction(context, _userInput) {
+    const sb = getSupabaseClient();
+    if (!sb) {
+      throw Object.assign(new Error('Supabase 未配置'), { code: 'INTERNAL_ERROR' });
     }
 
-    const messages = [
-      { role: 'system', content: context.systemPrompt },
-      ...context.messages.slice(-10).map(m => ({ role: m.role, content: m.content })),
-    ];
-
-    const res = await fetch(`${this.config.apiBase}/v1/chat/completions`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.config.apiKey}`,
-      },
-      body: JSON.stringify({
-        model: this.config.model,
-        messages,
-        max_tokens: this.config.maxTokens,
-        temperature: this.config.temperature,
-      }),
-    });
-
-    if (!res.ok) {
-      const err = await res.text();
-      throw new Error(`API错误 (${res.status}): ${err}`);
+    const session = await sb.auth.getSession();
+    const jwt = session.data.session?.access_token;
+    if (!jwt) {
+      throw Object.assign(new Error('未登录'), { code: 'UNAUTHORIZED' });
     }
 
-    const data = await res.json();
-    const content = data.choices?.[0]?.message?.content;
-    if (!content) {
-      throw new Error('API返回空内容');
+    // Build Edge Function URL from SUPABASE_URL
+    const baseUrl = SUPABASE_URL.replace(/\/$/, '');
+    const edgeUrl = `${baseUrl}/functions/v1/ai-dialogue`;
+
+    const body = {
+      messages: context.messages.map(m => ({
+        role: m.role,
+        content: m.content,
+      })),
+      language: context.language,
+      scenarioId: context.scenarioId || null,
+      mode: 'oral', // OralDialogue uses oral mode; TextDialogue can override
+    };
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 20000); // 20s frontend timeout
+
+    let res;
+    try {
+      res = await fetch(edgeUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${jwt}`,
+        },
+        body: JSON.stringify(body),
+        signal: controller.signal,
+      });
+    } catch (fetchErr) {
+      clearTimeout(timeoutId);
+      if (fetchErr.name === 'AbortError') {
+        throw Object.assign(new Error('请求超时'), { code: 'LLM_TIMEOUT' });
+      }
+      throw Object.assign(new Error('网络错误'), { code: 'LLM_ERROR' });
+    }
+    clearTimeout(timeoutId);
+
+    let data;
+    try {
+      data = await res.json();
+    } catch {
+      throw Object.assign(new Error('响应解析失败'), { code: 'LLM_ERROR' });
     }
 
-    return content.trim();
+    if (!data.success) {
+      const errCode = data.error?.code || 'LLM_ERROR';
+      const errMsg = data.error?.message || 'AI 调用失败';
+      throw Object.assign(new Error(errMsg), { code: errCode, details: data.error });
+    }
+
+    return data.data.content;
   },
 
-  // Enhanced rule-based response generator
+  // --- Text mode Edge Function call (for TextDialogue free dialogue) ---
+
+  async callEdgeFunctionText(messages, language, scenarioId = null) {
+    const sb = getSupabaseClient();
+    if (!sb) {
+      throw Object.assign(new Error('Supabase 未配置'), { code: 'INTERNAL_ERROR' });
+    }
+
+    const session = await sb.auth.getSession();
+    const jwt = session.data.session?.access_token;
+    if (!jwt) {
+      throw Object.assign(new Error('未登录'), { code: 'UNAUTHORIZED' });
+    }
+
+    const baseUrl = SUPABASE_URL.replace(/\/$/, '');
+    const edgeUrl = `${baseUrl}/functions/v1/ai-dialogue`;
+
+    const body = {
+      messages: messages.map(m => ({
+        role: m.role,
+        content: m.content,
+      })),
+      language,
+      scenarioId,
+      mode: 'text',
+    };
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 20000);
+
+    let res;
+    try {
+      res = await fetch(edgeUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${jwt}`,
+        },
+        body: JSON.stringify(body),
+        signal: controller.signal,
+      });
+    } catch (fetchErr) {
+      clearTimeout(timeoutId);
+      if (fetchErr.name === 'AbortError') {
+        throw Object.assign(new Error('请求超时'), { code: 'LLM_TIMEOUT' });
+      }
+      throw Object.assign(new Error('网络错误'), { code: 'LLM_ERROR' });
+    }
+    clearTimeout(timeoutId);
+
+    let data;
+    try {
+      data = await res.json();
+    } catch {
+      throw Object.assign(new Error('响应解析失败'), { code: 'LLM_ERROR' });
+    }
+
+    if (!data.success) {
+      const errCode = data.error?.code || 'LLM_ERROR';
+      const errMsg = data.error?.message || 'AI 调用失败';
+      throw Object.assign(new Error(errMsg), { code: errCode, details: data.error });
+    }
+
+    return data.data.content;
+  },
+
+  // --- Error code to Chinese message mapping ---
+
+  getErrorMessage(code, details) {
+    const messages = {
+      'UNAUTHORIZED': '登录已过期，请重新登录',
+      'QUOTA_EXHAUSTED': `今日 AI 对话额度已用完（${details?.used ?? '?'}/${details?.limit ?? '?'}），已切换到离线模式`,
+      'RATE_LIMITED': '请求过快，请稍后再试',
+      'INPUT_TOO_LONG': '输入太长，请精简后重试',
+      'TOO_MANY_TURNS': '对话轮数过多，请开启新对话',
+      'LLM_TIMEOUT': 'AI 响应较慢，已切换到离线模式',
+      'LLM_ERROR': 'AI 服务暂时不可用，已切换到离线模式',
+      'INTERNAL_ERROR': '服务暂时异常，已切换到离线模式',
+      'INVALID_PARAMS': '参数错误，请检查后重试',
+    };
+    return messages[code] || 'AI 服务暂时不可用，已切换到离线模式';
+  },
+
+  // --- Enhanced rule-based response generator (fallback) ---
+
   _generateEnhancedRuleResponse(context, userInput) {
-    const { scenario, turnCount } = context;
+    const { scenario, language, turnCount } = context;
     const input = userInput.toLowerCase().trim();
 
-    // 1. Try to match scenario-specific responses
-    if (scenario) {
+    // 1. Try scenario-specific responses (only for Chinese)
+    if (language === 'zh-CN' && scenario) {
       const scenarioResponse = this._matchScenarioResponse(scenario, input, turnCount);
       if (scenarioResponse) return scenarioResponse;
     }
 
-    // 2. Use generic conversational responses based on intent
+    // 2. Generic conversational responses
     const genericResponse = this._generateGenericResponse(input, context);
     if (genericResponse) return genericResponse;
 
-    // 3. Fallback: encourage and continue
+    // 3. Fallback
     return this._generateFallbackResponse(context);
   },
 
-  // Match user input against scenario response patterns
   _matchScenarioResponse(scenario, input, turnCount) {
     const patterns = SCENARIO_RESPONSE_PATTERNS[scenario.id];
     if (!patterns) return null;
 
-    // Try exact match first
     for (const p of patterns) {
       if (p.keywords.some(k => input.includes(k))) {
-        const responses = p.responses;
-        const idx = turnCount % responses.length;
-        return responses[idx];
+        const idx = turnCount % p.responses.length;
+        return p.responses[idx];
       }
     }
 
-    // Try fuzzy intent matching
     for (const p of patterns) {
       if (p.keywords.some(k => this._fuzzyMatch(input, k))) {
-        const responses = p.responses;
-        const idx = turnCount % responses.length;
-        return responses[idx];
+        const idx = turnCount % p.responses.length;
+        return p.responses[idx];
       }
     }
 
     return null;
   },
 
-  // Fuzzy string matching for intent detection
   _fuzzyMatch(text, keyword) {
     if (text.includes(keyword)) return true;
-    // Simple char overlap check for short keywords
     if (keyword.length <= 2) return false;
     let matches = 0;
     for (const ch of keyword) {
@@ -223,70 +325,60 @@ const AIDialogueService = {
     return matches >= keyword.length * 0.6;
   },
 
-  // Generic intent-based responses
   _generateGenericResponse(input, context) {
     const { language } = context;
 
-    // Greeting detection
-    if (/^(hi|hello|hey|你好|您好|こん|안녕)/.test(input)) {
-      return language === 'ja' ? 'こんにちは！何かお話ししましょう。' :
-             language === 'en' ? 'Hello there! How can I help you today?' :
-             '你好呀！很高兴和你练习口语，今天想聊什么呢？';
+    if (/^(hi|hello|hey|你好|您好|こん|안녕|hola|bonjour|ciao|olá|привет|merhaba|salam)/.test(input)) {
+      if (language === 'ja') return 'こんにちは！何かお話ししましょう。';
+      if (language === 'zh-CN') return '你好呀！很高兴和你练习口语，今天想聊什么呢？';
+      return 'Hello there! How can I help you today?';
     }
 
-    // Question detection
-    if (/\?|？|吗|什么|哪里|how|what|where|when|why/.test(input)) {
-      return language === 'ja' ? 'いい質問ですね。それについてもっと話しましょう。' :
-             language === 'en' ? "That's a good question. Let me think... Well, what do you think about it?" :
-             '这个问题很有意思。你觉得呢？我们可以一起讨论一下。';
+    if (/\?|？|吗|什么|哪里|how|what|where|when|why|quoi|où|wie|was|dove|quando/.test(input)) {
+      if (language === 'ja') return 'いい質問ですね。それについてもっと話しましょう。';
+      if (language === 'zh-CN') return '这个问题很有意思。你觉得呢？我们可以一起讨论一下。';
+      return "That's a good question. Let me think... Well, what do you think about it?";
     }
 
-    // Agreement/Yes
-    if (/^(yes|yeah|sure|ok|okay|好的|可以|行|はい|そう)/.test(input)) {
-      return language === 'ja' ? 'わかりました。では、続けましょう。' :
-             language === 'en' ? 'Great! Let\'s continue then.' :
-             '好的！那我们就继续吧。';
+    if (/^(yes|yeah|sure|ok|okay|好的|可以|行|はい|そう|oui|si|ja|да|evet)/.test(input)) {
+      if (language === 'ja') return 'わかりました。では、続けましょう。';
+      if (language === 'zh-CN') return '好的！那我们就继续吧。';
+      return "Great! Let's continue then.";
     }
 
-    // Disagreement/No
-    if (/^(no|nope|not|不用|不要|不行|いいえ|だめ)/.test(input)) {
-      return language === 'ja' ? 'そうですか。他の方法を考えてみましょう。' :
-             language === 'en' ? 'I see. Let\'s think of another way then.' :
-             '明白，那我们换个方式试试。';
+    if (/^(no|nope|not|不用|不要|不行|いいえ|だめ|non|nein|нет|hayır)/.test(input)) {
+      if (language === 'ja') return 'そうですか。他の方法を考えてみましょう。';
+      if (language === 'zh-CN') return '明白，那我们换个方式试试。';
+      return "I see. Let's think of another way then.";
     }
 
-    // Gratitude
-    if (/谢谢|thanks|thank you|ありがと|감사/.test(input)) {
-      return language === 'ja' ? 'どういたしまして。他に何かありますか？' :
-             language === 'en' ? 'You\'re welcome! Anything else I can help with?' :
-             '不客气！还有什么我可以帮你的吗？';
+    if (/谢谢|thanks|thank you|ありがと|감사|gracias|merci|danke|grazie|obrigado|spasibo)/.test(input)) {
+      if (language === 'ja') return 'どういたしまして。他に何かありますか？';
+      if (language === 'zh-CN') return '不客气！还有什么我可以帮你的吗？';
+      return "You're welcome! Anything else I can help with?";
     }
 
-    // Farewell
-    if (/再见|拜拜|bye|goodbye|さようなら|잘 가/.test(input)) {
-      return language === 'ja' ? 'さようなら！また練習しましょう。' :
-             language === 'en' ? 'Goodbye! Keep practicing and you\'ll get better!' :
-             '再见！继续加油练习，你会越来越棒的！';
+    if (/再见|拜拜|bye|goodbye|さようなら|잘 가|adios|au revoir|arrivederci|adeus|do svidaniya)/.test(input)) {
+      if (language === 'ja') return 'さようなら！また練習しましょう。';
+      if (language === 'zh-CN') return '再见！继续加油练习，你会越来越棒的！';
+      return 'Goodbye! Keep practicing and you\'ll get better!';
     }
 
-    // Very short input
     if (input.length <= 3) {
-      return language === 'ja' ? 'もう少し詳しく教えてください。' :
-             language === 'en' ? 'Could you tell me a bit more about that?' :
-             '可以多说说你的想法吗？';
+      if (language === 'ja') return 'もう少し詳しく教えてください。';
+      if (language === 'zh-CN') return '可以多说说你的想法吗？';
+      return 'Could you tell me a bit more about that?';
     }
 
     return null;
   },
 
-  // Fallback response that encourages conversation
   _generateFallbackResponse(context) {
     const { scenario, language, turnCount } = context;
-    const fallbacks = FALLBACK_RESPONSES[language] || FALLBACK_RESPONSES['zh-CN'];
+    const fallbacks = FALLBACK_RESPONSES[language] || FALLBACK_RESPONSES['en'];
     const idx = turnCount % fallbacks.length;
 
-    if (scenario && turnCount < 3) {
-      // Early in conversation, steer back to scenario
+    if (scenario && language === 'zh-CN' && turnCount < 3) {
       return `${fallbacks[idx]} ${scenario.opening}`;
     }
 

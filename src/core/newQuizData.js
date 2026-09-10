@@ -1189,5 +1189,845 @@ const NEW_QUIZ_DATA = {
         }
     ],
   },
+  ko: {
+  themes: [
+    {
+      id: "basic",
+      name: "基础词汇",
+      color: "#8B5CF6",
+      levels: [
+        {
+          levelId: "ko-basic-01",
+          title: "问候入门",
+          timeLimit: 120,
+          minScoreFor1Star: 30,
+          minScoreFor2Star: 50,
+          minScoreFor3Star: 70,
+          prerequisites: [],
+          questions: [
+            {
+              id: "ko-b-01-1",
+              type: "translate",
+              question: "你好",
+              options: ["안녕하세요", "감사합니다", "미안해요", "안녕히"],
+              correctAnswer: "안녕하세요",
+              difficulty: 1
+            },
+            {
+              id: "ko-b-01-2",
+              type: "translate",
+              question: "谢谢",
+              options: ["감사합니다", "안녕하세요", "아니요", "네"],
+              correctAnswer: "감사합니다",
+              difficulty: 1
+            },
+            {
+              id: "ko-b-01-3",
+              type: "fill-blank",
+              question: "만나서 ___습니다.（很高兴认识你）",
+              options: ["반갑", "감사", "미안", "안녕"],
+              correctAnswer: "반갑",
+              difficulty: 2
+            },
+            {
+              id: "ko-b-01-4",
+              type: "match",
+              question: "韩语配对",
+              pairs: [
+                ["네", "是"],
+                ["아니요", "不是"],
+                ["사랑", "爱"],
+                ["친구", "朋友"]
+              ],
+              correctAnswer: "match",
+              difficulty: 2
+            },
+            {
+              id: "ko-b-01-5",
+              type: "translate",
+              question: "我爱你",
+              options: ["사랑해요", "감사해요", "미안해요", "안녕해요"],
+              correctAnswer: "사랑해요",
+              difficulty: 2
+            },
+            {
+              id: "ko-b-01-6",
+              type: "dictation",
+              question: "听写：水",
+              audioWord: "물",
+              correctAnswer: "물",
+              difficulty: 2
+            }
+          ]
+        },
+        {
+          levelId: "ko-basic-02",
+          title: "数字与颜色",
+          timeLimit: 120,
+          minScoreFor1Star: 30,
+          minScoreFor2Star: 50,
+          minScoreFor3Star: 70,
+          prerequisites: ["ko-basic-01"],
+          questions: [
+            {
+              id: "ko-b-02-1",
+              type: "translate",
+              question: "红色",
+              options: ["빨간색", "파란색", "노란색", "초록색"],
+              correctAnswer: "빨간색",
+              difficulty: 1
+            },
+            {
+              id: "ko-b-02-2",
+              type: "translate",
+              question: "三",
+              options: ["하나", "둘", "셋", "넷"],
+              correctAnswer: "셋",
+              difficulty: 1
+            },
+            {
+              id: "ko-b-02-3",
+              type: "fill-blank",
+              question: "하늘은 ___색이다.（天空是蓝色的）",
+              options: ["빨간", "파란", "초록", "하얀"],
+              correctAnswer: "파란",
+              difficulty: 1
+            },
+            {
+              id: "ko-b-02-4",
+              type: "match",
+              question: "数字配对",
+              pairs: [
+                ["하나", "一"],
+                ["둘", "二"],
+                ["셋", "三"],
+                ["넷", "四"]
+              ],
+              correctAnswer: "match",
+              difficulty: 2
+            },
+            {
+              id: "ko-b-02-5",
+              type: "translate",
+              question: "绿色",
+              options: ["빨간색", "파란색", "초록색", "검은색"],
+              correctAnswer: "초록색",
+              difficulty: 1
+            },
+            {
+              id: "ko-b-02-6",
+              type: "dictation",
+              question: "听写：苹果",
+              audioWord: "sagwa",
+              correctAnswer: "사과",
+              difficulty: 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: "daily",
+      name: "日常对话",
+      color: "#6366F1",
+      levels: [
+        {
+          levelId: "ko-daily-01",
+          title: "自我介绍",
+          timeLimit: 150,
+          minScoreFor1Star: 40,
+          minScoreFor2Star: 60,
+          minScoreFor3Star: 80,
+          prerequisites: [],
+          questions: [
+            {
+              id: "ko-d-01-1",
+              type: "translate",
+              question: "我的名字是…",
+              options: ["제 이름은…", "저는 학생입니다", "만나서 반갑습니다", "안녕하세요"],
+              correctAnswer: "제 이름은…",
+              difficulty: 2
+            },
+            {
+              id: "ko-d-01-2",
+              type: "fill-blank",
+              question: "만나서 ___습니다.（很高兴认识你）",
+              options: ["반갑", "감사", "미안", "안녕"],
+              correctAnswer: "반갑",
+              difficulty: 2
+            },
+            {
+              id: "ko-d-01-3",
+              type: "translate",
+              question: "你从哪里来？",
+              options: ["어디에서 왔어요?", "이름이 뭐예요?", "몇 살이에요?", "어디 가요?"],
+              correctAnswer: "어디에서 왔어요?",
+              difficulty: 2
+            },
+            {
+              id: "ko-d-01-4",
+              type: "repeat",
+              question: "跟读：제 이름은 토마스입니다.",
+              sentence: "제 이름은 토마스입니다.",
+              correctAnswer: "repeat",
+              difficulty: 2
+            },
+            {
+              id: "ko-d-01-5",
+              type: "dictation",
+              question: "听写：朋友",
+              audioWord: "chingu",
+              correctAnswer: "친구",
+              difficulty: 2
+            },
+            {
+              id: "ko-d-01-6",
+              type: "match",
+              question: "对话配对",
+              pairs: [
+                ["안녕하세요", "你好"],
+                ["안녕히 가세요", "再见"],
+                ["감사합니다", "谢谢"],
+                ["미안합니다", "对不起"]
+              ],
+              correctAnswer: "match",
+              difficulty: 2
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+  es: {
+  themes: [
+    {
+      id: "basic",
+      name: "基础词汇",
+      color: "#F59E0B",
+      levels: [
+        {
+          levelId: "es-basic-01",
+          title: "问候入门",
+          timeLimit: 120,
+          minScoreFor1Star: 30,
+          minScoreFor2Star: 50,
+          minScoreFor3Star: 70,
+          prerequisites: [],
+          questions: [
+            {
+              id: "es-b-01-1",
+              type: "translate",
+              question: "你好",
+              options: ["hola", "gracias", "adiós", "buenos"],
+              correctAnswer: "hola",
+              difficulty: 1
+            },
+            {
+              id: "es-b-01-2",
+              type: "translate",
+              question: "谢谢",
+              options: ["hola", "gracias", "sí", "no"],
+              correctAnswer: "gracias",
+              difficulty: 1
+            },
+            {
+              id: "es-b-01-3",
+              type: "fill-blank",
+              question: "___ días.（早上好）",
+              options: ["Buenos", "Buenas", "Buen", "Muy"],
+              correctAnswer: "Buenos",
+              difficulty: 1
+            },
+            {
+              id: "es-b-01-4",
+              type: "match",
+              question: "西语配对",
+              pairs: [
+                ["hola", "你好"],
+                ["gracias", "谢谢"],
+                ["amor", "爱"],
+                ["amigo", "朋友"]
+              ],
+              correctAnswer: "match",
+              difficulty: 2
+            },
+            {
+              id: "es-b-01-5",
+              type: "translate",
+              question: "我爱你",
+              options: ["te amo", "te quiero", "me gusta", "lo siento"],
+              correctAnswer: "te amo",
+              difficulty: 2
+            },
+            {
+              id: "es-b-01-6",
+              type: "dictation",
+              question: "听写：水",
+              audioWord: "agua",
+              correctAnswer: "agua",
+              difficulty: 2
+            }
+          ]
+        },
+        {
+          levelId: "es-basic-02",
+          title: "数字与颜色",
+          timeLimit: 120,
+          minScoreFor1Star: 30,
+          minScoreFor2Star: 50,
+          minScoreFor3Star: 70,
+          prerequisites: ["es-basic-01"],
+          questions: [
+            {
+              id: "es-b-02-1",
+              type: "translate",
+              question: "红色",
+              options: ["rojo", "azul", "verde", "amarillo"],
+              correctAnswer: "rojo",
+              difficulty: 1
+            },
+            {
+              id: "es-b-02-2",
+              type: "translate",
+              question: "三",
+              options: ["uno", "dos", "tres", "cuatro"],
+              correctAnswer: "tres",
+              difficulty: 1
+            },
+            {
+              id: "es-b-02-3",
+              type: "fill-blank",
+              question: "El cielo es ___.（天空是蓝色的）",
+              options: ["rojo", "azul", "verde", "blanco"],
+              correctAnswer: "azul",
+              difficulty: 1
+            },
+            {
+              id: "es-b-02-4",
+              type: "match",
+              question: "数字配对",
+              pairs: [
+                ["uno", "一"],
+                ["dos", "二"],
+                ["tres", "三"],
+                ["cuatro", "四"]
+              ],
+              correctAnswer: "match",
+              difficulty: 2
+            },
+            {
+              id: "es-b-02-5",
+              type: "translate",
+              question: "绿色",
+              options: ["rojo", "azul", "verde", "negro"],
+              correctAnswer: "verde",
+              difficulty: 1
+            },
+            {
+              id: "es-b-02-6",
+              type: "dictation",
+              question: "听写：苹果",
+              audioWord: "manzana",
+              correctAnswer: "manzana",
+              difficulty: 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: "daily",
+      name: "日常对话",
+      color: "#6366F1",
+      levels: [
+        {
+          levelId: "es-daily-01",
+          title: "出行与问路",
+          timeLimit: 150,
+          minScoreFor1Star: 40,
+          minScoreFor2Star: 60,
+          minScoreFor3Star: 80,
+          prerequisites: [],
+          questions: [
+            {
+              id: "es-d-01-1",
+              type: "translate",
+              question: "洗手间在哪里？",
+              options: ["¿Dónde está el baño?", "¿Cuánto cuesta?", "¿Qué hora es?", "¿Dónde vives?"],
+              correctAnswer: "¿Dónde está el baño?",
+              difficulty: 2
+            },
+            {
+              id: "es-d-01-2",
+              type: "fill-blank",
+              question: "Toma el ___ al aeropuerto.（坐出租车去机场）",
+              options: ["autobús", "tren", "taxi", "avión"],
+              correctAnswer: "taxi",
+              difficulty: 2
+            },
+            {
+              id: "es-d-01-3",
+              type: "translate",
+              question: "多少钱？",
+              options: ["¿Cuántos?", "¿Cuánto cuesta?", "¿Cuándo?", "¿Dónde?"],
+              correctAnswer: "¿Cuánto cuesta?",
+              difficulty: 2
+            },
+            {
+              id: "es-d-01-4",
+              type: "match",
+              question: "出行配对",
+              pairs: [
+                ["estación", "火车站"],
+                ["hotel", "酒店"],
+                ["restaurante", "餐厅"],
+                ["aeropuerto", "机场"]
+              ],
+              correctAnswer: "match",
+              difficulty: 2
+            },
+            {
+              id: "es-d-01-5",
+              type: "translate",
+              question: "我迷路了",
+              options: ["Estoy perdido", "Estoy cansado", "Tengo hambre", "Estoy enfermo"],
+              correctAnswer: "Estoy perdido",
+              difficulty: 2
+            },
+            {
+              id: "es-d-01-6",
+              type: "dictation",
+              question: "听写：餐厅",
+              audioWord: "restaurante",
+              correctAnswer: "restaurante",
+              difficulty: 2
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+  ru: {
+  themes: [
+    {
+      id: "basic",
+      name: "基础词汇",
+      color: "#6366F1",
+      levels: [
+        {
+          levelId: "ru-basic-01",
+          title: "问候入门",
+          timeLimit: 120,
+          minScoreFor1Star: 30,
+          minScoreFor2Star: 50,
+          minScoreFor3Star: 70,
+          prerequisites: [],
+          questions: [
+            {
+              id: "ru-b-01-1",
+              type: "translate",
+              question: "你好",
+              options: ["привет", "спасибо", "да", "нет"],
+              correctAnswer: "привет",
+              difficulty: 1
+            },
+            {
+              id: "ru-b-01-2",
+              type: "translate",
+              question: "谢谢",
+              options: ["привет", "спасибо", "извините", "пока"],
+              correctAnswer: "спасибо",
+              difficulty: 1
+            },
+            {
+              id: "ru-b-01-3",
+              type: "fill-blank",
+              question: "Доброе ___.（早上好）",
+              options: ["утро", "ночи", "день", "вечер"],
+              correctAnswer: "утро",
+              difficulty: 2
+            },
+            {
+              id: "ru-b-01-4",
+              type: "match",
+              question: "俄语配对",
+              pairs: [
+                ["да", "是"],
+                ["нет", "不是"],
+                ["друг", "朋友"],
+                ["семья", "家人"]
+              ],
+              correctAnswer: "match",
+              difficulty: 2
+            },
+            {
+              id: "ru-b-01-5",
+              type: "translate",
+              question: "我爱你",
+              options: ["я люблю тебя", "спасибо тебе", "извините меня", "привет тебе"],
+              correctAnswer: "я люблю тебя",
+              difficulty: 2
+            },
+            {
+              id: "ru-b-01-6",
+              type: "dictation",
+              question: "听写：水",
+              audioWord: "voda",
+              correctAnswer: "вода",
+              difficulty: 2
+            }
+          ]
+        },
+        {
+          levelId: "ru-basic-02",
+          title: "数字与颜色",
+          timeLimit: 120,
+          minScoreFor1Star: 30,
+          minScoreFor2Star: 50,
+          minScoreFor3Star: 70,
+          prerequisites: ["ru-basic-01"],
+          questions: [
+            {
+              id: "ru-b-02-1",
+              type: "translate",
+              question: "红色",
+              options: ["красный", "синий", "зелёный", "жёлтый"],
+              correctAnswer: "красный",
+              difficulty: 1
+            },
+            {
+              id: "ru-b-02-2",
+              type: "translate",
+              question: "三",
+              options: ["один", "два", "три", "четыре"],
+              correctAnswer: "три",
+              difficulty: 1
+            },
+            {
+              id: "ru-b-02-3",
+              type: "fill-blank",
+              question: "Небо ___.（天空是蓝色的）",
+              options: ["красное", "синее", "зелёное", "белое"],
+              correctAnswer: "синее",
+              difficulty: 1
+            },
+            {
+              id: "ru-b-02-4",
+              type: "match",
+              question: "数字配对",
+              pairs: [
+                ["один", "一"],
+                ["два", "二"],
+                ["три", "三"],
+                ["четыре", "四"]
+              ],
+              correctAnswer: "match",
+              difficulty: 2
+            },
+            {
+              id: "ru-b-02-5",
+              type: "translate",
+              question: "绿色",
+              options: ["красный", "синий", "зелёный", "чёрный"],
+              correctAnswer: "зелёный",
+              difficulty: 1
+            },
+            {
+              id: "ru-b-02-6",
+              type: "dictation",
+              question: "听写：苹果",
+              audioWord: "yabloko",
+              correctAnswer: "яблоко",
+              difficulty: 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: "daily",
+      name: "日常对话",
+      color: "#6366F1",
+      levels: [
+        {
+          levelId: "ru-daily-01",
+          title: "出行与问路",
+          timeLimit: 150,
+          minScoreFor1Star: 40,
+          minScoreFor2Star: 60,
+          minScoreFor3Star: 80,
+          prerequisites: [],
+          questions: [
+            {
+              id: "ru-d-01-1",
+              type: "translate",
+              question: "洗手间在哪里？",
+              options: ["Где туалет?", "Сколько стоит?", "Который час?", "Где вы живёте?"],
+              correctAnswer: "Где туалет?",
+              difficulty: 2
+            },
+            {
+              id: "ru-d-01-2",
+              type: "fill-blank",
+              question: "___ до аэропорта.（坐出租车去机场）",
+              options: ["Автобус", "Поезд", "Такси", "Самолёт"],
+              correctAnswer: "Такси",
+              difficulty: 2
+            },
+            {
+              id: "ru-d-01-3",
+              type: "translate",
+              question: "多少钱？",
+              options: ["Сколько?", "Сколько стоит?", "Когда?", "Где?"],
+              correctAnswer: "Сколько стоит?",
+              difficulty: 2
+            },
+            {
+              id: "ru-d-01-4",
+              type: "match",
+              question: "出行配对",
+              pairs: [
+                ["вокзал", "火车站"],
+                ["отель", "酒店"],
+                ["ресторан", "餐厅"],
+                ["аэропорт", "机场"]
+              ],
+              correctAnswer: "match",
+              difficulty: 2
+            },
+            {
+              id: "ru-d-01-5",
+              type: "translate",
+              question: "我迷路了",
+              options: ["Я заблудился", "Я устал", "Я голоден", "Я болен"],
+              correctAnswer: "Я заблудился",
+              difficulty: 2
+            },
+            {
+              id: "ru-d-01-6",
+              type: "dictation",
+              question: "听写：餐厅",
+              audioWord: "restoran",
+              correctAnswer: "ресторан",
+              difficulty: 2
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
+  yue: {
+  themes: [
+    {
+      id: "basic",
+      name: "基础词汇",
+      color: "#10B981",
+      levels: [
+        {
+          levelId: "yue-basic-01",
+          title: "问候与礼貌",
+          timeLimit: 120,
+          minScoreFor1Star: 30,
+          minScoreFor2Star: 50,
+          minScoreFor3Star: 70,
+          prerequisites: [],
+          questions: [
+            {
+              id: "yue-b-01-1",
+              type: "translate",
+              question: "你好",
+              options: ["唔该", "你好", "早晨", "早唞"],
+              correctAnswer: "你好",
+              difficulty: 1
+            },
+            {
+              id: "yue-b-01-2",
+              type: "translate",
+              question: "谢谢",
+              options: ["唔该/多谢", "对唔住", "早晨", "系"],
+              correctAnswer: "唔该/多谢",
+              difficulty: 1
+            },
+            {
+              id: "yue-b-01-3",
+              type: "fill-blank",
+              question: "早晨，___！（早上好，老师！）",
+              options: ["老师", "学生", "朋友", "屋企"],
+              correctAnswer: "老师",
+              difficulty: 1
+            },
+            {
+              id: "yue-b-01-4",
+              type: "match",
+              question: "粤语配对",
+              pairs: [
+                ["早晨", "早上好"],
+                ["早唞", "晚安"],
+                ["多谢", "谢谢"],
+                ["对唔住", "对不起"]
+              ],
+              correctAnswer: "match",
+              difficulty: 2
+            },
+            {
+              id: "yue-b-01-5",
+              type: "translate",
+              question: "家",
+              options: ["屋企", "学校", "餐厅", "酒店"],
+              correctAnswer: "屋企",
+              difficulty: 1
+            },
+            {
+              id: "yue-b-01-6",
+              type: "dictation",
+              question: "听写：朋友",
+              audioWord: "朋友",
+              correctAnswer: "朋友",
+              difficulty: 2
+            }
+          ]
+        },
+        {
+          levelId: "yue-basic-02",
+          title: "饮食与生活",
+          timeLimit: 120,
+          minScoreFor1Star: 30,
+          minScoreFor2Star: 50,
+          minScoreFor3Star: 70,
+          prerequisites: ["yue-basic-01"],
+          questions: [
+            {
+              id: "yue-b-02-1",
+              type: "translate",
+              question: "吃饭",
+              options: ["食饭", "饮茶", "食嘢", "饮水"],
+              correctAnswer: "食饭",
+              difficulty: 1
+            },
+            {
+              id: "yue-b-02-2",
+              type: "translate",
+              question: "喝茶",
+              options: ["饮水", "饮茶", "食茶", "咖啡"],
+              correctAnswer: "饮茶",
+              difficulty: 1
+            },
+            {
+              id: "yue-b-02-3",
+              type: "fill-blank",
+              question: "食咗___未？（吃饭了吗）",
+              options: ["饭", "茶", "水", "嘢"],
+              correctAnswer: "饭",
+              difficulty: 2
+            },
+            {
+              id: "yue-b-02-4",
+              type: "match",
+              question: "饮食配对",
+              pairs: [
+                ["食饭", "吃饭"],
+                ["饮茶", "喝茶"],
+                ["几多钱", "多少钱"],
+                ["唔该晒", "非常感谢"]
+              ],
+              correctAnswer: "match",
+              difficulty: 2
+            },
+            {
+              id: "yue-b-02-5",
+              type: "translate",
+              question: "好漂亮",
+              options: ["好靓", "好丑", "好高", "好矮"],
+              correctAnswer: "好靓",
+              difficulty: 1
+            },
+            {
+              id: "yue-b-02-6",
+              type: "translate",
+              question: "去哪里",
+              options: ["去边度", "做乜嘢", "点解", "几时"],
+              correctAnswer: "去边度",
+              difficulty: 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: "daily",
+      name: "日常对话",
+      color: "#6366F1",
+      levels: [
+        {
+          levelId: "yue-daily-01",
+          title: "问路与出行",
+          timeLimit: 150,
+          minScoreFor1Star: 40,
+          minScoreFor2Star: 60,
+          minScoreFor3Star: 80,
+          prerequisites: [],
+          questions: [
+            {
+              id: "yue-d-01-1",
+              type: "translate",
+              question: "地铁站在哪里？",
+              options: ["地铁站喺边度？", "几钱？", "而家几点？", "你住喺边？"],
+              correctAnswer: "地铁站喺边度？",
+              difficulty: 2
+            },
+            {
+              id: "yue-d-01-2",
+              type: "fill-blank",
+              question: "搭___去机场。（坐出租车去机场）",
+              options: ["巴士", "地铁", "的士", "飞机"],
+              correctAnswer: "的士",
+              difficulty: 2
+            },
+            {
+              id: "yue-d-01-3",
+              type: "translate",
+              question: "多少钱？",
+              options: ["几多？", "几钱？", "几耐？", "几远？"],
+              correctAnswer: "几钱？",
+              difficulty: 2
+            },
+            {
+              id: "yue-d-01-4",
+              type: "match",
+              question: "出行配对",
+              pairs: [
+                ["机场", "机场"],
+                ["酒店", "酒店"],
+                ["餐厅", "餐厅"],
+                ["车站", "车站"]
+              ],
+              correctAnswer: "match",
+              difficulty: 2
+            },
+            {
+              id: "yue-d-01-5",
+              type: "translate",
+              question: "我迷路了",
+              options: ["我荡失路", "我攰", "我饿", "我病"],
+              correctAnswer: "我荡失路",
+              difficulty: 2
+            },
+            {
+              id: "yue-d-01-6",
+              type: "dictation",
+              question: "听写：餐厅",
+              audioWord: "餐厅",
+              correctAnswer: "餐厅",
+              difficulty: 2
+            }
+          ]
+        }
+      ]
+    }
+  ]
+},
 };
 Object.assign(window, { NEW_QUIZ_DATA });

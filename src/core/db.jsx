@@ -526,6 +526,126 @@ async function seedGrammarLessons() {
       { id: 'grammar_006', language: 'ja', difficulty: 'beginner', weekIndex: -1, title: '日语五十音', duration: 5, description: '日语的基础发音系统', content: '五十音图是日语的基础，包含平假名和片假名。あいうえお、かきくけこ... 掌握五十音是学习日语的第一步。', examples: ['あ - a', 'い - i', 'う - u'], xpReward: 15 },
       { id: 'grammar_007', language: 'ja', difficulty: 'beginner', weekIndex: -1, title: '助词「は」「が」', duration: 4, description: '日语中最常用的两个助词', content: '「は」用于提示主题，「が」用于提示主语。私は学生です（我是学生）。私が学生です（我才是学生）。', examples: ['私は日本人です。', '猫が好きです。', 'これは本です。'], xpReward: 15 },
       { id: 'grammar_008', language: 'en', difficulty: 'beginner', weekIndex: -1, title: '冠词 a/an/the', duration: 3, description: '英语中名词前的限定词', content: '不定冠词 a/an 用于泛指，定冠词 the 用于特指。a 用于辅音音素前，an 用于元音音素前。例：a book, an apple, the sun.', examples: ['I have a dog.', 'She ate an orange.', 'The moon is bright tonight.'], xpReward: 10 },
+      {
+        id: "grammar_ko_001",
+        language: "ko",
+        difficulty: "beginner",
+        weekIndex: -1,
+        title: "韩语基本问候",
+        duration: 4,
+        description: "学习韩语中最常用的问候语",
+        content: "韩语问候语：안녕하세요（您好）감사합니다（谢谢）죄송합니다（对不起）안녕히 가세요（再见）。韩语有敬语体系，对长辈和上级需要使用敬语。",
+        examples: ["안녕하세요! 만나서 반갑습니다.", "감사합니다!", "죄송합니다."],
+        xpReward: 15
+      },
+      {
+        id: "grammar_ko_002",
+        language: "ko",
+        difficulty: "beginner",
+        weekIndex: -1,
+        title: "韩语助词 이/가",
+        duration: 4,
+        description: "韩语主格助词的基本用法",
+        content: "이/가 是韩语的主格助词，表示句子的主语。이 用于有尾音的名词后，가 用于无尾音的名词后。例：책이（书）연필이（铅笔）사과가（苹果）。",
+        examples: ["책이 있어요.", "사과가 맛있어요.", "학교가 커요."],
+        xpReward: 15
+      },
+      {
+        id: "grammar_es_001",
+        language: "es",
+        difficulty: "beginner",
+        weekIndex: -1,
+        title: "西班牙语动词变位",
+        duration: 5,
+        description: "学习西班牙语规则动词的现在时变位",
+        content: "西班牙语动词分为三类：-ar, -er, -ir。以 hablar（说话）为例：yo hablo, tú hablas, él/ella habla, nosotros hablamos, vosotros habláis, ellos hablan。",
+        examples: ["Yo hablo español.", "Tú comes manzanas.", "Ella vive en Madrid."],
+        xpReward: 15
+      },
+      {
+        id: "grammar_es_002",
+        language: "es",
+        difficulty: "beginner",
+        weekIndex: -1,
+        title: "西班牙语阴阳性",
+        duration: 4,
+        description: "学习西班牙语名词的性和冠词搭配",
+        content: "西班牙语中，以 -o 结尾的名词通常是阳性（un libro），以 -a 结尾的名词通常是阴性（una mesa）。阳性冠词用 un/el，阴性冠词用 una/la。",
+        examples: ["un libro", "una mesa", "el amigo", "la amiga"],
+        xpReward: 15
+      },
+      {
+        id: "grammar_ru_001",
+        language: "ru",
+        difficulty: "beginner",
+        weekIndex: -1,
+        title: "俄语名词变格",
+        duration: 5,
+        description: "学习俄语名词的性和格变化",
+        content: "俄语名词有三种性：阳性、阴性、中性。阳性多以辅音结尾（стол），阴性多以 -a/-я 结尾（книга），中性多以 -o/-e 结尾（окно）。名词有六个格的变化。",
+        examples: ["Это стол.", "Это книга.", "Это окно."],
+        xpReward: 15
+      },
+      {
+        id: "grammar_de_001",
+        language: "de",
+        difficulty: "beginner",
+        weekIndex: -1,
+        title: "德语名词的性",
+        duration: 4,
+        description: "学习德语名词的阴阳中性及冠词",
+        content: "德语中每个名词都有性：阳性 der（der Mann），阴性 die（die Frau），中性 das（das Kind）。复数都用 die。需要记忆每个名词的性。",
+        examples: ["der Tisch（桌子）", "die Tür（门）", "das Fenster（窗户）"],
+        xpReward: 15
+      },
+      {
+        id: "grammar_fr_001",
+        language: "fr",
+        difficulty: "beginner",
+        weekIndex: -1,
+        title: "法语动词 être",
+        duration: 4,
+        description: "学习法语最重要的动词 être（是）",
+        content: "Être 是法语中最常用的动词之一，意为「是」。变位：je suis, tu es, il/elle est, nous sommes, vous êtes, ils/elles sont。",
+        examples: ["Je suis étudiant.", "Elle est médecin.", "Nous sommes français."],
+        xpReward: 15
+      },
+      {
+        id: "grammar_it_001",
+        language: "it",
+        difficulty: "beginner",
+        weekIndex: -1,
+        title: "意大利语动词 essere",
+        duration: 4,
+        description: "学习意大利语动词 essere（是）",
+        content: "Essere 是意大利语核心动词，意为「是」。变位：io sono, tu sei, lui/lei è, noi siamo, voi siete, loro sono。",
+        examples: ["Io sono italiano.", "Lei è professoressa.", "Noi siamo amici."],
+        xpReward: 15
+      },
+      {
+        id: "grammar_pt_001",
+        language: "pt",
+        difficulty: "beginner",
+        weekIndex: -1,
+        title: "葡萄牙语动词 ser",
+        duration: 4,
+        description: "学习葡萄牙语动词 ser（是）",
+        content: "Ser 是葡萄牙语核心动词，表示本质属性。变位：eu sou, tu és, ele/ela é, nós somos, vós sois, eles/elas são。",
+        examples: ["Eu sou brasileiro.", "Ela é médica.", "Nós somos amigos."],
+        xpReward: 15
+      },
+      {
+        id: "grammar_yue_001",
+        language: "yue",
+        difficulty: "beginner",
+        weekIndex: -1,
+        title: "粤语量词",
+        duration: 4,
+        description: "学习粤语中常用的量词",
+        content: "粤语量词与普通话有相似之处也有差异。个（go3）是最通用的量词：一个人、一个苹果。只（zek3）用于动物：一只猫。张（zoeng1）用于平面物品：一张纸。",
+        examples: ["一个人", "一只猫", "一张纸"],
+        xpReward: 15
+      },
     ];
     await db.grammarLessons.bulkAdd(baseLessons);
   }
@@ -561,6 +681,127 @@ async function seedCultureArticles() {
     { id: 'culture_006', language: 'en', category: 'customs', title: '英国排队文化', icon: '🚶', readTime: 2, content: '英国人以爱排队闻名世界。无论是等公交、买咖啡还是进入博物馆，英国人都严格遵守「先来后到」的原则。插队（jump the queue）被认为是非常不礼貌的行为，甚至可能导致争吵。据说二战期间，排队领取配给粮的传统进一步强化了这种文化。', facts: ['插队在英国被视为严重失礼', '即使只有两个人也会自觉排队', '排队是英国国民性格的一部分'], xpReward: 10 },
     { id: 'culture_007', language: 'ja', category: 'customs', title: '日本温泉礼仪', icon: '♨️', readTime: 4, content: '在日本泡温泉（温泉/銭湯）有一套严格的礼仪。入浴前必须先在淋浴区将身体彻底洗净；必须裸体入浴，不可穿泳衣；长头发要盘起不可入水；有大面积纹身者可能被拒绝入内。温泉毛巾不能浸入池水中，通常放在池边或顶在头上。', facts: ['入浴前必须洗净身体', '不可穿泳衣入池', '毛巾不可浸入池水'], xpReward: 20 },
     { id: 'culture_008', language: 'es', category: 'customs', weekIndex: -1, title: '西班牙午睡文化', icon: '😴', readTime: 3, content: '午睡（Siesta）是西班牙和许多拉丁美洲国家的传统。通常在下午2-5点，商店关门，人们回家休息。这个习惯源于炎热的气候——中午温度过高，不适合工作。虽然现在大城市中这一传统逐渐消失，但在小城镇仍很常见。', facts: ['Siesta 通常持续15-30分钟', '源于西班牙炎热的夏季气候', '许多商店下午2-5点关门'], xpReward: 15 },
+    {
+      id: "culture_ko_001",
+      language: "ko",
+      category: "customs",
+      title: "韩国泡菜文化",
+      icon: "🥬",
+      readTime: 4,
+      content: "泡菜（김치）是韩国最具代表性的发酵食品，已有超过3000年的历史。韩国有句俗语「无泡菜不饭」（김치 없는 밥상）。韩国有超过200种泡菜，其中最著名的是白菜泡菜（배추김치）。制作泡菜需要白菜、辣椒面、大蒜、姜、鱼露等原料，经过腌制和发酵而成。",
+      facts: ["韩国有超过200种泡菜", "泡菜富含维生素和益生菌", "韩国人均每年消费约35公斤泡菜"],
+      xpReward: 20
+    },
+    {
+      id: "culture_ko_002",
+      language: "ko",
+      category: "customs",
+      title: "韩国敬老文化",
+      icon: "🙇",
+      readTime: 3,
+      content: "韩国是非常重视辈分和礼仪的国家。与长辈或上级说话时必须使用敬语（존댓말）。晚辈向长辈鞠躬问候，双手递接物品。吃饭时等长辈先动筷，饮酒时侧身避开长辈视线。",
+      facts: ["韩国有专门的敬语体系", "双手递接物品是基本礼仪", "吃饭时等长辈先动筷"],
+      xpReward: 15
+    },
+    {
+      id: "culture_es_001",
+      language: "es",
+      category: "customs",
+      title: "西班牙弗拉门戈",
+      icon: "💃",
+      readTime: 4,
+      content: "弗拉门戈（Flamenco）是西班牙安达卢西亚地区的传统艺术形式，融合歌舞乐为一体。它起源于15世纪吉卜赛人、摩尔人和犹太人的文化交融。弗拉门戈不仅是舞蹈，更是一种情感表达方式，代表着热情、悲伤与自由。",
+      facts: ["弗拉门戈2010年被列入人类非物质文化遗产", "起源于安达卢西亚地区", "经典伴奏乐器是吉他"],
+      xpReward: 20
+    },
+    {
+      id: "culture_es_002",
+      language: "es",
+      category: "food",
+      title: "西班牙海鲜饭",
+      icon: "🥘",
+      readTime: 3,
+      content: "海鲜饭（Paella）是西班牙瓦伦西亚地区的名菜，也是西班牙最具代表性的美食之一。传统海鲜饭用宽底平底锅烹制，以藏红花染色的米饭为基底，加入鸡肉、兔肉、海鲜或蔬菜。",
+      facts: ["Paella 源自瓦伦西亚", "传统上星期日家庭聚餐食用", "用藏红花给米饭上色"],
+      xpReward: 15
+    },
+    {
+      id: "culture_ru_001",
+      language: "ru",
+      category: "customs",
+      title: "俄罗斯套娃",
+      icon: "🪆",
+      readTime: 3,
+      content: "俄罗斯套娃（Матрёшка）是俄罗斯最著名的民间工艺品之一。通常由木材制成，由多个空心娃娃嵌套而成，最传统的图案是身穿民族服装的女性形象。套娃最早出现在19世纪末，如今已成为俄罗斯文化的象征。",
+      facts: ["套娃最早出现在1890年代", "传统套娃有5-7个", "每个套娃都是手工绘制"],
+      xpReward: 15
+    },
+    {
+      id: "culture_ru_002",
+      language: "ru",
+      category: "food",
+      title: "俄罗斯茶文化",
+      icon: "☕",
+      readTime: 3,
+      content: "俄罗斯人热爱喝茶，茶文化深深融入日常生活。俄罗斯人喜欢在茶中加入果酱或蜂蜜，而不是牛奶。传统的俄罗斯茶具是茶炊（самовар），一种用炭火加热的大茶壶。茶通常搭配甜点或三明治一起享用。",
+      facts: ["俄罗斯是世界最大茶叶进口国之一", "茶炊是俄罗斯传统茶具", "俄罗斯人偏爱红茶"],
+      xpReward: 15
+    },
+    {
+      id: "culture_de_001",
+      language: "de",
+      category: "customs",
+      title: "德国啤酒文化",
+      icon: "🍺",
+      readTime: 4,
+      content: "德国啤酒文化历史悠久，1516年颁布的《啤酒纯酿法》（Reinheitsgebot）规定啤酒只能使用水、大麦和啤酒花酿造。德国有超过1500种啤酒，每个地区都有自己的特色。慕尼黑啤酒节（Oktoberfest）是世界上最大的民间节日。",
+      facts: ["《啤酒纯酿法》是世界上最古老的食品法规之一", "德国有1300多家啤酒厂", "慕尼黑啤酒节每年吸引600万游客"],
+      xpReward: 20
+    },
+    {
+      id: "culture_fr_001",
+      language: "fr",
+      category: "food",
+      title: "法国可颂面包",
+      icon: "🥐",
+      readTime: 3,
+      content: "可颂（Croissant）是法国最具代表性的糕点之一，以其层层酥脆的黄油面团闻名。虽然其新月形状源自奥地利，但法国将其发扬光大。优质可颂应该有明显的蜂窝状内部结构，外层金黄酥脆，内层柔软蓬松。",
+      facts: ["可颂源自奥地利维也纳", "正宗可颂用大量黄油制作", "法国人早餐常配咖啡食用"],
+      xpReward: 15
+    },
+    {
+      id: "culture_it_001",
+      language: "it",
+      category: "food",
+      title: "意大利披萨起源",
+      icon: "🍕",
+      readTime: 4,
+      content: "披萨起源于意大利那不勒斯，最初是穷人的食物。1889年，为玛格丽特王后制作的披萨（番茄、马苏里拉奶酪、罗勒）以意大利国旗三色命名，成为经典。正宗那不勒斯披萨必须使用特定产地的食材，并在高温石炉中烘烤。",
+      facts: ["那不勒斯披萨被UNESCO列入非物质文化遗产", "正宗披萨只用番茄、奶酪、罗勒", "必须在485°C高温下烘烤60-90秒"],
+      xpReward: 20
+    },
+    {
+      id: "culture_pt_001",
+      language: "pt",
+      category: "food",
+      title: "葡式蛋挞",
+      icon: "🥧",
+      readTime: 3,
+      content: "葡式蛋挞（Pastel de Nata）是葡萄牙最著名的甜点，起源于里斯本贝伦区的热罗尼莫斯修道院。18世纪修女们用蛋白浆洗衣服，蛋黄则用来做糕点。贝伦蛋挞店（Pastéis de Belém）自1837年开始售卖，至今仍用秘方制作。",
+      facts: [" originated in Belém, Lisbon", "使用蛋黄和焦糖化糖皮", "贝伦店至今仍用1837年秘方"],
+      xpReward: 15
+    },
+    {
+      id: "culture_yue_001",
+      language: "yue",
+      category: "food",
+      title: "广式早茶文化",
+      icon: "🫖",
+      readTime: 4,
+      content: "广式早茶是粤菜文化的重要组成部分，「一盅两件」（一壶茶、两笼点心）是老广的生活方式。经典点心包括虾饺、烧卖、叉烧包、蛋挞、凤爪等。茶楼不仅是用餐场所，更是社交空间，老人家常在茶楼「叹茶」聊天。",
+      facts: ["「叹茶」意为享受品茶时光", "虾饺是早茶「四大天王」之一", "传统茶楼有推车叫卖点心的习俗"],
+      xpReward: 20
+    },
     ];
     await db.cultureArticles.bulkAdd(baseArticles);
   }
@@ -592,6 +833,246 @@ async function seedVideoLessons() {
     { id: 'video_006', language: 'ja', category: 'daily', title: '问路', duration: 30, description: '在日本问路', thumbnail: '🗾', dialogue: [{ speaker: 'user', text: 'すみません、駅はどこですか。（请问，车站在哪里？）' }, { speaker: 'local', text: 'まっすぐ行って、二つ目の信号を右に曲がってください。（直走，在第二个红绿灯右转。）' }, { speaker: 'user', text: 'ありがとうございます！（谢谢！）' }], xpReward: 20 },
     { id: 'video_007', language: 'en', category: 'business', title: '商务会议开场', duration: 30, description: '商务会议中的开场白', thumbnail: '💼', dialogue: [{ speaker: 'host', text: 'Thank you all for coming. Let us get started with today is agenda.' }, { speaker: 'user', text: 'Before we begin, could I share the updated report?' }, { speaker: 'host', text: 'Of course, please go ahead.' }], xpReward: 25 },
     { id: 'video_008', language: 'en', category: 'social', weekIndex: -1, title: '约会邀请', duration: 25, description: '邀请朋友出去玩的表达', thumbnail: '💬', dialogue: [{ speaker: 'user', text: 'Hey, are you free this Saturday?' }, { speaker: 'friend', text: 'Yes, I do not have any plans. Why do you ask?' }, { speaker: 'user', text: 'Would you like to check out that new cafe downtown?' }], xpReward: 20 },
+    {
+      id: "video_ko_001",
+      language: "ko",
+      category: "daily",
+      title: "韩国便利店购物",
+      duration: 30,
+      description: "在韩国便利店的对话",
+      thumbnail: "🏪",
+      dialogue: [
+        {
+          speaker: "clerk",
+          text: "어서 오세요!"
+        },
+        {
+          speaker: "user",
+          text: "안녕하세요. 이 김밥 하나 주세요."
+        },
+        {
+          speaker: "clerk",
+          text: "네, 여기 있습니다. 봉투 필요하세요?"
+        }
+      ],
+      xpReward: 20
+    },
+    {
+      id: "video_ko_002",
+      language: "ko",
+      category: "daily",
+      title: "韩国问路",
+      duration: 30,
+      description: "在韩国问路",
+      thumbnail: "🗾",
+      dialogue: [
+        {
+          speaker: "user",
+          text: "실례합니다, 지하철역은 어디에 있어요?"
+        },
+        {
+          speaker: "local",
+          text: "저기 사거리에서 왼쪽으로 가세요."
+        },
+        {
+          speaker: "user",
+          text: "감사합니다!"
+        }
+      ],
+      xpReward: 20
+    },
+    {
+      id: "video_es_001",
+      language: "es",
+      category: "daily",
+      title: "西班牙餐厅点餐",
+      duration: 30,
+      description: "在西班牙餐厅点菜",
+      thumbnail: "🍽️",
+      dialogue: [
+        {
+          speaker: "waiter",
+          text: "Buenas noches. ¿Quieren beber algo?"
+        },
+        {
+          speaker: "user",
+          text: "Una sangria, por favor."
+        },
+        {
+          speaker: "waiter",
+          text: "Muy bien. ¿Ya saben qué van a comer?"
+        }
+      ],
+      xpReward: 20
+    },
+    {
+      id: "video_es_002",
+      language: "es",
+      category: "daily",
+      title: "西班牙问路",
+      duration: 30,
+      description: "在西班牙问路",
+      thumbnail: "🗺️",
+      dialogue: [
+        {
+          speaker: "user",
+          text: "Perdone, ¿dónde está la estación de metro?"
+        },
+        {
+          speaker: "local",
+          text: "Siga recto y gire a la izquierda."
+        },
+        {
+          speaker: "user",
+          text: "Muchas gracias."
+        }
+      ],
+      xpReward: 20
+    },
+    {
+      id: "video_ru_001",
+      language: "ru",
+      category: "daily",
+      title: "俄罗斯餐厅点餐",
+      duration: 30,
+      description: "在俄罗斯餐厅点菜",
+      thumbnail: "🥣",
+      dialogue: [
+        {
+          speaker: "waiter",
+          text: "Добрый вечер! Что будете заказывать?"
+        },
+        {
+          speaker: "user",
+          text: "Борщ, пожалуйста."
+        },
+        {
+          speaker: "waiter",
+          text: "Отличный выбор. А на второе?"
+        }
+      ],
+      xpReward: 20
+    },
+    {
+      id: "video_de_001",
+      language: "de",
+      category: "daily",
+      title: "德国餐厅点餐",
+      duration: 30,
+      description: "在德国餐厅点菜",
+      thumbnail: "🥨",
+      dialogue: [
+        {
+          speaker: "waiter",
+          text: "Guten Abend! Was darf es sein?"
+        },
+        {
+          speaker: "user",
+          text: "Ich nehme die Schnitzel mit Pommes."
+        },
+        {
+          speaker: "waiter",
+          text: "Möchten Sie dazu ein Bier?"
+        }
+      ],
+      xpReward: 20
+    },
+    {
+      id: "video_fr_001",
+      language: "fr",
+      category: "daily",
+      title: "法国餐厅点餐",
+      duration: 30,
+      description: "在法国餐厅点菜",
+      thumbnail: "🥖",
+      dialogue: [
+        {
+          speaker: "waiter",
+          text: "Bonsoir. Vous avez choisi?"
+        },
+        {
+          speaker: "user",
+          text: "Je voudrais le coq au vin, s'il vous plaît."
+        },
+        {
+          speaker: "waiter",
+          text: "Excellent choix. Et comme boisson?"
+        }
+      ],
+      xpReward: 20
+    },
+    {
+      id: "video_it_001",
+      language: "it",
+      category: "daily",
+      title: "意大利餐厅点餐",
+      duration: 30,
+      description: "在意大利餐厅点菜",
+      thumbnail: "🍝",
+      dialogue: [
+        {
+          speaker: "waiter",
+          text: "Buonasera. Cosa desidera?"
+        },
+        {
+          speaker: "user",
+          text: "Vorrei gli spaghetti alla carbonara."
+        },
+        {
+          speaker: "waiter",
+          text: "Perfetto. Da bere?"
+        }
+      ],
+      xpReward: 20
+    },
+    {
+      id: "video_pt_001",
+      language: "pt",
+      category: "daily",
+      title: "葡萄牙餐厅点餐",
+      duration: 30,
+      description: "在葡萄牙餐厅点菜",
+      thumbnail: "🐟",
+      dialogue: [
+        {
+          speaker: "waiter",
+          text: "Boa noite. O que vai querer?"
+        },
+        {
+          speaker: "user",
+          text: "Quero o bacalhau à brás, por favor."
+        },
+        {
+          speaker: "waiter",
+          text: "Excelente escolha. E para beber?"
+        }
+      ],
+      xpReward: 20
+    },
+    {
+      id: "video_yue_001",
+      language: "yue",
+      category: "daily",
+      title: "香港茶餐厅",
+      duration: 30,
+      description: "在香港茶餐厅点餐",
+      thumbnail: "🍜",
+      dialogue: [
+        {
+          speaker: "waiter",
+          text: "先生，饮咩茶呀？"
+        },
+        {
+          speaker: "user",
+          text: "普洱啦。有咩推介呀？"
+        },
+        {
+          speaker: "waiter",
+          text: "今日例牌叉烧饭好正㗎！"
+        }
+      ],
+      xpReward: 20
+    },
     ];
     await db.videoLessons.bulkAdd(baseVideos);
   }

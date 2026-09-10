@@ -52,6 +52,329 @@ const SPELLING_WORDS = {
       { word: 'りょこう', meaning: '旅行', hint: 'りょ-う' },
     ],
   },
+  "ko": {
+      beginner: [
+        {
+          word: "안녕하세요",
+          meaning: "你好",
+          hint: "안녕-세요"
+        },
+        {
+          word: "감사합니다",
+          meaning: "谢谢",
+          hint: "감사-합니다"
+        },
+        {
+          word: "사랑해요",
+          meaning: "我爱你",
+          hint: "사랑-해요"
+        },
+        {
+          word: "친구",
+          meaning: "朋友",
+          hint: "친-구"
+        },
+        {
+          word: "물",
+          meaning: "水",
+          hint: "물"
+        }
+      ],
+      intermediate: [
+        {
+          word: "학교",
+          meaning: "学校",
+          hint: "학-교"
+        },
+        {
+          word: "커피",
+          meaning: "咖啡",
+          hint: "커-피"
+        },
+        {
+          word: "여행",
+          meaning: "旅行",
+          hint: "여-행"
+        }
+      ]
+    },
+  "es": {
+      beginner: [
+        {
+          word: "hola",
+          meaning: "你好",
+          hint: "h-la"
+        },
+        {
+          word: "gracias",
+          meaning: "谢谢",
+          hint: "gra-cias"
+        },
+        {
+          word: "amigo",
+          meaning: "朋友",
+          hint: "a-igo"
+        },
+        {
+          word: "agua",
+          meaning: "水",
+          hint: "a-gua"
+        },
+        {
+          word: "casa",
+          meaning: "房子",
+          hint: "ca-sa"
+        }
+      ],
+      intermediate: [
+        {
+          word: "restaurante",
+          meaning: "餐厅",
+          hint: "restau-ante"
+        },
+        {
+          word: "biblioteca",
+          meaning: "图书馆",
+          hint: "biblio-eca"
+        },
+        {
+          word: "hospital",
+          meaning: "医院",
+          hint: "hospi-al"
+        }
+      ]
+    },
+  "ru": {
+      beginner: [
+        {
+          word: "привет",
+          meaning: "你好",
+          hint: "при-ет"
+        },
+        {
+          word: "спасибо",
+          meaning: "谢谢",
+          hint: "спа-сибо"
+        },
+        {
+          word: "друг",
+          meaning: "朋友",
+          hint: "друг"
+        },
+        {
+          word: "вода",
+          meaning: "水",
+          hint: "во-да"
+        },
+        {
+          word: "дом",
+          meaning: "房子",
+          hint: "дом"
+        }
+      ],
+      intermediate: [
+        {
+          word: "ресторан",
+          meaning: "餐厅",
+          hint: "ресто-ан"
+        },
+        {
+          word: "библиотека",
+          meaning: "图书馆",
+          hint: "библио-ека"
+        },
+        {
+          word: "больница",
+          meaning: "医院",
+          hint: "боль-ица"
+        }
+      ]
+    },
+  "de": {
+      beginner: [
+        {
+          word: "hallo",
+          meaning: "你好",
+          hint: "ha-lo"
+        },
+        {
+          word: "danke",
+          meaning: "谢谢",
+          hint: "da-ke"
+        },
+        {
+          word: "freund",
+          meaning: "朋友",
+          hint: "fre-nd"
+        },
+        {
+          word: "wasser",
+          meaning: "水",
+          hint: "wa-ser"
+        },
+        {
+          word: "haus",
+          meaning: "房子",
+          hint: "h-aus"
+        }
+      ],
+      intermediate: [
+        {
+          word: "restaurant",
+          meaning: "餐厅",
+          hint: "restau-ant"
+        },
+        {
+          word: "bibliothek",
+          meaning: "图书馆",
+          hint: "biblio-thek"
+        },
+        {
+          word: "krankenhaus",
+          meaning: "医院",
+          hint: "kran-ken-haus"
+        }
+      ]
+    },
+  "fr": {
+      beginner: [
+        {
+          word: "bonjour",
+          meaning: "你好",
+          hint: "bon-our"
+        },
+        {
+          word: "merci",
+          meaning: "谢谢",
+          hint: "mer-i"
+        },
+        {
+          word: "ami",
+          meaning: "朋友",
+          hint: "a-i"
+        },
+        {
+          word: "eau",
+          meaning: "水",
+          hint: "eau"
+        },
+        {
+          word: "maison",
+          meaning: "房子",
+          hint: "mai-son"
+        }
+      ],
+      intermediate: [
+        {
+          word: "restaurant",
+          meaning: "餐厅",
+          hint: "restau-ant"
+        },
+        {
+          word: "bibliothèque",
+          meaning: "图书馆",
+          hint: "biblio-thèque"
+        },
+        {
+          word: "hôpital",
+          meaning: "医院",
+          hint: "hôpi-al"
+        }
+      ]
+    },
+  "it": {
+      beginner: [
+        {
+          word: "ciao",
+          meaning: "你好",
+          hint: "ci-o"
+        },
+        {
+          word: "grazie",
+          meaning: "谢谢",
+          hint: "gra-zie"
+        },
+        {
+          word: "amico",
+          meaning: "朋友",
+          hint: "a-ico"
+        },
+        {
+          word: "acqua",
+          meaning: "水",
+          hint: "ac-qua"
+        },
+        {
+          word: "casa",
+          meaning: "房子",
+          hint: "ca-sa"
+        }
+      ],
+      intermediate: [
+        {
+          word: "ristorante",
+          meaning: "餐厅",
+          hint: "risto-ante"
+        },
+        {
+          word: "biblioteca",
+          meaning: "图书馆",
+          hint: "biblio-eca"
+        },
+        {
+          word: "ospedale",
+          meaning: "医院",
+          hint: "ospe-ale"
+        }
+      ]
+    },
+  "pt": {
+      beginner: [
+        {
+          word: "olá",
+          meaning: "你好",
+          hint: "o-á"
+        },
+        {
+          word: "obrigado",
+          meaning: "谢谢",
+          hint: "obri-ado"
+        },
+        {
+          word: "amigo",
+          meaning: "朋友",
+          hint: "a-igo"
+        },
+        {
+          word: "água",
+          meaning: "水",
+          hint: "á-gua"
+        },
+        {
+          word: "casa",
+          meaning: "房子",
+          hint: "ca-sa"
+        }
+      ],
+      intermediate: [
+        {
+          word: "restaurante",
+          meaning: "餐厅",
+          hint: "restau-ante"
+        },
+        {
+          word: "biblioteca",
+          meaning: "图书馆",
+          hint: "biblio-eca"
+        },
+        {
+          word: "hospital",
+          meaning: "医院",
+          hint: "hospi-al"
+        }
+      ]
+    },
+  },
 };
 
 const SENTENCE_SELECTION_DATA = {
@@ -84,6 +407,259 @@ const SENTENCE_SELECTION_DATA = {
       { sentence: '雨___降っています。（正在下雨）', options: ['が', 'は', 'を', 'に'], correct: 'が', meaning: '正在下雨。' },
       { sentence: '駅___行きます。（去车站）', options: ['へ', 'は', 'が', 'を'], correct: 'へ', meaning: '去车站。' },
     ],
+  },
+  "ko": {
+      beginner: [
+        {
+          sentence: "___학생입니다。（我是学生）",
+          options: ["제", "너", "그", "그녀"],
+          correct: "제",
+          meaning: "我是学生。"
+        },
+        {
+          sentence: "이것___책입니다。（这是书）",
+          options: ["은", "이", "를", "에"],
+          correct: "은",
+          meaning: "这是书。"
+        },
+        {
+          sentence: "사과를___。（吃苹果）",
+          options: ["먹다", "마시다", "보다", "듣다"],
+          correct: "먹다",
+          meaning: "吃苹果。"
+        }
+      ],
+      intermediate: [
+        {
+          sentence: "비가___。（正在下雨）",
+          options: ["와요", "가요", "와서", "오고"],
+          correct: "와요",
+          meaning: "正在下雨。"
+        },
+        {
+          sentence: "학교___가요。（去学校）",
+          options: ["에", "에서", "을", "와"],
+          correct: "에",
+          meaning: "去学校。"
+        }
+      ]
+    },
+  "es": {
+      beginner: [
+        {
+          sentence: "___días!（早上好）",
+          options: ["Buenos", "Buenas", "Buen", "Bue"],
+          correct: "Buenos",
+          meaning: "早上好！"
+        },
+        {
+          sentence: "Yo ___ estudiante.（我是学生）",
+          options: ["soy", "es", "eres", "son"],
+          correct: "soy",
+          meaning: "我是学生。"
+        },
+        {
+          sentence: "Este es ___ libro.（这是一本书）",
+          options: ["un", "una", "el", "la"],
+          correct: "un",
+          meaning: "这是一本书。"
+        }
+      ],
+      intermediate: [
+        {
+          sentence: "¿___ está el baño?（洗手间在哪里？）",
+          options: ["Dónde", "Qué", "Quién", "Cuándo"],
+          correct: "Dónde",
+          meaning: "洗手间在哪里？"
+        },
+        {
+          sentence: "Me gustaría ___ café.（我想要咖啡）",
+          options: ["un", "una", "unos", "unas"],
+          correct: "un",
+          meaning: "我想要咖啡。"
+        }
+      ]
+    },
+  "ru": {
+      beginner: [
+        {
+          sentence: "___ утро!（早上好）",
+          options: ["Доброе", "Добрый", "Добрая", "Добрые"],
+          correct: "Доброе",
+          meaning: "早上好！"
+        },
+        {
+          sentence: "Я ___ студент.（我是学生）",
+          options: ["-", "есть", "это", "быть"],
+          correct: "-",
+          meaning: "我是学生。"
+        },
+        {
+          sentence: "Это ___ книга.（这是一本书）",
+          options: ["-", "один", "одна", "одно"],
+          correct: "-",
+          meaning: "这是一本书。"
+        }
+      ],
+      intermediate: [
+        {
+          sentence: "___ туалет?（洗手间在哪里？）",
+          options: ["Где", "Кто", "Что", "Когда"],
+          correct: "Где",
+          meaning: "洗手间在哪里？"
+        },
+        {
+          sentence: "Я хочу ___ кофе.（我想要咖啡）",
+          options: ["-", "один", "одну", "одного"],
+          correct: "-",
+          meaning: "我想要咖啡。"
+        }
+      ]
+    },
+  "de": {
+      beginner: [
+        {
+          sentence: "___ Morgen!（早上好）",
+          options: ["Guten", "Gute", "Gut", "Guter"],
+          correct: "Guten",
+          meaning: "早上好！"
+        },
+        {
+          sentence: "Ich ___ Student.（我是学生）",
+          options: ["bin", "ist", "sind", "bist"],
+          correct: "bin",
+          meaning: "我是学生。"
+        },
+        {
+          sentence: "Das ist ___ Buch.（这是一本书）",
+          options: ["ein", "eine", "einer", "einen"],
+          correct: "ein",
+          meaning: "这是一本书。"
+        }
+      ],
+      intermediate: [
+        {
+          sentence: "___ ist die Toilette?（洗手间在哪里？）",
+          options: ["Wo", "Was", "Wer", "Wann"],
+          correct: "Wo",
+          meaning: "洗手间在哪里？"
+        },
+        {
+          sentence: "Ich möchte ___ Kaffee.（我想要咖啡）",
+          options: ["einen", "eine", "ein", "einer"],
+          correct: "einen",
+          meaning: "我想要咖啡。"
+        }
+      ]
+    },
+  "fr": {
+      beginner: [
+        {
+          sentence: "___ jour!（早上好）",
+          options: ["Bon", "Bonne", "Beau", "Bons"],
+          correct: "Bon",
+          meaning: "早上好！"
+        },
+        {
+          sentence: "Je ___ étudiant.（我是学生）",
+          options: ["suis", "es", "est", "sommes"],
+          correct: "suis",
+          meaning: "我是学生。"
+        },
+        {
+          sentence: "C'est ___ livre.（这是一本书）",
+          options: ["un", "une", "le", "la"],
+          correct: "un",
+          meaning: "这是一本书。"
+        }
+      ],
+      intermediate: [
+        {
+          sentence: "___ sont les toilettes?（洗手间在哪里？）",
+          options: ["Où", "Qu'est-ce que", "Qui", "Quand"],
+          correct: "Où",
+          meaning: "洗手间在哪里？"
+        },
+        {
+          sentence: "Je voudrais ___ café.（我想要咖啡）",
+          options: ["un", "une", "du", "de la"],
+          correct: "un",
+          meaning: "我想要咖啡。"
+        }
+      ]
+    },
+  "it": {
+      beginner: [
+        {
+          sentence: "___ giorno!（早上好）",
+          options: ["Buon", "Buona", "Bella", "Bel"],
+          correct: "Buon",
+          meaning: "早上好！"
+        },
+        {
+          sentence: "Io ___ studente.（我是学生）",
+          options: ["sono", "è", "sei", "siamo"],
+          correct: "sono",
+          meaning: "我是学生。"
+        },
+        {
+          sentence: "Questo è ___ libro.（这是一本书）",
+          options: ["un", "una", "uno", "un'"],
+          correct: "un",
+          meaning: "这是一本书。"
+        }
+      ],
+      intermediate: [
+        {
+          sentence: "___ è il bagno?（洗手间在哪里？）",
+          options: ["Dov'è", "Che", "Chi", "Quando"],
+          correct: "Dov'è",
+          meaning: "洗手间在哪里？"
+        },
+        {
+          sentence: "Vorrei ___ caffè.（我想要咖啡）",
+          options: ["un", "una", "uno", "un'"],
+          correct: "un",
+          meaning: "我想要咖啡。"
+        }
+      ]
+    },
+  "pt": {
+      beginner: [
+        {
+          sentence: "___ dia!（早上好）",
+          options: ["Bom", "Boa", "Bons", "Boas"],
+          correct: "Bom",
+          meaning: "早上好！"
+        },
+        {
+          sentence: "Eu ___ estudante.（我是学生）",
+          options: ["sou", "é", "és", "somos"],
+          correct: "sou",
+          meaning: "我是学生。"
+        },
+        {
+          sentence: "Este é ___ livro.（这是一本书）",
+          options: ["um", "uma", "uns", "umas"],
+          correct: "um",
+          meaning: "这是一本书。"
+        }
+      ],
+      intermediate: [
+        {
+          sentence: "___ fica o banheiro?（洗手间在哪里？）",
+          options: ["Onde", "O que", "Quem", "Quando"],
+          correct: "Onde",
+          meaning: "洗手间在哪里？"
+        },
+        {
+          sentence: "Eu gostaria de ___ café.（我想要咖啡）",
+          options: ["um", "uma", "uns", "umas"],
+          correct: "um",
+          meaning: "我想要咖啡。"
+        }
+      ]
+    },
   },
 };
 

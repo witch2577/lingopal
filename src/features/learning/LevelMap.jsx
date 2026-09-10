@@ -396,7 +396,8 @@ const LevelMap = ({ onStartLevel }) => {
               </div>
             </div>
           </div>
-        )}
+        );
+      })}
       </div>
       )}
     </div>

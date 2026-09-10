@@ -54,6 +54,14 @@ const ACHIEVEMENTS = [
   { id: 'night-owl',         title: '夜猫子',   desc: '在深夜完成学习',           icon: '🦉' },
   { id: 'early-bird',        title: '早起鸟',   desc: '在清晨完成学习',           icon: '🐦' },
   { id: 'translator-100',    title: '翻译高手', desc: '完成 100 次翻译',          icon: '🌐' },
+  // Drama achievements
+  { id: 'drama-beginner',    title: '初阶影迷', desc: '完成首次剧本阅读',         icon: '🎭' },
+  { id: 'drama-actor',       title: '台词大师', desc: '完成 3 次角色扮演',        icon: '🎬' },
+  { id: 'drama-master',      title: '剧情通',   desc: '剧情测验正确率≥80%',       icon: '🏆' },
+  // Music achievements
+  { id: 'music-beginner',    title: '初级歌迷', desc: '完成首次歌曲学习',         icon: '🎵' },
+  { id: 'music-lyricist',    title: '填词高手', desc: '完成 3 次填词挑战',        icon: '🎤' },
+  { id: 'music-liaison',     title: '连读大师', desc: '完成 3 次连读训练',        icon: '🎧' },
   // P2 achievements
   { id: 'social-butterfly',  title: '社交达人', desc: '添加 3 位好友',            icon: '👥' },
   { id: 'group-founder',     title: '小组长',   desc: '创建学习小组',             icon: '🏫' },
@@ -80,14 +88,20 @@ const THEMES = [
   { id: 'culture',  name: '文化拓展', color: '#8B5CF6', bg: 'from-purple-500 to-fuchsia-500' },
 ];
 
-// bottom nav items
+// bottom nav items (4 items: Home / Learning / Practice / Me)
 const NAV_ITEMS = [
-  { key: 'translation', label: '翻译', icon: 'translate' },
-  { key: 'learning',    label: '学习', icon: 'book-open' },
-  { key: 'oral',        label: '口语', icon: 'mic' },
-  { key: 'written',     label: '笔试', icon: 'type-text' },
-  { key: 'content',     label: '发现', icon: 'compass' },
-  { key: 'user',        label: '我的', icon: 'user' },
+  { key: 'home',      label: '首页', icon: 'home' },
+  { key: 'learning',  label: '学习', icon: 'book-open' },
+  { key: 'practice',  label: '练习', icon: 'zap' },
+  { key: 'user',      label: '我的', icon: 'user' },
+];
+
+// Practice sub-tabs
+const PRACTICE_TABS = [
+  { key: 'oral',     label: '口语',    icon: 'mic' },
+  { key: 'written',  label: '笔试',    icon: 'type-text' },
+  { key: 'drama',    label: '影视',    icon: 'film' },
+  { key: 'music',    label: '音乐',    icon: 'music' },
 ];
 
 // Oral module sub-tabs
@@ -357,6 +371,20 @@ const XP_SOURCES = {
   CULTURE_ARTICLE: { base: 15, label: '文化知识' },
   VIDEO_LESSON: { base: 20, label: '情景视频' },
   FRIEND_PK_WIN: { base: 30, label: 'PK胜利' },
+  // Drama & Music
+  DRAMA_READ: { base: 10, label: '剧本阅读' },
+  DRAMA_ROLEPLAY: { base: 15, label: '角色扮演' },
+  DRAMA_QUIZ: { base: 20, label: '剧情测验' },
+  SONG_LEARN: { base: 10, label: '歌曲学习' },
+  LYRICS_FILL: { base: 15, label: '填词挑战' },
+  LYRICS_LIAISON: { base: 10, label: '连读训练' },
+  // Link Import Learning Loop
+  IMPORT_WATCH: { base: 10, label: '视频观看学习' },
+  IMPORT_LISTEN: { base: 10, label: '听力学习' },
+  IMPORT_REPEAT: { base: 15, label: '跟读练习' },
+  IMPORT_QUIZ: { base: 20, label: '导入测验' },
+  IMPORT_FILL: { base: 15, label: '导入填词' },
+  IMPORT_LIAISON: { base: 10, label: '导入连读' },
 };
 
 // ---- Time ranges for comparison ----
@@ -427,14 +455,19 @@ function saveActiveWeek(weekIndex) {
   } catch (e) {}
 }
 
+// Learning languages: exclude auto and dialects (learning modules need concrete content)
+const LEARNING_LANGUAGES = LANGUAGES.filter(l => l.type !== 'auto' && l.type !== 'dialect');
+
 Object.assign(window, {
   LANGUAGES,
   LANGUAGE_MAP,
   DIALECT_CODES,
+  LEARNING_LANGUAGES,
   ACHIEVEMENTS,
   QUIZ_TYPES,
   THEMES,
   NAV_ITEMS,
+  PRACTICE_TABS,
   ORAL_TABS,
   WRITTEN_TABS,
   DIFFICULTY_LEVELS,

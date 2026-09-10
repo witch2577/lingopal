@@ -185,15 +185,16 @@ const OralTraining = () => {
   return (
     <div className="flex flex-col h-full">
       <div className="flex items-center gap-2 mb-3 overflow-x-auto hide-scrollbar">
-        {['en', 'ja', 'zh-CN'].map(lang => (
+        {LEARNING_LANGUAGES.map(lang => (
           <button
-            key={lang}
-            onClick={() => { setLanguage(lang); setCurrentIndex(0); setRecordedBlob(null); }}
+            key={lang.code}
+            onClick={() => { setLanguage(lang.code); setCurrentIndex(0); setRecordedBlob(null); }}
             className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all ${
-              language === lang ? 'bg-brand-gradient text-white shadow-md' : 'bg-slate-100 text-slate-600'
+              language === lang.code ? 'bg-brand-gradient text-white shadow-md' : 'bg-slate-100 text-slate-600'
             }`}
           >
-            {LANGUAGE_MAP[lang]?.name || lang}
+            {lang.flag} {lang.name}
+            {lang.type === 'beta' && <span className="ml-0.5 text-[9px] opacity-70">β</span>}
           </button>
         ))}
       </div>

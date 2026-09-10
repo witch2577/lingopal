@@ -426,6 +426,13 @@ const UserProfile = () => {
             <div className="text-[10px] opacity-80">{currentLevel.title}</div>
           </div>
         </div>
+
+        {/* Tier badge */}
+        {IS_SUPABASE_CONFIGURED && (
+          <div className="mt-3 flex items-center gap-2">
+            <TierBadge />
+          </div>
+        )}
       </Card>
 
       {/* 7-dimension profile summary */}
@@ -511,6 +518,9 @@ const UserProfile = () => {
         <OfflineStorageInfo />
       </Card>
 
+      {/* Quota status card (Supabase mode) */}
+      {IS_SUPABASE_CONFIGURED && <QuotaStatusCard />}
+
       {/* Settings list */}
       <Card padding="p-0">
         <button
@@ -543,9 +553,22 @@ const UserProfile = () => {
           <span className="flex-1 text-sm text-slate-700">我的收藏</span>
           <Icon name="chevron" size={16} className="text-slate-300" />
         </button>
+        {/* Admin entry - only visible to admins */}
+        {useAuthStore(s => s.isAdmin) && (
+          <button
+            onClick={() => window.openAdmin && window.openAdmin()}
+            className="w-full flex items-center gap-3 p-4 hover:bg-brand-50 transition-colors text-left border-b border-slate-100"
+          >
+            <div className="w-9 h-9 rounded-xl bg-brand-50 flex items-center justify-center text-brand-500">
+              <Icon name="shield" size={18} />
+            </div>
+            <span className="flex-1 text-sm text-brand-700 font-medium">管理后台</span>
+            <Icon name="chevron" size={16} className="text-brand-300" />
+          </button>
+        )}
         <button
           onClick={handleClearAllData}
-          className="w-full flex items-center gap-3 p-4 hover:bg-red-50 transition-colors text-left"
+          className="w-full flex items-center gap-3 p-4 hover:bg-red-50 transition-colors text-left border-b border-slate-100"
         >
           <div className="w-9 h-9 rounded-xl bg-red-50 flex items-center justify-center text-red-500">
             <Icon name="trash" size={18} />
@@ -553,6 +576,24 @@ const UserProfile = () => {
           <span className="flex-1 text-sm text-red-600">清除所有数据</span>
           <Icon name="chevron" size={16} className="text-red-300" />
         </button>
+        {/* Sign out (Supabase mode) */}
+        {IS_SUPABASE_CONFIGURED && (
+          <button
+            onClick={async () => {
+              if (confirm('确定要退出登录吗？')) {
+                await useAuthStore.getState().signOut();
+                useUIStore.getState().showNotification('已退出登录', 'info');
+              }
+            }}
+            className="w-full flex items-center gap-3 p-4 hover:bg-slate-50 transition-colors text-left"
+          >
+            <div className="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center text-slate-500">
+              <Icon name="log-out" size={18} />
+            </div>
+            <span className="flex-1 text-sm text-slate-600">退出登录</span>
+            <Icon name="chevron" size={16} className="text-slate-300" />
+          </button>
+        )}
       </Card>
 
       {/* Version info */}
@@ -723,4 +764,107 @@ const OfflineStorageInfo = () => {
   );
 };
 
-Object.assign(window, { UserProfile, PWASettingsItem, OfflineStorageInfo });
+// ========== Tier Badge ==========
+const TierBadge = () => {
+  const { supabaseProfile } = useAuthStore();
+  const tier = supabaseProfile?.tier || 'free';
+  const role = supabaseProfile?.role || 'user';
+
+  const tierColors = {
+    free: 'bg-slate-100 text-slate-600 border-slate-200',
+    pro: 'bg-amber-50 text-amber-600 border-amber-200',
+    enterprise: 'bg-brand-50 text-brand-600 border-brand-200',
+  };
+
+  const tierLabels = {
+    free: 'Free',
+    pro: 'Pro',
+    enterprise: 'Enterprise',
+  };
+
+  return (
+    <>
+      <span className={`text-xs px-2 py-1 rounded-full border font-medium ${tierColors[tier] || tierColors.free}`}>
+        {tierLabels[tier] || tier}
+      </span>
+      {role === 'admin' && (
+        <span className="text-xs px-2 py-1 rounded-full bg-brand-500 text-white font-medium">
+          管理员
+        </span>
+      )}
+    </>
+  );
+};
+
+// ========== Quota Status Card ==========
+const QuotaStatusCard = () => {
+  const quota = useAuthStore(s => s.getQuotaStatus?.() || null);
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    await useAuthStore.getState().refreshProfile();
+    setRefreshing(false);
+  };
+
+  if (!quota) {
+    return (
+      <Card padding="p-4">
+        <div className="flex items-center justify-between">
+          <h3 className="font-semibold text-slate-800 text-sm">今日配额</h3>
+          <button onClick={handleRefresh} className="text-xs text-brand-500">
+            {refreshing ? '刷新中...' : '刷新'}
+          </button>
+        </div>
+        <p className="text-xs text-slate-400 mt-2">加载中...</p>
+      </Card>
+    );
+  }
+
+  const items = [
+    { label: '翻译', used: quota.translation?.used || 0, limit: quota.translation?.limit || 50 },
+    { label: 'AI对话', used: quota.aiDialogue?.used || 0, limit: quota.aiDialogue?.limit || 20 },
+    { label: '语音合成', used: quota.aiTTS?.used || 0, limit: quota.aiTTS?.limit || 50 },
+    { label: 'OCR', used: quota.ocr?.used || 0, limit: quota.ocr?.limit || 20 },
+  ];
+
+  return (
+    <Card padding="p-4">
+      <div className="flex items-center justify-between mb-3">
+        <h3 className="font-semibold text-slate-800 text-sm flex items-center gap-2">
+          <Icon name="gauge" size={16} className="text-brand-500" />
+          今日配额
+        </h3>
+        <button onClick={handleRefresh} className="text-xs text-brand-500">
+          {refreshing ? '刷新中...' : '刷新'}
+        </button>
+      </div>
+      <div className="grid grid-cols-2 gap-3">
+        {items.map(item => {
+          const pct = item.limit > 0 ? (item.used / item.limit) * 100 : 0;
+          const isExhausted = item.used >= item.limit;
+          return (
+            <div key={item.label} className="bg-slate-50 rounded-xl p-3">
+              <div className="flex items-center justify-between mb-1.5">
+                <span className="text-xs text-slate-500">{item.label}</span>
+                <span className={`text-xs font-medium ${isExhausted ? 'text-red-500' : 'text-slate-700'}`}>
+                  {item.used}/{item.limit}
+                </span>
+              </div>
+              <div className="h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                <div
+                  className={`h-full rounded-full transition-all ${
+                    isExhausted ? 'bg-red-400' : pct > 80 ? 'bg-amber-400' : 'bg-emerald-400'
+                  }`}
+                  style={{ width: `${Math.min(pct, 100)}%` }}
+                />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </Card>
+  );
+};
+
+Object.assign(window, { UserProfile, PWASettingsItem, OfflineStorageInfo, TierBadge, QuotaStatusCard });

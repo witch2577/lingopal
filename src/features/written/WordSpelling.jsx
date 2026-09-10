@@ -208,17 +208,18 @@ const WordSpelling = () => {
         <Card className="flex flex-col gap-3">
           <h3 className="text-sm font-semibold text-slate-700">选择语言</h3>
           <div className="flex gap-2 flex-wrap">
-            {['en', 'ja'].map(code => (
+            {LEARNING_LANGUAGES.map(lang => (
               <button
-                key={code}
-                onClick={() => useWrittenStore.getState().setLanguage(code)}
+                key={lang.code}
+                onClick={() => useWrittenStore.getState().setLanguage(lang.code)}
                 className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all btn-press ${
-                  currentLanguage === code
+                  currentLanguage === lang.code
                     ? 'bg-brand-100 text-brand-700 ring-2 ring-brand-300'
                     : 'bg-slate-100 text-slate-600'
                 }`}
               >
-                {LANGUAGE_MAP[code]?.flag} {LANGUAGE_MAP[code]?.name}
+                {lang.flag} {lang.name}
+                {lang.type === 'beta' && <span className="ml-0.5 text-[9px] opacity-70">β</span>}
               </button>
             ))}
           </div>
