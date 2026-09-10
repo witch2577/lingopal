@@ -47,10 +47,14 @@ const Dashboard = () => {
         langMap[p.language].levels++;
       });
 
+      // FIX(数据页白屏): QUIZ_DATA / getAllLevels 定义在 learning 懒加载组的 quizData.jsx，
+      // 用户未进过学习页直接开数据页时会 ReferenceError。未加载时用空表降级。
       const totalPerLang = {};
-      Object.keys(QUIZ_DATA).forEach(code => {
-        totalPerLang[code] = getAllLevels(code).length;
-      });
+      if (typeof QUIZ_DATA !== 'undefined' && typeof getAllLevels !== 'undefined') {
+        Object.keys(QUIZ_DATA).forEach(code => {
+          totalPerLang[code] = getAllLevels(code).length;
+        });
+      }
 
       // Load daily reports
       const reports = await getDailyReports(userId, reportRange);
@@ -64,7 +68,17 @@ const Dashboard = () => {
         setLoaded(true);
       }
     };
-    load();
+    // FIX: 数据加载失败（IndexedDB 异常等）不再以未处理 Promise 拒绝挂死在骨架屏，
+    // 降级为空数据让页面渲染空态
+    load().catch(e => {
+      console.warn('[Dashboard] 数据加载失败，降级为空数据:', e);
+      if (mounted) {
+        setDashboardData({ logs: [], progress: [], langMap: {}, totalPerLang: {} });
+        setDailyReports([]);
+        setTodayReport(null);
+        setLoaded(true);
+      }
+    });
     return () => { mounted = false; };
   }, [userId, reportRange]);
 
@@ -246,7 +260,9 @@ const Dashboard = () => {
 
     const chart = echarts.init(radarRef.current);
     const completed = dashboardData.progress.filter(p => p.status === 'completed').length;
-    const total = getAllLevels(currentLanguage).length || 1;
+    // FIX: getAllLevels 属于 learning 懒加载组，未加载时降级为 0（|| 1 兜底避免除零）
+    const total =
+      (typeof getAllLevels !== 'undefined' ? getAllLevels(currentLanguage).length : 0) || 1;
     const baseScore = Math.min(90, Math.round((completed / total) * 100) + 20);
 
     // Apply weakAreas penalty from profile

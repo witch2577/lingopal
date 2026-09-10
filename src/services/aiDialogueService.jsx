@@ -352,13 +352,13 @@ const AIDialogueService = {
       return "I see. Let's think of another way then.";
     }
 
-    if (/谢谢|thanks|thank you|ありがと|감사|gracias|merci|danke|grazie|obrigado|spasibo)/.test(input)) {
+    if (/谢谢|thanks|thank you|ありがと|감사|gracias|merci|danke|grazie|obrigado|spasibo/.test(input)) {
       if (language === 'ja') return 'どういたしまして。他に何かありますか？';
       if (language === 'zh-CN') return '不客气！还有什么我可以帮你的吗？';
       return "You're welcome! Anything else I can help with?";
     }
 
-    if (/再见|拜拜|bye|goodbye|さようなら|잘 가|adios|au revoir|arrivederci|adeus|do svidaniya)/.test(input)) {
+    if (/再见|拜拜|bye|goodbye|さようなら|잘 가|adios|au revoir|arrivederci|adeus|do svidaniya/.test(input)) {
       if (language === 'ja') return 'さようなら！また練習しましょう。';
       if (language === 'zh-CN') return '再见！继续加油练习，你会越来越棒的！';
       return 'Goodbye! Keep practicing and you\'ll get better!';

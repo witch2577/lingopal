@@ -104,7 +104,10 @@ const LearningPage = () => {
           >
             {view === 'map' && (
               <>
-                <ContentUpdater />
+                {/* FIX(学习页白屏): ContentUpdater 属于 content 懒加载组，学习页首次打开时
+                    该组可能尚未加载，裸引用会抛 ReferenceError: ContentUpdater is not defined。
+                    content 组加载完成前先不渲染该组件，不再阻塞整个学习页。 */}
+                {window.ContentUpdater ? <ContentUpdater /> : null}
                 <LevelMap onStartLevel={handleStartLevel} />
               </>
             )}

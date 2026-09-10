@@ -798,7 +798,18 @@ const TierBadge = () => {
 
 // ========== Quota Status Card ==========
 const QuotaStatusCard = () => {
-  const quota = useAuthStore(s => s.getQuotaStatus?.() || null);
+  // FIX(React error #185 白屏): 原写法 useAuthStore(s => s.getQuotaStatus?.() || null)
+  // 在 selector 内调用 getQuotaStatus()，它每次都返回全新对象字面量，
+  // useSyncExternalStore 判定快照变化触发无限重渲染直至崩溃。
+  // 改为订阅稳定的状态引用，用 useMemo 派生配额对象。
+  const getQuotaStatus = useAuthStore(s => s.getQuotaStatus);
+  const tierConfig = useAuthStore(s => s.tierConfig);
+  const dailyUsage = useAuthStore(s => s.dailyUsage);
+  const supabaseProfile = useAuthStore(s => s.supabaseProfile);
+  const quota = React.useMemo(
+    () => (typeof getQuotaStatus === 'function' ? getQuotaStatus() : null),
+    [getQuotaStatus, tierConfig, dailyUsage, supabaseProfile]
+  );
   const [refreshing, setRefreshing] = React.useState(false);
 
   const handleRefresh = async () => {

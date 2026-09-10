@@ -374,7 +374,6 @@ const SPELLING_WORDS = {
         }
       ]
     },
-  },
 };
 
 const SENTENCE_SELECTION_DATA = {
@@ -660,7 +659,6 @@ const SENTENCE_SELECTION_DATA = {
         }
       ]
     },
-  },
 };
 
 // Text dialogue scenarios for written practice
