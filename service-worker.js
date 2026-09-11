@@ -7,7 +7,7 @@
  * - 图片资源：Cache First
  */
 
-const CACHE_VERSION = 'lingopal-v10.2.0';
+const CACHE_VERSION = 'lingopal-v10.3.0';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const CDN_CACHE = `${CACHE_VERSION}-cdn`;
 const IMAGE_CACHE = `${CACHE_VERSION}-images`;

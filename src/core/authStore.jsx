@@ -358,14 +358,33 @@ const useAuthStore = create((set, get) => ({
       throw new Error('权限不足');
     }
 
-    const { data, error } = await sb
+    // Fix: profiles 与 daily_usage 无外键，PostgREST 嵌套查询会报
+    // "Could not find a relationship ... in the schema cache"。
+    // 改为两次独立查询后内存合并，数据形状与原嵌套查询保持兼容（数组）。
+    const { data: profiles, error: pError } = await sb
       .from('profiles')
-      .select('*, daily_usage(*)')
+      .select('*')
       .order('created_at', { ascending: false })
       .limit(200);
 
-    if (error) throw error;
-    return data || [];
+    if (pError) throw pError;
+    if (!profiles || profiles.length === 0) return [];
+
+    const userIds = profiles.map((p) => p.id);
+    const { data: usages, error: uError } = await sb
+      .from('daily_usage')
+      .select('*')
+      .in('user_id', userIds);
+
+    if (uError) throw uError;
+
+    const usageMap = new Map();
+    (usages || []).forEach((u) => usageMap.set(u.user_id, u));
+    const merged = profiles.map((p) => ({
+      ...p,
+      daily_usage: usageMap.has(p.id) ? [usageMap.get(p.id)] : [],
+    }));
+    return merged;
   },
 
   // Set user tier (admin only)
