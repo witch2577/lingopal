@@ -4,6 +4,7 @@
 const UserProfile = () => {
   const { profile, userId, updateProfile } = useUserStore();
   const [isEditing, setIsEditing] = useState(false);
+  const [subPage, setSubPage] = useState(null); // null | 'language' | 'plan' | 'favorites'
 
   // Form state includes all 7 dimensions + legacy fields
   const [form, setForm] = useState({
@@ -59,6 +60,10 @@ const UserProfile = () => {
   const streakDays = useUserStore(s => s.streakDays);
   const totalXP = useUserStore(s => s.totalXP);
   const achievements = useUserStore(s => s.achievements);
+  // 注意：isAdmin 订阅必须放在组件顶部 Hook 区。
+  // 原先写在设置列表 JSX 条件里（useAuthStore(s => s.isAdmin) && ...），
+  // 子页提前 return 会跳过该 JSX 导致 Hook 数量变化，触发 React #300 崩溃。
+  const isAdmin = useAuthStore(s => s.isAdmin);
   const currentLevel = getLevelByXP(totalXP);
   const xpProgress = getXPProgress(totalXP);
   const [oralRecords, setOralRecords] = useState([]);
@@ -146,6 +151,17 @@ const UserProfile = () => {
       </div>
     );
   };
+
+  // Render sub-pages
+  if (subPage === 'language') {
+    return <LanguagePreferences onBack={() => setSubPage(null)} />;
+  }
+  if (subPage === 'plan') {
+    return <LearningPlan onBack={() => setSubPage(null)} />;
+  }
+  if (subPage === 'favorites') {
+    return <MyFavorites onBack={() => setSubPage(null)} />;
+  }
 
   if (isEditing) {
     return (
@@ -524,7 +540,7 @@ const UserProfile = () => {
       {/* Settings list */}
       <Card padding="p-0">
         <button
-          onClick={() => useUIStore.getState().showNotification('功能开发中', 'info')}
+          onClick={() => setSubPage('language')}
           className="w-full flex items-center gap-3 p-4 hover:bg-slate-50 transition-colors text-left border-b border-slate-100"
         >
           <div className="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center text-blue-500">
@@ -534,7 +550,7 @@ const UserProfile = () => {
           <Icon name="chevron" size={16} className="text-slate-300" />
         </button>
         <button
-          onClick={() => useUIStore.getState().showNotification('功能开发中', 'info')}
+          onClick={() => setSubPage('plan')}
           className="w-full flex items-center gap-3 p-4 hover:bg-slate-50 transition-colors text-left border-b border-slate-100"
         >
           <div className="w-9 h-9 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-500">
@@ -544,7 +560,7 @@ const UserProfile = () => {
           <Icon name="chevron" size={16} className="text-slate-300" />
         </button>
         <button
-          onClick={() => useUIStore.getState().showNotification('功能开发中', 'info')}
+          onClick={() => setSubPage('favorites')}
           className="w-full flex items-center gap-3 p-4 hover:bg-slate-50 transition-colors text-left border-b border-slate-100"
         >
           <div className="w-9 h-9 rounded-xl bg-amber-50 flex items-center justify-center text-amber-500">
@@ -554,7 +570,7 @@ const UserProfile = () => {
           <Icon name="chevron" size={16} className="text-slate-300" />
         </button>
         {/* Admin entry - only visible to admins */}
-        {useAuthStore(s => s.isAdmin) && (
+        {isAdmin && (
           <button
             onClick={() => window.openAdmin && window.openAdmin()}
             className="w-full flex items-center gap-3 p-4 hover:bg-brand-50 transition-colors text-left border-b border-slate-100"

@@ -383,16 +383,56 @@ const TextTranslator = () => {
             {history.slice(0, 5).map((h, i) => (
               <div
                 key={i}
-                onClick={() => {
-                  setSourceText(h.sourceText);
-                  setSourceLang(h.sourceLang);
-                  setTargetLang(h.targetLang);
-                  setTranslatedText(h.translatedText);
-                }}
-                className="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 cursor-pointer transition-colors"
+                className="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 cursor-pointer transition-colors group"
               >
-                <div className="text-sm text-slate-700 truncate">{h.sourceText}</div>
-                <div className="text-xs text-slate-400 truncate mt-0.5">{h.translatedText}</div>
+                <div className="flex items-start justify-between">
+                  <div
+                    className="flex-1 min-w-0"
+                    onClick={() => {
+                      setSourceText(h.sourceText);
+                      setSourceLang(h.sourceLang);
+                      setTargetLang(h.targetLang);
+                      setTranslatedText(h.translatedText);
+                    }}
+                  >
+                    <div className="text-sm text-slate-700 truncate">{h.sourceText}</div>
+                    <div className="text-xs text-slate-400 truncate mt-0.5">{h.translatedText}</div>
+                  </div>
+                  <button
+                    onClick={async (e) => {
+                      e.stopPropagation();
+                      const uid = useUserStore.getState().userId;
+                      if (!uid) {
+                        useUIStore.getState().showNotification('请先登录', 'warning');
+                        return;
+                      }
+                      try {
+                        // Mark history as favorite
+                        if (h.id && window.db) {
+                          await db.translationHistory.update(h.id, { isFavorite: true });
+                        }
+                        // Also add to wordBooks
+                        if (window.db) {
+                          await db.wordBooks.add({
+                            userId: uid,
+                            word: h.sourceText,
+                            language: h.targetLang,
+                            translation: h.translatedText,
+                            addedAt: Date.now(),
+                            reviewCount: 0,
+                          });
+                        }
+                        useUIStore.getState().showNotification('已收藏', 'success');
+                      } catch (err) {
+                        useUIStore.getState().showNotification('收藏失败或已存在', 'info');
+                      }
+                    }}
+                    className="p-1.5 rounded-lg text-slate-300 hover:text-amber-500 hover:bg-amber-50 transition-colors opacity-0 group-hover:opacity-100"
+                    title="收藏"
+                  >
+                    <Icon name="bookmark" size={16} />
+                  </button>
+                </div>
               </div>
             ))}
           </div>

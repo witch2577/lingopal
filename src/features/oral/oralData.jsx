@@ -43,7 +43,68 @@ const ORAL_PRACTICE_DATA = {
       { text: '你好，很高兴认识你。', phonetic: 'nǐ hǎo，hěn gāo xìng rèn shi nǐ', meaning: '你好，很高兴认识你。', tip: '你 nǐ 第三声，好 hǎo 第三声' },
       { text: '请问洗手间在哪里？', phonetic: 'qǐng wèn xǐ shǒu jiān zài nǎ lǐ', meaning: '请问洗手间在哪里？', tip: '问 wèn 第四声' },
       { text: '我想要一杯水。', phonetic: 'wǒ xiǎng yào yì bēi shuǐ', meaning: '我想要一杯水。', tip: '想 xiǎng 第三声' },
-    ],
+    
+      {
+        text: "你好，很高兴认识你。",
+        phonetic: "nǐ hǎo，hěn gāo xìng rèn shi nǐ",
+        meaning: "你好，很高兴认识你。",
+        tip: "你 nǐ 第三声，好 hǎo 第三声"
+      },
+      {
+        text: "请问洗手间在哪里？",
+        phonetic: "qǐng wèn xǐ shǒu jiān zài nǎ lǐ",
+        meaning: "请问洗手间在哪里？",
+        tip: "问 wèn 第四声"
+      },
+      {
+        text: "我想要一杯水。",
+        phonetic: "wǒ xiǎng yào yì bēi shuǐ",
+        meaning: "我想要一杯水。",
+        tip: "想 xiǎng 第三声"
+      },
+      {
+        text: "这个多少钱？",
+        phonetic: "zhè ge duō shǎo qián",
+        meaning: "这个多少钱？",
+        tip: "少 shǎo 第三声"
+      },
+      {
+        text: "很好吃！",
+        phonetic: "hěn hǎo chī",
+        meaning: "很好吃！",
+        tip: "吃 chī 第一声"
+      },
+      {
+        text: "请帮我一下。",
+        phonetic: "qǐng bāng wǒ yí xià",
+        meaning: "请帮我一下。",
+        tip: "帮 bāng 第一声"
+      },
+      {
+        text: "谢谢你的帮助。",
+        phonetic: "xiè xie nǐ de bāng zhù",
+        meaning: "谢谢你的帮助。",
+        tip: "谢 xiè 第四声"
+      },
+      {
+        text: "再见，一路顺风！",
+        phonetic: "zài jiàn，yí lù shùn fēng",
+        meaning: "再见，一路顺风！",
+        tip: "见 jiàn 第四声"
+      },
+      {
+        text: "我迷路了。",
+        phonetic: "wǒ mí lù le",
+        meaning: "我迷路了。",
+        tip: "迷 mí 第二声"
+      },
+      {
+        text: "请问附近有医院吗？",
+        phonetic: "qǐng wèn fù jìn yǒu yī yuàn ma",
+        meaning: "请问附近有医院吗？",
+        tip: "院 yuàn 第四声"
+      },
+],
     intermediate: [
       { text: '你能推荐一家好吃的餐厅吗？', phonetic: 'nǐ néng tuī jiàn yì jiā hǎo chī de cān tīng ma', meaning: '你能推荐一家好吃的餐厅吗？', tip: '推荐 tuī jiàn' },
     ],
@@ -82,8 +143,69 @@ const ORAL_PRACTICE_DATA = {
         phonetic: "mul ju-se-yo",
         meaning: "请给我水。",
         tip: "주세요 读 ju-se-yo"
-      }
-    ],
+      },
+    
+      {
+        text: "안녕하세요.",
+        phonetic: "an-nyeong-ha-se-yo",
+        meaning: "你好。",
+        tip: "안녕 连读，하세요 降调"
+      },
+      {
+        text: "감사합니다.",
+        phonetic: "gam-sa-ham-ni-da",
+        meaning: "谢谢。",
+        tip: "감사 重音在 gam"
+      },
+      {
+        text: "미안합니다.",
+        phonetic: "mi-an-ham-ni-da",
+        meaning: "对不起。",
+        tip: "미안 读 mi-an"
+      },
+      {
+        text: "제 이름은 토마스입니다.",
+        phonetic: "je i-reum-eun to-ma-seu-im-ni-da",
+        meaning: "我的名字是托马斯。",
+        tip: "이름 读 i-reum"
+      },
+      {
+        text: "물 주세요.",
+        phonetic: "mul ju-se-yo",
+        meaning: "请给我水。",
+        tip: "주세요 读 ju-se-yo"
+      },
+      {
+        text: "얼마예요?",
+        phonetic: "eol-ma-ye-yo",
+        meaning: "多少钱？",
+        tip: "얼마예요 升调"
+      },
+      {
+        text: "화장실은 어디예요?",
+        phonetic: "hwa-jang-si-reun eo-di-ye-yo",
+        meaning: "洗手间在哪里？",
+        tip: "화장실 读 hwa-jang-sil"
+      },
+      {
+        text: "맛있어요!",
+        phonetic: "ma-si-sseo-yo",
+        meaning: "很好吃！",
+        tip: "있 双收音"
+      },
+      {
+        text: "도와 주세요!",
+        phonetic: "do-wa ju-se-yo",
+        meaning: "请帮帮我！",
+        tip: "도와 读 do-wa"
+      },
+      {
+        text: "잘 가요.",
+        phonetic: "jal ga-yo",
+        meaning: "再见。",
+        tip: "잘 读 jal，轻音"
+      },
+],
     intermediate: [
       {
         text: "역은 어디에 있어요?",
@@ -144,8 +266,69 @@ const ORAL_PRACTICE_DATA = {
         phonetic: "me gus-ta-ri-a un ka-fe",
         meaning: "我想要一杯咖啡。",
         tip: "gustaría 重音在 ri"
-      }
-    ],
+      },
+    
+      {
+        text: "Hola, ¿cómo estás?",
+        phonetic: "o-la, ko-mo es-tas",
+        meaning: "你好，你好吗？",
+        tip: "Hola 的 H 不发音"
+      },
+      {
+        text: "Muchas gracias.",
+        phonetic: "mu-chas gra-thias",
+        meaning: "非常感谢。",
+        tip: "gracias 的 c 读 th"
+      },
+      {
+        text: "Lo siento.",
+        phonetic: "lo sien-to",
+        meaning: "对不起。",
+        tip: "siento 重音在 sen"
+      },
+      {
+        text: "Me llamo Tomás.",
+        phonetic: "me ya-mo to-mas",
+        meaning: "我叫托马斯。",
+        tip: "ll 读 y 音"
+      },
+      {
+        text: "¿Dónde está el baño?",
+        phonetic: "don-de es-ta el ba-nyo",
+        meaning: "洗手间在哪里？",
+        tip: "baño 的 ñ 鼻音"
+      },
+      {
+        text: "¿Cuánto cuesta?",
+        phonetic: "kwan-to kwes-ta",
+        meaning: "多少钱？",
+        tip: "cu 读 kw"
+      },
+      {
+        text: "Está muy delicioso.",
+        phonetic: "es-ta muy de-li-thio-so",
+        meaning: "很好吃。",
+        tip: "c 读 th"
+      },
+      {
+        text: "Una mesa para dos, por favor.",
+        phonetic: "u-na me-sa pa-ra dos por fa-bor",
+        meaning: "请给我一张两人桌。",
+        tip: "por favor 重音在 bor"
+      },
+      {
+        text: "¡Ayuda!",
+        phonetic: "a-yu-da",
+        meaning: "救命！",
+        tip: "yu 读 u"
+      },
+      {
+        text: "Adiós.",
+        phonetic: "a-dios",
+        meaning: "再见。",
+        tip: "d 轻读"
+      },
+],
     intermediate: [
       {
         text: "¿Podría recomendarme un restaurante local?",
@@ -206,8 +389,69 @@ const ORAL_PRACTICE_DATA = {
         phonetic: "ya kho-tyel by cha-shku ko-fye",
         meaning: "我想要一杯咖啡。",
         tip: "бы 弱读"
-      }
-    ],
+      },
+    
+      {
+        text: "Привет, как дела?",
+        phonetic: "pri-vyet, kak de-la",
+        meaning: "你好，最近怎么样？",
+        tip: "Привет 重音在 vyet"
+      },
+      {
+        text: "Спасибо большое.",
+        phonetic: "spa-si-bo bol-sho-ye",
+        meaning: "非常感谢。",
+        tip: "бо 读 bo"
+      },
+      {
+        text: "Извините.",
+        phonetic: "iz-vi-ni-tye",
+        meaning: "对不起。",
+        tip: "те 读 tye"
+      },
+      {
+        text: "Меня зовут Томас.",
+        phonetic: "me-nya za-vut to-mas",
+        meaning: "我叫托马斯。",
+        tip: "зовут 重音在 zu"
+      },
+      {
+        text: "Где туалет?",
+        phonetic: "gdye tu-a-lyet",
+        meaning: "洗手间在哪里？",
+        tip: "Где 读 gdye"
+      },
+      {
+        text: "Сколько стоит?",
+        phonetic: "skol-ko sto-it",
+        meaning: "多少钱？",
+        tip: "стоит 重音在 sto"
+      },
+      {
+        text: "Очень вкусно!",
+        phonetic: "o-chen vkus-no",
+        meaning: "很好吃！",
+        tip: "Очень 读 o-chen"
+      },
+      {
+        text: "Столик на двоих, пожалуйста.",
+        phonetic: "sto-lik na dvo-ikh po-zha-lu-sta",
+        meaning: "请给我一张两人桌。",
+        tip: "пожалуйста 读 po-zha-lu-sta"
+      },
+      {
+        text: "Помогите!",
+        phonetic: "po-mo-gi-tye",
+        meaning: "帮帮我！",
+        tip: "ги 读 gi"
+      },
+      {
+        text: "До свидания.",
+        phonetic: "do svi-da-ni-ya",
+        meaning: "再见。",
+        tip: "ния 读 ni-ya"
+      },
+],
     intermediate: [
       {
         text: "Не могли бы вы порекомендовать местный ресторан?",
