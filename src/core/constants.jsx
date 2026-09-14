@@ -99,6 +99,7 @@ const NAV_ITEMS = [
 // Practice sub-tabs
 const PRACTICE_TABS = [
   { key: 'oral',     label: '口语',    icon: 'mic' },
+  { key: 'listening', label: '听力',   icon: 'headphones' },
   { key: 'written',  label: '笔试',    icon: 'type-text' },
   { key: 'drama',    label: '影视',    icon: 'film' },
   { key: 'music',    label: '音乐',    icon: 'music' },
