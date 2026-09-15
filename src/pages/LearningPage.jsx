@@ -33,6 +33,7 @@ const LearningPage = () => {
     setLastResult(null);
     setSelectedLevel(null);
     setSelectedScene(null);
+    setActiveTab('levels');
     setView('map');
   };
 
@@ -41,17 +42,18 @@ const LearningPage = () => {
     setView('scenario-play');
   };
 
-  const [activeTab, setActiveTab] = useState('levels'); // levels | scenarios
+  const [activeTab, setActiveTab] = useState('levels'); // levels | scenarios | academy
 
   const subTabs = [
     { key: 'levels', label: '关卡地图' },
     { key: 'scenarios', label: '场景学习' },
+    { key: 'academy', label: '文字学堂' },
   ];
 
   return (
     <div className="flex flex-col h-full">
       {/* Header for sub-views */}
-      {view !== 'map' && view !== 'scenarios' && (
+      {view !== 'map' && view !== 'scenarios' && view !== 'academy' && (
         <div className="flex items-center gap-3 mb-3 sm:mb-4">
           <button
             onClick={handleBackToMap}
@@ -71,14 +73,16 @@ const LearningPage = () => {
       )}
 
       {/* Sub tabs for main learning view */}
-      {(view === 'map' || view === 'scenarios') && (
+      {(view === 'map' || view === 'scenarios' || view === 'academy') && (
         <div className="flex bg-slate-100 rounded-2xl p-1 mb-3 sm:mb-4">
           {subTabs.map(tab => (
             <button
               key={tab.key}
               onClick={() => {
                 setActiveTab(tab.key);
-                setView(tab.key === 'levels' ? 'map' : 'scenarios');
+                if (tab.key === 'levels') setView('map');
+                else if (tab.key === 'scenarios') setView('scenarios');
+                else if (tab.key === 'academy') setView('academy');
               }}
               className={`relative flex-1 py-2.5 rounded-xl text-sm font-medium transition-all touch-target ${
                 activeTab === tab.key
@@ -113,6 +117,9 @@ const LearningPage = () => {
             )}
             {view === 'scenarios' && (
               <Scenarios onSelectScene={handleSelectScene} />
+            )}
+            {view === 'academy' && (
+              <CharacterAcademy onBack={handleBackToMap} />
             )}
             {view === 'scenario-play' && selectedScene && (
               <ScenarioPlayer scene={selectedScene} onBack={handleBackToMap} />

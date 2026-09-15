@@ -16,7 +16,7 @@ const PracticePage = () => {
           </div>
           <div>
             <h1 className="text-lg sm:text-xl font-bold text-slate-800 font-display">练习中心</h1>
-            <p className="text-xs text-slate-400">口语 · 听力 · 笔试 · 影视 · 音乐</p>
+            <p className="text-xs text-slate-400">口语 · 听力 · 打字 · 笔试 · 影视 · 音乐</p>
           </div>
         </div>
       </div>
@@ -57,6 +57,7 @@ const PracticePage = () => {
           >
             {activeTab === 'oral' && <OralPageContent />}
             {activeTab === 'listening' && <ListeningPageContent />}
+            {activeTab === 'typing' && <TypingPractice />}
             {activeTab === 'written' && <WrittenPageContent />}
             {activeTab === 'drama' && <DramaHub />}
             {activeTab === 'music' && <MusicHub />}
