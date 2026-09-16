@@ -80,71 +80,29 @@ const TranslationService = {
     return this._callMyMemory(trimmed, sourceLang, targetLang);
   },
 
-  _detectLang(text) {
-    if (/[\u4e00-\u9fff]/.test(text)) return 'zh-CN';
-    if (/[\u3040-\u30ff]/.test(text)) return 'ja';
-    if (/[\uac00-\ud7af]/.test(text)) return 'ko';
-    if (/[\u0400-\u04ff]/.test(text)) return 'ru';
-    return 'en';
-  },
-
   async _callMyMemory(text, sourceLang, targetLang) {
     if (this._failStreak >= this._circuitBreakerThreshold) {
       return {
-        translatedText: text,
+        translatedText: `[翻译服务暂不可用] ${text}`,
         isLocalDict: true,
         confidence: 0,
-        isFallback: true,
-        note: '翻译服务暂不可用，已为你显示原文',
       };
-    }
-
-    // Check Supabase quota if configured
-    if (IS_SUPABASE_CONFIGURED && window.useAuthStore) {
-      try {
-        const quotaResult = await useAuthStore.getState().consumeQuota('translation');
-        const quotaAllowed = quotaResult.allowed || !!quotaResult.localMode;
-        if (!quotaAllowed) {
-          this._failStreak++;
-          return {
-            translatedText: text,
-            isLocalDict: true,
-            confidence: 0,
-            isFallback: true,
-            note: '额度检查失败，已为你显示原文',
-          };
-        }
-      } catch (e) {
-        // Fail closed: quota check errors block translation
-        this._failStreak++;
-        console.warn('[TranslationService] quota check failed:', e);
-        return {
-          translatedText: text,
-          isLocalDict: true,
-          confidence: 0,
-          isFallback: true,
-          note: '额度检查失败，已为你显示原文',
-        };
-      }
     }
 
     if (this._dailyCount >= this._maxDaily) {
       return {
-        translatedText: text,
+        translatedText: `[今日翻译额度已用完] ${text}`,
         isLocalDict: true,
         confidence: 0,
-        isFallback: true,
-        note: '今日翻译额度已用完，已为你显示原文',
       };
     }
 
     try {
-      const detectedLang = sourceLang === 'auto' ? this._detectLang(text) : undefined;
-      const src = sourceLang === 'auto' ? detectedLang : sourceLang;
+      const src = sourceLang === 'auto' ? 'autodetect' : sourceLang;
       const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${src}|${targetLang}`;
 
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      const timeoutId = setTimeout(() => controller.abort(), 3000);
 
       const resp = await fetch(url, { signal: controller.signal });
       clearTimeout(timeoutId);
@@ -152,40 +110,26 @@ const TranslationService = {
       if (!resp.ok) throw new Error('API error');
 
       const data = await resp.json();
-      const responseData = data?.responseData || {};
-      const translated = responseData.translatedText || '';
-      const detected = responseData.detectedLanguage || '';
-
-      // Check for API failure / quota exhaustion / invalid response
-      const responseStatus = responseData.responseStatus;
-      const isWarning = /^MYMEMORY WARNING/i.test(translated);
-      const isInvalid = /INVALID/i.test(translated);
-      if (responseStatus !== 200 || isWarning || isInvalid) {
-        throw new Error('API quota exhausted or invalid response');
-      }
-
-      // Confidence scale compatibility: MyMemory match is 0–1, but some responses may use 0–100
-      const m = Number(responseData.match);
-      const confidence = m > 1 ? m / 100 : (m > 0 ? m : 0.8);
+      const translated = data?.responseData?.translatedText || '';
+      const detected = data?.responseData?.detectedLanguage || '';
 
       this._dailyCount++;
       this._failStreak = 0;
 
       return {
         translatedText: translated,
-        detectedLang: detected || detectedLang || undefined,
+        detectedLang: detected || undefined,
         isLocalDict: false,
-        confidence,
+        confidence: data?.responseData?.match ? data.responseData.match / 100 : 0.8,
       };
     } catch (e) {
       this._failStreak++;
       console.warn('Translation API failed:', e.message);
       return {
-        translatedText: text,
+        translatedText: this._mockTranslate(text, sourceLang, targetLang),
         isLocalDict: true,
         confidence: 0.3,
         isFallback: true,
-        note: '今日在线翻译免费额度已用完，将于明日自动重置；已为你显示原文',
       };
     }
   },

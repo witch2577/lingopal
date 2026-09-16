@@ -1,9 +1,5 @@
 // ========== Zustand Stores ==========
 // Uses UMD bundle: window.zustand
-// Task 3 updates:
-//   - CharacterStore uses MoodEngine for mood calculation
-//   - Evolution trigger with onEvolution callback for Task 5 ritual
-//   - 4-stage growth model (婴儿期→幼儿期→少儿期→成年期)
 
 const { create } = zustand;
 
@@ -16,7 +12,7 @@ const useTranslationStore = create((set, get) => ({
   isTranslating: false,
   history: [],
   error: null,
-  activeTab: 'text',
+  activeTab: 'text', // text | voice | ocr
 
   setSourceText: (text) => set({ sourceText: text }),
   setTranslatedText: (text) => set({ translatedText: text }),
@@ -41,6 +37,7 @@ const useTranslationStore = create((set, get) => ({
     const { history } = get();
     const newHistory = [record, ...history].slice(0, 50);
     set({ history: newHistory });
+    // persist to indexeddb asynchronously
     if (window.db) {
       db.translationHistory.add({
         ...record,
@@ -76,7 +73,7 @@ const useLearningStore = create((set, get) => ({
   wrongAnswers: [],
   timeRemaining: 0,
   isPlaying: false,
-  levelResult: null,
+  levelResult: null, // { score, stars, newAchievements }
 
   setLanguage: (lang) => set({ currentLanguage: lang }),
   setLevel: (levelId) => set({ currentLevelId: levelId }),
@@ -104,9 +101,11 @@ const useLearningStore = create((set, get) => ({
     const baseScore = isCorrect ? 10 : 0;
     const comboBonus = isCorrect && newCombo >= 2 ? newCombo * 2 : 0;
     const qScore = baseScore + comboBonus;
+
     const wrongAnswers = isCorrect
       ? state.wrongAnswers
       : [...state.wrongAnswers, { questionId, userAnswer, correctAnswer }];
+
     set({
       score: state.score + qScore,
       combo: newCombo,
@@ -114,13 +113,21 @@ const useLearningStore = create((set, get) => ({
       correctCount: state.correctCount + (isCorrect ? 1 : 0),
       wrongAnswers,
     });
-    return { isCorrect, questionScore: qScore, combo: newCombo, totalScore: state.score + qScore };
+
+    return {
+      isCorrect,
+      questionScore: qScore,
+      combo: newCombo,
+      totalScore: state.score + qScore,
+    };
   },
 
   nextQuestion: () => {
     const state = get();
     const next = state.currentQuestionIndex + 1;
-    if (next >= state.questions.length) return false;
+    if (next >= state.questions.length) {
+      return false; // end of level
+    }
     set({ currentQuestionIndex: next });
     return true;
   },
@@ -162,11 +169,14 @@ const useUserStore = create((set, get) => ({
   isLoggedIn: false,
   preferences: {
     theme: 'light',
+    themeMode: 'human', // 'human' | 'immortal'
     defaultSourceLang: 'auto',
     defaultTargetLang: 'en',
     dailyReminder: false,
     reminderTime: '20:00',
   },
+  realm: 0, // 0-23 cultivation realm (reserved for 修仙 system)
+  completedLanguages: [], // completed language identifiers (reserved)
   achievements: [],
   totalXP: 0,
   streakDays: 0,
@@ -174,13 +184,11 @@ const useUserStore = create((set, get) => ({
   currentLevel: null,
 
   init: async () => {
-    const authState = useAuthStore.getState();
-    let userId = authState.supabaseUser?.id;
-    if (!userId) {
-      userId = await window.ensureDefaultUser();
-    }
+    const userId = await window.ensureDefaultUser();
     const profile = await db.userProfiles.get(userId);
     const achRecords = await db.achievements.where('userId').equals(userId).toArray();
+
+    // Ensure 7-dimension fields exist on legacy profiles
     if (profile && !profile.languageLevel) {
       const defaults = {
         languageLevel: 'beginner',
@@ -194,6 +202,7 @@ const useUserStore = create((set, get) => ({
       await db.userProfiles.update(userId, defaults);
       Object.assign(profile, defaults);
     }
+
     const totalXP = profile?.totalXP || 0;
     const currentLevel = getLevelByXP(totalXP);
     set({
@@ -205,6 +214,7 @@ const useUserStore = create((set, get) => ({
       streakDays: profile?.streakDays || 0,
       currentLevel,
     });
+    // Check daily login and streak
     await get().checkDailyLogin();
     await get().checkStreakStatus();
     return profile;
@@ -239,19 +249,12 @@ const useUserStore = create((set, get) => ({
     });
     addXPHistory(state.userId, amount, source).catch(() => {});
     set({ totalXP: newXP });
+    // Level up notification
     if (newLevel.level > oldLevel.level) {
       useUIStore.getState().showNotification(
         `升级啦！Lv.${newLevel.level} ${newLevel.title}`, 'success', 4000
       );
       useUIStore.getState().triggerConfetti(4000);
-    }
-    // === GP / SC 同步写入（养成系统钩子）===
-    if (amount > 0 && typeof useCharacterStore !== 'undefined') {
-      try {
-        useCharacterStore.getState().addGP(amount, source);
-      } catch (e) {
-        console.error('[UserStore.addXP] GP sync failed:', e);
-      }
     }
     return { oldXP, newXP, levelUp: newLevel.level > oldLevel.level, newLevel };
   },
@@ -262,16 +265,20 @@ const useUserStore = create((set, get) => ({
     const today = todayStr();
     const todayLog = await db.dailyLogs.get({ userId: state.userId, date: today });
     if (!todayLog) {
+      // First activity today - grant login XP and check streak
       const yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);
       const yStr = yesterday.toISOString().slice(0, 10);
       const yLog = await db.dailyLogs.get({ userId: state.userId, date: yStr });
       const newStreak = yLog ? (yLog.streakDay || 0) + 1 : 1;
+      // Record streak
       await recordStreakDay(state.userId, today, newStreak, 1);
       await db.userProfiles.update(state.userId, { streakDays: newStreak });
       set({ streakDays: newStreak });
+      // Grant login XP
       const xpAmount = XP_SOURCES.DAILY_LOGIN.base + Math.min(newStreak, 30) * XP_SOURCES.STREAK_BONUS.base;
       get().addXP(xpAmount, 'daily_login');
+      // Check streak milestones
       const milestone = STREAK_MILESTONES.find(m => m.days === newStreak);
       if (milestone) {
         get().addXP(milestone.rewardXP, 'milestone_reached');
@@ -285,12 +292,14 @@ const useUserStore = create((set, get) => ({
           `连胜里程碑：${milestone.badge}！+${milestone.rewardXP}XP`, 'success', 4000
         );
       }
+      // Check for broken streak recovery opportunity
       const twoDaysAgo = new Date();
       twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
       const tdaStr = twoDaysAgo.toISOString().slice(0, 10);
       const tdaLog = await db.dailyLogs.get({ userId: state.userId, date: tdaStr });
       const yStreakRec = await db.streakRecords.get({ userId: state.userId, date: yStr });
       if (tdaLog && !yStreakRec) {
+        // Yesterday missed but day before had activity - offer recovery
         set({ streakRecoveryAvailable: { missedDate: yStr, cost: STREAK_RECOVERY_COST } });
       }
     }
@@ -304,10 +313,13 @@ const useUserStore = create((set, get) => ({
       useUIStore.getState().showNotification('经验值不足，无法恢复连胜', 'error');
       return false;
     }
+    // Deduct XP
     const newXP = state.totalXP - cost;
     await db.userProfiles.update(state.userId, { totalXP: newXP });
     addXPHistory(state.userId, -cost, 'streak_recovery').catch(() => {});
+    // Protect the missed day
     await protectStreakDay(state.userId, missedDate);
+    // Recalculate streak
     const today = todayStr();
     const streakHistory = await getStreakHistory(state.userId, 30);
     let currentStreak = 0;
@@ -332,6 +344,7 @@ const useUserStore = create((set, get) => ({
     const today = todayStr();
     const todayRec = await db.streakRecords.get({ userId: state.userId, date: today });
     if (!todayRec) {
+      // Check if yesterday was missed
       const yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);
       const yStr = yesterday.toISOString().slice(0, 10);
@@ -372,12 +385,49 @@ const useUserStore = create((set, get) => ({
     } catch (e) { console.error('[UserStore.setPreferences] 保存偏好设置失败:', e); }
   },
 
+  setThemeMode: (mode) => {
+    const validModes = ['human', 'immortal'];
+    if (!validModes.includes(mode)) return;
+    set(state => ({
+      preferences: { ...state.preferences, themeMode: mode },
+    }));
+    // Apply theme to document
+    const html = document.documentElement;
+    if (mode === 'immortal') {
+      html.setAttribute('data-theme', 'immortal');
+      html.classList.add('dark');
+    } else {
+      html.removeAttribute('data-theme');
+      html.classList.remove('dark');
+    }
+    try {
+      localStorage.setItem('lingopal_prefs', JSON.stringify(get().preferences));
+    } catch (e) { console.error('[UserStore.setThemeMode] 保存主题设置失败:', e); }
+  },
+
+  toggleThemeMode: () => {
+    const current = get().preferences.themeMode || 'human';
+    const next = current === 'human' ? 'immortal' : 'human';
+    get().setThemeMode(next);
+    return next;
+  },
+
   loadPreferences: () => {
     try {
       const saved = localStorage.getItem('lingopal_prefs');
       if (saved) {
         const prefs = JSON.parse(saved);
         set(state => ({ preferences: { ...state.preferences, ...prefs } }));
+        // Apply themeMode on load
+        const mode = prefs.themeMode || 'human';
+        const html = document.documentElement;
+        if (mode === 'immortal') {
+          html.setAttribute('data-theme', 'immortal');
+          html.classList.add('dark');
+        } else {
+          html.removeAttribute('data-theme');
+          html.classList.remove('dark');
+        }
       }
     } catch (e) { console.error('[UserStore.loadPreferences] 加载偏好设置失败:', e); }
   },
@@ -412,243 +462,11 @@ const useUIStore = create((set) => ({
   },
 }));
 
-// ---- Character Store (养成系统) — Task 3 updates ----
-const useCharacterStore = create((set, get) => ({
-  config: null,
-  growth: null,
-  loading: true,
-  initialized: false,
-  moodEngine: null,
-  _onEvolution: null,
-
-  // Init: load from persistence
-  init: async () => {
-    const userState = useUserStore.getState();
-    const userId = userState.userId;
-
-    // Run version migration first
-    await CharacterSave.runMigration(userId);
-
-    const { config, growth, naming } = await CharacterSave.loadAll(userId);
-
-    // Ensure naming is persisted (first-time init writes defaults)
-    CharacterSave.saveNaming(naming);
-
-    // Init MoodEngine
-    const moodEngine = new MoodEngine({
-      lastStudyDate: growth.lastStudyDate,
-      currentMood: growth.currentMood,
-      onChange: (newMood, descriptor) => {
-        const s = get();
-        if (!s.growth) return;
-        const newGrowth = { ...s.growth, currentMood: newMood };
-        CharacterSave.saveGrowth(newGrowth);
-        set({ growth: newGrowth });
-      },
-    });
-
-    // Ensure mood is up-to-date based on lastStudyDate
-    const today = new Date().toISOString().slice(0, 10);
-    if (growth.lastStudyDate !== today) {
-      growth.currentMood = moodEngine.update(growth.lastStudyDate);
-    }
-
-    // Ensure stage consistency
-    const computedStage = getStageByGP(growth.totalGP);
-    growth.currentStage = computedStage.stage;
-    growth.stageName = computedStage.name;
-    growth.stageGPRequired = computedStage.gpRequired;
-    growth.nextStageGP = getNextStage(computedStage.stage)?.gpRequired || null;
-
-    set({ config, growth, loading: false, initialized: true, moodEngine });
-  },
-
-  // Config update
-  setConfig: (updates) => {
-    set(state => {
-      const newConfig = { ...state.config, ...updates };
-      CharacterSave.saveConfig(newConfig);
-      return { config: newConfig };
-    });
-  },
-
-  // Growth update
-  setGrowth: (updates) => {
-    set(state => {
-      const newGrowth = { ...state.growth, ...updates };
-      CharacterSave.saveGrowth(newGrowth);
-      return { growth: newGrowth };
-    });
-  },
-
-  // Set evolution callback (for Task 5 ritual)
-  setOnEvolution: (callback) => {
-    set({ _onEvolution: callback });
-  },
-
-  // Add GP + SC (called from useUserStore.addXP hook)
-  addGP: (amount, source = 'other') => {
-    if (amount <= 0) return;
-    const state = get();
-    if (!state.growth || !state.config) return;
-
-    const oldGP = state.growth.totalGP;
-    const newGP = oldGP + amount;
-    const oldStage = getStageByGP(oldGP);
-    const newStage = getStageByGP(newGP);
-    const today = new Date().toISOString().slice(0, 10);
-
-    const newGrowth = {
-      ...state.growth,
-      totalGP: newGP,
-      currentStage: newStage.stage,
-      stageName: newStage.name,
-      stageGPRequired: newStage.gpRequired,
-      nextStageGP: getNextStage(newStage.stage)?.gpRequired || null,
-      lastStudyDate: today,
-      currentMood: 'happy',
-      streakAtLastStudy: useUserStore.getState().streakDays || 0,
-      gpHistory: [
-        ...(state.growth.gpHistory || []),
-        { amount, source, date: today, timestamp: Date.now() },
-      ].slice(-100),
-    };
-
-    // Update mood engine
-    if (state.moodEngine) {
-      state.moodEngine.recordStudy();
-    }
-
-    // Evolution detection + trigger
-    let evolved = false;
-    if (newStage.stage > oldStage.stage) {
-      evolved = true;
-      newGrowth.evolutionHistory = [
-        ...(newGrowth.evolutionHistory || []),
-        { stage: newStage.stage, date: today, gpAtEvolve: newGP, fromStage: oldStage.stage },
-      ];
-      useUIStore.getState().showNotification(
-        `角色成长了！晋升为「${newStage.name}」`, 'success', 4000
-      );
-      // Trigger evolution callback for Task 5 ritual
-      if (typeof state._onEvolution === 'function') {
-        try {
-          state._onEvolution({
-            fromStage: oldStage,
-            toStage: newStage,
-            gpAtEvolve: newGP,
-            date: today,
-          });
-        } catch (e) {
-          console.error('[CharacterStore.addGP] onEvolution callback error:', e);
-        }
-      }
-    }
-
-    // Update SC (1 XP = 1 SC)
-    const newConfig = {
-      ...state.config,
-      starCoin: (state.config.starCoin || 0) + amount,
-    };
-
-    CharacterSave.saveGrowth(newGrowth);
-    CharacterSave.saveConfig(newConfig);
-    set({ growth: newGrowth, config: newConfig });
-
-    return { oldGP, newGP, evolved, newStage };
-  },
-
-  // Record study activity (updates mood)
-  recordStudy: () => {
-    const state = get();
-    if (!state.growth) return;
-    const today = new Date().toISOString().slice(0, 10);
-    const newMood = state.moodEngine ? state.moodEngine.recordStudy() : 'happy';
-    const newGrowth = {
-      ...state.growth,
-      lastStudyDate: today,
-      currentMood: newMood,
-    };
-    CharacterSave.saveGrowth(newGrowth);
-    set({ growth: newGrowth });
-  },
-
-  // Recalculate mood (call periodically, e.g. on app resume)
-  refreshMood: () => {
-    const state = get();
-    if (!state.growth || !state.moodEngine) return;
-    const newMood = state.moodEngine.update(state.growth.lastStudyDate);
-    if (newMood !== state.growth.currentMood) {
-      const newGrowth = { ...state.growth, currentMood: newMood };
-      CharacterSave.saveGrowth(newGrowth);
-      set({ growth: newGrowth });
-    }
-  },
-
-  // Get stage progress info for UI
-  getStageProgress: () => {
-    const state = get();
-    if (!state.growth) return null;
-    return getStageProgress(state.growth.totalGP);
-  },
-
-  // Reset (for testing)
-  reset: async () => {
-    await CharacterSave.resetAll();
-    const config = getDefaultCharacterConfig();
-    const growth = getDefaultCharacterGrowth();
-    const moodEngine = new MoodEngine({
-      lastStudyDate: null,
-      currentMood: 'happy',
-    });
-    set({ config, growth, loading: false, moodEngine, initialized: true });
-  },
-}));
-
-// ---- Naming Store (称呼/命名 UI 状态) ----
-const useNamingStore = create((set, get) => ({
-  isEditing: false,
-  draftName: '',
-  draftNickname: '',
-  draftTitle: '',
-
-  startEdit: () => {
-    const charState = useCharacterStore.getState();
-    set({
-      isEditing: true,
-      draftName: charState.config?.characterName || '',
-      draftNickname: charState.config?.userNickname || '',
-      draftTitle: charState.config?.customTitle || '',
-    });
-  },
-
-  setDraftName: (name) => set({ draftName: name }),
-  setDraftNickname: (nickname) => set({ draftNickname: nickname }),
-  setDraftTitle: (title) => set({ draftTitle: title }),
-
-  save: () => {
-    const state = get();
-    const updates = {
-      characterName: state.draftName.trim(),
-      userNickname: state.draftNickname.trim(),
-      customTitle: state.draftTitle.trim(),
-    };
-    useCharacterStore.getState().setConfig(updates);
-    set({ isEditing: false });
-  },
-
-  cancel: () => {
-    set({ isEditing: false, draftName: '', draftNickname: '', draftTitle: '' });
-  },
-}));
-
 Object.assign(window, {
   useTranslationStore,
   useLearningStore,
   useUserStore,
   useUIStore,
-  useCharacterStore,
-  useNamingStore,
 });
 
 // ---- Oral Store ----
@@ -706,14 +524,7 @@ const useWrittenStore = create((set, get) => ({
   reset: () => set({ score: 0, streak: 0, maxStreak: 0, totalAnswered: 0, correctCount: 0, isPlaying: false }),
 }));
 
-// ---- Practice Store (for consolidated practice hub) ----
-const usePracticeStore = create((set) => ({
-  activeTab: 'oral',
-  setActiveTab: (tab) => set({ activeTab: tab }),
-}));
-
 Object.assign(window, {
   useOralStore,
   useWrittenStore,
-  usePracticeStore,
 });

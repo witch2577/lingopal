@@ -34,8 +34,8 @@ const ErrorState = ({
       >
         {icon}
       </motion.div>
-      <h3 className={`${s.title} font-semibold text-slate-700 mb-1`}>{title}</h3>
-      <p className={`${s.desc} text-slate-400 max-w-xs leading-relaxed whitespace-pre-line`}>
+      <h3 className={`${s.title} font-semibold text-theme-secondary mb-1`}>{title}</h3>
+      <p className={`${s.desc} text-theme-muted max-w-xs leading-relaxed whitespace-pre-line`}>
         {description}
       </p>
       {error && (
@@ -148,7 +148,7 @@ const ErrorBanner = ({ message, onRetry, className = '' }) => (
     {onRetry && (
       <button
         onClick={onRetry}
-        className="flex-shrink-0 px-3 py-1.5 bg-white text-red-600 text-xs font-medium rounded-lg hover:bg-red-100 transition-colors"
+        className="flex-shrink-0 px-3 py-1.5 bg-theme-card text-red-600 text-xs font-medium rounded-lg hover:bg-red-100 transition-colors"
       >
         重试
       </button>

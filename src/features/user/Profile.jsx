@@ -4,7 +4,6 @@
 const UserProfile = () => {
   const { profile, userId, updateProfile } = useUserStore();
   const [isEditing, setIsEditing] = useState(false);
-  const [subPage, setSubPage] = useState(null); // null | 'language' | 'plan' | 'favorites'
 
   // Form state includes all 7 dimensions + legacy fields
   const [form, setForm] = useState({
@@ -60,10 +59,6 @@ const UserProfile = () => {
   const streakDays = useUserStore(s => s.streakDays);
   const totalXP = useUserStore(s => s.totalXP);
   const achievements = useUserStore(s => s.achievements);
-  // 注意：isAdmin 订阅必须放在组件顶部 Hook 区。
-  // 原先写在设置列表 JSX 条件里（useAuthStore(s => s.isAdmin) && ...），
-  // 子页提前 return 会跳过该 JSX 导致 Hook 数量变化，触发 React #300 崩溃。
-  const isAdmin = useAuthStore(s => s.isAdmin);
   const currentLevel = getLevelByXP(totalXP);
   const xpProgress = getXPProgress(totalXP);
   const [oralRecords, setOralRecords] = useState([]);
@@ -127,10 +122,10 @@ const UserProfile = () => {
     const opt = options?.find(o => o.key === value);
     if (!opt) return null;
     return (
-      <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 rounded-xl text-xs">
+      <div className="flex items-center gap-2 px-3 py-1.5 bg-theme-elevated rounded-xl text-xs">
         <span>{opt.emoji}</span>
-        <span className="text-slate-500">{label}:</span>
-        <span className="font-medium text-slate-700">{opt.label}</span>
+        <span className="text-theme-muted">{label}:</span>
+        <span className="font-medium text-theme-secondary">{opt.label}</span>
       </div>
     );
   };
@@ -141,7 +136,7 @@ const UserProfile = () => {
     if (!selected?.length) return null;
     return (
       <div className="flex items-center gap-2 flex-wrap">
-        <span className="text-xs text-slate-500">{label}:</span>
+        <span className="text-xs text-theme-muted">{label}:</span>
         {selected.map(opt => (
           <span key={opt.key} className="inline-flex items-center gap-1 px-2 py-0.5 bg-brand-50 text-brand-700 rounded-lg text-xs">
             <span>{opt.emoji}</span>
@@ -152,35 +147,24 @@ const UserProfile = () => {
     );
   };
 
-  // Render sub-pages
-  if (subPage === 'language') {
-    return <LanguagePreferences onBack={() => setSubPage(null)} />;
-  }
-  if (subPage === 'plan') {
-    return <LearningPlan onBack={() => setSubPage(null)} />;
-  }
-  if (subPage === 'favorites') {
-    return <MyFavorites onBack={() => setSubPage(null)} />;
-  }
-
   if (isEditing) {
     return (
       <div className="flex flex-col gap-4">
         <Card padding="p-5">
-          <h3 className="font-bold text-slate-800 mb-4">编辑个人资料</h3>
+          <h3 className="font-bold text-theme-primary mb-4">编辑个人资料</h3>
           <div className="flex flex-col gap-4 max-h-[70vh] overflow-y-auto hide-scrollbar pr-1">
             {/* Basic info */}
             <div>
-              <label className="text-sm text-slate-600 mb-1 block">昵称</label>
+              <label className="text-sm text-theme-secondary mb-1 block">昵称</label>
               <input
                 type="text"
                 value={form.nickname}
                 onChange={(e) => setForm(f => ({ ...f, nickname: e.target.value }))}
-                className="w-full px-4 py-2.5 rounded-xl border-2 border-slate-200 focus:border-brand-400 focus:outline-none text-sm"
+                className="w-full px-4 py-2.5 rounded-xl border-2 border-theme-light focus:border-brand-400 focus:outline-none text-sm"
               />
             </div>
             <div>
-              <label className="text-sm text-slate-600 mb-1 block">性别</label>
+              <label className="text-sm text-theme-secondary mb-1 block">性别</label>
               <div className="flex gap-2">
                 {[
                   { v: 'male', label: '男' },
@@ -191,7 +175,7 @@ const UserProfile = () => {
                     key={opt.v}
                     onClick={() => setForm(f => ({ ...f, gender: opt.v }))}
                     className={`flex-1 py-2 rounded-xl text-sm font-medium transition-colors ${
-                      form.gender === opt.v ? 'bg-brand-500 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                      form.gender === opt.v ? 'bg-brand-500 text-white' : 'bg-theme-elevated text-theme-secondary hover:bg-theme-elevated'
                     }`}
                   >
                     {opt.label}
@@ -200,32 +184,32 @@ const UserProfile = () => {
               </div>
             </div>
             <div>
-              <label className="text-sm text-slate-600 mb-1 block">年龄</label>
+              <label className="text-sm text-theme-secondary mb-1 block">年龄</label>
               <input
                 type="number"
                 value={form.age}
                 onChange={(e) => setForm(f => ({ ...f, age: parseInt(e.target.value) || 0 }))}
-                className="w-full px-4 py-2.5 rounded-xl border-2 border-slate-200 focus:border-brand-400 focus:outline-none text-sm"
+                className="w-full px-4 py-2.5 rounded-xl border-2 border-theme-light focus:border-brand-400 focus:outline-none text-sm"
               />
             </div>
             <div>
-              <label className="text-sm text-slate-600 mb-1 block">职业</label>
+              <label className="text-sm text-theme-secondary mb-1 block">职业</label>
               <input
                 type="text"
                 value={form.occupation}
                 onChange={(e) => setForm(f => ({ ...f, occupation: e.target.value }))}
                 placeholder="如：学生、程序员、老师..."
-                className="w-full px-4 py-2.5 rounded-xl border-2 border-slate-200 focus:border-brand-400 focus:outline-none text-sm"
+                className="w-full px-4 py-2.5 rounded-xl border-2 border-theme-light focus:border-brand-400 focus:outline-none text-sm"
               />
             </div>
 
             {/* 7-dimension profile */}
-            <div className="border-t border-slate-100 pt-4">
-              <h4 className="text-sm font-semibold text-slate-700 mb-3">学习画像</h4>
+            <div className="border-t border-theme-light pt-4">
+              <h4 className="text-sm font-semibold text-theme-secondary mb-3">学习画像</h4>
 
               {/* Language Level */}
               <div className="mb-3">
-                <label className="text-sm text-slate-600 mb-1 block">当前语言水平</label>
+                <label className="text-sm text-theme-secondary mb-1 block">当前语言水平</label>
                 <div className="grid grid-cols-2 gap-2">
                   {PROFILE_DIMENSIONS.languageLevel.options.map(opt => (
                     <button
@@ -234,7 +218,7 @@ const UserProfile = () => {
                       className={`py-2 rounded-xl text-sm font-medium transition-colors ${
                         form.languageLevel === opt.key
                           ? 'bg-brand-500 text-white'
-                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                          : 'bg-theme-elevated text-theme-secondary hover:bg-theme-elevated'
                       }`}
                     >
                       {opt.emoji} {opt.label}
@@ -245,7 +229,7 @@ const UserProfile = () => {
 
               {/* Learning Goal */}
               <div className="mb-3">
-                <label className="text-sm text-slate-600 mb-1 block">学习目标</label>
+                <label className="text-sm text-theme-secondary mb-1 block">学习目标</label>
                 <div className="grid grid-cols-2 gap-2">
                   {PROFILE_DIMENSIONS.learningGoal.options.map(opt => (
                     <button
@@ -254,7 +238,7 @@ const UserProfile = () => {
                       className={`py-2 rounded-xl text-sm font-medium transition-colors ${
                         form.learningGoal === opt.key
                           ? 'bg-brand-500 text-white'
-                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                          : 'bg-theme-elevated text-theme-secondary hover:bg-theme-elevated'
                       }`}
                     >
                       {opt.emoji} {opt.label}
@@ -265,7 +249,7 @@ const UserProfile = () => {
 
               {/* Daily Minutes */}
               <div className="mb-3">
-                <label className="text-sm text-slate-600 mb-1 block">每日可用时长</label>
+                <label className="text-sm text-theme-secondary mb-1 block">每日可用时长</label>
                 <div className="grid grid-cols-2 gap-2">
                   {PROFILE_DIMENSIONS.dailyMinutes.options.map(opt => (
                     <button
@@ -274,7 +258,7 @@ const UserProfile = () => {
                       className={`py-2 rounded-xl text-sm font-medium transition-colors ${
                         form.dailyMinutes === opt.key
                           ? 'bg-brand-500 text-white'
-                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                          : 'bg-theme-elevated text-theme-secondary hover:bg-theme-elevated'
                       }`}
                     >
                       {opt.emoji} {opt.label}
@@ -285,7 +269,7 @@ const UserProfile = () => {
 
               {/* Learning Style */}
               <div className="mb-3">
-                <label className="text-sm text-slate-600 mb-1 block">学习偏好</label>
+                <label className="text-sm text-theme-secondary mb-1 block">学习偏好</label>
                 <div className="grid grid-cols-2 gap-2">
                   {PROFILE_DIMENSIONS.learningStyle.options.map(opt => (
                     <button
@@ -294,7 +278,7 @@ const UserProfile = () => {
                       className={`py-2 rounded-xl text-sm font-medium transition-colors ${
                         form.learningStyle === opt.key
                           ? 'bg-brand-500 text-white'
-                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                          : 'bg-theme-elevated text-theme-secondary hover:bg-theme-elevated'
                       }`}
                     >
                       {opt.emoji} {opt.label}
@@ -305,7 +289,7 @@ const UserProfile = () => {
 
               {/* Known Languages */}
               <div className="mb-3">
-                <label className="text-sm text-slate-600 mb-1 block">已掌握语言</label>
+                <label className="text-sm text-theme-secondary mb-1 block">已掌握语言</label>
                 <div className="flex flex-wrap gap-2">
                   {LANGUAGES.filter(l => l.type !== 'system').map(lang => {
                     const selected = form.knownLanguages.includes(lang.code);
@@ -321,7 +305,7 @@ const UserProfile = () => {
                         className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs border-2 transition-all ${
                           selected
                             ? 'border-brand-500 bg-brand-50 text-brand-700'
-                            : 'border-slate-100 bg-white text-slate-500 hover:border-slate-200'
+                            : 'border-theme-light bg-theme-card text-theme-muted hover:border-theme-light'
                         }`}
                       >
                         {lang.flag} {lang.name}
@@ -333,7 +317,7 @@ const UserProfile = () => {
 
               {/* Weak Areas */}
               <div className="mb-3">
-                <label className="text-sm text-slate-600 mb-1 block">薄弱环节</label>
+                <label className="text-sm text-theme-secondary mb-1 block">薄弱环节</label>
                 <div className="flex flex-wrap gap-2">
                   {PROFILE_DIMENSIONS.weakAreas.options.map(opt => {
                     const selected = form.weakAreas.includes(opt.key);
@@ -349,7 +333,7 @@ const UserProfile = () => {
                         className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs border-2 transition-all ${
                           selected
                             ? 'border-brand-500 bg-brand-50 text-brand-700'
-                            : 'border-slate-100 bg-white text-slate-500 hover:border-slate-200'
+                            : 'border-theme-light bg-theme-card text-theme-muted hover:border-theme-light'
                         }`}
                       >
                         {opt.emoji} {opt.label}
@@ -361,7 +345,7 @@ const UserProfile = () => {
 
               {/* Study Time Preference */}
               <div className="mb-3">
-                <label className="text-sm text-slate-600 mb-1 block">学习时段偏好</label>
+                <label className="text-sm text-theme-secondary mb-1 block">学习时段偏好</label>
                 <div className="grid grid-cols-2 gap-2">
                   {PROFILE_DIMENSIONS.studyTimePreference.options.map(opt => (
                     <button
@@ -370,7 +354,7 @@ const UserProfile = () => {
                       className={`py-2 rounded-xl text-sm font-medium transition-colors ${
                         form.studyTimePreference === opt.key
                           ? 'bg-brand-500 text-white'
-                          : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                          : 'bg-theme-elevated text-theme-secondary hover:bg-theme-elevated'
                       }`}
                     >
                       {opt.emoji} {opt.label}
@@ -398,7 +382,7 @@ const UserProfile = () => {
       {/* Profile header */}
       <Card className="bg-gradient-to-br from-brand-500 to-violet-600 text-white" padding="p-5">
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-3xl">
+          <div className="w-16 h-16 rounded-2xl bg-theme-card/20 backdrop-blur-sm flex items-center justify-center text-3xl">
             {profile?.nickname?.[0]?.toUpperCase() || '👤'}
           </div>
           <div className="flex-1 min-w-0">
@@ -407,7 +391,7 @@ const UserProfile = () => {
           </div>
           <button
             onClick={() => setIsEditing(true)}
-            className="p-2 rounded-xl bg-white/15 hover:bg-white/25 backdrop-blur-sm transition-colors btn-press"
+            className="p-2 rounded-xl bg-theme-card/15 hover:bg-theme-card/25 backdrop-blur-sm transition-colors btn-press"
           >
             <Icon name="settings" size={20} />
           </button>
@@ -419,41 +403,34 @@ const UserProfile = () => {
             <span>Lv.{currentLevel.level} {currentLevel.title}</span>
             <span>{xpProgress.current}/{xpProgress.needed} XP</span>
           </div>
-          <div className="h-2 bg-white/20 rounded-full overflow-hidden">
-            <div className="h-full bg-white/80 rounded-full" style={{ width: `${xpProgress.progress * 100}%` }} />
+          <div className="h-2 bg-theme-card/20 rounded-full overflow-hidden">
+            <div className="h-full bg-theme-card/80 rounded-full" style={{ width: `${xpProgress.progress * 100}%` }} />
           </div>
         </div>
 
         <div className="grid grid-cols-4 gap-2 mt-4">
-          <div className="bg-white/15 backdrop-blur-sm rounded-xl p-2.5 text-center">
+          <div className="bg-theme-card/15 backdrop-blur-sm rounded-xl p-2.5 text-center">
             <div className="text-xl font-bold">{streakDays || 0}</div>
             <div className="text-[10px] opacity-80">连续天数</div>
           </div>
-          <div className="bg-white/15 backdrop-blur-sm rounded-xl p-2.5 text-center">
+          <div className="bg-theme-card/15 backdrop-blur-sm rounded-xl p-2.5 text-center">
             <div className="text-xl font-bold">{totalXP || 0}</div>
             <div className="text-[10px] opacity-80">总经验</div>
           </div>
-          <div className="bg-white/15 backdrop-blur-sm rounded-xl p-2.5 text-center">
+          <div className="bg-theme-card/15 backdrop-blur-sm rounded-xl p-2.5 text-center">
             <div className="text-xl font-bold">{achievements?.length || 0}</div>
             <div className="text-[10px] opacity-80">成就</div>
           </div>
-          <div className="bg-white/15 backdrop-blur-sm rounded-xl p-2.5 text-center">
+          <div className="bg-theme-card/15 backdrop-blur-sm rounded-xl p-2.5 text-center">
             <div className="text-xl font-bold">Lv.{currentLevel.level}</div>
             <div className="text-[10px] opacity-80">{currentLevel.title}</div>
           </div>
         </div>
-
-        {/* Tier badge */}
-        {IS_SUPABASE_CONFIGURED && (
-          <div className="mt-3 flex items-center gap-2">
-            <TierBadge />
-          </div>
-        )}
       </Card>
 
       {/* 7-dimension profile summary */}
       <Card padding="p-4">
-        <h3 className="font-semibold text-slate-800 text-sm mb-3 flex items-center gap-2">
+        <h3 className="font-semibold text-theme-primary text-sm mb-3 flex items-center gap-2">
           <Icon name="target" size={16} className="text-brand-500" />
           学习画像
         </h3>
@@ -474,7 +451,7 @@ const UserProfile = () => {
 
       {/* Quick stats */}
       <Card padding="p-4">
-        <h3 className="font-semibold text-slate-800 text-sm mb-3">学习语言</h3>
+        <h3 className="font-semibold text-theme-primary text-sm mb-3">学习语言</h3>
         <div className="flex flex-wrap gap-2">
           {profile?.targetLanguages?.map(code => {
             const lang = LANGUAGE_MAP[code];
@@ -485,7 +462,7 @@ const UserProfile = () => {
             ) : null;
           })}
           {(!profile?.targetLanguages || profile.targetLanguages.length === 0) && (
-            <span className="text-sm text-slate-400">还未设置目标语言</span>
+            <span className="text-sm text-theme-muted">还未设置目标语言</span>
           )}
         </div>
       </Card>
@@ -493,7 +470,7 @@ const UserProfile = () => {
       {/* Oral training records */}
       {oralRecords.length > 0 && (
         <Card padding="p-4">
-          <h3 className="font-semibold text-slate-800 text-sm mb-3 flex items-center gap-2">
+          <h3 className="font-semibold text-theme-primary text-sm mb-3 flex items-center gap-2">
             <Icon name="mic" size={16} className="text-rose-500" />
             历史录音
           </h3>
@@ -501,11 +478,11 @@ const UserProfile = () => {
             {oralRecords.map((rec) => (
               <div
                 key={rec.id}
-                className="flex items-center justify-between bg-slate-50 rounded-xl px-3 py-2 text-xs"
+                className="flex items-center justify-between bg-theme-elevated rounded-xl px-3 py-2 text-xs"
               >
                 <div className="flex-1 min-w-0 mr-2">
-                  <div className="text-slate-700 font-medium truncate">{rec.text || '未命名录音'}</div>
-                  <div className="text-slate-400 mt-0.5">
+                  <div className="text-theme-secondary font-medium truncate">{rec.text || '未命名录音'}</div>
+                  <div className="text-theme-muted mt-0.5">
                     {new Date(rec.timestamp).toLocaleDateString()} · {rec.duration || 0}s
                   </div>
                 </div>
@@ -514,7 +491,7 @@ const UserProfile = () => {
                   className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                     playingRecordId === rec.id
                       ? 'bg-brand-500 text-white'
-                      : 'bg-white text-brand-600 hover:bg-brand-50 border border-slate-200'
+                      : 'bg-theme-card text-brand-600 hover:bg-brand-50 border border-theme-light'
                   }`}
                 >
                   <Icon name={playingRecordId === rec.id ? 'volume' : 'play'} size={12} />
@@ -534,57 +511,41 @@ const UserProfile = () => {
         <OfflineStorageInfo />
       </Card>
 
-      {/* Quota status card (Supabase mode) */}
-      {IS_SUPABASE_CONFIGURED && <QuotaStatusCard />}
-
       {/* Settings list */}
       <Card padding="p-0">
         <button
-          onClick={() => setSubPage('language')}
-          className="w-full flex items-center gap-3 p-4 hover:bg-slate-50 transition-colors text-left border-b border-slate-100"
+          onClick={() => useUIStore.getState().showNotification('功能开发中', 'info')}
+          className="w-full flex items-center gap-3 p-4 hover:bg-theme-elevated transition-colors text-left border-b border-theme-light"
         >
           <div className="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center text-blue-500">
             <Icon name="globe" size={18} />
           </div>
-          <span className="flex-1 text-sm text-slate-700">语言偏好设置</span>
-          <Icon name="chevron" size={16} className="text-slate-300" />
+          <span className="flex-1 text-sm text-theme-secondary">语言偏好设置</span>
+          <Icon name="chevron" size={16} className="text-theme-disabled" />
         </button>
         <button
-          onClick={() => setSubPage('plan')}
-          className="w-full flex items-center gap-3 p-4 hover:bg-slate-50 transition-colors text-left border-b border-slate-100"
+          onClick={() => useUIStore.getState().showNotification('功能开发中', 'info')}
+          className="w-full flex items-center gap-3 p-4 hover:bg-theme-elevated transition-colors text-left border-b border-theme-light"
         >
           <div className="w-9 h-9 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-500">
             <Icon name="target" size={18} />
           </div>
-          <span className="flex-1 text-sm text-slate-700">学习计划管理</span>
-          <Icon name="chevron" size={16} className="text-slate-300" />
+          <span className="flex-1 text-sm text-theme-secondary">学习计划管理</span>
+          <Icon name="chevron" size={16} className="text-theme-disabled" />
         </button>
         <button
-          onClick={() => setSubPage('favorites')}
-          className="w-full flex items-center gap-3 p-4 hover:bg-slate-50 transition-colors text-left border-b border-slate-100"
+          onClick={() => useUIStore.getState().showNotification('功能开发中', 'info')}
+          className="w-full flex items-center gap-3 p-4 hover:bg-theme-elevated transition-colors text-left border-b border-theme-light"
         >
           <div className="w-9 h-9 rounded-xl bg-amber-50 flex items-center justify-center text-amber-500">
             <Icon name="bookmark" size={18} />
           </div>
-          <span className="flex-1 text-sm text-slate-700">我的收藏</span>
-          <Icon name="chevron" size={16} className="text-slate-300" />
+          <span className="flex-1 text-sm text-theme-secondary">我的收藏</span>
+          <Icon name="chevron" size={16} className="text-theme-disabled" />
         </button>
-        {/* Admin entry - only visible to admins */}
-        {isAdmin && (
-          <button
-            onClick={() => window.openAdmin && window.openAdmin()}
-            className="w-full flex items-center gap-3 p-4 hover:bg-brand-50 transition-colors text-left border-b border-slate-100"
-          >
-            <div className="w-9 h-9 rounded-xl bg-brand-50 flex items-center justify-center text-brand-500">
-              <Icon name="shield" size={18} />
-            </div>
-            <span className="flex-1 text-sm text-brand-700 font-medium">管理后台</span>
-            <Icon name="chevron" size={16} className="text-brand-300" />
-          </button>
-        )}
         <button
           onClick={handleClearAllData}
-          className="w-full flex items-center gap-3 p-4 hover:bg-red-50 transition-colors text-left border-b border-slate-100"
+          className="w-full flex items-center gap-3 p-4 hover:bg-red-50 transition-colors text-left"
         >
           <div className="w-9 h-9 rounded-xl bg-red-50 flex items-center justify-center text-red-500">
             <Icon name="trash" size={18} />
@@ -592,28 +553,10 @@ const UserProfile = () => {
           <span className="flex-1 text-sm text-red-600">清除所有数据</span>
           <Icon name="chevron" size={16} className="text-red-300" />
         </button>
-        {/* Sign out (Supabase mode) */}
-        {IS_SUPABASE_CONFIGURED && (
-          <button
-            onClick={async () => {
-              if (confirm('确定要退出登录吗？')) {
-                await useAuthStore.getState().signOut();
-                useUIStore.getState().showNotification('已退出登录', 'info');
-              }
-            }}
-            className="w-full flex items-center gap-3 p-4 hover:bg-slate-50 transition-colors text-left"
-          >
-            <div className="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center text-slate-500">
-              <Icon name="log-out" size={18} />
-            </div>
-            <span className="flex-1 text-sm text-slate-600">退出登录</span>
-            <Icon name="chevron" size={16} className="text-slate-300" />
-          </button>
-        )}
       </Card>
 
       {/* Version info */}
-      <div className="text-center text-xs text-slate-300 pt-4 pb-2">
+      <div className="text-center text-xs text-theme-disabled pt-4 pb-2">
         LingoPal v1.2.0 · 语伴 · PWA
       </div>
     </div>
@@ -676,34 +619,34 @@ const PWASettingsItem = () => {
     <>
       <button
         onClick={handleInstall}
-        className="w-full flex items-center gap-3 p-4 hover:bg-slate-50 transition-colors text-left border-b border-slate-100"
+        className="w-full flex items-center gap-3 p-4 hover:bg-theme-elevated transition-colors text-left border-b border-theme-light"
       >
         <div className="w-9 h-9 rounded-xl bg-brand-50 flex items-center justify-center text-brand-500">
           <Icon name="download" size={18} />
         </div>
         <div className="flex-1">
-          <div className="text-sm text-slate-700">
+          <div className="text-sm text-theme-secondary">
             {isInstalled ? '已安装到主屏' : '安装到主屏'}
           </div>
-          <div className="text-xs text-slate-400 mt-0.5">
+          <div className="text-xs text-theme-muted mt-0.5">
             {isInstalled ? 'LingoPal 已作为独立应用安装' : '离线可用 · 启动更快 · 无广告'}
           </div>
         </div>
         {isInstalled ? (
           <span className="text-xs text-emerald-500 font-medium">已安装</span>
         ) : (
-          <Icon name="chevron" size={16} className="text-slate-300" />
+          <Icon name="chevron" size={16} className="text-theme-disabled" />
         )}
       </button>
       <button
         onClick={handleShare}
-        className="w-full flex items-center gap-3 p-4 hover:bg-slate-50 transition-colors text-left"
+        className="w-full flex items-center gap-3 p-4 hover:bg-theme-elevated transition-colors text-left"
       >
         <div className="w-9 h-9 rounded-xl bg-violet-50 flex items-center justify-center text-violet-500">
           <Icon name="share" size={18} />
         </div>
-        <span className="flex-1 text-sm text-slate-700">分享给好友</span>
-        <Icon name="chevron" size={16} className="text-slate-300" />
+        <span className="flex-1 text-sm text-theme-secondary">分享给好友</span>
+        <Icon name="chevron" size={16} className="text-theme-disabled" />
       </button>
     </>
   );
@@ -756,18 +699,18 @@ const OfflineStorageInfo = () => {
           `已缓存 ${formatBytes(storageInfo.used)} 数据`, 'info', 2000
         );
       }}
-      className="w-full flex items-center gap-3 p-4 hover:bg-slate-50 transition-colors text-left border-b border-slate-100"
+      className="w-full flex items-center gap-3 p-4 hover:bg-theme-elevated transition-colors text-left border-b border-theme-light"
     >
       <div className="w-9 h-9 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-500">
         <Icon name="database" size={18} />
       </div>
       <div className="flex-1">
-        <div className="text-sm text-slate-700">离线数据</div>
-        <div className="text-xs text-slate-400 mt-0.5">
+        <div className="text-sm text-theme-secondary">离线数据</div>
+        <div className="text-xs text-theme-muted mt-0.5">
           {storageInfo.dbRecords} 条学习记录 · {formatBytes(storageInfo.used)}
         </div>
         {storageInfo.total > 0 && (
-          <div className="mt-1.5 h-1 bg-slate-100 rounded-full overflow-hidden">
+          <div className="mt-1.5 h-1 bg-theme-elevated rounded-full overflow-hidden">
             <div
               className="h-full bg-emerald-400 rounded-full transition-all"
               style={{ width: `${Math.min(usagePercent, 100)}%` }}
@@ -775,123 +718,9 @@ const OfflineStorageInfo = () => {
           </div>
         )}
       </div>
-      <Icon name="chevron" size={16} className="text-slate-300" />
+      <Icon name="chevron" size={16} className="text-theme-disabled" />
     </button>
   );
 };
 
-// ========== Tier Badge ==========
-const TierBadge = () => {
-  const { supabaseProfile } = useAuthStore();
-  const tier = supabaseProfile?.tier || 'free';
-  const role = supabaseProfile?.role || 'user';
-
-  const tierColors = {
-    free: 'bg-slate-100 text-slate-600 border-slate-200',
-    pro: 'bg-amber-50 text-amber-600 border-amber-200',
-    enterprise: 'bg-brand-50 text-brand-600 border-brand-200',
-  };
-
-  const tierLabels = {
-    free: 'Free',
-    pro: 'Pro',
-    enterprise: 'Enterprise',
-  };
-
-  return (
-    <>
-      <span className={`text-xs px-2 py-1 rounded-full border font-medium ${tierColors[tier] || tierColors.free}`}>
-        {tierLabels[tier] || tier}
-      </span>
-      {role === 'admin' && (
-        <span className="text-xs px-2 py-1 rounded-full bg-brand-500 text-white font-medium">
-          管理员
-        </span>
-      )}
-    </>
-  );
-};
-
-// ========== Quota Status Card ==========
-const QuotaStatusCard = () => {
-  // FIX(React error #185 白屏): 原写法 useAuthStore(s => s.getQuotaStatus?.() || null)
-  // 在 selector 内调用 getQuotaStatus()，它每次都返回全新对象字面量，
-  // useSyncExternalStore 判定快照变化触发无限重渲染直至崩溃。
-  // 改为订阅稳定的状态引用，用 useMemo 派生配额对象。
-  const getQuotaStatus = useAuthStore(s => s.getQuotaStatus);
-  const tierConfig = useAuthStore(s => s.tierConfig);
-  const dailyUsage = useAuthStore(s => s.dailyUsage);
-  const supabaseProfile = useAuthStore(s => s.supabaseProfile);
-  const quota = React.useMemo(
-    () => (typeof getQuotaStatus === 'function' ? getQuotaStatus() : null),
-    [getQuotaStatus, tierConfig, dailyUsage, supabaseProfile]
-  );
-  const [refreshing, setRefreshing] = React.useState(false);
-
-  const handleRefresh = async () => {
-    setRefreshing(true);
-    await useAuthStore.getState().refreshProfile();
-    setRefreshing(false);
-  };
-
-  if (!quota) {
-    return (
-      <Card padding="p-4">
-        <div className="flex items-center justify-between">
-          <h3 className="font-semibold text-slate-800 text-sm">今日配额</h3>
-          <button onClick={handleRefresh} className="text-xs text-brand-500">
-            {refreshing ? '刷新中...' : '刷新'}
-          </button>
-        </div>
-        <p className="text-xs text-slate-400 mt-2">加载中...</p>
-      </Card>
-    );
-  }
-
-  const items = [
-    { label: '翻译', used: quota.translation?.used || 0, limit: quota.translation?.limit || 50 },
-    { label: 'AI对话', used: quota.aiDialogue?.used || 0, limit: quota.aiDialogue?.limit || 20 },
-    { label: '语音合成', used: quota.aiTTS?.used || 0, limit: quota.aiTTS?.limit || 50 },
-    { label: 'OCR', used: quota.ocr?.used || 0, limit: quota.ocr?.limit || 20 },
-  ];
-
-  return (
-    <Card padding="p-4">
-      <div className="flex items-center justify-between mb-3">
-        <h3 className="font-semibold text-slate-800 text-sm flex items-center gap-2">
-          <Icon name="gauge" size={16} className="text-brand-500" />
-          今日配额
-        </h3>
-        <button onClick={handleRefresh} className="text-xs text-brand-500">
-          {refreshing ? '刷新中...' : '刷新'}
-        </button>
-      </div>
-      <div className="grid grid-cols-2 gap-3">
-        {items.map(item => {
-          const pct = item.limit > 0 ? (item.used / item.limit) * 100 : 0;
-          const isExhausted = item.used >= item.limit;
-          return (
-            <div key={item.label} className="bg-slate-50 rounded-xl p-3">
-              <div className="flex items-center justify-between mb-1.5">
-                <span className="text-xs text-slate-500">{item.label}</span>
-                <span className={`text-xs font-medium ${isExhausted ? 'text-red-500' : 'text-slate-700'}`}>
-                  {item.used}/{item.limit}
-                </span>
-              </div>
-              <div className="h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                <div
-                  className={`h-full rounded-full transition-all ${
-                    isExhausted ? 'bg-red-400' : pct > 80 ? 'bg-amber-400' : 'bg-emerald-400'
-                  }`}
-                  style={{ width: `${Math.min(pct, 100)}%` }}
-                />
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </Card>
-  );
-};
-
-Object.assign(window, { UserProfile, PWASettingsItem, OfflineStorageInfo, TierBadge, QuotaStatusCard });
+Object.assign(window, { UserProfile, PWASettingsItem, OfflineStorageInfo });

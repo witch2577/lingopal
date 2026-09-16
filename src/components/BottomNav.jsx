@@ -1,15 +1,16 @@
 // ========== Bottom Navigation ==========
-// 4 items: Home / Learning / Practice / Me
 
 const BottomNav = ({ active, onChange }) => {
   const { isMobile, windowWidth } = useMobileDetect();
+
+  // On very small screens, show fewer nav items or use compact mode
   const isCompact = isMobile && windowWidth < 360;
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 glass border-t border-slate-200/60 z-30 pb-safe">
+    <nav className="fixed bottom-0 left-0 right-0 nav-themed z-30 pb-safe theme-transition">
       <div className="max-w-xl mx-auto flex justify-around items-center">
         {NAV_ITEMS.map(item => {
-          const isActive = active === item.key || (item.key === 'practice' && (active === 'oral' || active === 'written'));
+          const isActive = active === item.key;
           return (
             <button
               key={item.key}
@@ -18,8 +19,8 @@ const BottomNav = ({ active, onChange }) => {
                 isCompact ? 'py-1 px-1' : 'py-1.5 px-2'
               } ${
                 isActive
-                  ? 'text-brand-600'
-                  : 'text-slate-400 hover:text-slate-600'
+                  ? 'text-brand-500'
+                  : 'text-theme-muted hover:text-theme-secondary'
               }`}
               aria-label={item.label}
             >
@@ -42,7 +43,7 @@ const BottomNav = ({ active, onChange }) => {
               {isActive && (
                 <motion.div
                   layoutId="nav-indicator"
-                  className="absolute -top-0.5 w-6 h-1 rounded-full bg-brand-500"
+                  className="absolute -top-0.5 w-1 h-1 rounded-full" style={{ background: "var(--brand-primary)" }}
                 />
               )}
             </button>

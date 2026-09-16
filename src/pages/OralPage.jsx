@@ -15,14 +15,14 @@ const OralPage = () => {
             <Icon name="mic" size={18} />
           </div>
           <div>
-            <h1 className="text-lg sm:text-xl font-bold text-slate-800 font-display">口语</h1>
-            <p className="text-xs text-slate-400">听说读写，全面提升</p>
+            <h1 className="text-lg sm:text-xl font-bold text-theme-primary font-display">口语</h1>
+            <p className="text-xs text-theme-muted">听说读写，全面提升</p>
           </div>
         </div>
       </div>
 
       {/* Sub-tab navigation */}
-      <div className="flex items-center gap-1 mb-3 sm:mb-4 border-b border-slate-200 pb-1 -mx-1 px-1 overflow-x-auto hide-scrollbar">
+      <div className="flex items-center gap-1 mb-3 sm:mb-4 border-b border-theme-light pb-1 -mx-1 px-1 overflow-x-auto hide-scrollbar">
         {ORAL_TABS.map(tab => {
           const isActive = activeTab === tab.key;
           return (
@@ -32,7 +32,7 @@ const OralPage = () => {
               className={`relative px-3 py-2 text-sm font-medium rounded-lg transition-all btn-press whitespace-nowrap touch-target ${
                 isActive
                   ? 'text-brand-600 bg-brand-50'
-                  : 'text-slate-500 hover:text-slate-700 hover:bg-slate-50'
+                  : 'text-theme-muted hover:text-theme-secondary hover:bg-theme-elevated'
               }`}
             >
               {tab.label}

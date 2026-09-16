@@ -28,9 +28,9 @@ const LeaderboardView = () => {
 
   const getRankStyle = (rank) => {
     if (rank === 1) return 'bg-amber-100 text-amber-700 border-amber-200';
-    if (rank === 2) return 'bg-slate-100 text-slate-700 border-slate-200';
+    if (rank === 2) return 'bg-theme-elevated text-theme-secondary border-theme-light';
     if (rank === 3) return 'bg-orange-100 text-orange-700 border-orange-200';
-    return 'bg-white text-slate-600 border-slate-100';
+    return 'bg-theme-card text-theme-secondary border-theme-light';
   };
 
   const getRankIcon = (rank) => {
@@ -55,7 +55,7 @@ const LeaderboardView = () => {
             className={`flex-1 py-2 rounded-xl text-sm font-medium transition-all ${
               period === key
                 ? 'bg-brand-500 text-white shadow-md'
-                : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                : 'bg-theme-elevated text-theme-secondary hover:bg-theme-elevated'
             }`}
           >
             {label}
@@ -92,7 +92,7 @@ const LeaderboardView = () => {
                     alt={entry.nickname}
                     className="w-12 h-12 rounded-full border-2 border-white shadow-md object-cover"
                   />
-                  <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-white shadow flex items-center justify-center text-xs">
+                  <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-theme-card shadow flex items-center justify-center text-xs">
                     {getRankIcon(entry.rank)}
                   </div>
                 </div>
@@ -101,7 +101,7 @@ const LeaderboardView = () => {
                 }`}>
                   <span className="text-white text-xs font-bold">{entry.totalXP}XP</span>
                 </div>
-                <span className="text-xs text-slate-600 mt-1 font-medium truncate max-w-[60px]">{entry.nickname}</span>
+                <span className="text-xs text-theme-secondary mt-1 font-medium truncate max-w-[60px]">{entry.nickname}</span>
               </motion.div>
             );
           })}
@@ -243,9 +243,9 @@ const FriendPK = () => {
 
         <div className="space-y-3">
           {pkResult.categories.map((cat, i) => (
-            <div key={i} className="bg-white rounded-xl p-3 border border-slate-100">
+            <div key={i} className="bg-theme-card rounded-xl p-3 border border-theme-light">
               <div className="flex items-center justify-between mb-2">
-                <p className="text-xs text-slate-500">{cat.name}</p>
+                <p className="text-xs text-theme-muted">{cat.name}</p>
                 {cat.meDemo && (
                   <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 text-[10px] font-medium">
                     <Icon name="alert-circle" size={10} />
@@ -255,7 +255,7 @@ const FriendPK = () => {
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-sm font-bold w-12 text-right">{cat.meDemo ? '—' : cat.me}</span>
-                <div className="flex-1 h-3 bg-slate-100 rounded-full overflow-hidden flex">
+                <div className="flex-1 h-3 bg-theme-elevated rounded-full overflow-hidden flex">
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${cat.meDemo ? 0 : (cat.me / (cat.me + cat.friend)) * 100}%` }}
@@ -272,7 +272,7 @@ const FriendPK = () => {
                 <span className="text-sm font-bold w-12">{cat.friend}</span>
               </div>
               {cat.meDemo && (
-                <p className="text-[10px] text-slate-400 mt-1">数据不足：暂无足够的答题记录来计算正确率</p>
+                <p className="text-[10px] text-theme-muted mt-1">数据不足：暂无足够的答题记录来计算正确率</p>
               )}
             </div>
           ))}
@@ -296,7 +296,7 @@ const FriendPK = () => {
             key={friend.friendId}
             whileTap={{ scale: 0.98 }}
             onClick={() => startPK(friend)}
-            className="flex items-center gap-3 p-3 bg-white rounded-xl border border-slate-100 cursor-pointer hover:border-brand-200 transition-colors"
+            className="flex items-center gap-3 p-3 bg-theme-card rounded-xl border border-theme-light cursor-pointer hover:border-brand-200 transition-colors"
           >
             <img
               src={friend.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${friend.nickname}`}
@@ -305,7 +305,7 @@ const FriendPK = () => {
             />
             <div className="flex-1 min-w-0">
               <p className="text-sm font-semibold">{friend.nickname}</p>
-              <div className="flex items-center gap-3 text-xs text-slate-500">
+              <div className="flex items-center gap-3 text-xs text-theme-muted">
                 <span>⚡ {friend.totalXP} XP</span>
                 <span>🔥 {friend.streakDays}天</span>
                 <span>✅ {friend.accuracy}%</span>

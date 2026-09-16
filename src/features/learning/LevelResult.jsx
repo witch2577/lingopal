@@ -47,7 +47,7 @@ const LevelResult = ({ result, level, onRetry, onBack }) => {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="text-2xl font-bold text-slate-800 mb-1"
+        className="text-2xl font-bold text-theme-primary mb-1"
       >
         {message.title}
       </motion.h2>
@@ -55,7 +55,7 @@ const LevelResult = ({ result, level, onRetry, onBack }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
-        className="text-sm text-slate-500 mb-6"
+        className="text-sm text-theme-muted mb-6"
       >
         {message.desc}
       </motion.p>
@@ -109,17 +109,17 @@ const LevelResult = ({ result, level, onRetry, onBack }) => {
         transition={{ delay: 1.1 }}
         className="w-full grid grid-cols-3 gap-2 mb-4"
       >
-        <div className="bg-white rounded-xl p-3 text-center shadow-sm border border-slate-100">
-          <div className="text-lg font-bold text-slate-700">{correctCount}/{totalQuestions}</div>
-          <div className="text-xs text-slate-400">正确率 {accuracy}%</div>
+        <div className="bg-theme-card rounded-xl p-3 text-center shadow-sm border border-theme-light">
+          <div className="text-lg font-bold text-theme-secondary">{correctCount}/{totalQuestions}</div>
+          <div className="text-xs text-theme-muted">正确率 {accuracy}%</div>
         </div>
-        <div className="bg-white rounded-xl p-3 text-center shadow-sm border border-slate-100">
+        <div className="bg-theme-card rounded-xl p-3 text-center shadow-sm border border-theme-light">
           <div className="text-lg font-bold text-amber-500">{maxCombo}</div>
-          <div className="text-xs text-slate-400">最大连击</div>
+          <div className="text-xs text-theme-muted">最大连击</div>
         </div>
-        <div className="bg-white rounded-xl p-3 text-center shadow-sm border border-slate-100">
+        <div className="bg-theme-card rounded-xl p-3 text-center shadow-sm border border-theme-light">
           <div className="text-lg font-bold text-emerald-500">+{timeBonus}</div>
-          <div className="text-xs text-slate-400">时间奖励</div>
+          <div className="text-xs text-theme-muted">时间奖励</div>
         </div>
       </motion.div>
 
@@ -144,12 +144,12 @@ const LevelResult = ({ result, level, onRetry, onBack }) => {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.2 }}
-                    className="flex items-center gap-3 bg-white/70 backdrop-blur-sm rounded-xl p-3"
+                    className="flex items-center gap-3 bg-theme-card/70 backdrop-blur-sm rounded-xl p-3"
                   >
                     <span className="text-2xl">{ach.icon}</span>
                     <div>
-                      <div className="font-semibold text-slate-700 text-sm">{ach.title}</div>
-                      <div className="text-xs text-slate-500">{ach.desc}</div>
+                      <div className="font-semibold text-theme-secondary text-sm">{ach.title}</div>
+                      <div className="text-xs text-theme-muted">{ach.desc}</div>
                     </div>
                   </motion.div>
                 ))}

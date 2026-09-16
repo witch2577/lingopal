@@ -53,7 +53,7 @@ const LanguageSelector = ({
       className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors touch-target ${
         value === lang.code
           ? 'bg-brand-50 text-brand-700'
-          : 'hover:bg-slate-50 text-slate-700'
+          : 'hover:bg-theme-elevated text-theme-secondary'
       }`}
     >
       <span className="text-xl">{lang.flag}</span>
@@ -71,14 +71,14 @@ const LanguageSelector = ({
     <div className={`relative ${className}`} ref={dropdownRef}>
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors btn-press touch-target w-full"
+        className="flex items-center gap-2 px-3 py-2 rounded-xl bg-theme-elevated hover:bg-theme-elevated transition-colors btn-press touch-target w-full"
       >
         <span className="text-lg">{currentLang.flag}</span>
         <div className="text-left flex-1 min-w-0">
-          {label && <div className="text-[10px] text-slate-400 leading-tight">{label}</div>}
-          <div className="text-sm font-medium text-slate-700 leading-tight truncate">{currentLang.name}</div>
+          {label && <div className="text-[10px] text-theme-muted leading-tight">{label}</div>}
+          <div className="text-sm font-medium text-theme-secondary leading-tight truncate">{currentLang.name}</div>
         </div>
-        <Icon name="chevron-down" size={16} className={`text-slate-400 transition-transform flex-shrink-0 ${open ? 'rotate-180' : ''}`} />
+        <Icon name="chevron-down" size={16} className={`text-theme-muted transition-transform flex-shrink-0 ${open ? 'rotate-180' : ''}`} />
       </button>
 
       <AnimatePresence>
@@ -88,17 +88,17 @@ const LanguageSelector = ({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8, scale: 0.95 }}
             transition={{ type: 'spring', stiffness: 400, damping: 35 }}
-            className="absolute top-full left-0 mt-2 w-full min-w-[14rem] sm:w-56 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-50 overflow-hidden max-h-[70vh] overflow-y-auto"
+            className="absolute top-full left-0 mt-2 w-full min-w-[14rem] sm:w-56 bg-theme-card rounded-2xl shadow-xl border border-theme-light py-2 z-50 overflow-hidden max-h-[70vh] overflow-y-auto"
           >
             {autoLang && renderLangItem(autoLang)}
             {standardLangs.map(renderLangItem)}
 
             {betaLangs.length > 0 && (
               <>
-                <div className="px-4 py-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wider bg-slate-50">新增语言 (Beta)</div>
+                <div className="px-4 py-1.5 text-[11px] font-semibold text-theme-muted uppercase tracking-wider bg-theme-elevated">新增语言 (Beta)</div>
                 {betaGroups.map(group => (
                   <div key={group.key}>
-                    <div className="px-4 py-1 text-[10px] text-slate-400">{group.label}</div>
+                    <div className="px-4 py-1 text-[10px] text-theme-muted">{group.label}</div>
                     {group.langs.map(renderLangItem)}
                   </div>
                 ))}
@@ -107,7 +107,7 @@ const LanguageSelector = ({
 
             {dialectLangs.length > 0 && (
               <>
-                <div className="px-4 py-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wider bg-slate-50">方言</div>
+                <div className="px-4 py-1.5 text-[11px] font-semibold text-theme-muted uppercase tracking-wider bg-theme-elevated">方言</div>
                 {dialectLangs.map(renderLangItem)}
               </>
             )}

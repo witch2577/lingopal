@@ -62,7 +62,7 @@ const GrammarClass = () => {
         <button
           onClick={() => setFilterLang('all')}
           className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-            filterLang === 'all' ? 'bg-brand-500 text-white' : 'bg-slate-100 text-slate-600'
+            filterLang === 'all' ? 'bg-brand-500 text-white' : 'bg-theme-elevated text-theme-secondary'
           }`}
         >
           全部
@@ -72,7 +72,7 @@ const GrammarClass = () => {
             key={l.code}
             onClick={() => setFilterLang(l.code)}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-              filterLang === l.code ? 'bg-brand-500 text-white' : 'bg-slate-100 text-slate-600'
+              filterLang === l.code ? 'bg-brand-500 text-white' : 'bg-theme-elevated text-theme-secondary'
             }`}
           >
             {l.name}
@@ -81,15 +81,15 @@ const GrammarClass = () => {
       </div>
 
       {/* Stats */}
-      <div className="bg-white rounded-xl p-4 border border-slate-100 flex items-center justify-between">
+      <div className="bg-theme-card rounded-xl p-4 border border-theme-light flex items-center justify-between">
         <div>
-          <p className="text-sm text-slate-500">已学习</p>
+          <p className="text-sm text-theme-muted">已学习</p>
           <p className="text-xl font-bold text-brand-600">
             {Object.keys(progress).filter(k => k.startsWith('grammar_')).length}/{lessons.length}
           </p>
         </div>
         <div className="text-right">
-          <p className="text-sm text-slate-500">获得 XP</p>
+          <p className="text-sm text-theme-muted">获得 XP</p>
           <p className="text-xl font-bold text-emerald-600">
             {Object.keys(progress).filter(k => k.startsWith('grammar_')).length * 15}+
           </p>
@@ -111,7 +111,7 @@ const GrammarClass = () => {
               className={`p-4 rounded-xl border cursor-pointer transition-all ${
                 isCompleted
                   ? 'bg-emerald-50 border-emerald-200'
-                  : 'bg-white border-slate-100 hover:border-brand-200'
+                  : 'bg-theme-card border-theme-light hover:border-brand-200'
               }`}
             >
               <div className="flex items-start justify-between">
@@ -125,17 +125,17 @@ const GrammarClass = () => {
                     )}
                     {isCompleted && <span className="text-emerald-500 text-xs">✅</span>}
                   </div>
-                  <p className="text-xs text-slate-500 truncate">{lesson.description}</p>
+                  <p className="text-xs text-theme-muted truncate">{lesson.description}</p>
                   <div className="flex items-center gap-2 mt-2">
                     <Badge variant="primary" className="text-[10px]">{LANGUAGE_MAP[lesson.language]?.name}</Badge>
                     <Badge variant={lesson.difficulty === 'beginner' ? 'success' : lesson.difficulty === 'intermediate' ? 'accent' : 'danger'} className="text-[10px]">
                       {DIFFICULTY_LEVELS.find(d => d.key === lesson.difficulty)?.label}
                     </Badge>
-                    <span className="text-[10px] text-slate-400">{lesson.duration}分钟</span>
+                    <span className="text-[10px] text-theme-muted">{lesson.duration}分钟</span>
                     <span className="text-[10px] text-brand-500">+{lesson.xpReward} XP</span>
                   </div>
                 </div>
-                <Icon name="chevron" size={16} className="text-slate-300 mt-1" />
+                <Icon name="chevron" size={16} className="text-theme-disabled mt-1" />
               </div>
             </motion.div>
           );
@@ -156,24 +156,24 @@ const GrammarLessonDetail = ({ lesson, isCompleted, onBack, onComplete }) => {
       className="space-y-4"
     >
       <div className="flex items-center gap-2">
-        <button onClick={onBack} className="p-2 rounded-lg hover:bg-slate-100">
+        <button onClick={onBack} className="p-2 rounded-lg hover:bg-theme-elevated">
           <Icon name="chevron-left" size={20} />
         </button>
         <h2 className="text-lg font-bold">{lesson.title}</h2>
       </div>
 
-      <div className="bg-white rounded-xl p-5 border border-slate-100 space-y-4">
+      <div className="bg-theme-card rounded-xl p-5 border border-theme-light space-y-4">
         <div className="flex items-center gap-2">
           <Badge variant="primary">{LANGUAGE_MAP[lesson.language]?.name}</Badge>
           <Badge variant={lesson.difficulty === 'beginner' ? 'success' : lesson.difficulty === 'intermediate' ? 'accent' : 'danger'}>
             {DIFFICULTY_LEVELS.find(d => d.key === lesson.difficulty)?.label}
           </Badge>
-          <span className="text-xs text-slate-400">{lesson.duration}分钟</span>
+          <span className="text-xs text-theme-muted">{lesson.duration}分钟</span>
         </div>
 
         <div>
-          <h3 className="text-sm font-semibold text-slate-700 mb-2">知识点</h3>
-          <p className="text-sm text-slate-600 leading-relaxed">{lesson.content}</p>
+          <h3 className="text-sm font-semibold text-theme-secondary mb-2">知识点</h3>
+          <p className="text-sm text-theme-secondary leading-relaxed">{lesson.content}</p>
         </div>
 
         <div>
@@ -194,7 +194,7 @@ const GrammarLessonDetail = ({ lesson, isCompleted, onBack, onComplete }) => {
               >
                 <div className="mt-2 space-y-2">
                   {lesson.examples.map((ex, i) => (
-                    <div key={i} className="bg-slate-50 rounded-lg p-3 text-sm text-slate-700">
+                    <div key={i} className="bg-theme-elevated rounded-lg p-3 text-sm text-theme-secondary">
                       {ex}
                     </div>
                   ))}

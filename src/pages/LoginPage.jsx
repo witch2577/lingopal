@@ -99,7 +99,7 @@ const LoginPage = ({ onComplete }) => {
         <div
           key={s}
           className={`h-1.5 rounded-full transition-all duration-300 ${
-            s <= step ? 'w-6 bg-brand-500' : 'w-3 bg-slate-200'
+            s <= step ? 'w-6 bg-brand-500' : 'w-3 bg-theme-elevated'
           }`}
         />
       ))}
@@ -124,8 +124,8 @@ const LoginPage = ({ onComplete }) => {
           >
             🌍
           </motion.div>
-          <h1 className="text-lg sm:text-xl font-bold text-slate-800 font-display">语伴 LingoPal</h1>
-          <p className="text-xs text-slate-400 mt-0.5">多语言翻译 · 趣味方言学习</p>
+          <h1 className="text-lg sm:text-xl font-bold text-theme-primary font-display">语伴 LingoPal</h1>
+          <p className="text-xs text-theme-muted mt-0.5">多语言翻译 · 趣味方言学习</p>
         </div>
 
         {renderStepIndicator()}
@@ -139,17 +139,17 @@ const LoginPage = ({ onComplete }) => {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: animDuration }}
-              className={`bg-white rounded-2xl ${cardPadding} shadow-sm border border-slate-100`}
+              className={`bg-theme-card rounded-2xl ${cardPadding} shadow-sm border border-theme-light`}
             >
-              <h2 className="text-lg font-bold text-slate-800 mb-1">你好！👋</h2>
-              <p className="text-sm text-slate-500 mb-4">给自己起个昵称吧</p>
+              <h2 className="text-lg font-bold text-theme-primary mb-1">你好！👋</h2>
+              <p className="text-sm text-theme-muted mb-4">给自己起个昵称吧</p>
               <input
                 ref={nicknameRef}
                 type="text"
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
                 placeholder="输入你的昵称"
-                className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-brand-400 focus:outline-none text-base mb-4"
+                className="w-full px-4 py-3 rounded-xl border-2 border-theme-light focus:border-brand-400 focus:outline-none text-base mb-4"
                 maxLength={20}
                 autoFocus
               />
@@ -167,10 +167,10 @@ const LoginPage = ({ onComplete }) => {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: animDuration }}
-              className={`bg-white rounded-2xl ${cardPadding} shadow-sm border border-slate-100`}
+              className={`bg-theme-card rounded-2xl ${cardPadding} shadow-sm border border-theme-light`}
             >
-              <h2 className="text-lg font-bold text-slate-800 mb-1">想学习什么语言？📚</h2>
-              <p className="text-sm text-slate-500 mb-4">可以多选，后续也可以随时切换</p>
+              <h2 className="text-lg font-bold text-theme-primary mb-1">想学习什么语言？📚</h2>
+              <p className="text-sm text-theme-muted mb-4">可以多选，后续也可以随时切换</p>
               <div className={`space-y-2 mb-4 sm:mb-5 ${listMaxH} overflow-y-auto hide-scrollbar`}>
                 {learningLangs.map(lang => {
                   const selected = selectedLangs.includes(lang.code);
@@ -181,19 +181,19 @@ const LoginPage = ({ onComplete }) => {
                       className={`touch-target w-full flex items-center gap-3 p-3 rounded-xl transition-all text-left border-2 ${
                         selected
                           ? 'border-brand-500 bg-brand-50'
-                          : 'border-slate-100 hover:border-slate-200 bg-white'
+                          : 'border-theme-light hover:border-theme-light bg-theme-card'
                       }`}
                     >
                       <span className="text-xl sm:text-2xl">{lang.flag}</span>
                       <div className="flex-1 min-w-0">
-                        <div className="font-medium text-slate-700 text-sm sm:text-base truncate">{lang.name}</div>
-                        <div className="text-xs text-slate-400 truncate">
+                        <div className="font-medium text-theme-secondary text-sm sm:text-base truncate">{lang.name}</div>
+                        <div className="text-xs text-theme-muted truncate">
                           {lang.type === 'dialect' ? '方言' : lang.nameEn}
                           {quizDataReady && QUIZ_DATA[lang.code] ? ` · ${getAllLevels(lang.code).length} 关` : ''}
                         </div>
                       </div>
                       <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all flex-shrink-0 ${
-                        selected ? 'bg-brand-500 border-brand-500 text-white' : 'border-slate-200'
+                        selected ? 'bg-brand-500 border-brand-500 text-white' : 'border-theme-light'
                       }`}>
                         {selected && <Icon name="check" size={14} />}
                       </div>
@@ -218,10 +218,10 @@ const LoginPage = ({ onComplete }) => {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: animDuration }}
-              className={`bg-white rounded-2xl ${cardPadding} shadow-sm border border-slate-100`}
+              className={`bg-theme-card rounded-2xl ${cardPadding} shadow-sm border border-theme-light`}
             >
-              <h2 className="text-lg font-bold text-slate-800 mb-1">你的语言水平？📊</h2>
-              <p className="text-sm text-slate-500 mb-4">这将决定内容起点和难度曲线</p>
+              <h2 className="text-lg font-bold text-theme-primary mb-1">你的语言水平？📊</h2>
+              <p className="text-sm text-theme-muted mb-4">这将决定内容起点和难度曲线</p>
               <div className="space-y-2 mb-4 sm:mb-5">
                 {PROFILE_DIMENSIONS.languageLevel.options.map(opt => (
                   <button
@@ -230,15 +230,15 @@ const LoginPage = ({ onComplete }) => {
                     className={`touch-target w-full flex items-center gap-3 p-3 rounded-xl transition-all text-left border-2 ${
                       profileDims.languageLevel === opt.key
                         ? 'border-brand-500 bg-brand-50'
-                        : 'border-slate-100 hover:border-slate-200 bg-white'
+                        : 'border-theme-light hover:border-theme-light bg-theme-card'
                     }`}
                   >
                     <span className="text-xl sm:text-2xl">{opt.emoji}</span>
                     <div className="flex-1">
-                      <div className="font-medium text-slate-700 text-sm sm:text-base">{opt.label}</div>
+                      <div className="font-medium text-theme-secondary text-sm sm:text-base">{opt.label}</div>
                     </div>
                     <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all flex-shrink-0 ${
-                      profileDims.languageLevel === opt.key ? 'bg-brand-500 border-brand-500 text-white' : 'border-slate-200'
+                      profileDims.languageLevel === opt.key ? 'bg-brand-500 border-brand-500 text-white' : 'border-theme-light'
                     }`}>
                       {profileDims.languageLevel === opt.key && <Icon name="check" size={14} />}
                     </div>
@@ -260,10 +260,10 @@ const LoginPage = ({ onComplete }) => {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: animDuration }}
-              className={`bg-white rounded-2xl ${cardPadding} shadow-sm border border-slate-100`}
+              className={`bg-theme-card rounded-2xl ${cardPadding} shadow-sm border border-theme-light`}
             >
-              <h2 className="text-lg font-bold text-slate-800 mb-1">学习目标是什么？🎯</h2>
-              <p className="text-sm text-slate-500 mb-4">决定词汇侧重和训练模式</p>
+              <h2 className="text-lg font-bold text-theme-primary mb-1">学习目标是什么？🎯</h2>
+              <p className="text-sm text-theme-muted mb-4">决定词汇侧重和训练模式</p>
               <div className="space-y-2 mb-4 sm:mb-5">
                 {PROFILE_DIMENSIONS.learningGoal.options.map(opt => (
                   <button
@@ -272,15 +272,15 @@ const LoginPage = ({ onComplete }) => {
                     className={`touch-target w-full flex items-center gap-3 p-3 rounded-xl transition-all text-left border-2 ${
                       profileDims.learningGoal === opt.key
                         ? 'border-brand-500 bg-brand-50'
-                        : 'border-slate-100 hover:border-slate-200 bg-white'
+                        : 'border-theme-light hover:border-theme-light bg-theme-card'
                     }`}
                   >
                     <span className="text-xl sm:text-2xl">{opt.emoji}</span>
                     <div className="flex-1">
-                      <div className="font-medium text-slate-700 text-sm sm:text-base">{opt.label}</div>
+                      <div className="font-medium text-theme-secondary text-sm sm:text-base">{opt.label}</div>
                     </div>
                     <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all flex-shrink-0 ${
-                      profileDims.learningGoal === opt.key ? 'bg-brand-500 border-brand-500 text-white' : 'border-slate-200'
+                      profileDims.learningGoal === opt.key ? 'bg-brand-500 border-brand-500 text-white' : 'border-theme-light'
                     }`}>
                       {profileDims.learningGoal === opt.key && <Icon name="check" size={14} />}
                     </div>
@@ -302,13 +302,13 @@ const LoginPage = ({ onComplete }) => {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: animDuration }}
-              className={`bg-white rounded-2xl ${cardPadding} shadow-sm border border-slate-100`}
+              className={`bg-theme-card rounded-2xl ${cardPadding} shadow-sm border border-theme-light`}
             >
-              <h2 className="text-lg font-bold text-slate-800 mb-1">学习习惯 ⏱️</h2>
-              <p className="text-sm text-slate-500 mb-4">帮你制定合适的每日任务量</p>
+              <h2 className="text-lg font-bold text-theme-primary mb-1">学习习惯 ⏱️</h2>
+              <p className="text-sm text-theme-muted mb-4">帮你制定合适的每日任务量</p>
 
               <div className="mb-4 sm:mb-5">
-                <label className="text-sm font-medium text-slate-700 mb-2 block">每日可用时长</label>
+                <label className="text-sm font-medium text-theme-secondary mb-2 block">每日可用时长</label>
                 <div className={`grid ${gridCols} gap-2`}>
                   {PROFILE_DIMENSIONS.dailyMinutes.options.map(opt => (
                     <button
@@ -317,18 +317,18 @@ const LoginPage = ({ onComplete }) => {
                       className={`touch-target flex items-center gap-2 p-3 rounded-xl transition-all text-left border-2 ${
                         profileDims.dailyMinutes === opt.key
                           ? 'border-brand-500 bg-brand-50'
-                          : 'border-slate-100 hover:border-slate-200 bg-white'
+                          : 'border-theme-light hover:border-theme-light bg-theme-card'
                       }`}
                     >
                       <span className="text-lg">{opt.emoji}</span>
-                      <span className="text-sm font-medium text-slate-700">{opt.label}</span>
+                      <span className="text-sm font-medium text-theme-secondary">{opt.label}</span>
                     </button>
                   ))}
                 </div>
               </div>
 
               <div className="mb-4 sm:mb-5">
-                <label className="text-sm font-medium text-slate-700 mb-2 block">学习偏好</label>
+                <label className="text-sm font-medium text-theme-secondary mb-2 block">学习偏好</label>
                 <div className={`grid ${gridCols} gap-2`}>
                   {PROFILE_DIMENSIONS.learningStyle.options.map(opt => (
                     <button
@@ -337,11 +337,11 @@ const LoginPage = ({ onComplete }) => {
                       className={`touch-target flex items-center gap-2 p-3 rounded-xl transition-all text-left border-2 ${
                         profileDims.learningStyle === opt.key
                           ? 'border-brand-500 bg-brand-50'
-                          : 'border-slate-100 hover:border-slate-200 bg-white'
+                          : 'border-theme-light hover:border-theme-light bg-theme-card'
                       }`}
                     >
                       <span className="text-lg">{opt.emoji}</span>
-                      <span className="text-sm font-medium text-slate-700">{opt.label}</span>
+                      <span className="text-sm font-medium text-theme-secondary">{opt.label}</span>
                     </button>
                   ))}
                 </div>
@@ -362,13 +362,13 @@ const LoginPage = ({ onComplete }) => {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: animDuration }}
-              className={`bg-white rounded-2xl ${cardPadding} shadow-sm border border-slate-100`}
+              className={`bg-theme-card rounded-2xl ${cardPadding} shadow-sm border border-theme-light`}
             >
-              <h2 className="text-lg font-bold text-slate-800 mb-1">个性化诊断 🔍</h2>
-              <p className="text-sm text-slate-500 mb-4">针对性降低学习门槛</p>
+              <h2 className="text-lg font-bold text-theme-primary mb-1">个性化诊断 🔍</h2>
+              <p className="text-sm text-theme-muted mb-4">针对性降低学习门槛</p>
 
               <div className="mb-4">
-                <label className="text-sm font-medium text-slate-700 mb-2 block">已掌握语言（多选）</label>
+                <label className="text-sm font-medium text-theme-secondary mb-2 block">已掌握语言（多选）</label>
                 <div className="flex flex-wrap gap-2">
                   {LANGUAGES.filter(l => l.type !== 'system').map(lang => {
                     const selected = profileDims.knownLanguages.includes(lang.code);
@@ -379,7 +379,7 @@ const LoginPage = ({ onComplete }) => {
                         className={`touch-target-sm flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm border-2 transition-all ${
                           selected
                             ? 'border-brand-500 bg-brand-50 text-brand-700'
-                            : 'border-slate-100 bg-white text-slate-600 hover:border-slate-200'
+                            : 'border-theme-light bg-theme-card text-theme-secondary hover:border-theme-light'
                         }`}
                       >
                         <span>{lang.flag}</span>
@@ -391,7 +391,7 @@ const LoginPage = ({ onComplete }) => {
               </div>
 
               <div className="mb-4 sm:mb-5">
-                <label className="text-sm font-medium text-slate-700 mb-2 block">薄弱环节（多选）</label>
+                <label className="text-sm font-medium text-theme-secondary mb-2 block">薄弱环节（多选）</label>
                 <div className="flex flex-wrap gap-2">
                   {PROFILE_DIMENSIONS.weakAreas.options.map(opt => {
                     const selected = profileDims.weakAreas.includes(opt.key);
@@ -402,7 +402,7 @@ const LoginPage = ({ onComplete }) => {
                         className={`touch-target-sm flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm border-2 transition-all ${
                           selected
                             ? 'border-brand-500 bg-brand-50 text-brand-700'
-                            : 'border-slate-100 bg-white text-slate-600 hover:border-slate-200'
+                            : 'border-theme-light bg-theme-card text-theme-secondary hover:border-theme-light'
                         }`}
                       >
                         <span>{opt.emoji}</span>
@@ -428,13 +428,13 @@ const LoginPage = ({ onComplete }) => {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: animDuration }}
-              className={`bg-white rounded-2xl ${cardPadding} shadow-sm border border-slate-100`}
+              className={`bg-theme-card rounded-2xl ${cardPadding} shadow-sm border border-theme-light`}
             >
-              <h2 className="text-lg font-bold text-slate-800 mb-1">学习节奏 🕐</h2>
-              <p className="text-sm text-slate-500 mb-4">决定推送提醒时段</p>
+              <h2 className="text-lg font-bold text-theme-primary mb-1">学习节奏 🕐</h2>
+              <p className="text-sm text-theme-muted mb-4">决定推送提醒时段</p>
 
               <div className="mb-4">
-                <label className="text-sm font-medium text-slate-700 mb-2 block">学习时段偏好</label>
+                <label className="text-sm font-medium text-theme-secondary mb-2 block">学习时段偏好</label>
                 <div className={`grid ${gridCols} gap-2`}>
                   {PROFILE_DIMENSIONS.studyTimePreference.options.map(opt => (
                     <button
@@ -443,18 +443,18 @@ const LoginPage = ({ onComplete }) => {
                       className={`touch-target flex items-center gap-2 p-3 rounded-xl transition-all text-left border-2 ${
                         profileDims.studyTimePreference === opt.key
                           ? 'border-brand-500 bg-brand-50'
-                          : 'border-slate-100 hover:border-slate-200 bg-white'
+                          : 'border-theme-light hover:border-theme-light bg-theme-card'
                       }`}
                     >
                       <span className="text-lg">{opt.emoji}</span>
-                      <span className="text-sm font-medium text-slate-700">{opt.label}</span>
+                      <span className="text-sm font-medium text-theme-secondary">{opt.label}</span>
                     </button>
                   ))}
                 </div>
               </div>
 
               <div className="mb-4 sm:mb-5">
-                <label className="text-sm font-medium text-slate-700 mb-2 block">整体学习节奏</label>
+                <label className="text-sm font-medium text-theme-secondary mb-2 block">整体学习节奏</label>
                 <div className="space-y-2">
                   {[
                     { key: 'light',  title: '轻松入门', desc: '每天 10 分钟，培养兴趣', emoji: '🌱' },
@@ -467,16 +467,16 @@ const LoginPage = ({ onComplete }) => {
                       className={`touch-target w-full flex items-center gap-3 p-3 rounded-xl transition-all text-left border-2 ${
                         goal === g.key
                           ? 'border-brand-500 bg-brand-50'
-                          : 'border-slate-100 hover:border-slate-200 bg-white'
+                          : 'border-theme-light hover:border-theme-light bg-theme-card'
                       }`}
                     >
                       <span className="text-xl">{g.emoji}</span>
                       <div className="flex-1 min-w-0">
-                        <div className="font-medium text-slate-700 text-sm sm:text-base">{g.title}</div>
-                        <div className="text-xs text-slate-400 truncate">{g.desc}</div>
+                        <div className="font-medium text-theme-secondary text-sm sm:text-base">{g.title}</div>
+                        <div className="text-xs text-theme-muted truncate">{g.desc}</div>
                       </div>
                       <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all flex-shrink-0 ${
-                        goal === g.key ? 'bg-brand-500 border-brand-500 text-white' : 'border-slate-200'
+                        goal === g.key ? 'bg-brand-500 border-brand-500 text-white' : 'border-theme-light'
                       }`}>
                         {goal === g.key && <Icon name="check" size={14} />}
                       </div>
@@ -499,7 +499,7 @@ const LoginPage = ({ onComplete }) => {
         <div className="text-center mt-4">
           <button
             onClick={handleFinish}
-            className="touch-target-sm text-xs text-slate-400 hover:text-slate-600 transition-colors px-2 py-1"
+            className="touch-target-sm text-xs text-theme-muted hover:text-theme-secondary transition-colors px-2 py-1"
           >
             先跳过，直接使用
           </button>

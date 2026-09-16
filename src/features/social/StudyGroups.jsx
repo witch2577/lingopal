@@ -65,7 +65,7 @@ const StudyGroups = () => {
 
       {myGroups.length > 0 && (
         <div>
-          <h3 className="text-sm font-semibold text-slate-700 mb-2">我的小组</h3>
+          <h3 className="text-sm font-semibold text-theme-secondary mb-2">我的小组</h3>
           <div className="space-y-2">
             {myGroups.map(group => (
               <GroupCard key={group.groupId} group={group} isMember onClick={() => setSelectedGroup(group)} />
@@ -76,7 +76,7 @@ const StudyGroups = () => {
 
       {otherGroups.length > 0 && (
         <div>
-          <h3 className="text-sm font-semibold text-slate-700 mb-2">推荐小组</h3>
+          <h3 className="text-sm font-semibold text-theme-secondary mb-2">推荐小组</h3>
           <div className="space-y-2">
             {otherGroups.map(group => (
               <GroupCard key={group.groupId} group={group} onJoin={() => handleJoin(group.groupId)} />
@@ -93,17 +93,17 @@ const GroupCard = ({ group, isMember, onClick, onJoin }) => {
     <motion.div
       whileTap={{ scale: 0.98 }}
       onClick={onClick}
-      className="flex items-center gap-3 p-3 bg-white rounded-xl border border-slate-100 cursor-pointer hover:border-brand-200 transition-colors"
+      className="flex items-center gap-3 p-3 bg-theme-card rounded-xl border border-theme-light cursor-pointer hover:border-brand-200 transition-colors"
     >
       <div className="w-12 h-12 rounded-xl bg-brand-100 flex items-center justify-center text-2xl">
         {group.icon}
       </div>
       <div className="flex-1 min-w-0">
         <p className="text-sm font-semibold truncate">{group.name}</p>
-        <p className="text-xs text-slate-500 truncate">{group.description}</p>
+        <p className="text-xs text-theme-muted truncate">{group.description}</p>
         <div className="flex items-center gap-2 mt-1">
           <Badge variant="primary" className="text-[10px]">{LANGUAGE_MAP[group.language]?.name || group.language}</Badge>
-          <span className="text-xs text-slate-400">{group.memberCount} 人</span>
+          <span className="text-xs text-theme-muted">{group.memberCount} 人</span>
         </div>
       </div>
       {isMember ? (
@@ -140,19 +140,19 @@ const GroupDetail = ({ group, onBack, onLeave }) => {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
-        <button onClick={onBack} className="p-2 rounded-lg hover:bg-slate-100">
+        <button onClick={onBack} className="p-2 rounded-lg hover:bg-theme-elevated">
           <Icon name="chevron-left" size={20} />
         </button>
         <h2 className="text-lg font-bold">{group.name}</h2>
       </div>
 
-      <div className="bg-white rounded-xl p-4 border border-slate-100 text-center">
+      <div className="bg-theme-card rounded-xl p-4 border border-theme-light text-center">
         <div className="text-4xl mb-2">{group.icon}</div>
         <h3 className="font-semibold">{group.name}</h3>
-        <p className="text-sm text-slate-500 mt-1">{group.description}</p>
+        <p className="text-sm text-theme-muted mt-1">{group.description}</p>
         <div className="flex justify-center gap-4 mt-3 text-sm">
-          <span className="text-slate-600">👥 {group.memberCount} 成员</span>
-          <span className="text-slate-600">📚 {LANGUAGE_MAP[group.language]?.name}</span>
+          <span className="text-theme-secondary">👥 {group.memberCount} 成员</span>
+          <span className="text-theme-secondary">📚 {LANGUAGE_MAP[group.language]?.name}</span>
         </div>
       </div>
 
@@ -166,7 +166,7 @@ const GroupDetail = ({ group, onBack, onLeave }) => {
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
             className={`flex-1 py-2 rounded-xl text-sm font-medium transition-all ${
-              activeTab === tab.key ? 'bg-brand-500 text-white' : 'bg-slate-100 text-slate-600'
+              activeTab === tab.key ? 'bg-brand-500 text-white' : 'bg-theme-elevated text-theme-secondary'
             }`}
           >
             {tab.label}
@@ -181,14 +181,14 @@ const GroupDetail = ({ group, onBack, onLeave }) => {
               <Icon name="alert-circle" size={10} />
               演示数据
             </span>
-            <span className="text-[10px] text-slate-400">成员信息仅供演示</span>
+            <span className="text-[10px] text-theme-muted">成员信息仅供演示</span>
           </div>
           {mockMembers.map((m, i) => (
-            <div key={i} className="flex items-center gap-3 p-3 bg-white rounded-xl border border-slate-100">
+            <div key={i} className="flex items-center gap-3 p-3 bg-theme-card rounded-xl border border-theme-light">
               <img src={m.avatar} className="w-10 h-10 rounded-full" />
               <div className="flex-1">
                 <p className="text-sm font-medium">{m.nickname}</p>
-                <p className="text-xs text-slate-500">⚡ {m.xp} XP · 🔥 {m.streak}天</p>
+                <p className="text-xs text-theme-muted">⚡ {m.xp} XP · 🔥 {m.streak}天</p>
               </div>
               {m.role === 'owner' && <Badge variant="accent">组长</Badge>}
             </div>
@@ -197,13 +197,13 @@ const GroupDetail = ({ group, onBack, onLeave }) => {
       )}
 
       {activeTab === 'chat' && (
-        <div className="space-y-3 bg-white rounded-xl p-4 border border-slate-100">
+        <div className="space-y-3 bg-theme-card rounded-xl p-4 border border-theme-light">
           <div className="flex items-center gap-1">
             <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 text-[10px] font-medium">
               <Icon name="alert-circle" size={10} />
               演示数据
             </span>
-            <span className="text-[10px] text-slate-400">聊天记录仅保存在本地</span>
+            <span className="text-[10px] text-theme-muted">聊天记录仅保存在本地</span>
           </div>
           {messages.map((msg, i) => (
             <div key={i} className="flex gap-2">
@@ -213,9 +213,9 @@ const GroupDetail = ({ group, onBack, onLeave }) => {
               <div className="flex-1">
                 <div className="flex items-center gap-2">
                   <span className="text-xs font-medium">{msg.nickname}</span>
-                  <span className="text-[10px] text-slate-400">{msg.time}</span>
+                  <span className="text-[10px] text-theme-muted">{msg.time}</span>
                 </div>
-                <p className="text-sm text-slate-700 mt-0.5">{msg.text}</p>
+                <p className="text-sm text-theme-secondary mt-0.5">{msg.text}</p>
               </div>
             </div>
           ))}
@@ -226,7 +226,7 @@ const GroupDetail = ({ group, onBack, onLeave }) => {
               value={newMessage}
               onChange={e => setNewMessage(e.target.value)}
               onKeyDown={e => { if (e.key === 'Enter') handleSendMessage(); }}
-              className="flex-1 px-3 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-brand-400"
+              className="flex-1 px-3 py-2 rounded-xl border border-theme-light text-sm focus:outline-none focus:border-brand-400"
             />
             <Button size="sm" variant="primary" onClick={handleSendMessage}>发送</Button>
           </div>
@@ -240,15 +240,15 @@ const GroupDetail = ({ group, onBack, onLeave }) => {
               <Icon name="alert-circle" size={10} />
               演示数据
             </span>
-            <span className="text-[10px] text-slate-400">进度信息仅供演示</span>
+            <span className="text-[10px] text-theme-muted">进度信息仅供演示</span>
           </div>
           {mockMembers.map((m, i) => (
-            <div key={i} className="bg-white rounded-xl p-3 border border-slate-100">
+            <div key={i} className="bg-theme-card rounded-xl p-3 border border-theme-light">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-medium">{m.nickname}</span>
-                <span className="text-xs text-slate-500">{Math.min(100, Math.floor(m.xp / 50))}%</span>
+                <span className="text-xs text-theme-muted">{Math.min(100, Math.floor(m.xp / 50))}%</span>
               </div>
-              <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+              <div className="h-2 bg-theme-elevated rounded-full overflow-hidden">
                 <div
                   className="h-full bg-brand-500 rounded-full"
                   style={{ width: `${Math.min(100, Math.floor(m.xp / 50))}%` }}
@@ -289,7 +289,7 @@ const CreateGroupForm = ({ onCancel, onCreated }) => {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
-        <button onClick={onCancel} className="p-2 rounded-lg hover:bg-slate-100">
+        <button onClick={onCancel} className="p-2 rounded-lg hover:bg-theme-elevated">
           <Icon name="chevron-left" size={20} />
         </button>
         <h2 className="text-lg font-bold">创建学习小组</h2>
@@ -297,34 +297,34 @@ const CreateGroupForm = ({ onCancel, onCreated }) => {
 
       <div className="space-y-3">
         <div>
-          <label className="text-sm font-medium text-slate-700">小组名称</label>
+          <label className="text-sm font-medium text-theme-secondary">小组名称</label>
           <input
             type="text"
             value={name}
             onChange={e => setName(e.target.value)}
             placeholder="例如：英语每日打卡"
-            className="w-full mt-1 px-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-brand-400"
+            className="w-full mt-1 px-3 py-2.5 rounded-xl border border-theme-light text-sm focus:outline-none focus:border-brand-400"
           />
         </div>
         <div>
-          <label className="text-sm font-medium text-slate-700">描述</label>
+          <label className="text-sm font-medium text-theme-secondary">描述</label>
           <textarea
             value={description}
             onChange={e => setDescription(e.target.value)}
             placeholder="描述一下你的小组..."
             rows={3}
-            className="w-full mt-1 px-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-brand-400 resize-none"
+            className="w-full mt-1 px-3 py-2.5 rounded-xl border border-theme-light text-sm focus:outline-none focus:border-brand-400 resize-none"
           />
         </div>
         <div>
-          <label className="text-sm font-medium text-slate-700">图标</label>
+          <label className="text-sm font-medium text-theme-secondary">图标</label>
           <div className="flex gap-2 mt-1 flex-wrap">
             {icons.map(ic => (
               <button
                 key={ic}
                 onClick={() => setIcon(ic)}
                 className={`w-10 h-10 rounded-xl text-xl flex items-center justify-center transition-all ${
-                  icon === ic ? 'bg-brand-100 ring-2 ring-brand-400' : 'bg-slate-100 hover:bg-slate-200'
+                  icon === ic ? 'bg-brand-100 ring-2 ring-brand-400' : 'bg-theme-elevated hover:bg-theme-elevated'
                 }`}
               >
                 {ic}
@@ -333,11 +333,11 @@ const CreateGroupForm = ({ onCancel, onCreated }) => {
           </div>
         </div>
         <div>
-          <label className="text-sm font-medium text-slate-700">语言</label>
+          <label className="text-sm font-medium text-theme-secondary">语言</label>
           <select
             value={language}
             onChange={e => setLanguage(e.target.value)}
-            className="w-full mt-1 px-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-brand-400 bg-white"
+            className="w-full mt-1 px-3 py-2.5 rounded-xl border border-theme-light text-sm focus:outline-none focus:border-brand-400 bg-theme-card"
           >
             {LANGUAGES.filter(l => l.type === 'standard').map(l => (
               <option key={l.code} value={l.code}>{l.name}</option>

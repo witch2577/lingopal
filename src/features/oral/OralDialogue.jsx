@@ -1,23 +1,20 @@
 // ========== AI-Powered Oral Dialogue Component ==========
-// Edge Function proxy mode (primary) + Enhanced Rule Engine (fallback)
+// Hybrid: LLM API (with user key) + Enhanced Rule Engine (default)
 // Supports multi-turn natural conversation across multiple scenarios
 
 const OralDialogue = () => {
-  const oralStoreLang = useOralStore(s => s.currentLanguage);
-  const oralSetLang = useOralStore(s => s.setLanguage);
-
   const [selectedScenario, setSelectedScenario] = useState(null);
   const [messages, setMessages] = useState([]);
   const [isComplete, setIsComplete] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [isAiThinking, setIsAiThinking] = useState(false);
   const [userInput, setUserInput] = useState('');
-  const [language, setLanguage] = useState(oralStoreLang || 'zh-CN');
+  const [language, setLanguage] = useState('zh-CN');
   const [sessionId, setSessionId] = useState(null);
   const [showSettings, setShowSettings] = useState(false);
   const [aiMode, setAiMode] = useState(AIDialogueService.config.mode);
+  const [apiKey, setApiKey] = useState(AIDialogueService.config.apiKey || '');
   const [errorMsg, setErrorMsg] = useState(null);
-  const [errorCode, setErrorCode] = useState(null);
   const messagesEndRef = useRef(null);
   const recognitionRef = useRef(null);
 
@@ -25,6 +22,7 @@ const OralDialogue = () => {
   useEffect(() => {
     AIDialogueService.loadConfig();
     setAiMode(AIDialogueService.config.mode);
+    setApiKey(AIDialogueService.config.apiKey || '');
   }, []);
 
   const startScenario = (scenarioId) => {
@@ -40,7 +38,6 @@ const OralDialogue = () => {
     setIsComplete(false);
     setUserInput('');
     setErrorMsg(null);
-    setErrorCode(null);
 
     // Init AI service session
     AIDialogueService.initSession(sid, scenarioId, language);
@@ -51,17 +48,25 @@ const OralDialogue = () => {
     if (!text || !selectedScenario || isAiThinking) return;
 
     setErrorMsg(null);
-    setErrorCode(null);
     const userMsg = { role: 'user', text };
     setMessages(prev => [...prev, userMsg]);
     setUserInput('');
     setIsAiThinking(true);
 
     try {
-      const aiText = await AIDialogueService.generateResponse(sessionId, text);
+      let aiText;
+
+      if (AIDialogueService.isLLMReady()) {
+        // Real AI mode
+        aiText = await AIDialogueService.generateResponse(sessionId, text);
+      } else {
+        // Enhanced rule engine
+        aiText = await AIDialogueService.generateResponse(sessionId, text);
+      }
+
       setMessages(prev => [...prev, { role: 'ai', text: aiText }]);
 
-      // Check if conversation should end (after 15 turns)
+      // Check if conversation should end (optional: after N turns)
       const context = AIDialogueService._contexts.get(sessionId);
       if (context && context.turnCount >= 15) {
         setIsComplete(true);
@@ -71,27 +76,14 @@ const OralDialogue = () => {
       }
     } catch (e) {
       console.error('[OralDialogue] AI响应失败:', e);
-
-      // Error code from Edge Function or fallback
-      const code = e.code || 'LLM_ERROR';
-      const isFallback = e.isFallback || false;
-      const fallbackResponse = e.fallbackResponse;
-
-      setErrorCode(code);
-      setErrorMsg(AIDialogueService.getErrorMessage(code, e.details));
-
-      // If we have a fallback response from the catch block, use it
-      if (isFallback && fallbackResponse) {
-        setMessages(prev => [...prev, { role: 'ai', text: fallbackResponse }]);
-      } else {
-        // Otherwise generate rule engine response
-        try {
-          AIDialogueService.setMode('enhanced-rule');
-          const aiText = await AIDialogueService.generateResponse(sessionId, text);
-          setMessages(prev => [...prev, { role: 'ai', text: aiText }]);
-        } catch (e2) {
-          setMessages(prev => [...prev, { role: 'ai', text: '抱歉，我这边出了点问题，请稍后再试。' }]);
-        }
+      setErrorMsg('AI响应出错，已切换到规则引擎模式');
+      // Fallback to rule engine
+      try {
+        AIDialogueService.setMode('enhanced-rule');
+        const aiText = await AIDialogueService.generateResponse(sessionId, text);
+        setMessages(prev => [...prev, { role: 'ai', text: aiText }]);
+      } catch (e2) {
+        setMessages(prev => [...prev, { role: 'ai', text: '抱歉，我这边出了点问题，请稍后再试。' }]);
       }
     } finally {
       setIsAiThinking(false);
@@ -154,12 +146,14 @@ const OralDialogue = () => {
     setIsComplete(false);
     setUserInput('');
     setErrorMsg(null);
-    setErrorCode(null);
     setSessionId(null);
   };
 
   const handleSaveSettings = () => {
     AIDialogueService.setMode(aiMode);
+    if (apiKey.trim()) {
+      AIDialogueService.setApiKey(apiKey.trim());
+    }
     setShowSettings(false);
     useUIStore.getState().showNotification('设置已保存', 'success');
   };
@@ -168,29 +162,6 @@ const OralDialogue = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isAiThinking]);
 
-  const handleLanguageChange = (lang) => {
-    setLanguage(lang);
-    oralSetLang(lang);
-    if (sessionId) {
-      AIDialogueService.endSession(sessionId);
-    }
-    setSelectedScenario(null);
-    setMessages([]);
-    setIsComplete(false);
-    setUserInput('');
-    setErrorMsg(null);
-    setErrorCode(null);
-    setSessionId(null);
-  };
-
-  // Determine mode badge text
-  const modeLabel = AIDialogueService.isLLMReady()
-    ? (AIDialogueService.config.mode === 'edge-function' ? 'AI 对话模式' : '规则引擎模式')
-    : '规则引擎模式';
-  const modeSubLabel = AIDialogueService.isLLMReady()
-    ? (AIDialogueService.config.mode === 'edge-function' ? '由云端AI驱动' : '演示数据·基于规则')
-    : '演示数据·基于规则';
-
   // Scenario selection screen
   if (!selectedScenario) {
     return (
@@ -198,53 +169,24 @@ const OralDialogue = () => {
         <div className="mb-4">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-bold text-slate-800 mb-1">选择对话场景</h2>
-              <p className="text-xs text-slate-400">选择场景后开始多轮对话练习</p>
+              <h2 className="text-lg font-bold text-theme-primary mb-1">选择对话场景</h2>
+              <p className="text-xs text-theme-muted">选择场景后开始多轮对话练习</p>
             </div>
             <button
               onClick={() => setShowSettings(true)}
-              className="p-2 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors btn-press"
+              className="p-2 rounded-xl bg-theme-elevated text-theme-secondary hover:bg-theme-elevated transition-colors btn-press"
             >
               <Icon name="settings" size={18} />
             </button>
           </div>
-
-          {/* Language selector */}
-          <div className="flex items-center gap-2 mt-3 overflow-x-auto hide-scrollbar">
-            <span className="text-xs text-slate-400 whitespace-nowrap">练习语种：</span>
-            {LEARNING_LANGUAGES.map(lang => (
-              <button
-                key={lang.code}
-                onClick={() => handleLanguageChange(lang.code)}
-                className={`px-2.5 py-1 rounded-lg text-xs font-medium whitespace-nowrap transition-all ${
-                  language === lang.code
-                    ? 'bg-brand-100 text-brand-700 ring-1 ring-brand-300'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                }`}
-              >
-                {lang.flag} {lang.name}
-                {lang.type === 'beta' && <span className="ml-0.5 text-[9px] opacity-70">β</span>}
-              </button>
-            ))}
-          </div>
-
           <div className="flex items-center gap-2 mt-2">
             <Badge variant={AIDialogueService.isLLMReady() ? 'success' : 'default'}>
-              {modeLabel}
+              {AIDialogueService.isLLMReady() ? 'AI 对话模式' : '规则引擎模式'}
             </Badge>
-            <span className="text-xs text-slate-400">{modeSubLabel}</span>
+            <span className="text-xs text-theme-muted">
+              {AIDialogueService.isLLMReady() ? '由云端AI驱动' : '演示数据·基于规则'}
+            </span>
           </div>
-
-          {!AIDialogueService.isLLMReady() && (
-            <div className="flex items-center gap-2 mt-2 text-xs text-amber-600 bg-amber-50 px-3 py-2 rounded-lg">
-              <Icon name="alert-circle" size={14} />
-              <span>
-                {IS_SUPABASE_CONFIGURED
-                  ? '登录后可使用 AI 对话模式（云端大模型驱动）'
-                  : 'Supabase 未配置，当前使用规则引擎模式'}
-              </span>
-            </div>
-          )}
         </div>
 
         <div className="grid grid-cols-2 gap-3 overflow-y-auto hide-scrollbar pb-4">
@@ -254,11 +196,11 @@ const OralDialogue = () => {
               <button
                 key={sc.id}
                 onClick={() => startScenario(sc.id)}
-                className="flex flex-col items-start p-4 rounded-2xl bg-white border border-slate-100 shadow-sm hover:shadow-md hover:border-brand-200 transition-all btn-press text-left"
+                className="flex flex-col items-start p-4 rounded-2xl bg-theme-card border border-theme-light shadow-sm hover:shadow-md hover:border-brand-200 transition-all btn-press text-left"
               >
                 <span className="text-2xl mb-2">{sc.icon}</span>
-                <span className="text-sm font-semibold text-slate-800">{sc.name}</span>
-                <span className="text-xs text-slate-400 mt-1 line-clamp-2">{sc.description}</span>
+                <span className="text-sm font-semibold text-theme-primary">{sc.name}</span>
+                <span className="text-xs text-theme-muted mt-1 line-clamp-2">{sc.description}</span>
               </button>
             );
           })}
@@ -270,58 +212,67 @@ const OralDialogue = () => {
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="bg-white rounded-2xl p-5 w-full max-w-sm shadow-xl"
+              className="bg-theme-card rounded-2xl p-5 w-full max-w-sm shadow-xl"
             >
-              <h3 className="text-lg font-bold text-slate-800 mb-4">AI 对话设置</h3>
+              <h3 className="text-lg font-bold text-theme-primary mb-4">AI 对话设置</h3>
 
               <div className="space-y-4">
                 <div>
-                  <label className="text-sm font-medium text-slate-700 mb-2 block">对话模式</label>
+                  <label className="text-sm font-medium text-theme-secondary mb-2 block">对话模式</label>
                   <div className="flex gap-2">
                     <button
                       onClick={() => setAiMode('enhanced-rule')}
                       className={`flex-1 px-3 py-2 rounded-xl text-sm font-medium transition-all ${
                         aiMode === 'enhanced-rule'
                           ? 'bg-brand-gradient text-white'
-                          : 'bg-slate-100 text-slate-600'
+                          : 'bg-theme-elevated text-theme-secondary'
                       }`}
                     >
                       规则引擎
                     </button>
                     <button
-                      onClick={() => setAiMode('edge-function')}
+                      onClick={() => setAiMode('llm-api')}
                       className={`flex-1 px-3 py-2 rounded-xl text-sm font-medium transition-all ${
-                        aiMode === 'edge-function'
+                        aiMode === 'llm-api'
                           ? 'bg-brand-gradient text-white'
-                          : 'bg-slate-100 text-slate-600'
+                          : 'bg-theme-elevated text-theme-secondary'
                       }`}
                     >
                       AI 模型
                     </button>
                   </div>
-                  <p className="text-xs text-slate-400 mt-1">
+                  <p className="text-xs text-theme-muted mt-1">
                     {aiMode === 'enhanced-rule'
                       ? '使用增强规则引擎，无需配置，即时响应'
-                      : '使用云端大模型（需登录），通过 Edge Function 安全代理'}
+                      : '使用云端大模型，需要配置API Key'}
                   </p>
                 </div>
 
-                {aiMode === 'edge-function' && (
-                  <div className="bg-slate-50 rounded-xl p-3">
-                    <p className="text-xs text-slate-500">
-                      <span className="font-medium">AI 模式说明：</span>
-                      云端大模型通过 Supabase Edge Function 安全代理调用，API Key 不存储在前端。
-                      需登录且配置 Supabase 后方可使用。
+                {aiMode === 'llm-api' && (
+                  <div>
+                    <label className="text-sm font-medium text-theme-secondary mb-2 block">API Key</label>
+                    <input
+                      type="password"
+                      value={apiKey}
+                      onChange={(e) => setApiKey(e.target.value)}
+                      placeholder="输入 DeepSeek API Key"
+                      className="w-full px-3 py-2 rounded-xl bg-theme-elevated text-sm border border-theme-light focus:outline-none focus:border-brand-400"
+                    />
+                    <p className="text-xs text-theme-muted mt-1">
+                      支持 DeepSeek/OpenAI 格式。Key 仅保存在本地。
+                    </p>
+                    <p className="text-xs text-amber-600 mt-1">
+                      DeepSeek 免费版：100万 tokens/天，个人使用足够
                     </p>
                   </div>
                 )}
 
-                <div className="bg-slate-50 rounded-xl p-3">
-                  <p className="text-xs text-slate-500">
+                <div className="bg-theme-elevated rounded-xl p-3">
+                  <p className="text-xs text-theme-muted">
                     <span className="font-medium">能力边界：</span>
-                    当前{aiMode === 'edge-function' ? '使用云端AI模型' : '使用本地规则引擎'}生成对话回复。
+                    当前{aiMode === 'llm-api' ? '使用云端AI模型' : '使用本地规则引擎'}生成对话回复。
                     规则引擎覆盖餐厅、问路、酒店、商务、购物、机场等场景。
-                    切换模式后需重新选择场景生效。
+                    如需更自然的对话体验，可切换到AI模式并配置API Key。
                   </p>
                 </div>
               </div>
@@ -349,27 +300,25 @@ const OralDialogue = () => {
       <div className="flex items-center gap-3 mb-3">
         <button
           onClick={handleReset}
-          className="p-2 rounded-xl hover:bg-slate-100 transition-colors btn-press"
+          className="p-2 rounded-xl hover:bg-theme-elevated transition-colors btn-press"
         >
           <Icon name="chevron-left" size={20} />
         </button>
-        <div className="flex-1 min-w-0">
-          <h2 className="text-base font-bold text-slate-800">{currentScenario.name}</h2>
-          <p className="text-xs text-slate-400 truncate">
-            {LANGUAGE_MAP[language]?.flag} {LANGUAGE_MAP[language]?.name || language}
-            {' · '}
-            {modeLabel}
+        <div className="flex-1">
+          <h2 className="text-base font-bold text-theme-primary">{currentScenario.name}</h2>
+          <p className="text-xs text-theme-muted">
+            {AIDialogueService.isLLMReady() ? 'AI 对话模式 · 多轮自然对话' : '规则引擎模式 · 演示数据'}
           </p>
         </div>
-        <div className="flex items-center gap-1 flex-shrink-0">
+        <div className="flex items-center gap-1">
           <Badge variant={AIDialogueService.isLLMReady() ? 'success' : 'default'}>
             {AIDialogueService.isLLMReady() ? 'AI' : '规则'}
           </Badge>
           <button
             onClick={() => setShowSettings(true)}
-            className="p-1.5 rounded-lg hover:bg-slate-100 transition-colors"
+            className="p-1.5 rounded-lg hover:bg-theme-elevated transition-colors"
           >
-            <Icon name="settings" size={16} className="text-slate-400" />
+            <Icon name="settings" size={16} className="text-theme-muted" />
           </button>
         </div>
       </div>
@@ -394,7 +343,7 @@ const OralDialogue = () => {
               className={`max-w-[85%] px-4 py-2.5 rounded-2xl text-sm ${
                 msg.role === 'user'
                   ? 'bg-brand-gradient text-white rounded-br-md'
-                  : 'bg-white border border-slate-100 text-slate-700 rounded-bl-md shadow-sm'
+                  : 'bg-theme-card border border-theme-light text-theme-secondary rounded-bl-md shadow-sm'
               }`}
             >
               {msg.text}
@@ -404,12 +353,12 @@ const OralDialogue = () => {
 
         {isAiThinking && (
           <div className="flex justify-start">
-            <div className="bg-white border border-slate-100 rounded-2xl rounded-bl-md px-4 py-3 shadow-sm">
+            <div className="bg-theme-card border border-theme-light rounded-2xl rounded-bl-md px-4 py-3 shadow-sm">
               <div className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-400 animate-pulse" />
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-400 animate-pulse" style={{ animationDelay: '0.2s' }} />
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-400 animate-pulse" style={{ animationDelay: '0.4s' }} />
-                <span className="text-xs text-slate-400 ml-1">AI 思考中...</span>
+                <span className="text-xs text-theme-muted ml-1">AI 思考中...</span>
               </div>
             </div>
           </div>
@@ -433,7 +382,7 @@ const OralDialogue = () => {
 
       {/* Input area */}
       {!isComplete && (
-        <div className="bg-white border border-slate-100 rounded-2xl p-3 shadow-sm">
+        <div className="bg-theme-card border border-theme-light rounded-2xl p-3 shadow-sm">
           <div className="flex items-center gap-2">
             <input
               type="text"
@@ -442,14 +391,13 @@ const OralDialogue = () => {
               onKeyDown={(e) => e.key === 'Enter' && !isAiThinking && handleUserSubmit()}
               placeholder="输入回复..."
               disabled={isAiThinking}
-              maxLength={2000}
-              className="flex-1 px-3 py-2 rounded-xl bg-slate-50 text-sm border border-slate-200 focus:outline-none focus:border-brand-400 disabled:opacity-50"
+              className="flex-1 px-3 py-2 rounded-xl bg-theme-elevated text-sm border border-theme-light focus:outline-none focus:border-brand-400 disabled:opacity-50"
             />
             <button
               onClick={isListening ? stopVoiceInput : startVoiceInput}
               disabled={isAiThinking}
               className={`p-2.5 rounded-xl transition-colors btn-press disabled:opacity-40 ${
-                isListening ? 'bg-red-500 text-white animate-pulse' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                isListening ? 'bg-red-500 text-white animate-pulse' : 'bg-theme-elevated text-theme-secondary hover:bg-theme-elevated'
               }`}
             >
               <Icon name={isListening ? 'x' : 'mic'} size={18} />
@@ -466,12 +414,12 @@ const OralDialogue = () => {
           <div className="flex items-center justify-between mt-2">
             <button
               onClick={handleEndConversation}
-              className="text-xs text-slate-400 hover:text-slate-600 transition-colors"
+              className="text-xs text-theme-muted hover:text-theme-secondary transition-colors"
             >
               结束对话
             </button>
-            <span className="text-xs text-slate-300">
-              {modeSubLabel}
+            <span className="text-xs text-theme-disabled">
+              {AIDialogueService.isLLMReady() ? 'AI 驱动' : '规则引擎 · 演示数据'}
             </span>
           </div>
         </div>
@@ -483,43 +431,48 @@ const OralDialogue = () => {
         </Button>
       )}
 
-      {/* Settings Modal (in-dialogue) */}
+      {/* Settings Modal */}
       {showSettings && (
         <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-white rounded-2xl p-5 w-full max-w-sm shadow-xl"
+            className="bg-theme-card rounded-2xl p-5 w-full max-w-sm shadow-xl"
           >
-            <h3 className="text-lg font-bold text-slate-800 mb-4">AI 对话设置</h3>
+            <h3 className="text-lg font-bold text-theme-primary mb-4">AI 对话设置</h3>
             <div className="space-y-4">
               <div>
-                <label className="text-sm font-medium text-slate-700 mb-2 block">对话模式</label>
+                <label className="text-sm font-medium text-theme-secondary mb-2 block">对话模式</label>
                 <div className="flex gap-2">
                   <button
                     onClick={() => setAiMode('enhanced-rule')}
                     className={`flex-1 px-3 py-2 rounded-xl text-sm font-medium transition-all ${
-                      aiMode === 'enhanced-rule' ? 'bg-brand-gradient text-white' : 'bg-slate-100 text-slate-600'
+                      aiMode === 'enhanced-rule' ? 'bg-brand-gradient text-white' : 'bg-theme-elevated text-theme-secondary'
                     }`}
                   >
                     规则引擎
                   </button>
                   <button
-                    onClick={() => setAiMode('edge-function')}
+                    onClick={() => setAiMode('llm-api')}
                     className={`flex-1 px-3 py-2 rounded-xl text-sm font-medium transition-all ${
-                      aiMode === 'edge-function' ? 'bg-brand-gradient text-white' : 'bg-slate-100 text-slate-600'
+                      aiMode === 'llm-api' ? 'bg-brand-gradient text-white' : 'bg-theme-elevated text-theme-secondary'
                     }`}
                   >
                     AI 模型
                   </button>
                 </div>
               </div>
-
-              {aiMode === 'edge-function' && (
-                <div className="bg-slate-50 rounded-xl p-3">
-                  <p className="text-xs text-slate-500">
-                    云端大模型通过 Supabase Edge Function 安全代理调用，API Key 不存储在前端。
-                  </p>
+              {aiMode === 'llm-api' && (
+                <div>
+                  <label className="text-sm font-medium text-theme-secondary mb-2 block">API Key</label>
+                  <input
+                    type="password"
+                    value={apiKey}
+                    onChange={(e) => setApiKey(e.target.value)}
+                    placeholder="输入 DeepSeek API Key"
+                    className="w-full px-3 py-2 rounded-xl bg-theme-elevated text-sm border border-theme-light focus:outline-none focus:border-brand-400"
+                  />
+                  <p className="text-xs text-amber-600 mt-1">DeepSeek 免费版：100万 tokens/天</p>
                 </div>
               )}
             </div>

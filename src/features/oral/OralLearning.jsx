@@ -46,7 +46,7 @@ const OralLearning = () => {
 
   if (!current) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 text-slate-400">
+      <div className="flex flex-col items-center justify-center py-12 text-theme-muted">
         <Icon name="info" size={32} className="mb-2" />
         <p className="text-sm">该语言暂无练习内容</p>
         <Badge variant="default" className="mt-2">演示数据</Badge>
@@ -58,18 +58,17 @@ const OralLearning = () => {
     <div className="flex flex-col h-full">
       {/* Language & Difficulty Selectors */}
       <div className="flex items-center gap-2 mb-4 overflow-x-auto hide-scrollbar">
-        {LEARNING_LANGUAGES.map(lang => (
+        {['en', 'ja', 'zh-CN'].map(lang => (
           <button
-            key={lang.code}
-            onClick={() => handleLanguageChange(lang.code)}
+            key={lang}
+            onClick={() => handleLanguageChange(lang)}
             className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all ${
-              language === lang.code
+              language === lang
                 ? 'bg-brand-gradient text-white shadow-md'
-                : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                : 'bg-theme-elevated text-theme-secondary hover:bg-theme-elevated'
             }`}
           >
-            {lang.flag} {lang.name}
-            {lang.type === 'beta' && <span className="ml-0.5 text-[9px] opacity-70">β</span>}
+            {LANGUAGE_MAP[lang]?.name || lang}
           </button>
         ))}
       </div>
@@ -80,7 +79,7 @@ const OralLearning = () => {
             key={diff.key}
             onClick={() => handleDifficultyChange(diff.key)}
             className={`px-3 py-1 rounded-lg text-xs font-medium transition-all ${
-              difficulty === diff.key ? diff.color : 'bg-slate-100 text-slate-500'
+              difficulty === diff.key ? diff.color : 'bg-theme-elevated text-theme-muted'
             }`}
           >
             {diff.label}
@@ -95,7 +94,7 @@ const OralLearning = () => {
         </div>
 
         <div className="flex-1 flex flex-col items-center justify-center text-center px-4 py-6">
-          <div className="text-sm text-slate-400 mb-2">
+          <div className="text-sm text-theme-muted mb-2">
             {currentIndex + 1} / {items.length}
           </div>
 
@@ -105,13 +104,13 @@ const OralLearning = () => {
             animate={{ opacity: 1, y: 0 }}
             className="mb-4"
           >
-            <h2 className="text-xl font-bold text-slate-800 mb-2 leading-relaxed">
+            <h2 className="text-xl font-bold text-theme-primary mb-2 leading-relaxed">
               {current.text}
             </h2>
             <p className="text-sm text-brand-600 font-mono mb-2">
               {current.phonetic}
             </p>
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-theme-muted">
               {current.meaning}
             </p>
           </motion.div>
@@ -135,7 +134,7 @@ const OralLearning = () => {
           <button
             onClick={handlePrev}
             disabled={currentIndex === 0}
-            className="p-3 rounded-full bg-slate-100 hover:bg-slate-200 disabled:opacity-40 transition-colors btn-press"
+            className="p-3 rounded-full bg-theme-elevated hover:bg-theme-elevated disabled:opacity-40 transition-colors btn-press"
           >
             <Icon name="chevron-left" size={20} />
           </button>
@@ -147,9 +146,9 @@ const OralLearning = () => {
           >
             {isPlaying ? (
               <div className="flex items-center gap-0.5">
-                <span className="w-1 h-4 bg-white/80 rounded-full animate-pulse" />
-                <span className="w-1 h-6 bg-white/80 rounded-full animate-pulse" style={{ animationDelay: '0.1s' }} />
-                <span className="w-1 h-4 bg-white/80 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }} />
+                <span className="w-1 h-4 bg-theme-card/80 rounded-full animate-pulse" />
+                <span className="w-1 h-6 bg-theme-card/80 rounded-full animate-pulse" style={{ animationDelay: '0.1s' }} />
+                <span className="w-1 h-4 bg-theme-card/80 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }} />
               </div>
             ) : (
               <Icon name="volume" size={28} />
@@ -159,7 +158,7 @@ const OralLearning = () => {
           <button
             onClick={handleNext}
             disabled={currentIndex >= items.length - 1}
-            className="p-3 rounded-full bg-slate-100 hover:bg-slate-200 disabled:opacity-40 transition-colors btn-press"
+            className="p-3 rounded-full bg-theme-elevated hover:bg-theme-elevated disabled:opacity-40 transition-colors btn-press"
           >
             <Icon name="chevron" size={20} />
           </button>

@@ -291,9 +291,9 @@ const PronunciationService = {
       case 'close': return 'text-amber-600';
       case 'partial': return 'text-orange-600';
       case 'incorrect': return 'text-red-600';
-      case 'missing': return 'text-slate-400 line-through';
+      case 'missing': return 'text-theme-muted line-through';
       case 'extra': return 'text-blue-500';
-      default: return 'text-slate-600';
+      default: return 'text-theme-secondary';
     }
   },
 

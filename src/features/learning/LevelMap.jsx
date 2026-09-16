@@ -117,7 +117,7 @@ const LevelMap = ({ onStartLevel }) => {
       <div className="bg-brand-gradient rounded-2xl p-4 sm:p-5 text-white shadow-lg shadow-brand-500/20">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2 sm:gap-3">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/20 flex items-center justify-center text-xl backdrop-blur-sm">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-theme-card/20 flex items-center justify-center text-xl backdrop-blur-sm">
               {profile?.nickname?.[0] || '👤'}
             </div>
             <div>
@@ -134,17 +134,17 @@ const LevelMap = ({ onStartLevel }) => {
           </div>
         </div>
         <div className="grid grid-cols-3 gap-2">
-          <div className="bg-white/15 backdrop-blur-sm rounded-xl p-2 sm:p-2.5 text-center">
+          <div className="bg-theme-card/15 backdrop-blur-sm rounded-xl p-2 sm:p-2.5 text-center">
             <div className="text-base sm:text-lg font-bold">{totalStats.completed}/{totalStats.totalLevels}</div>
             <div className="text-[10px] opacity-80">通关</div>
           </div>
-          <div className="bg-white/15 backdrop-blur-sm rounded-xl p-2 sm:p-2.5 text-center">
+          <div className="bg-theme-card/15 backdrop-blur-sm rounded-xl p-2 sm:p-2.5 text-center">
             <div className="text-base sm:text-lg font-bold flex items-center justify-center gap-0.5">
               {totalStats.totalStars} <Icon name="star" size={14} className="text-amber-300" />
             </div>
             <div className="text-[10px] opacity-80">星星</div>
           </div>
-          <div className="bg-white/15 backdrop-blur-sm rounded-xl p-2 sm:p-2.5 text-center">
+          <div className="bg-theme-card/15 backdrop-blur-sm rounded-xl p-2 sm:p-2.5 text-center">
             <div className="text-base sm:text-lg font-bold">{totalXP || 0}</div>
             <div className="text-[10px] opacity-80">经验值</div>
           </div>
@@ -160,21 +160,21 @@ const LevelMap = ({ onStartLevel }) => {
             className={`flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-2 rounded-xl whitespace-nowrap transition-all btn-press flex-shrink-0 touch-target ${
               currentLanguage === lang.code
                 ? 'bg-brand-500 text-white shadow-md shadow-brand-500/30'
-                : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-100'
+                : 'bg-theme-card text-theme-secondary hover:bg-theme-elevated border border-theme-light'
             }`}
           >
             <span className="text-base sm:text-lg">{lang.flag}</span>
             <span className="text-xs sm:text-sm font-medium">{lang.name}</span>
             {lang.type === 'dialect' && (
               <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
-                currentLanguage === lang.code ? 'bg-white/20' : 'bg-amber-100 text-amber-600'
+                currentLanguage === lang.code ? 'bg-theme-card/20' : 'bg-amber-100 text-amber-600'
               }`}>
                 方言
               </span>
             )}
             {lang.type === 'beta' && (
               <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
-                currentLanguage === lang.code ? 'bg-white/20' : 'bg-amber-100 text-amber-700'
+                currentLanguage === lang.code ? 'bg-theme-card/20' : 'bg-amber-100 text-amber-700'
               }`}>
                 Beta
               </span>
@@ -184,11 +184,11 @@ const LevelMap = ({ onStartLevel }) => {
       </div>
 
       {/* Profile-based smart recommendations */}
-      <div className="bg-white rounded-xl p-3 sm:p-4 border border-slate-100 shadow-sm space-y-2 sm:space-y-3">
+      <div className="bg-theme-card rounded-xl p-3 sm:p-4 border border-theme-light shadow-sm space-y-2 sm:space-y-3">
         <div className="flex items-center gap-2">
           <Icon name="sparkles" size={16} className="text-brand-500" />
-          <h3 className="text-sm font-semibold text-slate-700">为你推荐</h3>
-          <span className="text-[10px] text-slate-400 ml-auto">基于你的画像</span>
+          <h3 className="text-sm font-semibold text-theme-secondary">为你推荐</h3>
+          <span className="text-[10px] text-theme-muted ml-auto">基于你的画像</span>
         </div>
         <div className="grid grid-cols-2 gap-2">
           <div className="bg-brand-50 rounded-lg p-2 sm:p-2.5">
@@ -196,12 +196,12 @@ const LevelMap = ({ onStartLevel }) => {
             <div className="text-sm font-bold text-brand-700">{recommendedTasks} 关</div>
             <div className="text-[10px] text-brand-500">约 {DAILY_MINUTES_MAP[dailyMinutes] || 15} 分钟</div>
           </div>
-          <div className="bg-slate-50 rounded-lg p-2 sm:p-2.5">
-            <div className="text-[10px] text-slate-500 mb-0.5">当前水平</div>
-            <div className="text-sm font-bold text-slate-700">
+          <div className="bg-theme-elevated rounded-lg p-2 sm:p-2.5">
+            <div className="text-[10px] text-theme-muted mb-0.5">当前水平</div>
+            <div className="text-sm font-bold text-theme-secondary">
               {PROFILE_DIMENSIONS.languageLevel.options.find(o => o.key === languageLevel)?.label || languageLevel}
             </div>
-            <div className="text-[10px] text-slate-400">
+            <div className="text-[10px] text-theme-muted">
               推荐 {Array.from(recommendedThemes).map(t => {
                 const map = { basic: '基础词汇', daily: '日常对话', grammar: '语法进阶' };
                 return map[t];
@@ -256,7 +256,7 @@ const LevelMap = ({ onStartLevel }) => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <h3 className="font-semibold text-slate-800 text-sm">{theme.name}</h3>
+                    <h3 className="font-semibold text-theme-primary text-sm">{theme.name}</h3>
                     {theme.isWeekly && (
                       <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-brand-100 text-brand-700 text-[10px] font-medium">
                         <Icon name="sparkles" size={10} />
@@ -270,12 +270,12 @@ const LevelMap = ({ onStartLevel }) => {
                       </span>
                     )}
                     {!isRecommended && languageLevel !== 'beginner' && (
-                      <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-500 text-[10px]">
+                      <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-theme-elevated text-theme-muted text-[10px]">
                         进阶内容
                       </span>
                     )}
                   </div>
-                  <p className="text-xs text-slate-400">{theme.levels.length} 个关卡</p>
+                  <p className="text-xs text-theme-muted">{theme.levels.length} 个关卡</p>
                 </div>
               </div>
 
@@ -312,8 +312,8 @@ const LevelMap = ({ onStartLevel }) => {
                           status.status === 'completed'
                             ? 'bg-amber-400 text-white shadow-md shadow-amber-400/40'
                             : status.status === 'available'
-                              ? 'bg-white border-2 border-brand-500 text-brand-600 shadow-md'
-                              : 'bg-slate-100 text-slate-300 border-2 border-slate-200 cursor-not-allowed'
+                              ? 'bg-theme-card border-2 border-brand-500 text-brand-600 shadow-md'
+                              : 'bg-theme-elevated text-theme-disabled border-2 border-theme-light cursor-not-allowed'
                         }`}
                       >
                         {status.status === 'completed' ? (
@@ -344,14 +344,14 @@ const LevelMap = ({ onStartLevel }) => {
                         disabled={status.status === 'locked'}
                         className={`flex-1 text-left p-2.5 sm:p-3 rounded-xl transition-all btn-press touch-target ${
                           status.status === 'locked'
-                            ? 'bg-slate-50 opacity-60 cursor-not-allowed'
-                            : 'bg-white hover:bg-slate-50 shadow-sm border border-slate-100 hover:shadow-md'
+                            ? 'bg-theme-elevated opacity-60 cursor-not-allowed'
+                            : 'bg-theme-card hover:bg-theme-elevated shadow-sm border border-theme-light hover:shadow-md'
                         }`}
                       >
                         <div className="flex items-center justify-between">
                           <div className="min-w-0">
                             <div className={`font-semibold text-sm ${
-                              status.status === 'locked' ? 'text-slate-400' : 'text-slate-700'
+                              status.status === 'locked' ? 'text-theme-muted' : 'text-theme-secondary'
                             }`}>
                               第{idx + 1}关 · {level.title}
                               {level.isWeekly && (
@@ -360,7 +360,7 @@ const LevelMap = ({ onStartLevel }) => {
                                 </span>
                               )}
                             </div>
-                            <div className="text-xs text-slate-400 mt-0.5 flex items-center gap-2">
+                            <div className="text-xs text-theme-muted mt-0.5 flex items-center gap-2">
                               <span className="flex items-center gap-0.5">
                                 <Icon name="clock" size={12} /> {level.timeLimit}秒
                               </span>
@@ -385,7 +385,7 @@ const LevelMap = ({ onStartLevel }) => {
                                 <Icon name="play" size={isMobile ? 12 : 14} />
                               </div>
                             ) : (
-                              <span className="text-xs text-slate-300">未解锁</span>
+                              <span className="text-xs text-theme-disabled">未解锁</span>
                             )}
                           </div>
                         </div>
@@ -396,11 +396,11 @@ const LevelMap = ({ onStartLevel }) => {
               </div>
             </div>
           </div>
-        );
+        )
       })}
-      </div>
-      )}
     </div>
+    )}
+  </div>
   );
 };
 

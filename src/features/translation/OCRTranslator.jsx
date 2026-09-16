@@ -143,7 +143,7 @@ const OCRTranslator = () => {
         {/* Language selector */}
         <div className="flex gap-3">
           <div className="flex-1">
-            <label className="text-xs text-slate-400 mb-1 block">图片语言</label>
+            <label className="text-xs text-theme-muted mb-1 block">图片语言</label>
             <LanguageSelector
               value={sourceLang}
               onChange={setSourceLang}
@@ -153,7 +153,7 @@ const OCRTranslator = () => {
             />
           </div>
           <div className="flex-1">
-            <label className="text-xs text-slate-400 mb-1 block">翻译为 {showBetaBadge && <span className="text-[10px] px-1 py-0.5 rounded bg-amber-100 text-amber-700 font-medium ml-1">Beta</span>}</label>
+            <label className="text-xs text-theme-muted mb-1 block">翻译为 {showBetaBadge && <span className="text-[10px] px-1 py-0.5 rounded bg-amber-100 text-amber-700 font-medium ml-1">Beta</span>}</label>
             <LanguageSelector
               value={targetLang}
               onChange={setTargetLang}
@@ -164,7 +164,7 @@ const OCRTranslator = () => {
         </div>
 
         <div
-          className="border-2 border-dashed border-slate-200 rounded-2xl p-8 sm:p-12 flex flex-col items-center justify-center text-center hover:border-brand-300 hover:bg-brand-50/30 transition-all cursor-pointer"
+          className="border-2 border-dashed border-theme-light rounded-2xl p-8 sm:p-12 flex flex-col items-center justify-center text-center hover:border-brand-300 hover:bg-brand-50/30 transition-all cursor-pointer"
           onClick={() => fileInputRef.current?.click()}
           onDragOver={(e) => e.preventDefault()}
           onDrop={handleDrop}
@@ -172,8 +172,8 @@ const OCRTranslator = () => {
           <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-brand-100 flex items-center justify-center mb-3 sm:mb-4">
             <Icon name="camera" size={isMobile ? 24 : 28} className="text-brand-600" />
           </div>
-          <h3 className="text-base sm:text-lg font-semibold text-slate-700 mb-1">拍照或上传图片</h3>
-          <p className="text-xs sm:text-sm text-slate-400 mb-3 sm:mb-4 max-w-xs">
+          <h3 className="text-base sm:text-lg font-semibold text-theme-secondary mb-1">拍照或上传图片</h3>
+          <p className="text-xs sm:text-sm text-theme-muted mb-3 sm:mb-4 max-w-xs">
             支持 JPG、PNG、WebP 格式，单张不超过 10MB
           </p>
           <Button icon="upload" size={isMobile ? 'md' : 'md'}>
@@ -194,8 +194,8 @@ const OCRTranslator = () => {
               <span className="text-lg sm:text-xl">💡</span>
             </div>
             <div>
-              <h4 className="font-semibold text-slate-700 text-sm">使用技巧</h4>
-              <ul className="text-xs text-slate-500 mt-1 space-y-0.5">
+              <h4 className="font-semibold text-theme-secondary text-sm">使用技巧</h4>
+              <ul className="text-xs text-theme-muted mt-1 space-y-0.5">
                 <li>• 确保图片光线充足、文字清晰</li>
                 <li>• 印刷体识别准确率最高</li>
                 <li>• 支持涂抹选词翻译单字/短句</li>
@@ -215,7 +215,7 @@ const OCRTranslator = () => {
     <div className="flex flex-col gap-3 sm:gap-4">
       {/* Mode toggle */}
       <div className="flex items-center justify-between">
-        <div className="flex bg-slate-100 rounded-xl p-1">
+        <div className="flex bg-theme-elevated rounded-xl p-1">
           {[
             { key: 'full', label: '全图翻译' },
             { key: 'select', label: '涂抹选词' },
@@ -225,8 +225,8 @@ const OCRTranslator = () => {
               onClick={() => setMode(m.key)}
               className={`px-3 sm:px-4 py-1.5 rounded-lg text-sm font-medium transition-all touch-target ${
                 mode === m.key
-                  ? 'bg-white text-brand-600 shadow-sm'
-                  : 'text-slate-500 hover:text-slate-700'
+                  ? 'bg-theme-card text-brand-600 shadow-sm'
+                  : 'text-theme-muted hover:text-theme-secondary'
               }`}
             >
               {m.label}
@@ -235,7 +235,7 @@ const OCRTranslator = () => {
         </div>
         <button
           onClick={handleReset}
-          className="text-sm text-slate-500 hover:text-slate-700 flex items-center gap-1 touch-target"
+          className="text-sm text-theme-muted hover:text-theme-secondary flex items-center gap-1 touch-target"
         >
           <Icon name="refresh" size={16} />
           重新选择
@@ -266,9 +266,9 @@ const OCRTranslator = () => {
           <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white">
             <Spinner size={40} className="text-white mb-3" />
             <p className="text-sm font-medium mb-2">{progressStatus || '识别中...'}</p>
-            <div className="w-48 h-1.5 bg-white/20 rounded-full overflow-hidden">
+            <div className="w-48 h-1.5 bg-theme-card/20 rounded-full overflow-hidden">
               <motion.div
-                className="h-full bg-white rounded-full"
+                className="h-full bg-theme-card rounded-full"
                 initial={{ width: 0 }}
                 animate={{ width: `${progress || 30}%` }}
                 transition={{ duration: 0.3 }}
@@ -288,7 +288,7 @@ const OCRTranslator = () => {
           {/* Original text */}
           <Card padding="p-3 sm:p-4">
             <div className="flex items-center justify-between mb-2 flex-wrap gap-1">
-              <span className="text-xs text-slate-400">
+              <span className="text-xs text-theme-muted">
                 识别文字 · {LANGUAGE_MAP[sourceLang]?.name}
                 <span className="ml-2 text-emerald-500">置信度 {Math.round(ocrResult.confidence)}%</span>
                 {isSourceDialect && (
@@ -298,7 +298,7 @@ const OCRTranslator = () => {
               <AudioPlayer text={ocrResult.text} lang={sourceLang} size="sm" />
             </div>
             <p
-              className="text-sm text-slate-700 whitespace-pre-wrap leading-relaxed"
+              className="text-sm text-theme-secondary whitespace-pre-wrap leading-relaxed"
               style={OCRService._rtlLangs.includes(sourceLang) ? { direction: 'rtl', textAlign: 'right' } : {}}
             >
               {ocrResult.text}
@@ -329,7 +329,7 @@ const OCRTranslator = () => {
                 </div>
               </div>
               <p
-                className="text-base font-medium text-slate-800 leading-relaxed"
+                className="text-base font-medium text-theme-primary leading-relaxed"
                 style={OCRService._rtlLangs.includes(targetLang) ? { direction: 'rtl', textAlign: 'right' } : {}}
               >
                 {translatedText}
@@ -340,7 +340,7 @@ const OCRTranslator = () => {
           {/* Words list (for select mode) */}
           {mode === 'select' && ocrResult.words && (
             <Card padding="p-3 sm:p-4">
-              <div className="text-xs text-slate-400 mb-2">点击单词快速翻译</div>
+              <div className="text-xs text-theme-muted mb-2">点击单词快速翻译</div>
               <div className="flex flex-wrap gap-2">
                 {ocrResult.words.slice(0, 30).map((w, i) => (
                   <button
@@ -349,7 +349,7 @@ const OCRTranslator = () => {
                     className={`px-2 py-1 text-xs rounded-lg transition-colors touch-target-sm ${
                       selectedWord?.text === w.text
                         ? 'bg-brand-500 text-white'
-                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                        : 'bg-theme-elevated text-theme-secondary hover:bg-theme-elevated'
                     }`}
                   >
                     {w.text}
@@ -360,7 +360,7 @@ const OCRTranslator = () => {
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
-                  className="mt-3 pt-3 border-t border-slate-100"
+                  className="mt-3 pt-3 border-t border-theme-light"
                 >
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium text-brand-600">{selectedWord.translation}</span>

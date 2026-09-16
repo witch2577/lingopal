@@ -137,7 +137,7 @@ const PronunciationCorrection = () => {
 
   if (!current) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 text-slate-400">
+      <div className="flex flex-col items-center justify-center py-12 text-theme-muted">
         <Icon name="info" size={32} className="mb-2" />
         <p className="text-sm">该语言暂无练习内容</p>
         <Badge variant="default" className="mt-2">演示数据</Badge>
@@ -153,7 +153,7 @@ const PronunciationCorrection = () => {
             key={lang}
             onClick={() => { setLanguage(lang); setCurrentIndex(0); setResult(null); setShowDetails(false); }}
             className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all ${
-              language === lang ? 'bg-brand-gradient text-white shadow-md' : 'bg-slate-100 text-slate-600'
+              language === lang ? 'bg-brand-gradient text-white shadow-md' : 'bg-theme-elevated text-theme-secondary'
             }`}
           >
             {LANGUAGE_MAP[lang]?.name || lang}
@@ -167,7 +167,7 @@ const PronunciationCorrection = () => {
             key={diff.key}
             onClick={() => { setDifficulty(diff.key); setCurrentIndex(0); setResult(null); setShowDetails(false); }}
             className={`px-3 py-1 rounded-lg text-xs font-medium transition-all ${
-              difficulty === diff.key ? diff.color : 'bg-slate-100 text-slate-500'
+              difficulty === diff.key ? diff.color : 'bg-theme-elevated text-theme-muted'
             }`}
           >
             {diff.label}
@@ -181,7 +181,7 @@ const PronunciationCorrection = () => {
         </div>
 
         <div className="flex-1 flex flex-col items-center justify-center text-center px-4 py-4">
-          <div className="text-sm text-slate-400 mb-2">{currentIndex + 1} / {items.length}</div>
+          <div className="text-sm text-theme-muted mb-2">{currentIndex + 1} / {items.length}</div>
 
           <motion.div
             key={current.text}
@@ -189,9 +189,9 @@ const PronunciationCorrection = () => {
             animate={{ opacity: 1, y: 0 }}
             className="mb-4"
           >
-            <h2 className="text-xl font-bold text-slate-800 mb-2">{current.text}</h2>
+            <h2 className="text-xl font-bold text-theme-primary mb-2">{current.text}</h2>
             <p className="text-sm text-brand-600 font-mono mb-1">{current.phonetic}</p>
-            <p className="text-sm text-slate-500">{current.meaning}</p>
+            <p className="text-sm text-theme-muted">{current.meaning}</p>
           </motion.div>
 
           <button
@@ -228,40 +228,40 @@ const PronunciationCorrection = () => {
               {/* Score Header */}
               <div className="text-center mb-3">
                 <div className={`text-4xl font-bold ${PronunciationService.getScoreColor(result.total)}`}>{result.total}</div>
-                <div className="text-xs text-slate-500 mt-1">纠音评分（基于语音识别文本估算）</div>
+                <div className="text-xs text-theme-muted mt-1">纠音评分（基于语音识别文本估算）</div>
               </div>
 
               {/* Score Details */}
               <div className="space-y-2 text-xs mb-3">
                 <div className="flex justify-between">
-                  <span className="text-slate-500">文本相似度</span>
+                  <span className="text-theme-muted">文本相似度</span>
                   <span className="font-medium">{result.details.levenshtein}%</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500">字符准确度</span>
+                  <span className="text-theme-muted">字符准确度</span>
                   <span className="font-medium">{result.details.charAccuracy}%</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500">单词准确度</span>
+                  <span className="text-theme-muted">单词准确度</span>
                   <span className="font-medium">{result.details.wordAccuracy}%</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500">流畅度</span>
+                  <span className="text-theme-muted">流畅度</span>
                   <span className="font-medium">{result.details.continuityScore}%</span>
                 </div>
               </div>
 
               {/* Recognized Text */}
-              <div className="bg-white/60 rounded-lg p-2 mb-3">
-                <p className="text-xs text-slate-500">识别结果:</p>
-                <p className="text-sm font-medium text-slate-700">{result.details.recognizedText || '（未识别到内容）'}</p>
+              <div className="bg-theme-card/60 rounded-lg p-2 mb-3">
+                <p className="text-xs text-theme-muted">识别结果:</p>
+                <p className="text-sm font-medium text-theme-secondary">{result.details.recognizedText || '（未识别到内容）'}</p>
               </div>
 
               {/* Word-level Analysis */}
               {result.wordAnalysis && result.wordAnalysis.length > 0 && (
                 <div className="mb-3">
                   <div className="flex items-center justify-between mb-1">
-                    <p className="text-xs text-slate-500">逐词分析</p>
+                    <p className="text-xs text-theme-muted">逐词分析</p>
                     <button
                       onClick={() => setShowDetails(!showDetails)}
                       className="text-xs text-brand-600 hover:text-brand-700"
@@ -277,7 +277,7 @@ const PronunciationCorrection = () => {
                           word.status === 'correct' ? 'bg-emerald-100 text-emerald-700' :
                           word.status === 'close' ? 'bg-amber-100 text-amber-700' :
                           word.status === 'partial' ? 'bg-orange-100 text-orange-700' :
-                          word.status === 'missing' ? 'bg-slate-100 text-slate-400 line-through' :
+                          word.status === 'missing' ? 'bg-theme-elevated text-theme-muted line-through' :
                           word.status === 'extra' ? 'bg-blue-100 text-blue-700' :
                           'bg-red-100 text-red-700'
                         }`}
@@ -313,8 +313,8 @@ const PronunciationCorrection = () => {
               )}
 
               {/* Boundary Note */}
-              <div className="mt-3 pt-2 border-t border-slate-200/50">
-                <p className="text-[10px] text-slate-400 leading-relaxed">
+              <div className="mt-3 pt-2 border-t border-theme-light/50">
+                <p className="text-[10px] text-theme-muted leading-relaxed">
                   本评分基于语音识别后的文本相似度进行估算，非专业声学分析。
                   如需更精准的发音评估，建议咨询专业语言教师。
                 </p>
@@ -327,14 +327,14 @@ const PronunciationCorrection = () => {
           <button
             onClick={handlePrev}
             disabled={currentIndex === 0}
-            className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 disabled:opacity-40 transition-colors btn-press"
+            className="p-2 rounded-xl bg-theme-elevated hover:bg-theme-elevated disabled:opacity-40 transition-colors btn-press"
           >
             <Icon name="chevron-left" size={18} />
           </button>
           <button
             onClick={handleNext}
             disabled={currentIndex >= items.length - 1}
-            className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 disabled:opacity-40 transition-colors btn-press"
+            className="p-2 rounded-xl bg-theme-elevated hover:bg-theme-elevated disabled:opacity-40 transition-colors btn-press"
           >
             <Icon name="chevron" size={18} />
           </button>
@@ -343,11 +343,11 @@ const PronunciationCorrection = () => {
 
       {history.length > 0 && (
         <div className="mb-4">
-          <h3 className="text-sm font-semibold text-slate-700 mb-2">最近纠音记录</h3>
+          <h3 className="text-sm font-semibold text-theme-secondary mb-2">最近纠音记录</h3>
           <div className="space-y-2 max-h-32 overflow-y-auto hide-scrollbar">
             {history.slice(0, 5).map((rec, i) => (
-              <div key={i} className="flex items-center justify-between bg-white rounded-xl px-3 py-2 text-xs border border-slate-100">
-                <span className="text-slate-600 truncate max-w-[50%]">{rec.targetText}</span>
+              <div key={i} className="flex items-center justify-between bg-theme-card rounded-xl px-3 py-2 text-xs border border-theme-light">
+                <span className="text-theme-secondary truncate max-w-[50%]">{rec.targetText}</span>
                 <span className={`font-bold ${PronunciationService.getScoreColor(rec.score)}`}>{rec.score}分</span>
               </div>
             ))}

@@ -1,15 +1,12 @@
 // ========== App Root ==========
 
 const App = () => {
-  const [activeTab, setActiveTab] = useState('home');
+  const [activeTab, setActiveTab] = useState('translation');
   const [isInitialized, setIsInitialized] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
-  const [postOnboarding, setPostOnboarding] = useState(false);
-  const [showAdmin, setShowAdmin] = useState(false);
-  const [showCharacterEditor, setShowCharacterEditor] = useState(false);
-  const [loadedCharacter, setLoadedCharacter] = useState(false);
+  const [showCeremony, setShowCeremony] = useState(false);
+  const [pendingThemeMode, setPendingThemeMode] = useState(null);
   const [loadedModules, setLoadedModules] = useState({
-    home: true,
     translation: true,
     learning: false,
     oral: false,
@@ -17,13 +14,8 @@ const App = () => {
     content: false,
     user: false,
     login: false,
-    auth: false,
-    admin: false,
-    practice: false,
   });
-  const isLoggedIn = useAuthStore(s => s.isLoggedIn);
-  const isAdmin = useAuthStore(s => s.isAdmin);
-  const authLoading = useAuthStore(s => s.isLoading);
+  const isLoggedIn = useUserStore(s => s.isLoggedIn);
   const profile = useUserStore(s => s.profile);
   const { isMobile, isLandscape } = useMobileDetect();
   const { isOpen: keyboardOpen } = useKeyboard();
@@ -31,54 +23,20 @@ const App = () => {
 
   // Module loading map: which lazy group each tab needs
   const tabModuleMap = {
-    home: null,
-    translation: null,
+    translation: null, // P0, already loaded
     learning: 'learning',
-    practice: 'practice',
-    oral: 'practice',
-    written: 'practice',
+    oral: 'oral',
+    written: 'written',
     content: 'content',
     user: 'user',
   };
-
-  // Lazy-load auth module on first need
-  useEffect(() => {
-    if (!loadedModules.auth && window.loadLazyModule) {
-      window.loadLazyModule('auth').then(() => {
-        setLoadedModules(prev => ({ ...prev, auth: true }));
-      });
-    }
-  }, []);
-
-  // Lazy-load admin module when needed
-  useEffect(() => {
-    if (showAdmin && !loadedModules.admin && window.loadLazyModule) {
-      window.loadLazyModule('admin').then(() => {
-        setLoadedModules(prev => ({ ...prev, admin: true }));
-      });
-    }
-  }, [showAdmin]);
-
-  // Lazy-load character module when editor is shown
-  useEffect(() => {
-    if (showCharacterEditor && !loadedCharacter && window.loadLazyModule) {
-      window.loadLazyModule('character').then(() => {
-        setLoadedCharacter(true);
-        useCharacterStore.getState().init();
-      });
-    }
-  }, [showCharacterEditor]);
 
   // Lazy-load module when tab changes
   useEffect(() => {
     const group = tabModuleMap[activeTab];
     if (group && !loadedModules[group] && window.loadLazyModule) {
       window.loadLazyModule(group).then(() => {
-        setLoadedModules(prev => ({
-          ...prev,
-          [group]: true,
-          ...(group === 'practice' ? { oral: true, written: true } : {}),
-        }));
+        setLoadedModules(prev => ({ ...prev, [group]: true }));
       });
     }
   }, [activeTab]);
@@ -86,18 +44,8 @@ const App = () => {
   // Expose tab switcher for empty state actions
   useEffect(() => {
     window.setActiveTab = setActiveTab;
-    window.openCharacterEditor = () => setShowCharacterEditor(true);
-    if (isLoggedIn && isAdmin) {
-      window.openAdmin = () => setShowAdmin(true);
-    } else {
-      delete window.openAdmin;
-    }
-    return () => {
-      delete window.setActiveTab;
-      delete window.openAdmin;
-      delete window.openCharacterEditor;
-    };
-  }, [isLoggedIn, isAdmin]);
+    return () => { delete window.setActiveTab; };
+  }, []);
 
   // Initialize app
   useEffect(() => {
@@ -106,19 +54,24 @@ const App = () => {
 
     const init = async () => {
       try {
+        // Load preferences (sync, fast) — includes themeMode restoration
         useUserStore.getState().loadPreferences();
-        const [authProfile, localProfile] = await Promise.all([
-          useAuthStore.getState().init(),
+        // Theme already applied by loadPreferences via data-theme attribute
+
+        // Init user and load history in parallel
+        const [userProfile] = await Promise.all([
           useUserStore.getState().init(),
           useTranslationStore.getState().loadHistory(),
         ]);
 
         if (cancelled) return;
 
+        // Check weekly content rotation
         const weekChanged = hasWeekChanged();
         if (weekChanged) {
           const currentWeek = getCurrentWeekIndex();
           saveActiveWeek(currentWeek);
+          // Clear seeded flags so new weekly content gets loaded
           try {
             localStorage.removeItem('lingopal_content_week_0_dismissed');
             localStorage.removeItem('lingopal_content_week_1_dismissed');
@@ -127,12 +80,9 @@ const App = () => {
           } catch (e) {}
         }
 
+        // Check if onboarding needed (new user without nickname)
         const userState = useUserStore.getState();
-        const authState = useAuthStore.getState();
-        const needsOnboarding = !IS_SUPABASE_CONFIGURED || !authState.isLoggedIn
-          ? (!userState.profile?.nickname || userState.profile.nickname === '语言学习者')
-          : (!authState.supabaseProfile?.nickname || authState.supabaseProfile.nickname === '语言学习者');
-        if (needsOnboarding) {
+        if (!userState.profile?.nickname || userState.profile.nickname === '语言学习者') {
           const dismissed = localStorage.getItem('lingopal_onboarded');
           if (!dismissed) {
             setShowOnboarding(true);
@@ -147,6 +97,7 @@ const App = () => {
       }
     };
 
+    // 5 秒超时兜底：无论 init 成功/失败/挂起，5 秒内必须解除初始化状态
     timeoutId = setTimeout(() => {
       if (!cancelled) {
         console.warn('[LingoPal] 初始化超时（5秒），强制解除加载状态');
@@ -164,9 +115,8 @@ const App = () => {
 
   const handleOnboardingComplete = () => {
     setShowOnboarding(false);
-    setPostOnboarding(true);
     localStorage.setItem('lingopal_onboarded', 'true');
-    setActiveTab('home');
+    setActiveTab('learning');
   };
 
   // Lazy-load login module when onboarding is shown
@@ -180,7 +130,7 @@ const App = () => {
 
   if (!isInitialized) {
     return (
-      <div className="h-full flex items-center justify-center bg-slate-50">
+      <div className="h-full flex items-center justify-center scene-home">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -188,7 +138,7 @@ const App = () => {
           className="flex flex-col items-center gap-5"
         >
           <div className="relative">
-            <div className="w-16 h-16 rounded-2xl bg-brand-gradient flex items-center justify-center text-white text-3xl shadow-lg shadow-brand-500/30">
+            <div className="w-16 h-16 rounded-2xl bg-brand-gradient flex items-center justify-center text-white text-3xl shadow-lg shadow-brand-500/30 animate-breathe">
               🌍
             </div>
             <motion.div
@@ -198,12 +148,13 @@ const App = () => {
             />
           </div>
           <div className="flex flex-col items-center gap-2">
-            <p className="text-lg font-semibold text-slate-700">语伴 LingoPal</p>
-            <p className="text-sm text-slate-400">正在初始化...</p>
+            <p className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>语伴 LingoPal</p>
+            <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>正在初始化...</p>
           </div>
-          <div className="w-48 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+          <div className="w-48 h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--border-light)' }}>
             <motion.div
-              className="h-full bg-brand-gradient rounded-full"
+              className="h-full rounded-full"
+              style={{ background: 'var(--brand-gradient)' }}
               animate={{ width: ['0%', '70%', '90%', '100%'] }}
               transition={{ duration: 2, ease: 'easeInOut' }}
             />
@@ -213,140 +164,90 @@ const App = () => {
     );
   }
 
+  // Animation config based on device capabilities
   const pageTransition = reducedMotion
     ? { duration: 0 }
     : isMobile
       ? { duration: 0.12 }
       : { duration: 0.15 };
 
-  const requireAuth = IS_SUPABASE_CONFIGURED && !isLoggedIn && !authLoading && !postOnboarding;
-
-  if (showAdmin && loadedModules.admin && isLoggedIn && isAdmin) {
-    return (
-      <div className="h-full">
-        <AdminPage onClose={() => setShowAdmin(false)} />
-      </div>
-    );
-  }
-
   return (
-    <div className={`h-full flex flex-col bg-slate-50 ${isMobile ? 'mobile-compact' : ''}`}>
+    <div className={`h-full flex flex-col theme-transition ${isMobile ? 'mobile-compact' : ''}`}
+      style={{ background: 'var(--bg-body)' }}>
+      {/* PWA Manager: 离线状态、安装提示、更新检测 */}
       <PWAManager />
+      {/* Main content area (padding-top handled by offline banner spacing) */}
       <main className="flex-1 overflow-hidden relative" id="app-main">
         <div
           className={`mx-auto h-full overflow-y-auto hide-scrollbar ${
             isLandscape && isMobile
               ? 'max-w-none px-4 pt-3 pb-16'
               : 'max-w-xl px-4 pt-4 pb-20'
+          } ${
+            activeTab === 'translation' ? 'scene-home' :
+            activeTab === 'learning' ? 'scene-learning' :
+            activeTab === 'practice' || activeTab === 'oral' || activeTab === 'written' ? 'scene-practice' :
+            activeTab === 'user' ? 'scene-user' : 'scene-home'
           }`}
           style={{
             paddingBottom: keyboardOpen ? '20px' : undefined,
           }}
         >
           <AnimatePresence mode="wait">
-            {requireAuth ? (
-              <motion.div
-                key="auth"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="h-full"
-              >
-                {loadedModules.auth ? <AuthPage /> : (
-                  <div className="h-full flex items-center justify-center">
-                    <div className="w-12 h-12 rounded-xl bg-brand-gradient flex items-center justify-center text-white text-2xl animate-pulse">
-                      🌍
-                    </div>
-                  </div>
-                )}
-              </motion.div>
-            ) : (
-              <motion.div
-                key={activeTab}
-                initial={{ opacity: 0, y: 12, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -8, scale: 0.98 }}
-                transition={pageTransition}
-                className="h-full"
-              >
-                {activeTab === 'home' && <HomePage />}
-                {activeTab === 'translation' && <TranslationPage />}
-                {activeTab === 'learning' && loadedModules.learning && <LearningPage />}
-                {activeTab === 'practice' && loadedModules.practice && <PracticePage />}
-                {activeTab === 'oral' && loadedModules.practice && <PracticePage />}
-                {activeTab === 'written' && loadedModules.practice && <PracticePage />}
-                {activeTab === 'content' && loadedModules.content && <ContentPage />}
-                {activeTab === 'user' && loadedModules.user && <UserPage />}
-              </motion.div>
-            )}
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 12, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -8, scale: 0.98 }}
+              transition={pageTransition}
+              className="h-full"
+            >
+              {activeTab === 'translation' && <TranslationPage />}
+              {activeTab === 'learning' && loadedModules.learning && <LearningPage />}
+              {activeTab === 'oral' && loadedModules.oral && <OralPage />}
+              {activeTab === 'written' && loadedModules.written && <WrittenPage />}
+              {activeTab === 'content' && loadedModules.content && <ContentPage />}
+              {activeTab === 'user' && loadedModules.user && <UserPage />}
+            </motion.div>
           </AnimatePresence>
         </div>
       </main>
 
-      {/* Floating translate button (visible on non-translation pages) */}
-      {activeTab !== 'translation' && !requireAuth && (
-        <motion.button
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={() => setActiveTab('translation')}
-          className="fixed right-4 bottom-20 z-40 w-12 h-12 rounded-full bg-brand-500 text-white shadow-lg shadow-brand-500/30 flex items-center justify-center hover:bg-brand-600 transition-colors"
-          aria-label="快速翻译"
-        >
-          <Icon name="translate" size={20} />
-        </motion.button>
-      )}
-
-      {/* Bottom navigation */}
-      {(!isMobile || !keyboardOpen) && !requireAuth && (
+      {/* Bottom navigation - hidden when keyboard is open on mobile */}
+      {(!isMobile || !keyboardOpen) && (
         <BottomNav active={activeTab} onChange={setActiveTab} />
       )}
 
+      {/* Global notification */}
       <Notification />
+
+      {/* Confetti */}
       <ConfettiEffect />
 
-      <AnimatePresence>
-        {showOnboarding && (
-          <div className="fixed inset-0 z-50 bg-slate-50 overflow-y-auto">
-            <OnboardingFlow onComplete={handleOnboardingComplete} />
-          </div>
-        )}
-      </AnimatePresence>
+      {/* Theme Switching Ceremony */}
+      <ThemeCeremony
+        isActive={showCeremony}
+        onComplete={() => {
+          setShowCeremony(false);
+          if (pendingThemeMode) {
+            useUserStore.getState().setThemeMode(pendingThemeMode);
+            setPendingThemeMode(null);
+          }
+        }}
+      />
 
-      {/* Character Editor overlay */}
+      {/* Onboarding Modal */}
       <AnimatePresence>
-        {showCharacterEditor && (
-          <motion.div
-            key="character-editor"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[55]"
-          >
-            {typeof CharacterEditor !== 'undefined' ? (
-              <CharacterEditor
-                onClose={() => setShowCharacterEditor(false)}
-                onSave={() => {
-                  /* saved via store */
-                }}
-              />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center bg-slate-50">
-                <div className="flex flex-col items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-brand-gradient flex items-center justify-center text-white text-xl animate-pulse">
-                    🎨
-                  </div>
-                  <p className="text-sm text-slate-500">加载捏脸编辑器...</p>
-                </div>
-              </div>
-            )}
-          </motion.div>
+        {showOnboarding && loadedModules.login && (
+          <div className="fixed inset-0 z-50 bg-theme-elevated overflow-y-auto">
+            <LoginPage onComplete={handleOnboardingComplete} />
+          </div>
         )}
       </AnimatePresence>
     </div>
   );
 };
 
+// Mount app
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);

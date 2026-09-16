@@ -19,7 +19,6 @@ const SentenceSelection = () => {
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState([]);
-  const [characterFeedback, setCharacterFeedback] = useState(null);
 
   const questionPool = useMemo(() => {
     const pool = SENTENCE_SELECTION_DATA[currentLanguage]?.[difficulty] || [];
@@ -60,10 +59,6 @@ const SentenceSelection = () => {
     const result = answerQuestion(isCorrect, points);
 
     setTotalQuestions(prev => prev + 1);
-    if (typeof FeedbackEngine !== 'undefined') {
-      const fb = FeedbackEngine.onAnswer(isCorrect, { source: 'written', combo: result.newStreak });
-      if (fb) setCharacterFeedback(fb);
-    }
     if (isCorrect) {
       setCorrectCount(prev => prev + 1);
       useUIStore.getState().showNotification(`正确！+${points} 分`, 'success');
@@ -106,14 +101,14 @@ const SentenceSelection = () => {
       <div className="flex flex-col gap-4">
         {/* Difficulty */}
         <Card className="flex flex-col gap-3">
-          <h3 className="text-sm font-semibold text-slate-700">选择难度</h3>
+          <h3 className="text-sm font-semibold text-theme-secondary">选择难度</h3>
           <div className="flex gap-2">
             {DIFFICULTY_LEVELS.map(level => (
               <button
                 key={level.key}
                 onClick={() => setDifficulty(level.key)}
                 className={`flex-1 py-2 rounded-xl text-sm font-medium transition-all btn-press ${
-                  difficulty === level.key ? level.color : 'bg-slate-100 text-slate-500'
+                  difficulty === level.key ? level.color : 'bg-theme-elevated text-theme-muted'
                 }`}
               >
                 {level.label}
@@ -124,20 +119,19 @@ const SentenceSelection = () => {
 
         {/* Language */}
         <Card className="flex flex-col gap-3">
-          <h3 className="text-sm font-semibold text-slate-700">选择语言</h3>
+          <h3 className="text-sm font-semibold text-theme-secondary">选择语言</h3>
           <div className="flex gap-2 flex-wrap">
-            {LEARNING_LANGUAGES.map(lang => (
+            {['en', 'ja'].map(code => (
               <button
-                key={lang.code}
-                onClick={() => useWrittenStore.getState().setLanguage(lang.code)}
+                key={code}
+                onClick={() => useWrittenStore.getState().setLanguage(code)}
                 className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all btn-press ${
-                  currentLanguage === lang.code
+                  currentLanguage === code
                     ? 'bg-brand-100 text-brand-700 ring-2 ring-brand-300'
-                    : 'bg-slate-100 text-slate-600'
+                    : 'bg-theme-elevated text-theme-secondary'
                 }`}
               >
-                {lang.flag} {lang.name}
-                {lang.type === 'beta' && <span className="ml-0.5 text-[9px] opacity-70">β</span>}
+                {LANGUAGE_MAP[code]?.flag} {LANGUAGE_MAP[code]?.name}
               </button>
             ))}
           </div>
@@ -146,7 +140,7 @@ const SentenceSelection = () => {
         {/* Wrong answers preview */}
         {wrongAnswers.length > 0 && (
           <Card className="flex flex-col gap-2">
-            <h3 className="text-sm font-semibold text-slate-700 flex items-center gap-2">
+            <h3 className="text-sm font-semibold text-theme-secondary flex items-center gap-2">
               <Icon name="bookmark" size={16} />
               错题本 ({wrongAnswers.length} 题)
             </h3>
@@ -185,10 +179,6 @@ const SentenceSelection = () => {
           correct: correctCount,
         });
       }
-      if (typeof FeedbackEngine !== 'undefined' && totalQuestions > 0) {
-        const fb = FeedbackEngine.onSessionEnd(correctCount, totalQuestions, { source: 'written' });
-        if (fb) setCharacterFeedback(fb);
-      }
     }, []);
 
     return (
@@ -203,22 +193,22 @@ const SentenceSelection = () => {
         </motion.div>
 
         <div className="text-center">
-          <h2 className="text-xl font-bold text-slate-800">练习完成！</h2>
-          <p className="text-sm text-slate-500 mt-1">本次共答 {totalQuestions} 题</p>
+          <h2 className="text-xl font-bold text-theme-primary">练习完成！</h2>
+          <p className="text-sm text-theme-muted mt-1">本次共答 {totalQuestions} 题</p>
         </div>
 
         <div className="grid grid-cols-3 gap-3 w-full">
           <Card className="text-center py-4">
             <div className="text-2xl font-bold text-brand-600">{score}</div>
-            <div className="text-xs text-slate-500 mt-1">总得分</div>
+            <div className="text-xs text-theme-muted mt-1">总得分</div>
           </Card>
           <Card className="text-center py-4">
             <div className="text-2xl font-bold text-emerald-600">{accuracy}%</div>
-            <div className="text-xs text-slate-500 mt-1">正确率</div>
+            <div className="text-xs text-theme-muted mt-1">正确率</div>
           </Card>
           <Card className="text-center py-4">
             <div className="text-2xl font-bold text-amber-600">{streak}</div>
-            <div className="text-xs text-slate-500 mt-1">最高连击</div>
+            <div className="text-xs text-theme-muted mt-1">最高连击</div>
           </Card>
         </div>
 
@@ -230,14 +220,6 @@ const SentenceSelection = () => {
             再来一次
           </Button>
         </div>
-
-        {/* Character feedback overlay (non-blocking) */}
-        {characterFeedback && (
-          <CharacterFeedbackOverlay
-            feedback={characterFeedback}
-            onComplete={() => setCharacterFeedback(null)}
-          />
-        )}
       </div>
     );
   }
@@ -254,13 +236,13 @@ const SentenceSelection = () => {
           <Badge variant="primary">{score} 分</Badge>
           {streak >= 2 && <Badge variant="accent">🔥 x{streak}</Badge>}
         </div>
-        <span className="text-xs text-slate-400">
+        <span className="text-xs text-theme-muted">
           {questionIndex + 1} / {questionPool.length}
         </span>
       </div>
 
       {/* Progress */}
-      <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+      <div className="h-1.5 bg-theme-elevated rounded-full overflow-hidden">
         <motion.div
           className="h-full bg-brand-gradient rounded-full"
           animate={{ width: `${((questionIndex) / questionPool.length) * 100}%` }}
@@ -271,8 +253,8 @@ const SentenceSelection = () => {
       {/* Question */}
       <Card className="flex flex-col gap-4 py-5">
         <div className="text-center">
-          <p className="text-xs text-slate-400 mb-2">选择正确的词语填入空白处</p>
-          <p className="text-base text-slate-700 leading-relaxed">
+          <p className="text-xs text-theme-muted mb-2">选择正确的词语填入空白处</p>
+          <p className="text-base text-theme-secondary leading-relaxed">
             {parts[0]}
             <span className="inline-block min-w-[60px] h-7 border-b-2 border-brand-400 mx-1 text-center font-semibold text-brand-600">
               {selectedOption || '?'}
@@ -281,8 +263,8 @@ const SentenceSelection = () => {
           </p>
         </div>
 
-        <div className="bg-slate-50 rounded-xl px-4 py-3 text-center">
-          <p className="text-sm text-slate-600">{currentQuestion.meaning}</p>
+        <div className="bg-theme-elevated rounded-xl px-4 py-3 text-center">
+          <p className="text-sm text-theme-secondary">{currentQuestion.meaning}</p>
         </div>
 
         {/* Options */}
@@ -290,7 +272,7 @@ const SentenceSelection = () => {
           {currentQuestion.options.map((option, i) => {
             const isSelected = selectedOption === option;
             const isCorrect = option === currentQuestion.correct;
-            let btnClass = 'bg-white border-2 border-slate-200 text-slate-700 hover:border-brand-400 hover:text-brand-600';
+            let btnClass = 'bg-theme-card border-2 border-theme-light text-theme-secondary hover:border-brand-400 hover:text-brand-600';
 
             if (feedback) {
               if (isCorrect) {
@@ -298,7 +280,7 @@ const SentenceSelection = () => {
               } else if (isSelected) {
                 btnClass = 'bg-red-50 border-2 border-red-400 text-red-700';
               } else {
-                btnClass = 'bg-slate-50 border-2 border-slate-100 text-slate-400';
+                btnClass = 'bg-theme-elevated border-2 border-theme-light text-theme-muted';
               }
             } else if (isSelected) {
               btnClass = 'bg-brand-50 border-2 border-brand-400 text-brand-700';
@@ -330,14 +312,6 @@ const SentenceSelection = () => {
           </motion.div>
         )}
       </Card>
-
-      {/* Character feedback overlay (non-blocking) */}
-      {characterFeedback && (
-        <CharacterFeedbackOverlay
-          feedback={characterFeedback}
-          onComplete={() => setCharacterFeedback(null)}
-        />
-      )}
     </div>
   );
 };

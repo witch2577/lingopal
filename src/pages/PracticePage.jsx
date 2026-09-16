@@ -15,14 +15,14 @@ const PracticePage = () => {
             <Icon name="zap" size={18} />
           </div>
           <div>
-            <h1 className="text-lg sm:text-xl font-bold text-slate-800 font-display">练习中心</h1>
-            <p className="text-xs text-slate-400">口语 · 听力 · 打字 · 笔试 · 影视 · 音乐</p>
+            <h1 className="text-lg sm:text-xl font-bold text-theme-primary font-display">练习中心</h1>
+            <p className="text-xs text-theme-muted">口语 · 笔试 · 打字 · 影视 · 音乐</p>
           </div>
         </div>
       </div>
 
       {/* Sub-tab navigation */}
-      <div className="flex items-center gap-1 mb-3 sm:mb-4 border-b border-slate-200 pb-1 -mx-1 px-1 overflow-x-auto hide-scrollbar">
+      <div className="flex items-center gap-1 mb-3 sm:mb-4 border-b border-theme-light pb-1 -mx-1 px-1 overflow-x-auto hide-scrollbar">
         {PRACTICE_TABS.map(tab => {
           const isActive = activeTab === tab.key;
           return (
@@ -32,7 +32,7 @@ const PracticePage = () => {
               className={`relative px-3 py-2 text-sm font-medium rounded-lg transition-all btn-press whitespace-nowrap touch-target flex items-center gap-1.5 ${
                 isActive
                   ? 'text-brand-600 bg-brand-50'
-                  : 'text-slate-500 hover:text-slate-700 hover:bg-slate-50'
+                  : 'text-theme-muted hover:text-theme-secondary hover:bg-theme-elevated'
               }`}
             >
               <Icon name={tab.icon} size={14} />
@@ -56,9 +56,8 @@ const PracticePage = () => {
             transition={{ duration: isMobile ? 0.12 : 0.2 }}
           >
             {activeTab === 'oral' && <OralPageContent />}
-            {activeTab === 'listening' && <ListeningPageContent />}
-            {activeTab === 'typing' && <TypingPractice />}
             {activeTab === 'written' && <WrittenPageContent />}
+            {activeTab === 'typing' && <TypingPractice />}
             {activeTab === 'drama' && <DramaHub />}
             {activeTab === 'music' && <MusicHub />}
           </motion.div>
@@ -82,7 +81,7 @@ const OralPageContent = () => {
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
             className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all whitespace-nowrap ${
-              activeTab === tab.key ? 'bg-emerald-100 text-emerald-700' : 'text-slate-500 hover:bg-slate-50'
+              activeTab === tab.key ? 'bg-emerald-100 text-emerald-700' : 'text-theme-muted hover:bg-theme-elevated'
             }`}
           >
             {tab.label}
@@ -112,7 +111,7 @@ const WrittenPageContent = () => {
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
             className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-all whitespace-nowrap ${
-              activeTab === tab.key ? 'bg-amber-100 text-amber-700' : 'text-slate-500 hover:bg-slate-50'
+              activeTab === tab.key ? 'bg-amber-100 text-amber-700' : 'text-theme-muted hover:bg-theme-elevated'
             }`}
           >
             {tab.label}
@@ -188,10 +187,10 @@ const DramaHub = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-base font-bold text-slate-800">影视短剧</h2>
-          <p className="text-xs text-slate-400">通过剧本对话沉浸式学习</p>
+          <h2 className="text-base font-bold text-theme-primary">影视短剧</h2>
+          <p className="text-xs text-theme-muted">通过剧本对话沉浸式学习</p>
         </div>
-        <div className="text-xs text-slate-400">{scripts.length} 部剧本</div>
+        <div className="text-xs text-theme-muted">{scripts.length} 部剧本</div>
       </div>
 
       {scripts.length === 0 ? (
@@ -202,7 +201,7 @@ const DramaHub = () => {
             key={script.id}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white rounded-2xl p-4 shadow-sm border border-slate-100"
+            className="bg-theme-card rounded-2xl p-4 shadow-sm border border-theme-light"
           >
             <div className="flex items-start gap-3 mb-3">
               <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-red-400 to-rose-500 flex items-center justify-center text-2xl flex-shrink-0">
@@ -210,7 +209,7 @@ const DramaHub = () => {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
-                  <h3 className="font-semibold text-slate-800 text-sm">{script.title}</h3>
+                  <h3 className="font-semibold text-theme-primary text-sm">{script.title}</h3>
                   <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
                     script.difficulty === 'beginner' ? 'bg-emerald-100 text-emerald-700' :
                     script.difficulty === 'intermediate' ? 'bg-amber-100 text-amber-700' :
@@ -219,8 +218,8 @@ const DramaHub = () => {
                     {script.difficulty === 'beginner' ? '入门' : script.difficulty === 'intermediate' ? '中级' : '高级'}
                   </span>
                 </div>
-                <p className="text-xs text-slate-500 line-clamp-2">{script.description}</p>
-                <p className="text-[10px] text-slate-400 mt-1">{script.scenes.length} 个场景 · {script.quiz?.length || 0} 道测验</p>
+                <p className="text-xs text-theme-muted line-clamp-2">{script.description}</p>
+                <p className="text-[10px] text-theme-muted mt-1">{script.scenes.length} 个场景 · {script.quiz?.length || 0} 道测验</p>
               </div>
             </div>
             <div className="flex gap-2">
@@ -241,11 +240,11 @@ const DramaHub = () => {
       {/* Video link import */}
       <button
         onClick={() => setView('import')}
-        className="bg-slate-50 rounded-2xl p-4 border border-dashed border-slate-200 text-center hover:bg-slate-100 transition-colors"
+        className="bg-theme-elevated rounded-2xl p-4 border border-dashed border-theme-light text-center hover:bg-theme-elevated transition-colors"
       >
         <div className="text-2xl mb-2">📹</div>
-        <p className="text-sm font-medium text-slate-600">视频链接导入</p>
-        <p className="text-xs text-slate-400 mt-1">粘贴 YouTube / Bilibili 链接提取字幕学习</p>
+        <p className="text-sm font-medium text-theme-secondary">视频链接导入</p>
+        <p className="text-xs text-theme-muted mt-1">粘贴 YouTube / Bilibili 链接提取字幕学习</p>
       </button>
     </div>
   );
@@ -292,8 +291,8 @@ const MusicHub = () => {
     <div className="flex flex-col gap-3">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-base font-bold text-slate-800">音乐学习</h2>
-          <p className="text-xs text-slate-400">听歌学语言，跟读填词练语感</p>
+          <h2 className="text-base font-bold text-theme-primary">音乐学习</h2>
+          <p className="text-xs text-theme-muted">听歌学语言，跟读填词练语感</p>
         </div>
         <div className="flex gap-2">
           <button
@@ -319,7 +318,7 @@ const MusicHub = () => {
             key={song.id}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white rounded-2xl p-4 shadow-sm border border-slate-100"
+            className="bg-theme-card rounded-2xl p-4 shadow-sm border border-theme-light"
           >
             <div className="flex items-start gap-3 mb-3">
               <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center text-2xl flex-shrink-0">
@@ -327,7 +326,7 @@ const MusicHub = () => {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
-                  <h3 className="font-semibold text-slate-800 text-sm">{song.title}</h3>
+                  <h3 className="font-semibold text-theme-primary text-sm">{song.title}</h3>
                   <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
                     song.difficulty === 'beginner' ? 'bg-emerald-100 text-emerald-700' :
                     song.difficulty === 'intermediate' ? 'bg-amber-100 text-amber-700' :
@@ -336,8 +335,8 @@ const MusicHub = () => {
                     {song.difficulty === 'beginner' ? '入门' : song.difficulty === 'intermediate' ? '中级' : '高级'}
                   </span>
                 </div>
-                <p className="text-xs text-slate-500">{song.description}</p>
-                <p className="text-[10px] text-slate-400 mt-1">{song.lyrics.length} 句歌词 · {song.type === 'children' ? '儿歌' : '流行'}</p>
+                <p className="text-xs text-theme-muted">{song.description}</p>
+                <p className="text-[10px] text-theme-muted mt-1">{song.lyrics.length} 句歌词 · {song.type === 'children' ? '儿歌' : '流行'}</p>
               </div>
             </div>
             <button

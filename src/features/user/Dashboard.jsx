@@ -47,14 +47,10 @@ const Dashboard = () => {
         langMap[p.language].levels++;
       });
 
-      // FIX(数据页白屏): QUIZ_DATA / getAllLevels 定义在 learning 懒加载组的 quizData.jsx，
-      // 用户未进过学习页直接开数据页时会 ReferenceError。未加载时用空表降级。
       const totalPerLang = {};
-      if (typeof QUIZ_DATA !== 'undefined' && typeof getAllLevels !== 'undefined') {
-        Object.keys(QUIZ_DATA).forEach(code => {
-          totalPerLang[code] = getAllLevels(code).length;
-        });
-      }
+      Object.keys(QUIZ_DATA).forEach(code => {
+        totalPerLang[code] = getAllLevels(code).length;
+      });
 
       // Load daily reports
       const reports = await getDailyReports(userId, reportRange);
@@ -68,17 +64,7 @@ const Dashboard = () => {
         setLoaded(true);
       }
     };
-    // FIX: 数据加载失败（IndexedDB 异常等）不再以未处理 Promise 拒绝挂死在骨架屏，
-    // 降级为空数据让页面渲染空态
-    load().catch(e => {
-      console.warn('[Dashboard] 数据加载失败，降级为空数据:', e);
-      if (mounted) {
-        setDashboardData({ logs: [], progress: [], langMap: {}, totalPerLang: {} });
-        setDailyReports([]);
-        setTodayReport(null);
-        setLoaded(true);
-      }
-    });
+    load();
     return () => { mounted = false; };
   }, [userId, reportRange]);
 
@@ -260,9 +246,7 @@ const Dashboard = () => {
 
     const chart = echarts.init(radarRef.current);
     const completed = dashboardData.progress.filter(p => p.status === 'completed').length;
-    // FIX: getAllLevels 属于 learning 懒加载组，未加载时降级为 0（|| 1 兜底避免除零）
-    const total =
-      (typeof getAllLevels !== 'undefined' ? getAllLevels(currentLanguage).length : 0) || 1;
+    const total = getAllLevels(currentLanguage).length || 1;
     const baseScore = Math.min(90, Math.round((completed / total) * 100) + 20);
 
     // Apply weakAreas penalty from profile
@@ -414,10 +398,10 @@ const Dashboard = () => {
     <div className="flex flex-col gap-4">
       {/* Page title */}
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold text-slate-800">学习数据</h2>
-        <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 rounded-xl text-sm">
+        <h2 className="text-xl font-bold text-theme-primary">学习数据</h2>
+        <div className="flex items-center gap-2 px-3 py-1.5 bg-theme-elevated rounded-xl text-sm">
           <span>{currentLangObj?.flag}</span>
-          <span className="font-medium text-slate-700">{currentLangObj?.name}</span>
+          <span className="font-medium text-theme-secondary">{currentLangObj?.name}</span>
         </div>
       </div>
 
@@ -425,36 +409,36 @@ const Dashboard = () => {
       <div className="grid grid-cols-2 gap-3">
         <Card padding="p-4">
           <div className="text-2xl font-bold text-brand-600">{totalCompleted}</div>
-          <div className="text-xs text-slate-400 mt-0.5">已通关数</div>
+          <div className="text-xs text-theme-muted mt-0.5">已通关数</div>
         </Card>
         <Card padding="p-4">
           <div className="text-2xl font-bold text-emerald-600">{totalXP}</div>
-          <div className="text-xs text-slate-400 mt-0.5">累计经验</div>
+          <div className="text-xs text-theme-muted mt-0.5">累计经验</div>
         </Card>
         <Card padding="p-4">
           <div className="text-2xl font-bold text-amber-600">{totalQuestions}</div>
-          <div className="text-xs text-slate-400 mt-0.5">答题总数</div>
+          <div className="text-xs text-theme-muted mt-0.5">答题总数</div>
         </Card>
         <Card padding="p-4">
           <div className="text-2xl font-bold text-rose-500 flex items-center gap-1">
             {streakDays} <Icon name="flame" size={20} />
           </div>
-          <div className="text-xs text-slate-400 mt-0.5">连续天数</div>
+          <div className="text-xs text-theme-muted mt-0.5">连续天数</div>
         </Card>
       </div>
 
       {/* Daily Report */}
       <Card padding="p-4">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="font-semibold text-slate-800 text-sm flex items-center gap-2">
+          <h3 className="font-semibold text-theme-primary text-sm flex items-center gap-2">
             <Icon name="chart" size={16} className="text-brand-500" />
             每日学习报告
           </h3>
-          <div className="flex bg-slate-100 rounded-lg p-0.5">
+          <div className="flex bg-theme-elevated rounded-lg p-0.5">
             <button
               onClick={() => setReportRange(7)}
               className={`px-2.5 py-1 rounded-md text-xs font-medium transition-all ${
-                reportRange === 7 ? 'bg-white text-brand-600 shadow-sm' : 'text-slate-500'
+                reportRange === 7 ? 'bg-theme-card text-brand-600 shadow-sm' : 'text-theme-muted'
               }`}
             >
               近7天
@@ -462,7 +446,7 @@ const Dashboard = () => {
             <button
               onClick={() => setReportRange(30)}
               className={`px-2.5 py-1 rounded-md text-xs font-medium transition-all ${
-                reportRange === 30 ? 'bg-white text-brand-600 shadow-sm' : 'text-slate-500'
+                reportRange === 30 ? 'bg-theme-card text-brand-600 shadow-sm' : 'text-theme-muted'
               }`}
             >
               近30天
@@ -501,21 +485,21 @@ const Dashboard = () => {
         <div className="mt-3 space-y-2 max-h-48 overflow-y-auto hide-scrollbar">
           {[...dailyReports].reverse().map(r => (
             <div key={r.date} className={`flex items-center justify-between px-3 py-2 rounded-xl text-xs ${
-              r.studyMinutes > 0 ? 'bg-slate-50' : 'bg-transparent'
+              r.studyMinutes > 0 ? 'bg-theme-elevated' : 'bg-transparent'
             }`}>
               <div className="flex items-center gap-2">
-                <span className={`w-2 h-2 rounded-full ${r.studyMinutes > 0 ? 'bg-brand-400' : 'bg-slate-200'}`} />
-                <span className="text-slate-600">{r.date.slice(5)} 周{r.weekday}</span>
+                <span className={`w-2 h-2 rounded-full ${r.studyMinutes > 0 ? 'bg-brand-400' : 'bg-theme-elevated'}`} />
+                <span className="text-theme-secondary">{r.date.slice(5)} 周{r.weekday}</span>
               </div>
               <div className="flex items-center gap-3">
                 {r.studyMinutes > 0 && (
                   <>
-                    <span className="text-slate-500">{r.studyMinutes}分钟</span>
+                    <span className="text-theme-muted">{r.studyMinutes}分钟</span>
                     <span className="text-emerald-600">{r.earnedXP}XP</span>
-                    <span className="text-slate-400">{r.correctCount}/{r.totalQuestions}</span>
+                    <span className="text-theme-muted">{r.correctCount}/{r.totalQuestions}</span>
                   </>
                 )}
-                {r.studyMinutes === 0 && <span className="text-slate-300">未学习</span>}
+                {r.studyMinutes === 0 && <span className="text-theme-disabled">未学习</span>}
               </div>
             </div>
           ))}
@@ -524,7 +508,7 @@ const Dashboard = () => {
 
       {/* Calendar heatmap */}
       <Card padding="p-4">
-        <h3 className="font-semibold text-slate-800 text-sm mb-3 flex items-center gap-2">
+        <h3 className="font-semibold text-theme-primary text-sm mb-3 flex items-center gap-2">
           <Icon name="calendar" size={16} className="text-brand-500" />
           学习日历
         </h3>
@@ -534,7 +518,7 @@ const Dashboard = () => {
       {/* Vocabulary growth */}
       <Card padding="p-4">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="font-semibold text-slate-800 text-sm flex items-center gap-2">
+          <h3 className="font-semibold text-theme-primary text-sm flex items-center gap-2">
             <Icon name="chart" size={16} className="text-emerald-500" />
             词汇量增长
           </h3>
@@ -549,14 +533,14 @@ const Dashboard = () => {
       {/* Two columns: radar + pie */}
       <div className="grid grid-cols-2 gap-3">
         <Card padding="p-4">
-          <h3 className="font-semibold text-slate-800 text-sm mb-2 flex items-center gap-2">
+          <h3 className="font-semibold text-theme-primary text-sm mb-2 flex items-center gap-2">
             <Icon name="target" size={16} className="text-violet-500" />
             能力雷达
           </h3>
           <div ref={radarRef} style={{ width: '100%', height: '200px' }} />
         </Card>
         <Card padding="p-4">
-          <h3 className="font-semibold text-slate-800 text-sm mb-2 flex items-center gap-2">
+          <h3 className="font-semibold text-theme-primary text-sm mb-2 flex items-center gap-2">
             <Icon name="book-open" size={16} className="text-brand-500" />
             关卡进度
           </h3>
@@ -566,7 +550,7 @@ const Dashboard = () => {
 
       {/* Weakness analysis based on profile */}
       <Card padding="p-4">
-        <h3 className="font-semibold text-slate-800 text-sm mb-3 flex items-center gap-2">
+        <h3 className="font-semibold text-theme-primary text-sm mb-3 flex items-center gap-2">
           <Icon name="zap" size={16} className="text-amber-500" />
           弱项分析与建议
         </h3>

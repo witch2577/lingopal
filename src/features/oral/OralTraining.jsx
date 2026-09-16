@@ -174,7 +174,7 @@ const OralTraining = () => {
 
   if (!current) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 text-slate-400">
+      <div className="flex flex-col items-center justify-center py-12 text-theme-muted">
         <Icon name="info" size={32} className="mb-2" />
         <p className="text-sm">该语言暂无练习内容</p>
         <Badge variant="default" className="mt-2">演示数据</Badge>
@@ -185,16 +185,15 @@ const OralTraining = () => {
   return (
     <div className="flex flex-col h-full">
       <div className="flex items-center gap-2 mb-3 overflow-x-auto hide-scrollbar">
-        {LEARNING_LANGUAGES.map(lang => (
+        {['en', 'ja', 'zh-CN'].map(lang => (
           <button
-            key={lang.code}
-            onClick={() => { setLanguage(lang.code); setCurrentIndex(0); setRecordedBlob(null); }}
+            key={lang}
+            onClick={() => { setLanguage(lang); setCurrentIndex(0); setRecordedBlob(null); }}
             className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all ${
-              language === lang.code ? 'bg-brand-gradient text-white shadow-md' : 'bg-slate-100 text-slate-600'
+              language === lang ? 'bg-brand-gradient text-white shadow-md' : 'bg-theme-elevated text-theme-secondary'
             }`}
           >
-            {lang.flag} {lang.name}
-            {lang.type === 'beta' && <span className="ml-0.5 text-[9px] opacity-70">β</span>}
+            {LANGUAGE_MAP[lang]?.name || lang}
           </button>
         ))}
       </div>
@@ -205,7 +204,7 @@ const OralTraining = () => {
             key={diff.key}
             onClick={() => { setDifficulty(diff.key); setCurrentIndex(0); setRecordedBlob(null); }}
             className={`px-3 py-1 rounded-lg text-xs font-medium transition-all ${
-              difficulty === diff.key ? diff.color : 'bg-slate-100 text-slate-500'
+              difficulty === diff.key ? diff.color : 'bg-theme-elevated text-theme-muted'
             }`}
           >
             {diff.label}
@@ -219,10 +218,10 @@ const OralTraining = () => {
         </div>
 
         <div className="flex-1 flex flex-col items-center justify-center text-center px-4 py-4">
-          <div className="text-sm text-slate-400 mb-2">{currentIndex + 1} / {items.length}</div>
-          <h2 className="text-xl font-bold text-slate-800 mb-1">{current.text}</h2>
+          <div className="text-sm text-theme-muted mb-2">{currentIndex + 1} / {items.length}</div>
+          <h2 className="text-xl font-bold text-theme-primary mb-1">{current.text}</h2>
           <p className="text-sm text-brand-600 font-mono mb-1">{current.phonetic}</p>
-          <p className="text-sm text-slate-500">{current.meaning}</p>
+          <p className="text-sm text-theme-muted">{current.meaning}</p>
         </div>
 
         {/* Recording Controls */}
@@ -242,7 +241,7 @@ const OralTraining = () => {
               className={`w-16 h-16 rounded-full flex items-center justify-center shadow-lg btn-press transition-all ${
                 isRecording
                   ? 'bg-red-500 text-white shadow-red-500/30 animate-pulse'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  : 'bg-theme-elevated text-theme-secondary hover:bg-theme-elevated'
               }`}
             >
               <Icon name={isRecording ? 'x' : 'mic'} size={28} />
@@ -252,7 +251,7 @@ const OralTraining = () => {
               onClick={playRecorded}
               disabled={!recordedBlob || isPlayingRec}
               className={`flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-colors btn-press disabled:opacity-40 ${
-                recordedBlob ? 'bg-emerald-50 text-emerald-600 hover:bg-emerald-100' : 'bg-slate-50 text-slate-400'
+                recordedBlob ? 'bg-emerald-50 text-emerald-600 hover:bg-emerald-100' : 'bg-theme-elevated text-theme-muted'
               }`}
             >
               <Icon name={isPlayingRec ? 'volume' : 'play'} size={20} />
@@ -272,7 +271,7 @@ const OralTraining = () => {
               <Button size="sm" variant="secondary" onClick={saveRecord} icon="bookmark">
                 保存记录
               </Button>
-              <span className="text-xs text-slate-400">时长: {recordingTime}s</span>
+              <span className="text-xs text-theme-muted">时长: {recordingTime}s</span>
             </div>
           )}
         </div>
@@ -282,14 +281,14 @@ const OralTraining = () => {
           <button
             onClick={handlePrev}
             disabled={currentIndex === 0}
-            className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 disabled:opacity-40 transition-colors btn-press"
+            className="p-2 rounded-xl bg-theme-elevated hover:bg-theme-elevated disabled:opacity-40 transition-colors btn-press"
           >
             <Icon name="chevron-left" size={18} />
           </button>
           <button
             onClick={handleNext}
             disabled={currentIndex >= items.length - 1}
-            className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 disabled:opacity-40 transition-colors btn-press"
+            className="p-2 rounded-xl bg-theme-elevated hover:bg-theme-elevated disabled:opacity-40 transition-colors btn-press"
           >
             <Icon name="chevron" size={18} />
           </button>
@@ -298,12 +297,12 @@ const OralTraining = () => {
 
       {records.length > 0 && (
         <div className="mb-4">
-          <h3 className="text-sm font-semibold text-slate-700 mb-2">最近练习记录</h3>
+          <h3 className="text-sm font-semibold text-theme-secondary mb-2">最近练习记录</h3>
           <div className="space-y-2 max-h-32 overflow-y-auto hide-scrollbar">
             {records.slice(0, 5).map((rec, i) => (
-              <div key={i} className="flex items-center justify-between bg-white rounded-xl px-3 py-2 text-xs border border-slate-100">
-                <span className="text-slate-600 truncate max-w-[60%]">{rec.text}</span>
-                <span className="text-slate-400">{new Date(rec.timestamp).toLocaleDateString()}</span>
+              <div key={i} className="flex items-center justify-between bg-theme-card rounded-xl px-3 py-2 text-xs border border-theme-light">
+                <span className="text-theme-secondary truncate max-w-[60%]">{rec.text}</span>
+                <span className="text-theme-muted">{new Date(rec.timestamp).toLocaleDateString()}</span>
               </div>
             ))}
           </div>

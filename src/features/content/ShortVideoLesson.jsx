@@ -91,10 +91,10 @@ const ShortVideoLesson = () => {
                     每周轮换
                   </span>
                 )}
-                <p className="text-slate-400 text-sm mt-1">{video.description}</p>
+                <p className="text-theme-muted text-sm mt-1">{video.description}</p>
                 <div className="flex items-center justify-center gap-3 mt-3">
                   <Badge variant="primary" className="bg-brand-500/20 text-brand-300">{LANGUAGE_MAP[video.language]?.name}</Badge>
-                  <span className="text-xs text-slate-400">{video.duration}秒</span>
+                  <span className="text-xs text-theme-muted">{video.duration}秒</span>
                   {isCompleted && <span className="text-emerald-400 text-xs">✅ 已完成</span>}
                 </div>
               </div>
@@ -143,14 +143,14 @@ const ShortVideoLesson = () => {
 
       {/* Video list */}
       <div className="space-y-2">
-        <h3 className="text-sm font-semibold text-slate-700">更多情景</h3>
+        <h3 className="text-sm font-semibold text-theme-secondary">更多情景</h3>
         <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1">
           {videos.map((v, i) => (
             <button
               key={v.id}
               onClick={() => { setCurrentIndex(i); setShowPractice(false); setPracticeStep(0); }}
               className={`flex-shrink-0 w-24 p-2 rounded-xl text-left transition-all ${
-                i === currentIndex ? 'bg-brand-100 border-2 border-brand-400' : 'bg-white border border-slate-100'
+                i === currentIndex ? 'bg-brand-100 border-2 border-brand-400' : 'bg-theme-card border border-theme-light'
               }`}
             >
               <div className="text-2xl mb-1">{v.thumbnail}</div>
@@ -160,7 +160,7 @@ const ShortVideoLesson = () => {
                   每周
                 </span>
               )}
-              <p className="text-[10px] text-slate-400">{v.duration}秒</p>
+              <p className="text-[10px] text-theme-muted">{v.duration}秒</p>
             </button>
           ))}
         </div>
@@ -177,8 +177,8 @@ const PracticeMode = ({ video, step, onNext, onSkip }) => {
   return (
     <div className="h-full flex flex-col p-4">
       <div className="flex items-center justify-between mb-4">
-        <span className="text-xs text-slate-400">跟读练习 {step + 1}/{video.dialogue.length}</span>
-        <button onClick={onSkip} className="text-xs text-slate-400">跳过</button>
+        <span className="text-xs text-theme-muted">跟读练习 {step + 1}/{video.dialogue.length}</span>
+        <button onClick={onSkip} className="text-xs text-theme-muted">跳过</button>
       </div>
 
       <div className="flex-1 flex flex-col items-center justify-center">
@@ -210,7 +210,7 @@ const PracticeMode = ({ video, step, onNext, onSkip }) => {
               animate={{ opacity: 1 }}
               className="text-center mt-4"
             >
-              <p className="text-slate-400 text-sm mb-3">请跟读上方句子</p>
+              <p className="text-theme-muted text-sm mb-3">请跟读上方句子</p>
               <Button onClick={() => setShowAnswer(true)} variant="primary" icon="mic">
                 开始跟读
               </Button>

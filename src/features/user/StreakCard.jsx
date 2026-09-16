@@ -61,9 +61,9 @@ const StreakCard = () => {
               <span>距离「{nextMilestone.badge}」还差 {nextMilestone.days - streakDays} 天</span>
               <span>+{nextMilestone.rewardXP} XP</span>
             </div>
-            <div className="h-2 bg-white/20 rounded-full overflow-hidden">
+            <div className="h-2 bg-theme-card/20 rounded-full overflow-hidden">
               <motion.div
-                className="h-full bg-white rounded-full"
+                className="h-full bg-theme-card rounded-full"
                 initial={{ width: 0 }}
                 animate={{ width: `${(streakDays / nextMilestone.days) * 100}%` }}
               />
@@ -104,8 +104,8 @@ const StreakCard = () => {
       <Modal open={showRecovery} onClose={() => setShowRecovery(false)} title="恢复连胜">
         <div className="text-center py-4">
           <div className="text-4xl mb-3">🛡️</div>
-          <p className="text-sm text-slate-600 mb-1">使用 {streakRecoveryAvailable?.cost} XP 恢复昨日连胜记录</p>
-          <p className="text-xs text-slate-400">当前 XP: {totalXP}</p>
+          <p className="text-sm text-theme-secondary mb-1">使用 {streakRecoveryAvailable?.cost} XP 恢复昨日连胜记录</p>
+          <p className="text-xs text-theme-muted">当前 XP: {totalXP}</p>
           <div className="flex gap-3 mt-5">
             <Button variant="outline" fullWidth onClick={() => setShowRecovery(false)}>取消</Button>
             <Button
@@ -123,7 +123,7 @@ const StreakCard = () => {
 
       {/* Weekly calendar */}
       <Card padding="p-4">
-        <h3 className="font-semibold text-slate-800 text-sm mb-3">本周打卡</h3>
+        <h3 className="font-semibold text-theme-primary text-sm mb-3">本周打卡</h3>
         <div className="grid grid-cols-7 gap-2">
           {last7Days.map(({ dayName, rec, dateStr }) => {
             const isActive = rec?.activityCount > 0 || rec?.protected;
@@ -135,11 +135,11 @@ const StreakCard = () => {
                     ? 'bg-gradient-to-br from-amber-400 to-orange-500 text-white shadow-md'
                     : isToday
                     ? 'bg-brand-100 text-brand-600 border-2 border-brand-300'
-                    : 'bg-slate-100 text-slate-400'
+                    : 'bg-theme-elevated text-theme-muted'
                 }`}>
                   {isActive ? '🔥' : dayName}
                 </div>
-                <span className="text-[10px] text-slate-400">{dayName}</span>
+                <span className="text-[10px] text-theme-muted">{dayName}</span>
               </div>
             );
           })}
@@ -148,25 +148,25 @@ const StreakCard = () => {
 
       {/* Milestones */}
       <Card padding="p-4">
-        <h3 className="font-semibold text-slate-800 text-sm mb-3">连胜里程碑</h3>
+        <h3 className="font-semibold text-theme-primary text-sm mb-3">连胜里程碑</h3>
         <div className="space-y-2">
           {STREAK_MILESTONES.map(m => {
             const reached = streakDays >= m.days;
             return (
               <div key={m.days} className={`flex items-center gap-3 p-3 rounded-xl ${
-                reached ? 'bg-amber-50 border border-amber-100' : 'bg-slate-50'
+                reached ? 'bg-amber-50 border border-amber-100' : 'bg-theme-elevated'
               }`}>
                 <span className="text-xl">{m.icon}</span>
                 <div className="flex-1">
-                  <div className={`text-sm font-medium ${reached ? 'text-amber-800' : 'text-slate-500'}`}>
+                  <div className={`text-sm font-medium ${reached ? 'text-amber-800' : 'text-theme-muted'}`}>
                     {m.badge}
                   </div>
-                  <div className="text-[10px] text-slate-400">连续 {m.days} 天 · +{m.rewardXP} XP</div>
+                  <div className="text-[10px] text-theme-muted">连续 {m.days} 天 · +{m.rewardXP} XP</div>
                 </div>
                 {reached ? (
                   <Badge variant="accent">已达成</Badge>
                 ) : (
-                  <span className="text-xs text-slate-400">还差 {m.days - streakDays} 天</span>
+                  <span className="text-xs text-theme-muted">还差 {m.days - streakDays} 天</span>
                 )}
               </div>
             );
@@ -176,7 +176,7 @@ const StreakCard = () => {
 
       {/* Monthly mini calendar */}
       <Card padding="p-4">
-        <h3 className="font-semibold text-slate-800 text-sm mb-3">近30天打卡记录</h3>
+        <h3 className="font-semibold text-theme-primary text-sm mb-3">近30天打卡记录</h3>
         <div className="grid grid-cols-7 gap-1.5">
           {Array.from({ length: 30 }, (_, i) => {
             const rec = history[i];
@@ -187,14 +187,14 @@ const StreakCard = () => {
                 className={`aspect-square rounded-md ${
                   isActive
                     ? 'bg-gradient-to-br from-amber-400 to-orange-500'
-                    : 'bg-slate-100'
+                    : 'bg-theme-elevated'
                 }`}
                 title={rec?.date || ''}
               />
             );
           })}
         </div>
-        <div className="flex items-center justify-between mt-2 text-[10px] text-slate-400">
+        <div className="flex items-center justify-between mt-2 text-[10px] text-theme-muted">
           <span>30天前</span>
           <span>今天</span>
         </div>

@@ -190,11 +190,11 @@ const VoiceTranslator = () => {
   if (!supported) {
     return (
       <div className="flex flex-col items-center justify-center py-16 text-center">
-        <div className="w-20 h-20 rounded-full bg-slate-100 flex items-center justify-center mb-4">
-          <Icon name="mic" size={32} className="text-slate-400" />
+        <div className="w-20 h-20 rounded-full bg-theme-elevated flex items-center justify-center mb-4">
+          <Icon name="mic" size={32} className="text-theme-muted" />
         </div>
-        <h3 className="text-lg font-semibold text-slate-700 mb-2">浏览器不支持语音识别</h3>
-        <p className="text-sm text-slate-500 max-w-xs">
+        <h3 className="text-lg font-semibold text-theme-secondary mb-2">浏览器不支持语音识别</h3>
+        <p className="text-sm text-theme-muted max-w-xs">
           您的浏览器不支持 Web Speech API，建议使用 Chrome 或 Edge 浏览器体验语音翻译功能。
         </p>
       </div>
@@ -217,7 +217,7 @@ const VoiceTranslator = () => {
           disabled={sourceLang === 'auto' || isDialectSource || DIALECT_CODES.includes(targetLang)}
           className={`p-2.5 rounded-xl transition-all btn-press ${
             sourceLang === 'auto' || isDialectSource || DIALECT_CODES.includes(targetLang)
-              ? 'bg-slate-100 text-slate-300 cursor-not-allowed'
+              ? 'bg-theme-elevated text-theme-disabled cursor-not-allowed'
               : 'bg-brand-100 text-brand-600 hover:bg-brand-200'
           }`}
         >
@@ -246,10 +246,10 @@ const VoiceTranslator = () => {
         </div>
 
         {/* Timer */}
-        <div className="text-3xl font-bold text-slate-700 font-mono mb-2">
+        <div className="text-3xl font-bold text-theme-secondary font-mono mb-2">
           {formatTime(recordingTime)}
         </div>
-        <div className="text-sm text-slate-400 mb-6">
+        <div className="text-sm text-theme-muted mb-6">
           {isRecording ? '正在聆听...' : isProcessing ? '翻译中...' : '点击麦克风开始说话'}
         </div>
 
@@ -263,7 +263,7 @@ const VoiceTranslator = () => {
             isRecording
               ? 'bg-red-500 shadow-lg shadow-red-500/40'
               : isDialectSource || !sourceSupported
-                ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
+                ? 'bg-theme-elevated text-theme-muted cursor-not-allowed'
                 : 'bg-brand-gradient shadow-lg shadow-brand-500/40 hover:shadow-xl hover:shadow-brand-500/50'
           } text-white`}
         >
@@ -283,7 +283,7 @@ const VoiceTranslator = () => {
           </p>
         )}
         {isDialectTarget && !isDialectSource && (
-          <p className="mt-2 text-xs text-slate-400">
+          <p className="mt-2 text-xs text-theme-muted">
             语音输出目标为方言时，将使用普通话语音合成（演示数据）
           </p>
         )}
@@ -313,10 +313,10 @@ const VoiceTranslator = () => {
       {sourceText && (
         <Card padding="p-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs text-slate-400">识别结果 · {LANGUAGE_MAP[sourceLang]?.name}</span>
+            <span className="text-xs text-theme-muted">识别结果 · {LANGUAGE_MAP[sourceLang]?.name}</span>
             <AudioPlayer text={sourceText} lang={sourceLang} size="sm" />
           </div>
-          <p className="text-base text-slate-700">{sourceText || interimText}</p>
+          <p className="text-base text-theme-secondary">{sourceText || interimText}</p>
         </Card>
       )}
 
@@ -333,10 +333,10 @@ const VoiceTranslator = () => {
                 <AudioPlayer text={translatedText} lang={targetLang} showSpeed={true} />
               </div>
             </div>
-            <p className="text-lg font-semibold text-slate-800">{translatedText}</p>
+            <p className="text-lg font-semibold text-theme-primary">{translatedText}</p>
             {targetSupported && (
               <div className="mt-3 flex items-center gap-2">
-                <span className="text-xs text-slate-400">播放速度:</span>
+                <span className="text-xs text-theme-muted">播放速度:</span>
                 <div className="flex gap-1">
                   {[0.5, 0.75, 1, 1.25, 1.5].map(speed => (
                     <button
@@ -348,7 +348,7 @@ const VoiceTranslator = () => {
                       className={`px-2 py-0.5 text-xs rounded-lg transition-colors ${
                         playbackRate === speed
                           ? 'bg-brand-500 text-white'
-                          : 'bg-white/60 text-slate-600 hover:bg-white'
+                          : 'bg-theme-card/60 text-theme-secondary hover:bg-theme-card'
                       }`}
                     >
                       {speed}x
@@ -362,7 +362,7 @@ const VoiceTranslator = () => {
       )}
 
       {/* Tips */}
-      <div className="text-xs text-slate-400 text-center mt-2">
+      <div className="text-xs text-theme-muted text-center mt-2">
         <p>💡 提示：请在安静环境下使用，最长录音 60 秒</p>
       </div>
     </div>

@@ -57,7 +57,7 @@ const AnswerFeedback = ({ isCorrect, score, combo, onComplete, duration = 1500 }
               initial={{ y: 8, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.35 }}
-              className="text-sm text-slate-500 mt-1"
+              className="text-sm text-theme-muted mt-1"
             >
               +{score} 分
             </motion.p>
@@ -139,7 +139,7 @@ const AchievementUnlock = ({ achievement, onComplete, duration = 3000 }) => {
         animate={{ y: 0, opacity: 1, scale: 1 }}
         exit={{ y: -40, opacity: 0, scale: 0.9 }}
         transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-        className="bg-white rounded-2xl shadow-2xl p-6 flex flex-col items-center text-center max-w-xs mx-4"
+        className="bg-theme-card rounded-2xl shadow-2xl p-6 flex flex-col items-center text-center max-w-xs mx-4"
       >
         <motion.div
           initial={{ scale: 0, rotate: -180 }}
@@ -161,7 +161,7 @@ const AchievementUnlock = ({ achievement, onComplete, duration = 3000 }) => {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="text-lg font-bold text-slate-800 mb-1"
+          className="text-lg font-bold text-theme-primary mb-1"
         >
           {achievement?.title || '新成就'}
         </motion.h3>
@@ -169,7 +169,7 @@ const AchievementUnlock = ({ achievement, onComplete, duration = 3000 }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className="text-sm text-slate-500"
+          className="text-sm text-theme-muted"
         >
           {achievement?.description || ''}
         </motion.p>
@@ -236,7 +236,7 @@ const StreakCelebration = ({ streak, onComplete, duration = 2500 }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
-          className="text-sm text-slate-500 mt-1"
+          className="text-sm text-theme-muted mt-1"
         >
           继续保持，你正在养成好习惯！
         </motion.p>

@@ -1,5 +1,7 @@
 // ========== Learning Plan Management ==========
 // Daily 3-task recommendations based on profile; progress tracking; daily refresh
+// Batch 1: daily check-in ceremony trigger, per-language minute accumulation,
+//          check-in card revisit entry.
 
 const LearningPlan = ({ onBack }) => {
   const { profile, userId } = useUserStore();
@@ -7,6 +9,10 @@ const LearningPlan = ({ onBack }) => {
   const [tasks, setTasks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [dailyLog, setDailyLog] = useState(null);
+  // Batch 1: check-in ceremony states
+  const [showCheckIn, setShowCheckIn] = useState(false);
+  const [showRevisitCard, setShowRevisitCard] = useState(false);
+  const [checkInTriggeredToday, setCheckInTriggeredToday] = useState(false);
 
   const today = useMemo(() => {
     const d = new Date();
@@ -83,7 +89,6 @@ const LearningPlan = ({ onBack }) => {
     }
     setIsLoading(true);
     try {
-      // Try load saved plan from learningPlans table
       let saved = null;
       if (window.db) {
         saved = await db.learningPlans.get({ userId, planDate: today });
@@ -102,6 +107,10 @@ const LearningPlan = ({ onBack }) => {
           await db.learningPlans.put({ userId, planDate: today, tasks: fresh });
         }
       }
+      // Batch 1: check if already checked in today
+      if (typeof Analytics !== 'undefined') {
+        setCheckInTriggeredToday(Analytics.getFlag('checkin_' + today));
+      }
     } catch (e) {
       console.error('[LearningPlan] 加载计划失败:', e);
       const fresh = generatePlan();
@@ -119,11 +128,13 @@ const LearningPlan = ({ onBack }) => {
   const handleComplete = async (taskId) => {
     const next = tasks.map(t => t.id === taskId ? { ...t, completed: true } : t);
     setTasks(next);
+
+    const task = tasks.find(t => t.id === taskId);
+    const allDone = next.every(t => t.completed);
+
     if (window.db && userId) {
       try {
         await db.learningPlans.update({ userId, planDate }, { tasks: next });
-        // Record to daily log
-        const task = tasks.find(t => t.id === taskId);
         if (task) {
           await recordActivity(userId, task.type === 'oral' ? 'oral' : 'written', {
             minutes: task.duration,
@@ -135,6 +146,24 @@ const LearningPlan = ({ onBack }) => {
         console.error('[LearningPlan] 保存进度失败:', e);
       }
     }
+
+    // Batch 1: accumulate per-language minutes for culture eggs
+    if (task && typeof CultureEggs !== 'undefined') {
+      CultureEggs.accumulateLanguageMinutes(task.language, task.duration);
+    }
+
+    // Batch 1: trigger daily check-in ceremony when all tasks complete
+    if (allDone && typeof Analytics !== 'undefined' && typeof DailyCheckInCeremony !== 'undefined') {
+      const flagKey = 'checkin_' + today;
+      if (!Analytics.getFlag(flagKey)) {
+        Analytics.setFlag(flagKey, true);
+        Analytics.track('checkin_completion_rate');
+        setCheckInTriggeredToday(true);
+        // small delay for better UX
+        setTimeout(() => setShowCheckIn(true), 400);
+      }
+    }
+
     useUIStore.getState().showNotification('任务已完成', 'success');
   };
 
@@ -154,7 +183,6 @@ const LearningPlan = ({ onBack }) => {
   const handleGoTask = (task) => {
     if (task.type === 'oral') {
       window.setActiveTab?.('practice');
-      // Defer to let PracticePage mount
       setTimeout(() => {
         usePracticeStore?.getState?.().setActiveTab?.('oral');
         useOralStore?.getState?.().setLanguage?.(task.language);
@@ -175,6 +203,24 @@ const LearningPlan = ({ onBack }) => {
 
   const completedCount = tasks.filter(t => t.completed).length;
   const allCompleted = tasks.length > 0 && completedCount === tasks.length;
+
+  // Batch 1: study data for check-in card
+  const studyData = useMemo(() => {
+    const totalMinutes = tasks.reduce((sum, t) => sum + (t.completed ? (t.duration || 0) : 0), 0);
+    const quizTasks = tasks.filter(t => t.completed && t.type === 'quiz');
+    const questions = quizTasks.length * 5;
+    return {
+      minutes: totalMinutes,
+      questions,
+      words: Math.floor(questions * 0.4),
+    };
+  }, [tasks]);
+
+  // Batch 1: character state for check-in
+  const charState = useCharacterStore?.getState?.();
+  const checkInStage = charState?.growth?.currentStage || 1;
+  const checkInCharName = charState?.config?.name || charState?.growth?.name || '小语伴';
+  const checkInNickname = profile?.nickname || '你';
 
   if (isLoading) {
     return (
@@ -216,6 +262,22 @@ const LearningPlan = ({ onBack }) => {
           <Icon name="refresh" size={18} />
         </button>
       </div>
+
+      {/* Batch 1: Check-in card revisit entry */}
+      {checkInTriggeredToday && (
+        <button
+          onClick={() => { setShowRevisitCard(true); Analytics.track('checkin_card_revisit'); }}
+          className="text-left"
+        >
+          {typeof DailyStudyCard !== 'undefined' && (
+            <DailyStudyCard
+              studyData={studyData}
+              characterName={checkInCharName}
+              stage={checkInStage}
+            />
+          )}
+        </button>
+      )}
 
       {/* Progress bar */}
       <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
@@ -304,6 +366,42 @@ const LearningPlan = ({ onBack }) => {
             <p className="text-sm opacity-80 mt-1">继续保持，积少成多</p>
           </Card>
         </motion.div>
+      )}
+
+      {/* Batch 1: Daily check-in ceremony */}
+      {typeof DailyCheckInCeremony !== 'undefined' && (
+        <DailyCheckInCeremony
+          visible={showCheckIn}
+          onComplete={() => { setShowCheckIn(false); setShowRevisitCard(true); }}
+          onSkip={() => { Analytics.track('checkin_skip_rate'); }}
+          stage={checkInStage}
+          characterName={checkInCharName}
+          userNickname={checkInNickname}
+          studyData={studyData}
+        />
+      )}
+
+      {/* Batch 1: Revisit card modal */}
+      {showRevisitCard && typeof DailyStudyCard !== 'undefined' && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center"
+          onClick={() => setShowRevisitCard(false)}
+        >
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
+          <div className="relative z-10 max-w-xs w-full mx-4" onClick={e => e.stopPropagation()}>
+            <DailyStudyCard
+              studyData={studyData}
+              characterName={checkInCharName}
+              stage={checkInStage}
+            />
+            <button
+              onClick={() => setShowRevisitCard(false)}
+              className="mt-3 w-full py-2.5 rounded-xl bg-white text-slate-600 text-sm font-semibold shadow-sm"
+            >
+              关闭
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );

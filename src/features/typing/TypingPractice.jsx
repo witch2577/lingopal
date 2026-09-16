@@ -180,8 +180,8 @@ const TypingPractice = () => {
   const renderLanguageSelect = () => (
     <div className="flex flex-col gap-3">
       <div>
-        <h2 className="text-base font-bold text-slate-800">打字练习</h2>
-        <p className="text-xs text-slate-400 mt-0.5">选择语言，练习键盘输入</p>
+        <h2 className="text-base font-bold text-theme-primary">打字练习</h2>
+        <p className="text-xs text-theme-muted mt-0.5">选择语言，练习键盘输入</p>
       </div>
       <div className="flex flex-col gap-2.5">
         {availableLanguages.map(lang => (
@@ -191,21 +191,21 @@ const TypingPractice = () => {
             animate={{ opacity: 1, y: 0 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => startPractice(lang.code)}
-            className="flex items-center gap-3 bg-white rounded-2xl p-4 shadow-sm border border-slate-100 text-left hover:bg-slate-50 transition-colors"
+            className="flex items-center gap-3 bg-theme-card rounded-2xl p-4 shadow-sm border border-theme-light text-left hover:bg-theme-elevated transition-colors"
           >
             <div className="w-12 h-12 rounded-xl bg-brand-50 flex items-center justify-center text-2xl flex-shrink-0">
               {lang.flag}
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
-                <span className="font-semibold text-slate-800 text-sm">{lang.name}</span>
+                <span className="font-semibold text-theme-primary text-sm">{lang.name}</span>
                 <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700">
                   {lang.count} 题
                 </span>
               </div>
-              <p className="text-xs text-slate-500 mt-0.5">{lang.description}</p>
+              <p className="text-xs text-theme-muted mt-0.5">{lang.description}</p>
             </div>
-            <Icon name="chevron-right" size={16} className="text-slate-300 flex-shrink-0" />
+            <Icon name="chevron-right" size={16} className="text-theme-disabled flex-shrink-0" />
           </motion.button>
         ))}
       </div>
@@ -224,16 +224,16 @@ const TypingPractice = () => {
         <div className="flex items-center gap-2">
           <button
             onClick={handleBack}
-            className="p-2 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors touch-target"
+            className="p-2 rounded-xl bg-theme-elevated text-theme-secondary hover:bg-theme-elevated transition-colors touch-target"
           >
             <Icon name="chevron-left" size={18} />
           </button>
           <div className="flex-1">
             <div className="flex items-center gap-1.5">
               <span className="text-lg">{data.flag}</span>
-              <span className="text-sm font-semibold text-slate-700">{data.name}打字</span>
+              <span className="text-sm font-semibold text-theme-secondary">{data.name}打字</span>
             </div>
-            <div className="w-full h-1.5 bg-slate-100 rounded-full mt-1.5 overflow-hidden">
+            <div className="w-full h-1.5 bg-theme-elevated rounded-full mt-1.5 overflow-hidden">
               <motion.div
                 className="h-full bg-brand-500 rounded-full"
                 initial={{ width: 0 }}
@@ -242,7 +242,7 @@ const TypingPractice = () => {
               />
             </div>
           </div>
-          <div className="text-xs text-slate-400 whitespace-nowrap">
+          <div className="text-xs text-theme-muted whitespace-nowrap">
             {currentIndex + 1} / {items.length}
           </div>
         </div>
@@ -250,14 +250,14 @@ const TypingPractice = () => {
         {/* Target display */}
         <div className="flex-1 flex flex-col items-center justify-center gap-4 py-4">
           <div className="text-center">
-            <div className="text-4xl sm:text-5xl font-bold text-slate-800 mb-2 tracking-wide">
+            <div className="text-4xl sm:text-5xl font-bold text-theme-primary mb-2 tracking-wide">
               {item.target}
             </div>
-            <div className="text-sm text-slate-500">
+            <div className="text-sm text-theme-muted">
               {item.meaning}
             </div>
             {data.inputMode === 'romaji' && (
-              <div className="text-[10px] text-slate-400 mt-1">
+              <div className="text-[10px] text-theme-muted mt-1">
                 请输入对应的罗马音
               </div>
             )}
@@ -278,7 +278,7 @@ const TypingPractice = () => {
                   ? checkResult?.correct
                     ? 'border-emerald-400 bg-emerald-50 text-emerald-700'
                     : 'border-rose-400 bg-rose-50 text-rose-700'
-                  : 'border-slate-200 bg-white text-slate-800 focus:border-brand-400'
+                  : 'border-theme-light bg-theme-card text-theme-primary focus:border-brand-400'
               }`}
               autoComplete="off"
               autoCorrect="off"
@@ -369,11 +369,11 @@ const TypingPractice = () => {
         <div className="flex items-center gap-2">
           <button
             onClick={handleBack}
-            className="p-2 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors touch-target"
+            className="p-2 rounded-xl bg-theme-elevated text-theme-secondary hover:bg-theme-elevated transition-colors touch-target"
           >
             <Icon name="chevron-left" size={18} />
           </button>
-          <h2 className="text-base font-bold text-slate-800">练习结果</h2>
+          <h2 className="text-base font-bold text-theme-primary">练习结果</h2>
         </div>
 
         {/* Result card */}
@@ -397,31 +397,31 @@ const TypingPractice = () => {
             }`}>
               {resultStats.accuracy}%
             </div>
-            <div className="text-sm text-slate-500 mt-1">
+            <div className="text-sm text-theme-muted mt-1">
               {resultStats.passed ? '通过！' : '未通过（需 ≥80%）'}
             </div>
           </div>
 
           {/* Stats grid */}
           <div className="grid grid-cols-3 gap-3 w-full max-w-xs">
-            <div className="bg-white rounded-xl p-3 text-center border border-slate-100">
-              <div className="text-lg font-bold text-slate-800">{resultStats.correctCount}</div>
-              <div className="text-[10px] text-slate-400">正确</div>
+            <div className="bg-theme-card rounded-xl p-3 text-center border border-theme-light">
+              <div className="text-lg font-bold text-theme-primary">{resultStats.correctCount}</div>
+              <div className="text-[10px] text-theme-muted">正确</div>
             </div>
-            <div className="bg-white rounded-xl p-3 text-center border border-slate-100">
-              <div className="text-lg font-bold text-slate-800">{resultStats.total}</div>
-              <div className="text-[10px] text-slate-400">总题</div>
+            <div className="bg-theme-card rounded-xl p-3 text-center border border-theme-light">
+              <div className="text-lg font-bold text-theme-primary">{resultStats.total}</div>
+              <div className="text-[10px] text-theme-muted">总题</div>
             </div>
-            <div className="bg-white rounded-xl p-3 text-center border border-slate-100">
-              <div className="text-lg font-bold text-slate-800">{resultStats.avgTime}s</div>
-              <div className="text-[10px] text-slate-400">平均用时</div>
+            <div className="bg-theme-card rounded-xl p-3 text-center border border-theme-light">
+              <div className="text-lg font-bold text-theme-primary">{resultStats.avgTime}s</div>
+              <div className="text-[10px] text-theme-muted">平均用时</div>
             </div>
           </div>
 
           {/* Per-item breakdown */}
-          <div className="w-full max-w-xs bg-white rounded-xl border border-slate-100 overflow-hidden">
-            <div className="px-3 py-2 border-b border-slate-100">
-              <span className="text-xs font-medium text-slate-600">逐题记录</span>
+          <div className="w-full max-w-xs bg-theme-card rounded-xl border border-theme-light overflow-hidden">
+            <div className="px-3 py-2 border-b border-theme-light">
+              <span className="text-xs font-medium text-theme-secondary">逐题记录</span>
             </div>
             <div className="max-h-32 overflow-y-auto hide-scrollbar">
               {results.map((r, i) => {
@@ -429,11 +429,11 @@ const TypingPractice = () => {
                 return (
                   <div key={r.itemId} className="flex items-center justify-between px-3 py-1.5 text-xs border-b border-slate-50 last:border-0">
                     <div className="flex items-center gap-2 min-w-0">
-                      <span className="text-slate-400 w-4">{i + 1}</span>
-                      <span className="font-medium text-slate-700 truncate">{item?.target}</span>
+                      <span className="text-theme-muted w-4">{i + 1}</span>
+                      <span className="font-medium text-theme-secondary truncate">{item?.target}</span>
                     </div>
                     <div className="flex items-center gap-2 flex-shrink-0">
-                      <span className="text-slate-400">{Math.round(r.elapsed / 1000)}s</span>
+                      <span className="text-theme-muted">{Math.round(r.elapsed / 1000)}s</span>
                       <span className={r.correct ? 'text-emerald-500' : 'text-rose-500'}>
                         {r.correct ? '\u2713' : '\u2717'}
                       </span>

@@ -19,12 +19,6 @@ const Icon = ({ name, size = 20, className = '', strokeWidth = 2, ...rest }) => 
         <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
       </g>
     ),
-    headphones: (
-      <g fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
-        <path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm18 0h-3a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-5Z"/>
-        <path d="M3 14v-3a9 9 0 0 1 18 0v3"/>
-      </g>
-    ),
     mic: (
       <g fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
         <path d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
@@ -112,30 +106,6 @@ const Icon = ({ name, size = 20, className = '', strokeWidth = 2, ...rest }) => 
     'chevron-down': (
       <g fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
         <path d="M19 9l-7 7-7-7"/>
-      </g>
-    ),
-    'chevron-right': (
-      <g fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
-        <path d="M9 5l7 7-7 7"/>
-      </g>
-    ),
-    keyboard: (
-      <g fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="6" width="20" height="12" rx="2"/>
-        <path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M6 14h.01M18 14h.01M9 14h6"/>
-      </g>
-    ),
-    film: (
-      <g fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="4" width="20" height="16" rx="2"/>
-        <path d="M7 4v16M17 4v16M2 9h5M2 15h5M17 9h5M17 15h5"/>
-      </g>
-    ),
-    music: (
-      <g fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
-        <path d="M9 18V5l12-2v13"/>
-        <circle cx="6" cy="18" r="3"/>
-        <circle cx="18" cy="16" r="3"/>
       </g>
     ),
     heart: (
@@ -365,9 +335,9 @@ const RippleButton = React.forwardRef(({
 
   const variants = {
     primary: 'bg-brand-gradient text-white shadow-lg shadow-brand-500/25 hover:shadow-xl hover:shadow-brand-500/30',
-    secondary: 'bg-slate-100 text-slate-700 hover:bg-slate-200',
-    ghost: 'text-slate-600 hover:bg-slate-100',
-    outline: 'border-2 border-slate-200 text-slate-700 hover:border-brand-400 hover:text-brand-600',
+    secondary: 'bg-theme-elevated text-theme-secondary hover:bg-theme-elevated',
+    ghost: 'text-theme-secondary hover:bg-theme-elevated',
+    outline: 'border-2 border-theme-light text-theme-secondary hover:border-brand-400 hover:text-brand-600',
     danger: 'bg-red-500 text-white hover:bg-red-600',
     accent: 'bg-warm-gradient text-white shadow-lg shadow-amber-500/25 hover:shadow-xl',
     mint: 'bg-mint-gradient text-white shadow-lg shadow-emerald-500/25 hover:shadow-xl',
@@ -394,7 +364,7 @@ const RippleButton = React.forwardRef(({
       {ripples.map(r => (
         <span
           key={r.id}
-          className="absolute rounded-full bg-white/30 animate-ripple pointer-events-none"
+          className="absolute rounded-full bg-theme-card/30 animate-ripple pointer-events-none"
           style={{
             left: r.x,
             top: r.y,
@@ -423,7 +393,7 @@ const Button = (props) => <RippleButton {...props} />;
 
 // ---- Card Component ----
 const Card = ({ children, className = '', padding = 'p-4', ...rest }) => (
-  <div className={`bg-white rounded-2xl shadow-sm border border-slate-100 ${padding} ${className}`} {...rest}>
+  <div className={`bg-theme-card rounded-2xl shadow-sm border border-theme-light ${padding} ${className}`} {...rest}>
     {children}
   </div>
 );
@@ -431,7 +401,7 @@ const Card = ({ children, className = '', padding = 'p-4', ...rest }) => (
 // ---- Badge ----
 const Badge = ({ children, variant = 'default', className = '' }) => {
   const variants = {
-    default: 'bg-slate-100 text-slate-600',
+    default: 'bg-theme-elevated text-theme-secondary',
     primary: 'bg-brand-100 text-brand-700',
     accent: 'bg-amber-100 text-amber-700',
     success: 'bg-emerald-100 text-emerald-700',
@@ -493,7 +463,7 @@ const Modal = ({ open, onClose, title, children, className = '' }) => {
         initial={{ scale: 0.95, opacity: 0, y: 20 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-        className={`relative bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl w-full max-w-md overflow-hidden ${className}`}
+        className={`relative bg-theme-card rounded-t-2xl sm:rounded-2xl shadow-2xl w-full max-w-md overflow-hidden ${className}`}
         style={{ maxHeight: '90vh' }}
         onClick={e => e.stopPropagation()}
       >
@@ -502,9 +472,9 @@ const Modal = ({ open, onClose, title, children, className = '' }) => {
           <div className="w-10 h-1 rounded-full bg-slate-300" />
         </div>
         {title && (
-          <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
-            <h3 className="font-semibold text-slate-800">{title}</h3>
-            <button onClick={onClose} className="p-2 rounded-lg hover:bg-slate-100 text-slate-500 touch-target">
+          <div className="px-5 py-4 border-b border-theme-light flex items-center justify-between">
+            <h3 className="font-semibold text-theme-primary">{title}</h3>
+            <button onClick={onClose} className="p-2 rounded-lg hover:bg-theme-elevated text-theme-muted touch-target">
               <Icon name="x" size={18} />
             </button>
           </div>

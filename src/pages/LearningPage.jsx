@@ -33,7 +33,6 @@ const LearningPage = () => {
     setLastResult(null);
     setSelectedLevel(null);
     setSelectedScene(null);
-    setActiveTab('levels');
     setView('map');
   };
 
@@ -42,30 +41,29 @@ const LearningPage = () => {
     setView('scenario-play');
   };
 
-  const [activeTab, setActiveTab] = useState('levels'); // levels | scenarios | academy
+  const [activeTab, setActiveTab] = useState('levels'); // levels | scenarios
 
   const subTabs = [
     { key: 'levels', label: '关卡地图' },
     { key: 'scenarios', label: '场景学习' },
-    { key: 'academy', label: '文字学堂' },
   ];
 
   return (
     <div className="flex flex-col h-full">
       {/* Header for sub-views */}
-      {view !== 'map' && view !== 'scenarios' && view !== 'academy' && (
+      {view !== 'map' && view !== 'scenarios' && (
         <div className="flex items-center gap-3 mb-3 sm:mb-4">
           <button
             onClick={handleBackToMap}
-            className="p-2 rounded-xl hover:bg-slate-100 transition-colors btn-press touch-target"
+            className="p-2 rounded-xl hover:bg-theme-elevated transition-colors btn-press touch-target"
           >
             <Icon name="chevron-left" size={22} />
           </button>
           <div className="flex-1 min-w-0">
-            <h1 className="text-base sm:text-lg font-bold text-slate-800 truncate">
+            <h1 className="text-base sm:text-lg font-bold text-theme-primary truncate">
               {view === 'quiz' ? selectedLevel?.title : view === 'scenario-play' ? selectedScene?.name : '关卡结算'}
             </h1>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-theme-muted">
               {LANGUAGE_MAP[currentLanguage]?.flag} {LANGUAGE_MAP[currentLanguage]?.name}
             </p>
           </div>
@@ -73,21 +71,19 @@ const LearningPage = () => {
       )}
 
       {/* Sub tabs for main learning view */}
-      {(view === 'map' || view === 'scenarios' || view === 'academy') && (
-        <div className="flex bg-slate-100 rounded-2xl p-1 mb-3 sm:mb-4">
+      {(view === 'map' || view === 'scenarios') && (
+        <div className="flex bg-theme-elevated rounded-2xl p-1 mb-3 sm:mb-4">
           {subTabs.map(tab => (
             <button
               key={tab.key}
               onClick={() => {
                 setActiveTab(tab.key);
-                if (tab.key === 'levels') setView('map');
-                else if (tab.key === 'scenarios') setView('scenarios');
-                else if (tab.key === 'academy') setView('academy');
+                setView(tab.key === 'levels' ? 'map' : 'scenarios');
               }}
               className={`relative flex-1 py-2.5 rounded-xl text-sm font-medium transition-all touch-target ${
                 activeTab === tab.key
-                  ? 'bg-white text-brand-600 shadow-sm'
-                  : 'text-slate-500 hover:text-slate-700'
+                  ? 'bg-theme-card text-brand-600 shadow-sm'
+                  : 'text-theme-muted hover:text-theme-secondary'
               }`}
             >
               {tab.label}
@@ -108,18 +104,12 @@ const LearningPage = () => {
           >
             {view === 'map' && (
               <>
-                {/* FIX(学习页白屏): ContentUpdater 属于 content 懒加载组，学习页首次打开时
-                    该组可能尚未加载，裸引用会抛 ReferenceError: ContentUpdater is not defined。
-                    content 组加载完成前先不渲染该组件，不再阻塞整个学习页。 */}
-                {window.ContentUpdater ? <ContentUpdater /> : null}
+                <ContentUpdater />
                 <LevelMap onStartLevel={handleStartLevel} />
               </>
             )}
             {view === 'scenarios' && (
               <Scenarios onSelectScene={handleSelectScene} />
-            )}
-            {view === 'academy' && (
-              <CharacterAcademy onBack={handleBackToMap} />
             )}
             {view === 'scenario-play' && selectedScene && (
               <ScenarioPlayer scene={selectedScene} onBack={handleBackToMap} />

@@ -72,8 +72,8 @@ const Scenarios = ({ onSelectScene }) => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-bold text-slate-800">场景学习</h2>
-          <p className="text-xs text-slate-400 mt-0.5">选择适合你的学习场景，让语言融入生活</p>
+          <h2 className="text-xl font-bold text-theme-primary">场景学习</h2>
+          <p className="text-xs text-theme-muted mt-0.5">选择适合你的学习场景，让语言融入生活</p>
         </div>
         <div className="flex items-center gap-1.5 px-3 py-1.5 bg-brand-50 rounded-xl">
           <Icon name="zap" size={14} className="text-brand-500" />
@@ -82,13 +82,13 @@ const Scenarios = ({ onSelectScene }) => {
       </div>
 
       {/* Profile-based suggestion */}
-      <div className="bg-white rounded-xl p-3 border border-slate-100 shadow-sm">
+      <div className="bg-theme-card rounded-xl p-3 border border-theme-light shadow-sm">
         <div className="flex items-center gap-2 mb-2">
           <Icon name="sparkles" size={14} className="text-brand-500" />
-          <span className="text-sm font-semibold text-slate-700">场景推荐</span>
-          <span className="text-[10px] text-slate-400 ml-auto">基于你的画像</span>
+          <span className="text-sm font-semibold text-theme-secondary">场景推荐</span>
+          <span className="text-[10px] text-theme-muted ml-auto">基于你的画像</span>
         </div>
-        <div className="text-xs text-slate-600">
+        <div className="text-xs text-theme-secondary">
           学习目标「{PROFILE_DIMENSIONS.learningGoal.options.find(o => o.key === learningGoal)?.label || learningGoal}」优先推荐
           {priorityOrder.slice(0, 2).map(id => SCENARIOS.find(s => s.id === id)?.name).filter(Boolean).join('、')} 场景
           {userHasShortTime && '，当前可用时长较短，建议选择时长较短的场景'}
@@ -131,13 +131,13 @@ const Scenarios = ({ onSelectScene }) => {
               onClick={() => unlocked && onSelectScene(scene)}
               className={`relative p-4 rounded-2xl border transition-all ${
                 unlocked
-                  ? 'bg-white border-slate-100 shadow-sm cursor-pointer hover:shadow-md'
-                  : 'bg-slate-50 border-slate-100 opacity-60 cursor-not-allowed'
+                  ? 'bg-theme-card border-theme-light shadow-sm cursor-pointer hover:shadow-md'
+                  : 'bg-theme-elevated border-theme-light opacity-60 cursor-not-allowed'
               }`}
             >
               {!unlocked && (
                 <div className="absolute top-2 right-2">
-                  <Icon name="lock" size={14} className="text-slate-300" />
+                  <Icon name="lock" size={14} className="text-theme-disabled" />
                 </div>
               )}
               {unlocked && (isGoalMatch || isWeakMatch) && (
@@ -157,11 +157,11 @@ const Scenarios = ({ onSelectScene }) => {
                 </div>
               )}
               <div className="text-3xl mb-2">{scene.icon}</div>
-              <div className="font-semibold text-sm text-slate-800">{scene.name}</div>
-              <div className="text-[10px] text-slate-400 mt-0.5">{scene.tag}</div>
-              <div className="text-[10px] text-slate-400">{scene.duration}</div>
+              <div className="font-semibold text-sm text-theme-primary">{scene.name}</div>
+              <div className="text-[10px] text-theme-muted mt-0.5">{scene.tag}</div>
+              <div className="text-[10px] text-theme-muted">{scene.duration}</div>
               {unlocked && completed > 0 && (
-                <div className="mt-2 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                <div className="mt-2 h-1.5 bg-theme-elevated rounded-full overflow-hidden">
                   <div className="h-full bg-brand-400 rounded-full" style={{ width: `${Math.min(100, completed * 10)}%` }} />
                 </div>
               )}

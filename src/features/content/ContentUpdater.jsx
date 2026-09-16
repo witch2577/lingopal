@@ -71,7 +71,7 @@ const ContentUpdater = () => {
                 <span className="font-semibold text-sm">本周新内容已上线</span>
                 <button
                   onClick={handleDismiss}
-                  className="ml-auto p-1 rounded-full hover:bg-white/20 transition-colors"
+                  className="ml-auto p-1 rounded-full hover:bg-theme-card/20 transition-colors"
                 >
                   <Icon name="x" size={14} />
                 </button>
@@ -82,13 +82,13 @@ const ContentUpdater = () => {
               <div className="flex gap-2">
                 <button
                   onClick={handleRefresh}
-                  className="flex-1 bg-white text-brand-600 text-xs font-semibold py-2 rounded-lg hover:bg-white/90 transition-colors"
+                  className="flex-1 bg-theme-card text-brand-600 text-xs font-semibold py-2 rounded-lg hover:bg-theme-card/90 transition-colors"
                 >
                   刷新本周内容
                 </button>
                 <button
                   onClick={handleDismiss}
-                  className="px-3 py-2 bg-white/20 text-white text-xs rounded-lg hover:bg-white/30 transition-colors"
+                  className="px-3 py-2 bg-theme-card/20 text-white text-xs rounded-lg hover:bg-theme-card/30 transition-colors"
                 >
                   稍后
                 </button>
@@ -102,19 +102,19 @@ const ContentUpdater = () => {
       <div className="flex items-center gap-2 mb-3">
         <button
           onClick={() => setShowWeekSelector(!showWeekSelector)}
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-lg border border-slate-200 text-xs text-slate-600 hover:border-brand-300 transition-colors"
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-theme-card rounded-lg border border-theme-light text-xs text-theme-secondary hover:border-brand-300 transition-colors"
         >
           <Icon name="calendar" size={14} className="text-brand-500" />
           <span>{getWeekLabel(rotationInfo.activeWeekIndex)}</span>
           {rotationInfo.isManualOverride && (
             <span className="text-[10px] text-amber-600 bg-amber-50 px-1 rounded">手动</span>
           )}
-          <Icon name={showWeekSelector ? 'chevron-down' : 'chevron'} size={12} className="text-slate-400" />
+          <Icon name={showWeekSelector ? 'chevron-down' : 'chevron'} size={12} className="text-theme-muted" />
         </button>
         {!showNotice && (
           <button
             onClick={handleRefresh}
-            className="flex items-center gap-1 px-3 py-1.5 bg-white rounded-lg border border-slate-200 text-xs text-slate-600 hover:border-brand-300 transition-colors"
+            className="flex items-center gap-1 px-3 py-1.5 bg-theme-card rounded-lg border border-theme-light text-xs text-theme-secondary hover:border-brand-300 transition-colors"
           >
             <Icon name="refresh-cw" size={12} className="text-brand-500" />
             <span>刷新</span>
@@ -131,8 +131,8 @@ const ContentUpdater = () => {
             exit={{ opacity: 0, height: 0 }}
             className="overflow-hidden mb-3"
           >
-            <div className="bg-white rounded-xl border border-slate-200 p-3 space-y-2">
-              <p className="text-xs text-slate-500 font-medium">选择周次内容</p>
+            <div className="bg-theme-card rounded-xl border border-theme-light p-3 space-y-2">
+              <p className="text-xs text-theme-muted font-medium">选择周次内容</p>
               <div className="grid grid-cols-2 gap-2">
                 {Array.from({ length: CONTENT_WEEKS }, (_, i) => (
                   <button
@@ -143,7 +143,7 @@ const ContentUpdater = () => {
                         ? 'bg-brand-50 border border-brand-300 text-brand-700'
                         : rotationInfo.activeWeekIndex === i
                           ? 'bg-amber-50 border border-amber-300 text-amber-700'
-                          : 'bg-slate-50 border border-slate-100 text-slate-600 hover:border-slate-300'
+                          : 'bg-theme-elevated border border-theme-light text-theme-secondary hover:border-theme-medium'
                     }`}
                   >
                     <div className="font-semibold">{getWeekLabel(i)}</div>

@@ -133,21 +133,21 @@ const ScenarioPlayer = ({ scene, onBack }) => {
         {scene.icon}
       </motion.div>
       <div className="text-center">
-        <h2 className="text-xl font-bold text-slate-800">{scene.name}</h2>
-        <p className="text-sm text-slate-400 mt-1">{scene.description}</p>
+        <h2 className="text-xl font-bold text-theme-primary">{scene.name}</h2>
+        <p className="text-sm text-theme-muted mt-1">{scene.description}</p>
       </div>
       <div className="flex flex-wrap justify-center gap-2">
         {scene.features.map(f => (
-          <span key={f} className="px-2.5 py-1 bg-slate-100 rounded-lg text-xs text-slate-600">{f}</span>
+          <span key={f} className="px-2.5 py-1 bg-theme-elevated rounded-lg text-xs text-theme-secondary">{f}</span>
         ))}
       </div>
-      <div className="text-xs text-slate-400">
+      <div className="text-xs text-theme-muted">
         预计 {scene.duration} · {questions.length} 题 · XP x{scene.xpMultiplier}
       </div>
       <Button onClick={startPlaying} className="mt-2 w-48">
         开始学习
       </Button>
-      <button onClick={onBack} className="text-sm text-slate-400 hover:text-slate-600">
+      <button onClick={onBack} className="text-sm text-theme-muted hover:text-theme-secondary">
         返回场景列表
       </button>
     </div>
@@ -162,13 +162,13 @@ const ScenarioPlayer = ({ scene, onBack }) => {
       <div className="flex flex-col gap-4">
         {/* Progress bar */}
         <div className="flex items-center gap-3">
-          <button onClick={onBack} className="p-2 rounded-xl hover:bg-slate-100">
+          <button onClick={onBack} className="p-2 rounded-xl hover:bg-theme-elevated">
             <Icon name="chevron-left" size={20} />
           </button>
-          <div className="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
+          <div className="flex-1 h-2 bg-theme-elevated rounded-full overflow-hidden">
             <motion.div className="h-full bg-brand-500 rounded-full" initial={{ width: 0 }} animate={{ width: `${progress}%` }} />
           </div>
-          <span className="text-xs text-slate-400">{currentQ + 1}/{questions.length}</span>
+          <span className="text-xs text-theme-muted">{currentQ + 1}/{questions.length}</span>
         </div>
 
         {/* Timer */}
@@ -176,13 +176,13 @@ const ScenarioPlayer = ({ scene, onBack }) => {
           <Badge variant={timeLeft < 10 ? 'danger' : 'default'}>
             <Icon name="clock" size={12} /> {timeLeft}s
           </Badge>
-          <span className="text-xs text-slate-400">{scene.name}</span>
+          <span className="text-xs text-theme-muted">{scene.name}</span>
         </div>
 
         {/* Question */}
         <Card padding="p-5" className="min-h-[120px] flex items-center justify-center">
           <div className="text-center">
-            <div className="text-lg font-semibold text-slate-800">{q.question}</div>
+            <div className="text-lg font-semibold text-theme-primary">{q.question}</div>
             {q.type === 'dictation' && q.audioWord && (
               <button
                 onClick={() => speakText(q.audioWord, currentLanguage)}
@@ -196,7 +196,7 @@ const ScenarioPlayer = ({ scene, onBack }) => {
 
         {/* Options */}
         {q.type === 'match' && q.pairs ? (
-          <div className="text-center text-sm text-slate-400 py-4">
+          <div className="text-center text-sm text-theme-muted py-4">
             配对题在场景模式下简化为选择题
           </div>
         ) : q.type === 'repeat' ? (
@@ -205,7 +205,7 @@ const ScenarioPlayer = ({ scene, onBack }) => {
               <Icon name="alert-circle" size={10} />
               自我评估模式
             </div>
-            <p className="text-xs text-slate-400">请根据自我感觉判断是否完成跟读</p>
+            <p className="text-xs text-theme-muted">请根据自我感觉判断是否完成跟读</p>
             <Button onClick={() => handleAnswer(true)} variant="accent">
               我已完成跟读
             </Button>
@@ -216,7 +216,7 @@ const ScenarioPlayer = ({ scene, onBack }) => {
               <button
                 key={i}
                 onClick={() => handleAnswer(opt === q.correctAnswer)}
-                className="w-full p-4 rounded-xl bg-white border-2 border-slate-100 hover:border-brand-400 hover:bg-brand-50 text-left text-sm font-medium text-slate-700 transition-all btn-press"
+                className="w-full p-4 rounded-xl bg-theme-card border-2 border-theme-light hover:border-brand-400 hover:bg-brand-50 text-left text-sm font-medium text-theme-secondary transition-all btn-press"
               >
                 {opt}
               </button>
@@ -246,7 +246,7 @@ const ScenarioPlayer = ({ scene, onBack }) => {
           {stars === 3 ? '🏆' : stars === 2 ? '👍' : '💪'}
         </motion.div>
         <div className="text-center">
-          <h2 className="text-xl font-bold text-slate-800">{scene.name} 完成！</h2>
+          <h2 className="text-xl font-bold text-theme-primary">{scene.name} 完成！</h2>
           <div className="flex items-center justify-center gap-1 mt-2">
             {[1, 2, 3].map(s => (
               <span key={s} className={`text-2xl ${s <= stars ? '' : 'opacity-20'}`}>⭐</span>
@@ -256,15 +256,15 @@ const ScenarioPlayer = ({ scene, onBack }) => {
         <div className="grid grid-cols-3 gap-3 w-full">
           <Card padding="p-3" className="text-center">
             <div className="text-xl font-bold text-brand-600">{accuracy}%</div>
-            <div className="text-[10px] text-slate-400">正确率</div>
+            <div className="text-[10px] text-theme-muted">正确率</div>
           </Card>
           <Card padding="p-3" className="text-center">
             <div className="text-xl font-bold text-emerald-600">+{earnedXP}</div>
-            <div className="text-[10px] text-slate-400">获得XP</div>
+            <div className="text-[10px] text-theme-muted">获得XP</div>
           </Card>
           <Card padding="p-3" className="text-center">
             <div className="text-xl font-bold text-amber-600">{correctCount}/{total}</div>
-            <div className="text-[10px] text-slate-400">答对</div>
+            <div className="text-[10px] text-theme-muted">答对</div>
           </Card>
         </div>
         <div className="flex gap-3 w-full">

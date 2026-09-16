@@ -23,7 +23,6 @@ const WordSpelling = () => {
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
   const [wordIndex, setWordIndex] = useState(0);
-  const [characterFeedback, setCharacterFeedback] = useState(null);
   const inputRef = useRef(null);
 
   const wordPool = useMemo(() => {
@@ -90,11 +89,6 @@ const WordSpelling = () => {
 
     setTotalQuestions(prev => prev + 1);
     if (isCorrect) setCorrectCount(prev => prev + 1);
-
-    if (typeof FeedbackEngine !== 'undefined') {
-      const fb = FeedbackEngine.onAnswer(isCorrect, { source: 'written', combo: result.newStreak });
-      if (fb) setCharacterFeedback(fb);
-    }
 
     setFeedback({
       isCorrect,
@@ -183,7 +177,7 @@ const WordSpelling = () => {
               className={`flex flex-col items-center gap-1.5 p-3 rounded-xl border-2 transition-all btn-press ${
                 gameMode === mode.key
                   ? 'border-brand-400 bg-brand-50 text-brand-700'
-                  : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
+                  : 'border-theme-light bg-theme-card text-theme-secondary hover:border-theme-medium'
               }`}
             >
               <Icon name={mode.icon} size={22} />
@@ -194,14 +188,14 @@ const WordSpelling = () => {
 
         {/* Difficulty */}
         <Card className="flex flex-col gap-3">
-          <h3 className="text-sm font-semibold text-slate-700">选择难度</h3>
+          <h3 className="text-sm font-semibold text-theme-secondary">选择难度</h3>
           <div className="flex gap-2">
             {DIFFICULTY_LEVELS.map(level => (
               <button
                 key={level.key}
                 onClick={() => setDifficulty(level.key)}
                 className={`flex-1 py-2 rounded-xl text-sm font-medium transition-all btn-press ${
-                  difficulty === level.key ? level.color : 'bg-slate-100 text-slate-500'
+                  difficulty === level.key ? level.color : 'bg-theme-elevated text-theme-muted'
                 }`}
               >
                 {level.label}
@@ -212,20 +206,19 @@ const WordSpelling = () => {
 
         {/* Language */}
         <Card className="flex flex-col gap-3">
-          <h3 className="text-sm font-semibold text-slate-700">选择语言</h3>
+          <h3 className="text-sm font-semibold text-theme-secondary">选择语言</h3>
           <div className="flex gap-2 flex-wrap">
-            {LEARNING_LANGUAGES.map(lang => (
+            {['en', 'ja'].map(code => (
               <button
-                key={lang.code}
-                onClick={() => useWrittenStore.getState().setLanguage(lang.code)}
+                key={code}
+                onClick={() => useWrittenStore.getState().setLanguage(code)}
                 className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all btn-press ${
-                  currentLanguage === lang.code
+                  currentLanguage === code
                     ? 'bg-brand-100 text-brand-700 ring-2 ring-brand-300'
-                    : 'bg-slate-100 text-slate-600'
+                    : 'bg-theme-elevated text-theme-secondary'
                 }`}
               >
-                {lang.flag} {lang.name}
-                {lang.type === 'beta' && <span className="ml-0.5 text-[9px] opacity-70">β</span>}
+                {LANGUAGE_MAP[code]?.flag} {LANGUAGE_MAP[code]?.name}
               </button>
             ))}
           </div>
@@ -256,10 +249,6 @@ const WordSpelling = () => {
           correct: correctCount,
         });
       }
-      if (typeof FeedbackEngine !== 'undefined' && totalQuestions > 0) {
-        const fb = FeedbackEngine.onSessionEnd(correctCount, totalQuestions, { source: 'written' });
-        if (fb) setCharacterFeedback(fb);
-      }
     }, []);
 
     return (
@@ -274,22 +263,22 @@ const WordSpelling = () => {
         </motion.div>
 
         <div className="text-center">
-          <h2 className="text-xl font-bold text-slate-800">练习完成！</h2>
-          <p className="text-sm text-slate-500 mt-1">本次共答 {totalQuestions} 题</p>
+          <h2 className="text-xl font-bold text-theme-primary">练习完成！</h2>
+          <p className="text-sm text-theme-muted mt-1">本次共答 {totalQuestions} 题</p>
         </div>
 
         <div className="grid grid-cols-3 gap-3 w-full">
           <Card className="text-center py-4">
             <div className="text-2xl font-bold text-brand-600">{score}</div>
-            <div className="text-xs text-slate-500 mt-1">总得分</div>
+            <div className="text-xs text-theme-muted mt-1">总得分</div>
           </Card>
           <Card className="text-center py-4">
             <div className="text-2xl font-bold text-emerald-600">{accuracy}%</div>
-            <div className="text-xs text-slate-500 mt-1">正确率</div>
+            <div className="text-xs text-theme-muted mt-1">正确率</div>
           </Card>
           <Card className="text-center py-4">
             <div className="text-2xl font-bold text-amber-600">{streak}</div>
-            <div className="text-xs text-slate-500 mt-1">最高连击</div>
+            <div className="text-xs text-theme-muted mt-1">最高连击</div>
           </Card>
         </div>
 
@@ -301,14 +290,6 @@ const WordSpelling = () => {
             再来一次
           </Button>
         </div>
-
-        {/* Character feedback overlay (non-blocking) */}
-        {characterFeedback && (
-          <CharacterFeedbackOverlay
-            feedback={characterFeedback}
-            onComplete={() => setCharacterFeedback(null)}
-          />
-        )}
       </div>
     );
   }
@@ -321,13 +302,13 @@ const WordSpelling = () => {
           <Badge variant="primary">{score} 分</Badge>
           {streak >= 2 && <Badge variant="accent">🔥 x{streak}</Badge>}
         </div>
-        <span className="text-xs text-slate-400">
+        <span className="text-xs text-theme-muted">
           {wordIndex + 1} / {wordPool.length}
         </span>
       </div>
 
       {/* Progress bar */}
-      <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+      <div className="h-1.5 bg-theme-elevated rounded-full overflow-hidden">
         <motion.div
           className="h-full bg-brand-gradient rounded-full"
           animate={{ width: `${((wordIndex) / wordPool.length) * 100}%` }}
@@ -345,24 +326,24 @@ const WordSpelling = () => {
             >
               <Icon name="volume" size={28} className="text-white" />
             </button>
-            <p className="text-sm text-slate-500">点击播放发音，然后输入单词</p>
+            <p className="text-sm text-theme-muted">点击播放发音，然后输入单词</p>
           </>
         )}
 
         {gameMode === 'meaning' && (
           <div className="text-center">
-            <p className="text-lg font-medium text-slate-800">{currentWord?.meaning}</p>
-            <p className="text-xs text-slate-400 mt-1">提示：{currentWord?.hint}</p>
+            <p className="text-lg font-medium text-theme-primary">{currentWord?.meaning}</p>
+            <p className="text-xs text-theme-muted mt-1">提示：{currentWord?.hint}</p>
           </div>
         )}
 
         {gameMode === 'scramble' && (
           <>
-            <p className="text-sm text-slate-500">释义：{currentWord?.meaning}</p>
+            <p className="text-sm text-theme-muted">释义：{currentWord?.meaning}</p>
             {/* Selected letters */}
             <div className="flex items-center gap-1 min-h-[40px] flex-wrap justify-center">
               {selectedLetters.length === 0 ? (
-                <span className="text-slate-300 text-sm">点击下方字母组成单词</span>
+                <span className="text-theme-disabled text-sm">点击下方字母组成单词</span>
               ) : (
                 selectedLetters.map((l, i) => (
                   <motion.span
@@ -385,8 +366,8 @@ const WordSpelling = () => {
                   disabled={l.used}
                   className={`w-9 h-9 rounded-lg text-lg font-bold transition-all btn-press ${
                     l.used
-                      ? 'bg-slate-100 text-slate-300'
-                      : 'bg-white border-2 border-slate-200 text-slate-700 hover:border-brand-400 hover:text-brand-600'
+                      ? 'bg-theme-elevated text-theme-disabled'
+                      : 'bg-theme-card border-2 border-theme-light text-theme-secondary hover:border-brand-400 hover:text-brand-600'
                   }`}
                 >
                   {l.letter}
@@ -394,7 +375,7 @@ const WordSpelling = () => {
               ))}
             </div>
             {selectedLetters.length > 0 && (
-              <button onClick={handleClearLetters} className="text-xs text-slate-400 hover:text-slate-600">
+              <button onClick={handleClearLetters} className="text-xs text-theme-muted hover:text-theme-secondary">
                 清空
               </button>
             )}
@@ -409,7 +390,7 @@ const WordSpelling = () => {
             onChange={e => setUserInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="输入单词..."
-            className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-brand-400 focus:outline-none text-center text-lg font-medium transition-colors"
+            className="w-full px-4 py-3 rounded-xl border-2 border-theme-light focus:border-brand-400 focus:outline-none text-center text-lg font-medium transition-colors"
             autoComplete="off"
             autoCapitalize="off"
           />
@@ -436,14 +417,6 @@ const WordSpelling = () => {
           确认
         </Button>
       </Card>
-
-      {/* Character feedback overlay (non-blocking) */}
-      {characterFeedback && (
-        <CharacterFeedbackOverlay
-          feedback={characterFeedback}
-          onComplete={() => setCharacterFeedback(null)}
-        />
-      )}
     </div>
   );
 };

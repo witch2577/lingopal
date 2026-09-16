@@ -38,7 +38,7 @@ const AudioPlayer = ({
   if (!supported || !speechSupported) {
     return (
       <button
-        className={`text-slate-300 cursor-not-allowed ${sizes[size].btn} rounded-lg ${className}`}
+        className={`text-theme-disabled cursor-not-allowed ${sizes[size].btn} rounded-lg ${className}`}
         title="当前语言不支持语音播放"
         disabled
       >
@@ -67,7 +67,7 @@ const AudioPlayer = ({
         <select
           value={rate}
           onChange={(e) => setRate(parseFloat(e.target.value))}
-          className="text-xs bg-slate-50 border border-slate-200 rounded-lg px-1.5 py-1 text-slate-600 focus:outline-none focus:border-brand-400"
+          className="text-xs bg-theme-elevated border border-theme-light rounded-lg px-1.5 py-1 text-theme-secondary focus:outline-none focus:border-brand-400"
         >
           <option value="0.5">0.5x</option>
           <option value="0.75">0.75x</option>

@@ -21,25 +21,25 @@ const TranslationPage = () => {
             <span className="text-lg">🌍</span>
           </div>
           <div>
-            <h1 className="text-lg sm:text-xl font-bold text-slate-800 font-display">翻译</h1>
-            <p className="text-xs text-slate-400">支持多语言与方言互译</p>
+            <h1 className="text-lg sm:text-xl font-bold text-theme-primary font-display">翻译</h1>
+            <p className="text-xs text-theme-muted">支持多语言与方言互译</p>
           </div>
         </div>
         <div className="text-right">
-          <div className="text-xs text-slate-400">语伴 LingoPal</div>
+          <div className="text-xs text-theme-muted">语伴 LingoPal</div>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex bg-slate-100 rounded-2xl p-1 mb-3 sm:mb-4">
+      <div className="flex bg-theme-elevated rounded-2xl p-1 mb-3 sm:mb-4">
         {tabs.map(tab => (
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
             className={`relative flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-sm font-medium transition-all tab-active touch-target ${
               activeTab === tab.key
-                ? 'bg-white text-brand-600 shadow-sm'
-                : 'text-slate-500 hover:text-slate-700'
+                ? 'bg-theme-card text-brand-600 shadow-sm'
+                : 'text-theme-muted hover:text-theme-secondary'
             }`}
           >
             <Icon name={tab.icon} size={isMobile ? 16 : 18} />

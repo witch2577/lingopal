@@ -193,8 +193,8 @@ const ProgressCompare = () => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold text-slate-800">成果对比</h2>
-        <div className="flex bg-slate-100 rounded-lg p-0.5">
+        <h2 className="text-xl font-bold text-theme-primary">成果对比</h2>
+        <div className="flex bg-theme-elevated rounded-lg p-0.5">
           {[
             { key: 'week', label: '周' },
             { key: 'month', label: '月' },
@@ -204,7 +204,7 @@ const ProgressCompare = () => {
               key={r.key}
               onClick={() => setRange(r.key)}
               className={`px-3 py-1 rounded-md text-xs font-medium transition-all ${
-                range === r.key ? 'bg-white text-brand-600 shadow-sm' : 'text-slate-500'
+                range === r.key ? 'bg-theme-card text-brand-600 shadow-sm' : 'text-theme-muted'
               }`}
             >
               {r.label}
@@ -228,11 +228,11 @@ const ProgressCompare = () => {
                 <Card key={s.label} padding="p-3">
                   <div className="flex items-center gap-2 mb-1">
                     <Icon name={s.icon} size={14} className="text-brand-500" />
-                    <span className="text-xs text-slate-400">{s.label}</span>
+                    <span className="text-xs text-theme-muted">{s.label}</span>
                   </div>
                   <div className="flex items-end gap-2">
-                    <span className="text-xl font-bold text-slate-800">{s.current}</span>
-                    <span className="text-[10px] text-slate-400 mb-1">{s.unit}</span>
+                    <span className="text-xl font-bold text-theme-primary">{s.current}</span>
+                    <span className="text-[10px] text-theme-muted mb-1">{s.unit}</span>
                   </div>
                   <div className={`text-[10px] font-medium mt-1 ${isPositive ? 'text-emerald-600' : 'text-red-500'}`}>
                     {isPositive ? '↑' : '↓'} {Math.abs(change)}% vs 上{rangeConfig[range].label}
@@ -244,7 +244,7 @@ const ProgressCompare = () => {
 
           {/* Comparison bar chart */}
           <Card padding="p-4">
-            <h3 className="font-semibold text-slate-800 text-sm mb-2">
+            <h3 className="font-semibold text-theme-primary text-sm mb-2">
               本{rangeConfig[range].label} vs 上{rangeConfig[range].label}
             </h3>
             <div ref={chartRef} style={{ width: '100%', height: '220px' }} />
@@ -252,37 +252,37 @@ const ProgressCompare = () => {
 
           {/* Trend line */}
           <Card padding="p-4">
-            <h3 className="font-semibold text-slate-800 text-sm mb-2">学习趋势</h3>
+            <h3 className="font-semibold text-theme-primary text-sm mb-2">学习趋势</h3>
             <div ref={trendRef} style={{ width: '100%', height: '200px' }} />
           </Card>
 
           {/* Accuracy pie */}
           <div className="grid grid-cols-2 gap-3">
             <Card padding="p-4">
-              <h3 className="font-semibold text-slate-800 text-sm mb-2">正确率分布</h3>
+              <h3 className="font-semibold text-theme-primary text-sm mb-2">正确率分布</h3>
               <div ref={pieRef} style={{ width: '100%', height: '180px' }} />
             </Card>
             <Card padding="p-4">
-              <h3 className="font-semibold text-slate-800 text-sm mb-2">学习总结</h3>
+              <h3 className="font-semibold text-theme-primary text-sm mb-2">学习总结</h3>
               <div className="space-y-2 mt-2">
                 <div className="flex justify-between text-xs">
-                  <span className="text-slate-400">总答题</span>
-                  <span className="font-medium text-slate-700">{compareData.current.totalQuestions} 题</span>
+                  <span className="text-theme-muted">总答题</span>
+                  <span className="font-medium text-theme-secondary">{compareData.current.totalQuestions} 题</span>
                 </div>
                 <div className="flex justify-between text-xs">
-                  <span className="text-slate-400">正确</span>
+                  <span className="text-theme-muted">正确</span>
                   <span className="font-medium text-emerald-600">{compareData.current.correctCount} 题</span>
                 </div>
                 <div className="flex justify-between text-xs">
-                  <span className="text-slate-400">新词</span>
+                  <span className="text-theme-muted">新词</span>
                   <span className="font-medium text-violet-600">{compareData.current.newWords} 个</span>
                 </div>
                 <div className="flex justify-between text-xs">
-                  <span className="text-slate-400">活跃天数</span>
+                  <span className="text-theme-muted">活跃天数</span>
                   <span className="font-medium text-amber-600">{compareData.current.activeDays} 天</span>
                 </div>
-                <div className="pt-2 border-t border-slate-100">
-                  <p className="text-[10px] text-slate-400 leading-relaxed">
+                <div className="pt-2 border-t border-theme-light">
+                  <p className="text-[10px] text-theme-muted leading-relaxed">
                     {compareData.current.activeDays >= rangeConfig[range].days * 0.7
                       ? '非常棒！你的学习频率很高，继续保持！'
                       : compareData.current.activeDays >= rangeConfig[range].days * 0.3

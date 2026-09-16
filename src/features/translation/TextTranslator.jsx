@@ -180,7 +180,7 @@ const TextTranslator = () => {
           disabled={sourceLang === 'auto'}
           className={`p-2.5 rounded-xl transition-all btn-press touch-target ${
             sourceLang === 'auto'
-              ? 'bg-slate-100 text-slate-300 cursor-not-allowed'
+              ? 'bg-theme-elevated text-theme-disabled cursor-not-allowed'
               : 'bg-brand-100 text-brand-600 hover:bg-brand-200'
           }`}
           title="互换语言"
@@ -209,7 +209,7 @@ const TextTranslator = () => {
           value={sourceText}
           onChange={handleInput}
           placeholder="输入要翻译的文字..."
-          className="w-full h-32 sm:h-40 p-3 sm:p-4 text-base resize-none bg-transparent focus:outline-none placeholder:text-slate-400 text-slate-700"
+          className="w-full h-32 sm:h-40 p-3 sm:p-4 text-base resize-none bg-transparent focus:outline-none placeholder:text-theme-muted text-theme-secondary"
           maxLength={maxChars}
           style={{
             // Ensure textarea is scrollable when keyboard is open
@@ -217,13 +217,13 @@ const TextTranslator = () => {
           }}
         />
         <div className="absolute bottom-2 right-2 sm:bottom-3 sm:right-3 flex items-center gap-2">
-          <span className={`text-xs ${charCount > maxChars * 0.9 ? 'text-amber-500' : 'text-slate-400'}`}>
+          <span className={`text-xs ${charCount > maxChars * 0.9 ? 'text-amber-500' : 'text-theme-muted'}`}>
             {charCount}/{maxChars}
           </span>
           {sourceText && (
             <button
               onClick={handleClear}
-              className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors touch-target-sm"
+              className="p-1.5 rounded-lg hover:bg-theme-elevated text-theme-muted hover:text-theme-secondary transition-colors touch-target-sm"
             >
               <Icon name="x" size={16} />
             </button>
@@ -233,14 +233,14 @@ const TextTranslator = () => {
 
       {/* Result Area */}
       <Card className="relative" padding="p-0" ref={resultRef}>
-        <div className="px-3 pt-2.5 pb-1 sm:px-4 sm:pt-3 flex items-center justify-between border-b border-slate-100">
+        <div className="px-3 pt-2.5 pb-1 sm:px-4 sm:pt-3 flex items-center justify-between border-b border-theme-light">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-sm text-slate-500">{targetLangObj.flag} {targetLangObj.name}</span>
+            <span className="text-sm text-theme-muted">{targetLangObj.flag} {targetLangObj.name}</span>
             {showBetaBadge && (
               <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700 font-medium">Beta</span>
             )}
             {isTranslating && (
-              <span className="text-xs text-slate-400 flex items-center gap-1">
+              <span className="text-xs text-theme-muted flex items-center gap-1">
                 <Spinner size={12} className="text-brand-500" /> 翻译中...
               </span>
             )}
@@ -249,7 +249,7 @@ const TextTranslator = () => {
             <button
               onClick={handleFavorite}
               disabled={!translatedText}
-              className="p-2 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-rose-500 transition-colors disabled:opacity-40 touch-target-sm"
+              className="p-2 rounded-lg hover:bg-theme-elevated text-theme-muted hover:text-rose-500 transition-colors disabled:opacity-40 touch-target-sm"
               title="收藏到单词本"
             >
               <Icon name="bookmark" size={18} />
@@ -258,7 +258,7 @@ const TextTranslator = () => {
             <button
               onClick={handleCopy}
               disabled={!translatedText}
-              className="p-2 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors disabled:opacity-40 touch-target-sm"
+              className="p-2 rounded-lg hover:bg-theme-elevated text-theme-muted hover:text-theme-secondary transition-colors disabled:opacity-40 touch-target-sm"
               title="复制译文"
             >
               <Icon name="copy" size={18} />
@@ -273,7 +273,7 @@ const TextTranslator = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2 }}
             >
-              <p className="text-base text-slate-800 leading-relaxed whitespace-pre-wrap">
+              <p className="text-base text-theme-primary leading-relaxed whitespace-pre-wrap">
                 {translatedText}
               </p>
               {/* Confidence & Note */}
@@ -296,7 +296,7 @@ const TextTranslator = () => {
                     </span>
                   )}
                   {confidenceInfo.isFallback && (
-                    <span className="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 font-medium">
+                    <span className="text-[11px] px-2 py-0.5 rounded-full bg-theme-elevated text-theme-muted font-medium">
                       离线回退
                     </span>
                   )}
@@ -306,14 +306,14 @@ const TextTranslator = () => {
                     </span>
                   )}
                   {confidenceInfo.note && (
-                    <span className="text-[11px] text-slate-400">{confidenceInfo.note}</span>
+                    <span className="text-[11px] text-theme-muted">{confidenceInfo.note}</span>
                   )}
                 </div>
               )}
               {/* Alternatives */}
               {alternatives.length > 0 && (
-                <div className="mt-3 pt-3 border-t border-slate-100">
-                  <p className="text-[11px] text-slate-400 mb-1.5">您可能想找：</p>
+                <div className="mt-3 pt-3 border-t border-theme-light">
+                  <p className="text-[11px] text-theme-muted mb-1.5">您可能想找：</p>
                   <div className="flex flex-wrap gap-1.5">
                     {alternatives.map((alt, i) => (
                       <button
@@ -322,7 +322,7 @@ const TextTranslator = () => {
                           setSourceText(alt.source);
                           doTranslate(alt.source);
                         }}
-                        className="px-2 py-1 text-xs bg-slate-50 text-slate-600 rounded-lg hover:bg-brand-50 hover:text-brand-600 transition-colors"
+                        className="px-2 py-1 text-xs bg-theme-elevated text-theme-secondary rounded-lg hover:bg-brand-50 hover:text-brand-600 transition-colors"
                       >
                         {alt.source} → {alt.target}
                       </button>
@@ -332,7 +332,7 @@ const TextTranslator = () => {
               )}
             </motion.div>
           ) : (
-            <p className="text-slate-300 text-sm">翻译结果将显示在这里</p>
+            <p className="text-theme-disabled text-sm">翻译结果将显示在这里</p>
           )}
         </div>
       </Card>
@@ -365,7 +365,7 @@ const TextTranslator = () => {
               setSourceText(phrase);
               doTranslate(phrase);
             }}
-            className="px-3 py-1.5 text-xs bg-slate-100 text-slate-600 rounded-full hover:bg-slate-200 transition-colors btn-press touch-target-sm"
+            className="px-3 py-1.5 text-xs bg-theme-elevated text-theme-secondary rounded-full hover:bg-theme-elevated transition-colors btn-press touch-target-sm"
           >
             {phrase}
           </button>
@@ -375,64 +375,24 @@ const TextTranslator = () => {
       {/* History (Recent) */}
       {history.length > 0 && (
         <div className="mt-2">
-          <h4 className="text-sm font-semibold text-slate-700 mb-2 flex items-center gap-2">
-            <Icon name="clock" size={16} className="text-slate-400" />
+          <h4 className="text-sm font-semibold text-theme-secondary mb-2 flex items-center gap-2">
+            <Icon name="clock" size={16} className="text-theme-muted" />
             最近翻译
           </h4>
           <div className="flex flex-col gap-2 max-h-40 sm:max-h-48 overflow-y-auto">
             {history.slice(0, 5).map((h, i) => (
               <div
                 key={i}
-                className="p-3 bg-slate-50 rounded-xl hover:bg-slate-100 cursor-pointer transition-colors group"
+                onClick={() => {
+                  setSourceText(h.sourceText);
+                  setSourceLang(h.sourceLang);
+                  setTargetLang(h.targetLang);
+                  setTranslatedText(h.translatedText);
+                }}
+                className="p-3 bg-theme-elevated rounded-xl hover:bg-theme-elevated cursor-pointer transition-colors"
               >
-                <div className="flex items-start justify-between">
-                  <div
-                    className="flex-1 min-w-0"
-                    onClick={() => {
-                      setSourceText(h.sourceText);
-                      setSourceLang(h.sourceLang);
-                      setTargetLang(h.targetLang);
-                      setTranslatedText(h.translatedText);
-                    }}
-                  >
-                    <div className="text-sm text-slate-700 truncate">{h.sourceText}</div>
-                    <div className="text-xs text-slate-400 truncate mt-0.5">{h.translatedText}</div>
-                  </div>
-                  <button
-                    onClick={async (e) => {
-                      e.stopPropagation();
-                      const uid = useUserStore.getState().userId;
-                      if (!uid) {
-                        useUIStore.getState().showNotification('请先登录', 'warning');
-                        return;
-                      }
-                      try {
-                        // Mark history as favorite
-                        if (h.id && window.db) {
-                          await db.translationHistory.update(h.id, { isFavorite: true });
-                        }
-                        // Also add to wordBooks
-                        if (window.db) {
-                          await db.wordBooks.add({
-                            userId: uid,
-                            word: h.sourceText,
-                            language: h.targetLang,
-                            translation: h.translatedText,
-                            addedAt: Date.now(),
-                            reviewCount: 0,
-                          });
-                        }
-                        useUIStore.getState().showNotification('已收藏', 'success');
-                      } catch (err) {
-                        useUIStore.getState().showNotification('收藏失败或已存在', 'info');
-                      }
-                    }}
-                    className="p-1.5 rounded-lg text-slate-300 hover:text-amber-500 hover:bg-amber-50 transition-colors opacity-0 group-hover:opacity-100"
-                    title="收藏"
-                  >
-                    <Icon name="bookmark" size={16} />
-                  </button>
-                </div>
+                <div className="text-sm text-theme-secondary truncate">{h.sourceText}</div>
+                <div className="text-xs text-theme-muted truncate mt-0.5">{h.translatedText}</div>
               </div>
             ))}
           </div>

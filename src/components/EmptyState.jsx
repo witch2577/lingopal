@@ -32,8 +32,8 @@ const EmptyState = ({
       >
         {icon}
       </motion.div>
-      <h3 className={`${s.title} font-semibold text-slate-700 mb-1`}>{title}</h3>
-      <p className={`${s.desc} text-slate-400 max-w-xs leading-relaxed whitespace-pre-line`}>
+      <h3 className={`${s.title} font-semibold text-theme-secondary mb-1`}>{title}</h3>
+      <p className={`${s.desc} text-theme-muted max-w-xs leading-relaxed whitespace-pre-line`}>
         {description}
       </p>
       {action && onAction && (

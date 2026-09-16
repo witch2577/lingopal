@@ -61,7 +61,7 @@ const CultureBits = () => {
         <button
           onClick={() => setFilterLang('all')}
           className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-            filterLang === 'all' ? 'bg-brand-500 text-white' : 'bg-slate-100 text-slate-600'
+            filterLang === 'all' ? 'bg-brand-500 text-white' : 'bg-theme-elevated text-theme-secondary'
           }`}
         >
           全部
@@ -71,7 +71,7 @@ const CultureBits = () => {
             key={l.code}
             onClick={() => setFilterLang(l.code)}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-              filterLang === l.code ? 'bg-brand-500 text-white' : 'bg-slate-100 text-slate-600'
+              filterLang === l.code ? 'bg-brand-500 text-white' : 'bg-theme-elevated text-theme-secondary'
             }`}
           >
             {l.name}
@@ -93,7 +93,7 @@ const CultureBits = () => {
               className={`p-3 rounded-xl border cursor-pointer transition-all ${
                 isCompleted
                   ? 'bg-emerald-50 border-emerald-200'
-                  : 'bg-white border-slate-100 hover:border-brand-200'
+                  : 'bg-theme-card border-theme-light hover:border-brand-200'
               }`}
             >
               <div className="text-3xl mb-2">{article.icon}</div>
@@ -105,7 +105,7 @@ const CultureBits = () => {
               )}
               <div className="flex items-center gap-1 mt-2">
                 <Badge variant="primary" className="text-[10px]">{LANGUAGE_MAP[article.language]?.name}</Badge>
-                <span className="text-[10px] text-slate-400">{article.readTime}分钟</span>
+                <span className="text-[10px] text-theme-muted">{article.readTime}分钟</span>
               </div>
               {isCompleted && <span className="text-emerald-500 text-xs mt-1 block">✅ 已读</span>}
             </motion.div>
@@ -126,23 +126,23 @@ const CultureArticleDetail = ({ article, isCompleted, onBack, onComplete }) => {
       className="space-y-4"
     >
       <div className="flex items-center gap-2">
-        <button onClick={onBack} className="p-2 rounded-lg hover:bg-slate-100">
+        <button onClick={onBack} className="p-2 rounded-lg hover:bg-theme-elevated">
           <Icon name="chevron-left" size={20} />
         </button>
         <h2 className="text-lg font-bold">{article.title}</h2>
       </div>
 
-      <div className="bg-white rounded-xl p-5 border border-slate-100 space-y-4">
+      <div className="bg-theme-card rounded-xl p-5 border border-theme-light space-y-4">
         <div className="text-center">
           <div className="text-5xl mb-2">{article.icon}</div>
           <div className="flex items-center justify-center gap-2">
             <Badge variant="primary">{LANGUAGE_MAP[article.language]?.name}</Badge>
-            <span className="text-xs text-slate-400">{article.readTime}分钟阅读</span>
+            <span className="text-xs text-theme-muted">{article.readTime}分钟阅读</span>
           </div>
         </div>
 
         <div className="prose prose-sm max-w-none">
-          <p className="text-sm text-slate-700 leading-relaxed">{article.content}</p>
+          <p className="text-sm text-theme-secondary leading-relaxed">{article.content}</p>
         </div>
 
         <div>
@@ -165,7 +165,7 @@ const CultureArticleDetail = ({ article, isCompleted, onBack, onComplete }) => {
                   {article.facts.map((fact, i) => (
                     <div key={i} className="flex gap-2 bg-amber-50 rounded-lg p-3">
                       <span className="text-amber-500 text-sm">💡</span>
-                      <p className="text-sm text-slate-700">{fact}</p>
+                      <p className="text-sm text-theme-secondary">{fact}</p>
                     </div>
                   ))}
                 </div>

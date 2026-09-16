@@ -179,28 +179,28 @@ const ReportShare = () => {
 
       {/* Stats summary */}
       {reportData && (
-        <div className="bg-white rounded-xl p-4 border border-slate-100">
+        <div className="bg-theme-card rounded-xl p-4 border border-theme-light">
           <div className="grid grid-cols-2 gap-3">
-            <div className="bg-slate-50 rounded-lg p-3 text-center">
+            <div className="bg-theme-elevated rounded-lg p-3 text-center">
               <p className="text-xl font-bold text-brand-600">{reportData.studyDays}</p>
-              <p className="text-xs text-slate-500">学习天数</p>
+              <p className="text-xs text-theme-muted">学习天数</p>
             </div>
-            <div className="bg-slate-50 rounded-lg p-3 text-center">
+            <div className="bg-theme-elevated rounded-lg p-3 text-center">
               <p className="text-xl font-bold text-brand-600">{reportData.totalMinutes}</p>
-              <p className="text-xs text-slate-500">学习分钟</p>
+              <p className="text-xs text-theme-muted">学习分钟</p>
             </div>
-            <div className="bg-slate-50 rounded-lg p-3 text-center">
+            <div className="bg-theme-elevated rounded-lg p-3 text-center">
               <p className="text-xl font-bold text-brand-600">{reportData.totalWords}</p>
-              <p className="text-xs text-slate-500">收藏词汇</p>
+              <p className="text-xs text-theme-muted">收藏词汇</p>
             </div>
-            <div className="bg-slate-50 rounded-lg p-3 text-center">
+            <div className="bg-theme-elevated rounded-lg p-3 text-center">
               <p className="text-xl font-bold text-brand-600">{reportData.streakDays}</p>
-              <p className="text-xs text-slate-500">连胜天数</p>
+              <p className="text-xs text-theme-muted">连胜天数</p>
             </div>
           </div>
-          <div className="mt-3 pt-3 border-t border-slate-100 text-center">
-            <p className="text-2xl font-bold text-brand-600">{reportData.totalXP} <span className="text-sm text-slate-500">XP</span></p>
-            <p className="text-xs text-slate-500">Lv.{reportData.level} {reportData.levelTitle}</p>
+          <div className="mt-3 pt-3 border-t border-theme-light text-center">
+            <p className="text-2xl font-bold text-brand-600">{reportData.totalXP} <span className="text-sm text-theme-muted">XP</span></p>
+            <p className="text-xs text-theme-muted">Lv.{reportData.level} {reportData.levelTitle}</p>
           </div>
         </div>
       )}

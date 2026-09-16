@@ -215,14 +215,14 @@ const InstallPromptBanner = ({ visible, onInstall, onDismiss, installPrompt }) =
 
   return (
     <div className="fixed bottom-20 left-4 right-4 z-40 max-w-md mx-auto">
-      <div className="bg-white rounded-2xl shadow-2xl border border-slate-200 p-4 flex items-start gap-3"
+      <div className="bg-theme-card rounded-2xl shadow-2xl border border-theme-light p-4 flex items-start gap-3"
         style={{ animation: 'slideUp 0.3s ease-out' }}>
         <div className="w-12 h-12 rounded-xl bg-brand-gradient flex items-center justify-center shrink-0 text-white font-bold text-lg">
           L
         </div>
         <div className="flex-1 min-w-0">
           <h4 className="font-semibold text-slate-900 text-sm">添加到主屏</h4>
-          <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
+          <p className="text-xs text-theme-muted mt-0.5 leading-relaxed">
             {showIOSGuide
               ? '点击 Safari 分享按钮，选择「添加到主屏幕」即可离线使用'
               : '将 LingoPal 安装到主屏，体验完整离线学习功能'}
@@ -238,7 +238,7 @@ const InstallPromptBanner = ({ visible, onInstall, onDismiss, installPrompt }) =
         </div>
         <button
           onClick={onDismiss}
-          className="text-slate-400 hover:text-slate-600 p-1 -mr-1 -mt-1"
+          className="text-theme-muted hover:text-theme-secondary p-1 -mr-1 -mt-1"
           aria-label="关闭"
         >
           <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2">

@@ -116,12 +116,12 @@ const DailyReminder = () => {
       </div>
 
       {/* Toggle */}
-      <div className="bg-white rounded-xl p-4 border border-slate-100 flex items-center justify-between">
+      <div className="bg-theme-card rounded-xl p-4 border border-theme-light flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-brand-100 flex items-center justify-center text-lg">⏰</div>
           <div>
             <h4 className="text-sm font-semibold">每日提醒</h4>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-theme-muted">
               {enabled ? `下次提醒：${nextReminder?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}` : '已关闭'}
             </p>
           </div>
@@ -130,7 +130,7 @@ const DailyReminder = () => {
           onClick={handleToggle}
           className={`w-12 h-7 rounded-full transition-all relative ${enabled ? 'bg-brand-500' : 'bg-slate-300'}`}
         >
-          <div className={`absolute top-0.5 w-6 h-6 bg-white rounded-full shadow transition-transform ${enabled ? 'translate-x-5' : 'translate-x-0.5'}`} />
+          <div className={`absolute top-0.5 w-6 h-6 bg-theme-card rounded-full shadow transition-transform ${enabled ? 'translate-x-5' : 'translate-x-0.5'}`} />
         </button>
       </div>
 
@@ -139,15 +139,15 @@ const DailyReminder = () => {
         <motion.div
           initial={{ height: 0, opacity: 0 }}
           animate={{ height: 'auto', opacity: 1 }}
-          className="bg-white rounded-xl p-4 border border-slate-100 space-y-3"
+          className="bg-theme-card rounded-xl p-4 border border-theme-light space-y-3"
         >
           <div>
-            <label className="text-sm font-medium text-slate-700">提醒时间</label>
+            <label className="text-sm font-medium text-theme-secondary">提醒时间</label>
             <input
               type="time"
               value={reminderTime}
               onChange={handleTimeChange}
-              className="w-full mt-1 px-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-brand-400"
+              className="w-full mt-1 px-3 py-2.5 rounded-xl border border-theme-light text-sm focus:outline-none focus:border-brand-400"
             />
           </div>
           <Button onClick={sendTestNotification} variant="secondary" fullWidth size="sm">
@@ -157,8 +157,8 @@ const DailyReminder = () => {
       )}
 
       {/* Smart suggestions based on study preference */}
-      <div className="bg-white rounded-xl p-4 border border-slate-100">
-        <h4 className="text-sm font-semibold text-slate-700 mb-3">推荐提醒时段</h4>
+      <div className="bg-theme-card rounded-xl p-4 border border-theme-light">
+        <h4 className="text-sm font-semibold text-theme-secondary mb-3">推荐提醒时段</h4>
         <div className="space-y-2">
           {[
             { time: '08:00', label: '早晨', desc: '适合记忆单词和语法', emoji: '🌅' },
@@ -174,13 +174,13 @@ const DailyReminder = () => {
                 calculateNextReminder(s.time);
               }}
               className={`w-full flex items-center gap-3 p-3 rounded-xl text-left transition-all ${
-                reminderTime === s.time ? 'bg-brand-50 border border-brand-200' : 'bg-slate-50 hover:bg-slate-100'
+                reminderTime === s.time ? 'bg-brand-50 border border-brand-200' : 'bg-theme-elevated hover:bg-theme-elevated'
               }`}
             >
               <span className="text-xl">{s.emoji}</span>
               <div className="flex-1">
-                <p className="text-sm font-medium">{s.label} <span className="text-slate-400">{s.time}</span></p>
-                <p className="text-xs text-slate-500">{s.desc}</p>
+                <p className="text-sm font-medium">{s.label} <span className="text-theme-muted">{s.time}</span></p>
+                <p className="text-xs text-theme-muted">{s.desc}</p>
               </div>
               {reminderTime === s.time && <span className="text-brand-500 text-sm">✓</span>}
             </button>

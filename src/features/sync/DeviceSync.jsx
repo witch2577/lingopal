@@ -101,16 +101,16 @@ const DeviceSync = () => {
       </div>
 
       {/* Data summary */}
-      <div className="bg-white rounded-xl p-4 border border-slate-100">
-        <h4 className="text-sm font-semibold text-slate-700 mb-3">数据概览</h4>
+      <div className="bg-theme-card rounded-xl p-4 border border-theme-light">
+        <h4 className="text-sm font-semibold text-theme-secondary mb-3">数据概览</h4>
         <div className="grid grid-cols-2 gap-3">
-          <div className="bg-slate-50 rounded-lg p-3 text-center">
+          <div className="bg-theme-elevated rounded-lg p-3 text-center">
             <p className="text-lg font-bold text-brand-600">{formatSize(dataSize)}</p>
-            <p className="text-xs text-slate-500">数据大小</p>
+            <p className="text-xs text-theme-muted">数据大小</p>
           </div>
-          <div className="bg-slate-50 rounded-lg p-3 text-center">
+          <div className="bg-theme-elevated rounded-lg p-3 text-center">
             <p className="text-lg font-bold text-brand-600">{lastSync ? '已同步' : '未同步'}</p>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-theme-muted">
               {lastSync ? lastSync.toLocaleDateString() : '—'}
             </p>
           </div>
@@ -118,12 +118,12 @@ const DeviceSync = () => {
       </div>
 
       {/* Export */}
-      <div className="bg-white rounded-xl p-4 border border-slate-100 space-y-3">
+      <div className="bg-theme-card rounded-xl p-4 border border-theme-light space-y-3">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center text-lg">📤</div>
           <div className="flex-1">
             <h4 className="text-sm font-semibold">导出数据</h4>
-            <p className="text-xs text-slate-500">将学习进度下载为 JSON 文件</p>
+            <p className="text-xs text-theme-muted">将学习进度下载为 JSON 文件</p>
           </div>
         </div>
         <Button
@@ -138,12 +138,12 @@ const DeviceSync = () => {
       </div>
 
       {/* Import */}
-      <div className="bg-white rounded-xl p-4 border border-slate-100 space-y-3">
+      <div className="bg-theme-card rounded-xl p-4 border border-theme-light space-y-3">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center text-lg">📥</div>
           <div className="flex-1">
             <h4 className="text-sm font-semibold">导入数据</h4>
-            <p className="text-xs text-slate-500">从 JSON 文件恢复学习进度</p>
+            <p className="text-xs text-theme-muted">从 JSON 文件恢复学习进度</p>
           </div>
         </div>
         <label className="block">
@@ -156,8 +156,8 @@ const DeviceSync = () => {
           />
           <div className={`w-full py-2.5 px-4 rounded-xl text-sm font-medium text-center cursor-pointer transition-all ${
             syncStatus === 'importing'
-              ? 'bg-slate-100 text-slate-400'
-              : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+              ? 'bg-theme-elevated text-theme-muted'
+              : 'bg-theme-elevated text-theme-secondary hover:bg-theme-elevated'
           }`}>
             {syncStatus === 'importing' ? '导入中...' : '选择备份文件'}
           </div>
