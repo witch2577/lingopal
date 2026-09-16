@@ -2,7 +2,7 @@
 
 const db = new Dexie('LingoPalDB');
 
-db.version(5).stores({
+db.version(6).stores({
   userProfiles: 'userId',
   learningPlans: 'planId',
   userProgress: '[userId+language+levelId], userId, language',
@@ -31,6 +31,10 @@ db.version(5).stores({
   lessonProgress: '[userId+lessonId], userId',
   // Content rotation metadata
   contentMetadata: 'key',
+  // Character system (Task 2/4)
+  characterConfigs: 'userId',
+  characterGrowth: 'userId',
+  characterSnapshots: '++id, userId',
 });
 
 // Seed default user if none exists

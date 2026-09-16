@@ -23,6 +23,7 @@ const WordSpelling = () => {
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
   const [wordIndex, setWordIndex] = useState(0);
+  const [characterFeedback, setCharacterFeedback] = useState(null);
   const inputRef = useRef(null);
 
   const wordPool = useMemo(() => {
@@ -89,6 +90,11 @@ const WordSpelling = () => {
 
     setTotalQuestions(prev => prev + 1);
     if (isCorrect) setCorrectCount(prev => prev + 1);
+
+    if (typeof FeedbackEngine !== 'undefined') {
+      const fb = FeedbackEngine.onAnswer(isCorrect, { source: 'written', combo: result.newStreak });
+      if (fb) setCharacterFeedback(fb);
+    }
 
     setFeedback({
       isCorrect,
@@ -250,6 +256,10 @@ const WordSpelling = () => {
           correct: correctCount,
         });
       }
+      if (typeof FeedbackEngine !== 'undefined' && totalQuestions > 0) {
+        const fb = FeedbackEngine.onSessionEnd(correctCount, totalQuestions, { source: 'written' });
+        if (fb) setCharacterFeedback(fb);
+      }
     }, []);
 
     return (
@@ -291,6 +301,14 @@ const WordSpelling = () => {
             再来一次
           </Button>
         </div>
+
+        {/* Character feedback overlay (non-blocking) */}
+        {characterFeedback && (
+          <CharacterFeedbackOverlay
+            feedback={characterFeedback}
+            onComplete={() => setCharacterFeedback(null)}
+          />
+        )}
       </div>
     );
   }
@@ -418,6 +436,14 @@ const WordSpelling = () => {
           确认
         </Button>
       </Card>
+
+      {/* Character feedback overlay (non-blocking) */}
+      {characterFeedback && (
+        <CharacterFeedbackOverlay
+          feedback={characterFeedback}
+          onComplete={() => setCharacterFeedback(null)}
+        />
+      )}
     </div>
   );
 };

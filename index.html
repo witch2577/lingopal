@@ -400,6 +400,28 @@
   <script src="src/core/newLangDict.js"></script>
   <script type="text/babel" src="src/core/dictionary.jsx"></script>
   <script type="text/babel" src="src/core/db.jsx"></script>
+  <script type="text/babel" src="src/core/character/CharacterConfig.jsx"></script>
+  <script type="text/babel" src="src/core/character/CharacterSave.jsx"></script>
+  <!-- Task 2: Character Rendering Engine -->
+  <script src="src/core/character/CharacterItems.js"></script>
+  <script src="src/core/character/CharacterAssetLoader.js"></script>
+  <script type="text/babel" src="src/core/character/CharacterRenderer.jsx"></script>
+<script src="src/core/character/BabyCharacter.js"></script>
+  <script src="src/core/character/MoodEngine.js"></script>
+  <script src="src/core/character/NamingManager.js"></script>
+  <script src="src/core/character/FeedbackConfig.js"></script>
+  <script src="src/core/character/FeedbackEngine.js"></script>
+
+  <!-- Task 3: Shop System -->
+  <script src="src/core/shop/ShopItems.js"></script>
+  <script src="src/core/shop/ShopStore.js"></script>
+  <script type="text/babel" src="src/components/shop/ShopItemCard.jsx"></script>
+  <script type="text/babel" src="src/components/shop/ShopItemDetail.jsx"></script>
+  <script type="text/babel" src="src/components/shop/WardrobePage.jsx"></script>
+  <script type="text/babel" src="src/components/shop/ConsumablesPanel.jsx"></script>
+  <script type="text/babel" src="src/components/shop/TransactionHistoryPanel.jsx"></script>
+  <script type="text/babel" src="src/pages/ShopPage.jsx"></script>
+
   <script type="text/babel" src="src/core/mobile.jsx"></script>
   <script type="text/babel" src="src/core/supabaseConfig.jsx"></script>
   <script type="text/babel" src="src/core/authStore.jsx"></script>
@@ -416,6 +438,8 @@
   <script type="text/babel" src="src/components/BottomNav.jsx"></script>
   <script type="text/babel" src="src/components/Confetti.jsx"></script>
   <script type="text/babel" src="src/components/PWA.jsx"></script>
+<script type="text/babel" src="src/components/CharacterFeedbackOverlay.jsx"></script>
+  <script type="text/babel" src="src/components/EvolutionRitual.jsx"></script>
 
   <!-- Translation Feature (first screen) -->
   <script type="text/babel" src="src/services/translationService.jsx"></script>
@@ -431,6 +455,7 @@
   <script type="text/babel" src="src/pages/PracticePage.jsx"></script>
 
   <!-- App root -->
+<script type="text/babel" src="src/components/OnboardingFlow.jsx"></script>
   <script type="text/babel" src="src/App.jsx"></script>
 
   <!-- ===== P1: Defer-loaded data and libraries ===== -->
@@ -440,6 +465,25 @@
   <!-- Use data-src + data-type to avoid immediate Babel compilation -->
 
   <!-- Learning -->
+  <!-- Character System (lazy-loaded when editor opens) -->
+  <script data-lazy="character" data-src="src/core/character/BabyCharacter.js" data-type="text/babel"></script>
+  <script data-lazy="character" data-src="src/core/character/CharacterAssetLoader.js" data-type="text/babel"></script>
+  <script data-lazy="character" data-src="src/core/character/CharacterConfig.jsx" data-type="text/babel"></script>
+  <script data-lazy="character" data-src="src/core/character/CharacterItems.js" data-type="text/babel"></script>
+  <script data-lazy="character" data-src="src/core/character/CharacterRenderer.jsx" data-type="text/babel"></script>
+  <script data-lazy="character" data-src="src/core/character/CharacterSave.jsx" data-type="text/babel"></script>
+  <script data-lazy="character" data-src="src/core/character/MoodEngine.js" data-type="text/babel"></script>
+  <script data-lazy="character" data-src="src/core/character/NamingManager.js" data-type="text/babel"></script>
+  <script data-lazy="character" data-src="src/core/character/FeedbackConfig.js" data-type="text/babel"></script>
+  <script data-lazy="character" data-src="src/core/character/FeedbackEngine.js" data-type="text/babel"></script>
+  <script data-lazy="character" data-src="src/components/CharacterEditor.jsx" data-type="text/babel"></script>
+  <script data-lazy="character" data-src="src/components/ColorPicker.jsx" data-type="text/babel"></script>
+  <script data-lazy="character" data-src="src/components/DimensionTabs.jsx" data-type="text/babel"></script>
+  <script data-lazy="character" data-src="src/components/OptionGrid.jsx" data-type="text/babel"></script>
+  <script data-lazy="character" data-src="src/components/CharacterFeedbackOverlay.jsx" data-type="text/babel"></script>
+  <script data-lazy="character" data-src="src/components/EvolutionRitual.jsx" data-type="text/babel"></script>
+  <script data-lazy="character" data-src="src/components/CharacterHomeWidget.jsx" data-type="text/babel"></script>
+
   <script data-lazy="learning" data-src="src/core/contentPool.jsx" data-type="text/babel"></script>
   <script data-lazy="learning" data-src="src/core/quizData.jsx" data-type="text/babel"></script>
   <script data-lazy="learning" data-src="src/features/learning/useLearning.jsx" data-type="text/babel"></script>

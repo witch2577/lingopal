@@ -36,36 +36,9 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'What drink did the customer order?', options: [
-  'Cappuccino',
-  'Medium latte',
-  'Espresso',
-  'Tea'
-], correct: 1},
-        {question: 'What kind of milk did the customer request?', options: [
-  'Soy milk',
-  'Almond milk',
-  'Oat milk',
-  'Whole milk'
-], correct: 2},
-        {question: 'What did the customer order besides the drink?', options: [
-  'Croissant',
-  'Blueberry muffin',
-  'Bagel',
-  'Cookie'
-], correct: 1},
-        {question: 'How much was the total order?', options: [
-  '$6.50',
-  '$7.50',
-  '$8.50',
-  '$9.50'
-], correct: 2},
-        {question: 'What did the barista recommend at the end?', options: [
-  'A museum',
-  'A restaurant',
-  'A park',
-  'A bookstore'
-], correct: 2},
+        {question: 'What drink did the customer order?', options: ['Medium latte', 'Espresso', 'Cappuccino', 'Tea'], correct: 0},
+        {question: 'What kind of milk did the customer request?', options: ['Almond milk', 'Soy milk', 'Oat milk', 'Whole milk'], correct: 2},
+        {question: 'What did the customer order besides the drink?', options: ['Croissant', 'Bagel', 'Cookie', 'Blueberry muffin'], correct: 3},
       ],
     },
     {
@@ -90,24 +63,9 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'What field does Sarah have experience in?', options: [
-  'Finance',
-  'Marketing',
-  'Engineering',
-  'Design'
-], correct: 1},
-        {question: 'How long did Sarah work at Digital First?', options: [
-  'One year',
-  'Two years',
-  'Three years',
-  'Four years'
-], correct: 2},
-        {question: 'What was the result of Sarah\'s most successful campaign?', options: [
-  'Doubled sales',
-  'Increased engagement by 200%',
-  'Reduced costs',
-  'Hired 50 people'
-], correct: 1},
+        {question: 'What field does Sarah have experience in?', options: ['Design', 'Finance', 'Marketing', 'Engineering'], correct: 2},
+        {question: 'How long did Sarah work at Digital First?', options: ['Three years', 'One year', 'Four years', 'Two years'], correct: 0},
+        {question: 'What was the result of Sarah\'s most successful campaign?', options: ['Reduced costs', 'Doubled sales', 'Hired 50 people', 'Increased engagement by 200%'], correct: 3},
       ],
     },
     {
@@ -133,24 +91,9 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'Where is the traveler flying to?', options: [
-  'Seoul',
-  'Beijing',
-  'Tokyo',
-  'Bangkok'
-], correct: 2},
-        {question: 'How many checked bags does the traveler have?', options: [
-  'None',
-  'One',
-  'Two',
-  'Three'
-], correct: 1},
-        {question: 'What gate does the flight depart from?', options: [
-  'Gate 12',
-  'Gate 22',
-  'Gate 32',
-  'Gate 42'
-], correct: 3},
+        {question: 'Where is the traveler flying to?', options: ['Beijing', 'Seoul', 'Tokyo', 'Bangkok'], correct: 2},
+        {question: 'How many checked bags does the traveler have?', options: ['None', 'One', 'Two', 'Three'], correct: 1},
+        {question: 'What gate does the flight depart from?', options: ['Gate 12', 'Gate 32', 'Gate 22', 'Gate 42'], correct: 3},
       ],
     },
     {
@@ -177,30 +120,10 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'What is the guest\'s name?', options: [
-  'Lisa Chen',
-  'Sarah Kim',
-  'Emma Wu',
-  'Anna Li'
-], correct: 0},
-        {question: 'Which room is the guest staying in?', options: [
-  'Room 205',
-  'Room 305',
-  'Room 405',
-  'Room 505'
-], correct: 1},
-        {question: 'How many nights did the guest book?', options: [
-  'One night',
-  'Two nights',
-  'Three nights',
-  'Four nights'
-], correct: 1},
-        {question: 'What time does breakfast start?', options: [
-  '6:00 AM',
-  '7:00 AM',
-  '8:00 AM',
-  '9:00 AM'
-], correct: 1},
+        {question: 'What is the guest\'s name?', options: ['Sarah Kim', 'Emma Wu', 'Anna Li', 'Lisa Chen'], correct: 3},
+        {question: 'Which room is the guest staying in?', options: ['Room 305', 'Room 505', 'Room 205', 'Room 405'], correct: 0},
+        {question: 'How many nights did the guest book?', options: ['Four nights', 'Two nights', 'Three nights', 'One night'], correct: 1},
+        {question: 'What time does breakfast start?', options: ['9:00 AM', '8:00 AM', '7:00 AM', '6:00 AM'], correct: 2},
       ],
     },
     {
@@ -228,37 +151,17 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'What are the patient\'s main symptoms?', options: [
-  'Stomach pain',
-  'Sore throat and headache',
-  'Back pain',
-  'Cough'
-], correct: 1},
-        {question: 'How long has the patient been feeling unwell?', options: [
-  'One day',
-  'Two days',
-  'Three days',
-  'A week'
-], correct: 2},
-        {question: 'Did the patient have a fever?', options: [
-  'Yes, a high fever',
-  'Yes, a slight fever yesterday',
-  'No fever at all',
-  'Fever all the time'
-], correct: 1},
-        {question: 'What does the doctor prescribe?', options: [
-  'Surgery',
-  'Some medicine',
-  'Physical therapy',
-  'A vaccine'
-], correct: 1},
+        {question: 'What are the patient\'s main symptoms?', options: ['Stomach pain', 'Cough', 'Back pain', 'Sore throat and headache'], correct: 3},
+        {question: 'How long has the patient been feeling unwell?', options: ['Two days', 'A week', 'Three days', 'One day'], correct: 2},
+        {question: 'Did the patient have a fever?', options: ['Yes, a slight fever yesterday', 'Fever all the time', 'No fever at all', 'Yes, a high fever'], correct: 0},
+        {question: 'What does the doctor prescribe?', options: ['Surgery', 'Some medicine', 'Physical therapy', 'A vaccine'], correct: 1},
       ],
     },
     {
       id: 'en-drama-6',
       title: 'Talking About the Weather',
       titleCn: '谈论天气',
-      difficulty: 'beginner',
+      difficulty: 'intermediate',
       description: 'A casual conversation about weather plans. Perfect for practicing small talk and weather vocabulary.',
       cover: '🌤️',
       scenes: [
@@ -277,37 +180,17 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'What is the weather like today?', options: [
-  'Rainy',
-  'Sunny with a breeze',
-  'Snowy',
-  'Foggy'
-], correct: 1},
-        {question: 'Where does the woman want to go?', options: [
-  'The cinema',
-  'The park',
-  'The mall',
-  'The beach'
-], correct: 1},
-        {question: 'What does the weather forecast say?', options: [
-  'It will snow',
-  'It might rain later',
-  'It will be sunny all day',
-  'A storm is coming'
-], correct: 1},
-        {question: 'What did the man bring?', options: [
-  'A jacket',
-  'An umbrella',
-  'A hat',
-  'Sunglasses'
-], correct: 1},
+        {question: 'What is the weather like today?', options: ['Snowy', 'Foggy', 'Sunny with a breeze', 'Rainy'], correct: 2},
+        {question: 'Where does the woman want to go?', options: ['The cinema', 'The beach', 'The mall', 'The park'], correct: 3},
+        {question: 'What does the weather forecast say?', options: ['It might rain later', 'It will snow', 'A storm is coming', 'It will be sunny all day'], correct: 0},
+        {question: 'What did the man bring?', options: ['A jacket', 'An umbrella', 'Sunglasses', 'A hat'], correct: 1},
       ],
     },
     {
       id: 'en-drama-7',
       title: 'Making Friends at the Gym',
       titleCn: '健身房交友',
-      difficulty: 'beginner',
+      difficulty: 'intermediate',
       description: 'Starting a conversation at the gym. Good for fitness vocabulary and making new friends.',
       cover: '🏋️',
       scenes: [
@@ -327,30 +210,10 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'What is the woman\'s name?', options: [
-  'Sarah',
-  'Anna',
-  'Lisa',
-  'Emma'
-], correct: 1},
-        {question: 'What time does Tom usually come to the gym?', options: [
-  'Morning',
-  'After work around six',
-  'Lunchtime',
-  'Late at night'
-], correct: 1},
-        {question: 'What does Tom focus on?', options: [
-  'Yoga',
-  'Cardio and light weights',
-  'Swimming only',
-  'Basketball'
-], correct: 1},
-        {question: 'What does Anna suggest they do together?', options: [
-  'Run together',
-  'Swim together',
-  'Play tennis',
-  'Take a yoga class'
-], correct: 1},
+        {question: 'What is the woman\'s name?', options: ['Sarah', 'Anna', 'Emma', 'Lisa'], correct: 1},
+        {question: 'What time does Tom usually come to the gym?', options: ['Late at night', 'Lunchtime', 'After work around six', 'Morning'], correct: 2},
+        {question: 'What does Tom focus on?', options: ['Cardio and light weights', 'Swimming only', 'Basketball', 'Yoga'], correct: 0},
+        {question: 'What does Anna suggest they do together?', options: ['Take a yoga class', 'Play tennis', 'Run together', 'Swim together'], correct: 3},
       ],
     },
     {
@@ -377,37 +240,17 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'What kind of account does the customer want to open?', options: [
-  'Checking account',
-  'Savings account',
-  'Credit card',
-  'Loan'
-], correct: 1},
-        {question: 'What documents does the customer provide?', options: [
-  'Driver\'s license',
-  'Passport and utility bill',
-  'Birth certificate',
-  'Student ID'
-], correct: 1},
-        {question: 'What is the minimum deposit?', options: [
-  '$25',
-  '$50',
-  '$100',
-  '$200'
-], correct: 1},
-        {question: 'How much does the customer deposit?', options: [
-  '$50',
-  '$100',
-  '$150',
-  '$200'
-], correct: 3},
+        {question: 'What kind of account does the customer want to open?', options: ['Checking account', 'Credit card', 'Savings account', 'Loan'], correct: 2},
+        {question: 'What documents does the customer provide?', options: ['Passport and utility bill', 'Student ID', 'Driver\'s license', 'Birth certificate'], correct: 0},
+        {question: 'What is the minimum deposit?', options: ['$100', '$200', '$25', '$50'], correct: 3},
+        {question: 'How much does the customer deposit?', options: ['$50', '$200', '$100', '$150'], correct: 1},
       ],
     },
     {
       id: 'en-drama-9',
       title: 'Phone Call to a Friend',
       titleCn: '给朋友打电话',
-      difficulty: 'beginner',
+      difficulty: 'advanced',
       description: 'Making a phone call to invite a friend to dinner. Practice phone conversation vocabulary.',
       cover: '📞',
       scenes: [
@@ -427,30 +270,10 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'Who is making the phone call?', options: [
-  'Lisa',
-  'Mike',
-  'Tom',
-  'Anna'
-], correct: 1},
-        {question: 'When is the dinner?', options: [
-  'Friday evening',
-  'Saturday evening',
-  'Sunday afternoon',
-  'Monday night'
-], correct: 1},
-        {question: 'What is Mike making for dinner?', options: [
-  'Pizza',
-  'Pasta and salad',
-  'Burgers',
-  'Sushi'
-], correct: 1},
-        {question: 'What does Lisa offer to bring?', options: [
-  'Wine',
-  'A dessert',
-  'Bread',
-  'Flowers'
-], correct: 1},
+        {question: 'Who is making the phone call?', options: ['Mike', 'Tom', 'Lisa', 'Anna'], correct: 0},
+        {question: 'When is the dinner?', options: ['Friday evening', 'Monday night', 'Saturday evening', 'Sunday afternoon'], correct: 2},
+        {question: 'What is Mike making for dinner?', options: ['Burgers', 'Pasta and salad', 'Pizza', 'Sushi'], correct: 1},
+        {question: 'What does Lisa offer to bring?', options: ['Wine', 'Flowers', 'Bread', 'A dessert'], correct: 3},
       ],
     },
   ],
@@ -477,31 +300,16 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: '客は何人ですか。', options: [
-  '一人',
-  '二人',
-  '三人',
-  '四人'
-], correct: 0},
-        {question: '客はどんな席を希望しましたか。', options: [
-  '禁煙席',
-  '窓際の席',
-  '個室',
-  'カウンター'
-], correct: 1},
-        {question: 'おすすめの料理は何ですか。', options: [
-  '寿司',
-  '刺身の盛り合わせ',
-  '天ぷら',
-  'うどん'
-], correct: 1},
+        {question: '客は何人ですか。', options: ['一人', '二人', '三人', '四人'], correct: 0},
+        {question: '客はどんな席を希望しましたか。', options: ['個室', '窓際の席', '禁煙席', 'カウンター'], correct: 1},
+        {question: 'おすすめの料理は何ですか。', options: ['うどん', '寿司', '刺身の盛り合わせ', '天ぷら'], correct: 2},
       ],
     },
     {
       id: 'ja-drama-2',
       title: 'デパートで買い物',
       titleCn: '百货商店购物',
-      difficulty: 'beginner',
+      difficulty: 'intermediate',
       description: 'Shopping for clothes and asking about sizes and prices in a Japanese department store.',
       cover: '🛍️',
       scenes: [
@@ -521,31 +329,16 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: '客は何を探していますか。', options: [
-  'パンツ',
-  'シャツ',
-  'コート',
-  '靴'
-], correct: 1},
-        {question: '最初のサイズはどうでしたか。', options: [
-  '小さい',
-  '大きい',
-  'ぴったり',
-  'わからない'
-], correct: 1},
-        {question: 'シャツはいくらですか。', options: [
-  '三千円',
-  '三千五百円',
-  '四千円',
-  '五千円'
-], correct: 1},
+        {question: '客は何を探していますか。', options: ['靴', 'シャツ', 'パンツ', 'コート'], correct: 1},
+        {question: '最初のサイズはどうでしたか。', options: ['ぴったり', '小さい', 'わからない', '大きい'], correct: 3},
+        {question: 'シャツはいくらですか。', options: ['三千五百円', '三千円', '四千円', '五千円'], correct: 0},
       ],
     },
     {
       id: 'ja-drama-3',
       title: '道を尋ねる',
       titleCn: '问路',
-      difficulty: 'beginner',
+      difficulty: 'intermediate',
       description: 'Asking for directions to a train station in Japan. Practice location and direction vocabulary.',
       cover: '🚉',
       scenes: [
@@ -563,31 +356,16 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: '旅行者はどこへ行きたいですか。', options: [
-  '渋谷駅',
-  '新宿駅',
-  '東京駅',
-  '上野駅'
-], correct: 1},
-        {question: 'どこを曲がればいいですか。', options: [
-  '左',
-  '右',
-  'まっすぐ',
-  'Uターン'
-], correct: 1},
-        {question: '歩いてどのくらいかかりますか。', options: [
-  '三分',
-  '五分',
-  '十分',
-  '十五分'
-], correct: 1},
+        {question: '旅行者はどこへ行きたいですか。', options: ['新宿駅', '東京駅', '上野駅', '渋谷駅'], correct: 0},
+        {question: 'どこを曲がればいいですか。', options: ['まっすぐ', '左', 'Uターン', '右'], correct: 3},
+        {question: '歩いてどのくらいかかりますか。', options: ['十五分', '三分', '五分', '十分'], correct: 2},
       ],
     },
     {
       id: 'ja-drama-4',
       title: '郵便局で',
       titleCn: '在邮局',
-      difficulty: 'intermediate',
+      difficulty: 'advanced',
       description: 'Sending a package at the post office. Practice formal Japanese and postal vocabulary.',
       cover: '📮',
       scenes: [
@@ -608,30 +386,10 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: '荷物はどこへ送りますか。', options: [
-  'イギリス',
-  'アメリカ',
-  '中国',
-  '韓国'
-], correct: 1},
-        {question: '中身は何ですか。', options: [
-  '本とお菓子',
-  '服と靴',
-  'おもちゃ',
-  '電子機器'
-], correct: 0},
-        {question: 'どの方法で送りますか。', options: [
-  '船便',
-  '航空便',
-  'EMS',
-  '宅配便'
-], correct: 1},
-        {question: '送料はいくらですか。', options: [
-  '千円',
-  '二千円',
-  '三千円',
-  '五千円'
-], correct: 1},
+        {question: '荷物はどこへ送りますか。', options: ['アメリカ', '韓国', 'イギリス', '中国'], correct: 0},
+        {question: '中身は何ですか。', options: ['服と靴', 'おもちゃ', '電子機器', '本とお菓子'], correct: 3},
+        {question: 'どの方法で送りますか。', options: ['宅配便', 'EMS', '航空便', '船便'], correct: 2},
+        {question: '送料はいくらですか。', options: ['千円', '二千円', '五千円', '三千円'], correct: 1},
       ],
     },
     {
@@ -656,24 +414,9 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: '客は何を買いましたか。', options: [
-  'お弁当',
-  'おにぎりとお茶',
-  'パン',
-  'ジュース'
-], correct: 1},
-        {question: 'おにぎりはいくらですか。', options: [
-  '百円',
-  '一百二十円',
-  '百五十円',
-  '二百円'
-], correct: 1},
-        {question: 'お弁当はどうやって温められますか。', options: [
-  'フライパン',
-  '電子レンジ',
-  'オーブン',
-  '火'
-], correct: 1},
+        {question: '客は何を買いましたか。', options: ['おにぎりとお茶', 'お弁当', 'ジュース', 'パン'], correct: 0},
+        {question: 'おにぎりはいくらですか。', options: ['百円', '一百二十円', '二百円', '百五十円'], correct: 1},
+        {question: 'お弁当はどうやって温められますか。', options: ['オーブン', '火', '電子レンジ', 'フライパン'], correct: 2},
       ],
     },
   ],
@@ -700,31 +443,16 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: '손님은 무엇을 주문했나요?', options: [
-  '라떼',
-  '아메리카노',
-  '카푸치노',
-  '에스프레소'
-], correct: 1},
-        {question: '손님은 어떻게 마시고 싶어하나요?', options: [
-  '차갑게',
-  '따뜻하게',
-  '얼음 많이',
-  '우유 추가'
-], correct: 1},
-        {question: '손님은 얼음을 어떻게 했나요?', options: [
-  '많이 넣어 달라고 함',
-  '넣지 말라고 함',
-  '조금 넣어 달라고 함',
-  '상관없음'
-], correct: 1},
+        {question: '손님은 무엇을 주문했나요?', options: ['라떼', '카푸치노', '에스프레소', '아메리카노'], correct: 3},
+        {question: '손님은 어떻게 마시고 싶어하나요?', options: ['얼음 많이', '우유 추가', '따뜻하게', '차갑게'], correct: 2},
+        {question: '손님은 얼음을 어떻게 했나요?', options: ['상관없음', '넣지 말라고 함', '조금 넣어 달라고 함', '많이 넣어 달라고 함'], correct: 1},
       ],
     },
     {
       id: 'ko-drama-2',
       title: '처음 만남',
       titleCn: '初次见面',
-      difficulty: 'beginner',
+      difficulty: 'intermediate',
       description: 'A self-introduction and greeting conversation in Korean. Essential for meeting new people.',
       cover: '👋',
       scenes: [
@@ -744,37 +472,17 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: '민수 씨는 어디에서 왔나요?', options: [
-  '서울',
-  '부산',
-  '대구',
-  '인천'
-], correct: 1},
-        {question: '지영 씨는 서울에 온 지 얼마나 됐나요?', options: [
-  '일주일',
-  '한 달',
-  '일 년',
-  '삼 개월'
-], correct: 1},
-        {question: '지영 씨는 왜 외로워하나요?', options: [
-  '일이 어려워서',
-  '친구가 별로 없어서',
-  '집이 멀어서',
-  '배가 고파서'
-], correct: 1},
-        {question: '둘은 무엇을 같이 하기로 했나요?', options: [
-  '울동',
-  '한국어 공부',
-  '쇼핑',
-  '영화 보기'
-], correct: 1},
+        {question: '민수 씨는 어디에서 왔나요?', options: ['대구', '서울', '부산', '인천'], correct: 2},
+        {question: '지영 씨는 서울에 온 지 얼마나 됐나요?', options: ['삼 개월', '일주일', '일 년', '한 달'], correct: 3},
+        {question: '지영 씨는 왜 외로워하나요?', options: ['배가 고파서', '친구가 별로 없어서', '일이 어려워서', '집이 멀어서'], correct: 1},
+        {question: '둘은 무엇을 같이 하기로 했나요?', options: ['한국어 공부', '쇼핑', '울동', '영화 보기'], correct: 0},
       ],
     },
     {
       id: 'ko-drama-3',
       title: '옷가게에서',
       titleCn: '在服装店',
-      difficulty: 'beginner',
+      difficulty: 'intermediate',
       description: 'Shopping for clothes in Korean. Practice size, color, and price vocabulary.',
       cover: '👕',
       scenes: [
@@ -792,31 +500,16 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: '손님은 무엇을 찾나요?', options: [
-  '셔츠',
-  '청바지',
-  '코트',
-  '모자'
-], correct: 1},
-        {question: '손님의 사이즈는?', options: [
-  '28',
-  '29',
-  '30',
-  '31'
-], correct: 2},
-        {question: '손님은 어떤 색을 원하나요?', options: [
-  '빨간색',
-  '검은색',
-  '파란색',
-  '흰색'
-], correct: 2},
+        {question: '손님은 무엇을 찾나요?', options: ['청바지', '모자', '코트', '셔츠'], correct: 0},
+        {question: '손님의 사이즈는?', options: ['31', '29', '30', '28'], correct: 2},
+        {question: '손님은 어떤 색을 원하나요?', options: ['빨간색', '검은색', '흰색', '파란색'], correct: 3},
       ],
     },
     {
       id: 'ko-drama-4',
       title: '약국에서',
       titleCn: '在药店',
-      difficulty: 'beginner',
+      difficulty: 'advanced',
       description: 'Buying medicine at a Korean pharmacy. Practice health vocabulary with romanization.',
       cover: '💊',
       scenes: [
@@ -834,9 +527,9 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: '손님은 어디가 아파요?', options: ['머리', '목', '배', '다리'], correct: 1},
-        {question: '약은 하루 몇 번?', options: ['한 번', '두 번', '세 번', '네 번'], correct: 2},
-        {question: '약값은 얼마예요?', options: ['이천 원', '삼천 원', '사천 원', '오천 원'], correct: 1},
+        {question: '손님은 어디가 아파요?', options: ['목', '배', '머리', '다리'], correct: 0},
+        {question: '약은 하루 몇 번?', options: ['한 번', '네 번', '두 번', '세 번'], correct: 3},
+        {question: '약값은 얼마예요?', options: ['사천 원', '삼천 원', '이천 원', '오천 원'], correct: 1},
       ],
     },
 
@@ -863,31 +556,16 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: '顾客在找什么商品？', options: [
-  '面包',
-  '牛奶',
-  '水果',
-  '鸡蛋'
-], correct: 1},
-        {question: '牛奶在哪里？', options: [
-  '入口处',
-  '收银台旁',
-  '冷藏区',
-  '二楼'
-], correct: 2},
-        {question: '今天哪里打折？', options: [
-  '蔬菜区',
-  '水果区',
-  '肉类区',
-  '饮料区'
-], correct: 1},
+        {question: '顾客在找什么商品？', options: ['鸡蛋', '牛奶', '面包', '水果'], correct: 1},
+        {question: '牛奶在哪里？', options: ['冷藏区', '二楼', '入口处', '收银台旁'], correct: 0},
+        {question: '今天哪里打折？', options: ['饮料区', '肉类区', '蔬菜区', '水果区'], correct: 3},
       ],
     },
     {
       id: 'zh-CN-drama-2',
       title: '餐厅点餐',
       titleCn: 'Ordering at a Restaurant',
-      difficulty: 'beginner',
+      difficulty: 'intermediate',
       description: 'A dining scenario at a Chinese restaurant. Practice food ordering and polite expressions.',
       cover: '🥢',
       scenes: [
@@ -907,37 +585,17 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: '几位顾客用餐？', options: [
-  '一位',
-  '两位',
-  '三位',
-  '四位'
-], correct: 1},
-        {question: '顾客想要什么位置？', options: [
-  '包厢',
-  '靠窗',
-  '门口',
-  '角落'
-], correct: 1},
-        {question: '顾客点了什么菜？', options: [
-  '宫保鸡丁和麻婆豆腐',
-  '宫保鸡丁和西红柿炒鸡蛋',
-  '麻婆豆腐和鱼香肉丝',
-  '红烧肉和青菜'
-], correct: 1},
-        {question: '顾客要了几碗米饭？', options: [
-  '一碗',
-  '两碗',
-  '三碗',
-  '四碗'
-], correct: 1},
+        {question: '几位顾客用餐？', options: ['三位', '一位', '两位', '四位'], correct: 2},
+        {question: '顾客想要什么位置？', options: ['角落', '包厢', '门口', '靠窗'], correct: 3},
+        {question: '顾客点了什么菜？', options: ['宫保鸡丁和西红柿炒鸡蛋', '宫保鸡丁和麻婆豆腐', '麻婆豆腐和鱼香肉丝', '红烧肉和青菜'], correct: 0},
+        {question: '顾客要了几碗米饭？', options: ['三碗', '两碗', '一碗', '四碗'], correct: 1},
       ],
     },
     {
       id: 'zh-CN-drama-3',
       title: '问路去图书馆',
       titleCn: 'Asking Directions to the Library',
-      difficulty: 'beginner',
+      difficulty: 'advanced',
       description: 'Asking for directions to the library in Chinese. Practice location and direction vocabulary.',
       cover: '📚',
       scenes: [
@@ -955,24 +613,9 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: '行人要去哪里？', options: [
-  '超市',
-  '图书馆',
-  '医院',
-  '学校'
-], correct: 1},
-        {question: '图书馆门口有什么？', options: [
-  '大树',
-  '大喷泉',
-  '雕塑',
-  '花坛'
-], correct: 1},
-        {question: '大概要走多久？', options: [
-  '五分钟',
-  '十分钟',
-  '十五分钟',
-  '二十分钟'
-], correct: 1},
+        {question: '行人要去哪里？', options: ['学校', '图书馆', '超市', '医院'], correct: 1},
+        {question: '图书馆门口有什么？', options: ['大树', '雕塑', '大喷泉', '花坛'], correct: 2},
+        {question: '大概要走多久？', options: ['二十分钟', '五分钟', '十五分钟', '十分钟'], correct: 3},
       ],
     },
   ],
@@ -1001,37 +644,17 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: '¿Cuánto cuestan las manzanas?', options: [
-  'Un euro',
-  'Dos euros el kilo',
-  'Tres euros',
-  'Cinco euros'
-], correct: 1},
-        {question: '¿Cuántos kilos de naranjas compra el cliente?', options: [
-  'Un kilo',
-  'Dos kilos',
-  'Tres kilos',
-  'Medio kilo'
-], correct: 1},
-        {question: '¿Cuánto cuestan las uvas?', options: [
-  'Un euro',
-  'Dos euros',
-  'Tres euros',
-  'Cinco euros'
-], correct: 2},
-        {question: '¿Cuánto paga el cliente en total?', options: [
-  'Cinco euros',
-  'Seis euros',
-  'Siete euros',
-  'Ocho euros'
-], correct: 3},
+        {question: '¿Cuánto cuestan las manzanas?', options: ['Un euro', 'Dos euros el kilo', 'Cinco euros', 'Tres euros'], correct: 1},
+        {question: '¿Cuántos kilos de naranjas compra el cliente?', options: ['Medio kilo', 'Tres kilos', 'Dos kilos', 'Un kilo'], correct: 2},
+        {question: '¿Cuánto cuestan las uvas?', options: ['Tres euros', 'Cinco euros', 'Un euro', 'Dos euros'], correct: 0},
+        {question: '¿Cuánto paga el cliente en total?', options: ['Siete euros', 'Cinco euros', 'Seis euros', 'Ocho euros'], correct: 3},
       ],
     },
     {
       id: 'es-drama-2',
       title: 'En la Farmacia',
       titleCn: '在药店',
-      difficulty: 'beginner',
+      difficulty: 'intermediate',
       description: 'Buying medicine at a Spanish pharmacy. Practice health vocabulary.',
       cover: '💊',
       scenes: [
@@ -1049,9 +672,9 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: '¿Qué tiene el cliente?', options: ['Dolor de estómago', 'Dolor de cabeza', 'Dolor de espalda', 'Dolor de muelas'], correct: 1},
-        {question: '¿Desde cuándo?', options: ['Esta mañana', 'Anoche', 'Dos días', 'Una semana'], correct: 1},
-        {question: '¿Cuántas veces al día?', options: ['Una', 'Dos', 'Tres', 'Cuatro'], correct: 2},
+        {question: '¿Qué tiene el cliente?', options: ['Dolor de muelas', 'Dolor de espalda', 'Dolor de cabeza', 'Dolor de estómago'], correct: 2},
+        {question: '¿Desde cuándo?', options: ['Anoche', 'Esta mañana', 'Dos días', 'Una semana'], correct: 0},
+        {question: '¿Cuántas veces al día?', options: ['Cuatro', 'Dos', 'Una', 'Tres'], correct: 3},
       ],
     },
 
@@ -1061,7 +684,7 @@ const DRAMA_SCRIPTS = {
       id: 'ru-drama-1',
       title: 'В Книжном Магазине',
       titleCn: '在书店',
-      difficulty: 'beginner',
+      difficulty: 'advanced',
       description: 'Buying a book at a Russian bookstore. Practice polite Russian and shopping vocabulary with romanization.',
       cover: '📚',
       scenes: [
@@ -1080,31 +703,16 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'Что хочет купить покупатель? (What does the buyer want to buy?)', options: [
-  'Роман',
-  'Учебник русского языка',
-  'Словарь',
-  'Журнал'
-], correct: 1},
-        {question: 'Сколько стоит учебник? (How much does the textbook cost?)', options: [
-  '450 рублей',
-  '550 рублей',
-  '650 рублей',
-  '750 рублей'
-], correct: 1},
-        {question: 'Как покупатель хочет платить? (How does the buyer want to pay?)', options: [
-  'Наличными',
-  'Картой',
-  'Чеком',
-  'Онлайн'
-], correct: 1},
+        {question: 'Что хочет купить покупатель? (What does the buyer want to buy?)', options: ['Роман', 'Учебник русского языка', 'Словарь', 'Журнал'], correct: 1},
+        {question: 'Сколько стоит учебник? (How much does the textbook cost?)', options: ['650 рублей', '450 рублей', '550 рублей', '750 рублей'], correct: 2},
+        {question: 'Как покупатель хочет платить? (How does the buyer want to pay?)', options: ['Картой', 'Онлайн', 'Наличными', 'Чеком'], correct: 0},
       ],
     },
     {
       id: 'ru-drama-2',
       title: 'В Кафе',
       titleCn: '在咖啡馆',
-      difficulty: 'beginner',
+      difficulty: 'intermediate',
       description: 'Ordering at a Russian cafe. Practice basic phrases with romanization.',
       cover: '☕',
       scenes: [
@@ -1122,9 +730,9 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'Что заказывает клиент?', options: ['Чай', 'Капучино', 'Вода', 'Сок'], correct: 1},
-        {question: 'Что ещё он хочет?', options: ['Пирог', 'Круассан', 'Торт', 'Печенье'], correct: 1},
-        {question: 'Сколько стоит?', options: ['300', '350', '400', '250'], correct: 1},
+        {question: 'Что заказывает клиент?', options: ['Сок', 'Капучино', 'Чай', 'Вода'], correct: 1},
+        {question: 'Что ещё он хочет?', options: ['Пирог', 'Торт', 'Круассан', 'Печенье'], correct: 2},
+        {question: 'Сколько стоит?', options: ['350', '300', '250', '400'], correct: 0},
       ],
     },
 
@@ -1152,31 +760,16 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: '幾位食客？', options: [
-  '一位',
-  '兩位',
-  '三位',
-  '四位'
-], correct: 1},
-        {question: '飲咩茶？', options: [
-  '鐵觀音',
-  '普洱',
-  '龍井',
-  '菊花'
-], correct: 1},
-        {question: '點咗咩點心？', options: [
-  '蝦餃同燒賣',
-  '叉燒包',
-  '蛋撻',
-  '春卷'
-], correct: 0},
+        {question: '幾位食客？', options: ['四位', '三位', '兩位', '一位'], correct: 2},
+        {question: '飲咩茶？', options: ['普洱', '菊花', '龍井', '鐵觀音'], correct: 0},
+        {question: '點咗咩點心？', options: ['蛋撻', '春卷', '叉燒包', '蝦餃同燒賣'], correct: 3},
       ],
     },
     {
       id: 'yue-drama-2',
       title: '買餸',
       titleCn: '买菜',
-      difficulty: 'beginner',
+      difficulty: 'intermediate',
       description: 'Shopping at a Cantonese wet market. Practice food vocabulary and bargaining with romanization.',
       cover: '🥬',
       scenes: [
@@ -1194,9 +787,9 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: '菜心幾錢一斤？', options: ['六蚊', '七蚊', '八蚊', '九蚊'], correct: 2},
-        {question: '顧客還價幾多？', options: ['六蚊半', '七蚊', '七蚊半', '八蚊'], correct: 2},
-        {question: '買咗幾斤？', options: ['一斤', '兩斤', '三斤', '四斤'], correct: 1},
+        {question: '菜心幾錢一斤？', options: ['八蚊', '九蚊', '六蚊', '七蚊'], correct: 0},
+        {question: '顧客還價幾多？', options: ['六蚊半', '七蚊半', '七蚊', '八蚊'], correct: 1},
+        {question: '買咗幾斤？', options: ['一斤', '三斤', '四斤', '兩斤'], correct: 3},
       ],
     },
 
@@ -1206,7 +799,7 @@ const DRAMA_SCRIPTS = {
       id: 'fr-drama-1',
       title: 'À la Boulangerie',
       titleCn: '在面包店',
-      difficulty: 'beginner',
+      difficulty: 'intermediate',
       description: 'Buying bread at a French bakery. Practice basic French greetings, numbers, and food vocabulary.',
       cover: '🥖',
       scenes: [
@@ -1226,37 +819,17 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'Qu\'est-ce que la cliente achète en premier?', options: [
-  'Un croissant',
-  'Une baguette tradition',
-  'Une tarte',
-  'Un pain au chocolat'
-], correct: 1},
-        {question: 'Combien de croissants veut-elle?', options: [
-  'Un',
-  'Deux',
-  'Trois',
-  'Quatre'
-], correct: 1},
-        {question: 'Combien coûte la tarte aux pommes?', options: [
-  '3,50 €',
-  '4,50 €',
-  '5,50 €',
-  '6,50 €'
-], correct: 1},
-        {question: 'Combien est le total?', options: [
-  '6,20 €',
-  '7,20 €',
-  '8,20 €',
-  '9,20 €'
-], correct: 1},
+        {question: 'Qu\'est-ce que la cliente achète en premier?', options: ['Un pain au chocolat', 'Une baguette tradition', 'Un croissant', 'Une tarte'], correct: 1},
+        {question: 'Combien de croissants veut-elle?', options: ['Quatre', 'Trois', 'Un', 'Deux'], correct: 3},
+        {question: 'Combien coûte la tarte aux pommes?', options: ['4,50 €', '6,50 €', '5,50 €', '3,50 €'], correct: 0},
+        {question: 'Combien est le total?', options: ['8,20 €', '9,20 €', '7,20 €', '6,20 €'], correct: 2},
       ],
     },
     {
       id: 'fr-drama-2',
       title: 'Au Restaurant',
       titleCn: '在餐厅',
-      difficulty: 'beginner',
+      difficulty: 'advanced',
       description: 'Dining at a French restaurant. Practice food ordering and polite expressions.',
       cover: '🍽️',
       scenes: [
@@ -1275,9 +848,9 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'Pour combien de personnes?', options: ['Une', 'Deux', 'Trois', 'Quatre'], correct: 1},
-        {question: 'Quel est le plat du jour?', options: ['Soupe', 'Coq au vin', 'Salade', 'Poisson'], correct: 1},
-        {question: 'Que boit la cliente?', options: ['Eau', 'Vin rouge', 'Bière', 'Café'], correct: 1},
+        {question: 'Pour combien de personnes?', options: ['Une', 'Quatre', 'Trois', 'Deux'], correct: 3},
+        {question: 'Quel est le plat du jour?', options: ['Poisson', 'Soupe', 'Coq au vin', 'Salade'], correct: 2},
+        {question: 'Que boit la cliente?', options: ['Café', 'Vin rouge', 'Eau', 'Bière'], correct: 1},
       ],
     },
 
@@ -1306,31 +879,16 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'กี่คน?', options: [
-  'หนึ่ง',
-  'สอง',
-  'สาม',
-  'สี่'
-], correct: 1},
-        {question: 'ลูกค้าสั่งอะไร?', options: [
-  'ผัดไทยและต้มยำกุ้ง',
-  'ข้าวผัด',
-  'ต้มข่าไก่',
-  'แกงเขียวหวาน'
-], correct: 0},
-        {question: 'เผ็ดมากไหม?', options: [
-  'เผ็ดมาก',
-  'เผ็ดน้อย',
-  'ไม่เผ็ด',
-  'ปานกลาง'
-], correct: 1},
+        {question: 'กี่คน?', options: ['สอง', 'หนึ่ง', 'สี่', 'สาม'], correct: 0},
+        {question: 'ลูกค้าสั่งอะไร?', options: ['ข้าวผัด', 'แกงเขียวหวาน', 'ต้มข่าไก่', 'ผัดไทยและต้มยำกุ้ง'], correct: 3},
+        {question: 'เผ็ดมากไหม?', options: ['ไม่เผ็ด', 'เผ็ดน้อย', 'ปานกลาง', 'เผ็ดมาก'], correct: 1},
       ],
     },
     {
       id: 'th-drama-2',
       title: 'ซื้อผลไม้',
       titleCn: '买水果',
-      difficulty: 'beginner',
+      difficulty: 'advanced',
       description: 'Buying fruit in Thai. Practice numbers and polite expressions with romanization.',
       cover: '🥭',
       scenes: [
@@ -1348,9 +906,9 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'ผลไม้อะไร?', options: ['ส้ม', 'มะม่วง', 'แอปเปิ้ล', 'องุ่น'], correct: 1},
-        {question: 'ราคากิโลเท่าไหร่?', options: ['50', '60', '70', '40'], correct: 1},
-        {question: 'ซื้อกี่กิโล?', options: ['1', '2', '3', '4'], correct: 1},
+        {question: 'ผลไม้อะไร?', options: ['มะม่วง', 'แอปเปิ้ล', 'ส้ม', 'องุ่น'], correct: 0},
+        {question: 'ราคากิโลเท่าไหร่?', options: ['70', '50', '40', '60'], correct: 3},
+        {question: 'ซื้อกี่กิโล?', options: ['4', '1', '2', '3'], correct: 2},
       ],
     },
 
@@ -1360,7 +918,7 @@ const DRAMA_SCRIPTS = {
       id: 'de-drama-1',
       title: 'Im Café',
       titleCn: '在咖啡馆',
-      difficulty: 'beginner',
+      difficulty: 'intermediate',
       description: 'Ordering coffee in German. Practice basic greetings and polite expressions.',
       cover: '☕',
       scenes: [
@@ -1378,16 +936,16 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'Was bestellt der Kunde?', options: ['Tee', 'Cappuccino', 'Espresso', 'Wasser'], correct: 1},
-        {question: 'Was für Milch möchte er?', options: ['Kuhmilch', 'Hafermilch', 'Sojamilch', 'Mandelmilch'], correct: 1},
-        {question: 'Wie viel kostet das?', options: ['5,50', '6,50', '7,50', '8,50'], correct: 1},
+        {question: 'Was bestellt der Kunde?', options: ['Tee', 'Wasser', 'Espresso', 'Cappuccino'], correct: 3},
+        {question: 'Was für Milch möchte er?', options: ['Mandelmilch', 'Kuhmilch', 'Hafermilch', 'Sojamilch'], correct: 2},
+        {question: 'Wie viel kostet das?', options: ['8,50', '6,50', '7,50', '5,50'], correct: 1},
       ],
     },
     {
       id: 'de-drama-2',
       title: 'Im Supermarkt',
       titleCn: '在超市',
-      difficulty: 'beginner',
+      difficulty: 'advanced',
       description: 'Shopping for groceries in German. Practice food vocabulary and numbers.',
       cover: '🛒',
       scenes: [
@@ -1405,9 +963,9 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'Was hat der Kunde nicht?', options: ['Einkäufe', 'Payback-Karte', 'Geld', 'Tüte'], correct: 1},
-        {question: 'Wie bezahlt er?', options: ['Bar', 'Mit Karte', 'Mit Handy', 'Mit Scheck'], correct: 1},
-        {question: 'Wie viel kostet die Tüte?', options: ['5 Cent', '10 Cent', '20 Cent', 'Kostenlos'], correct: 1},
+        {question: 'Was hat der Kunde nicht?', options: ['Payback-Karte', 'Geld', 'Einkäufe', 'Tüte'], correct: 0},
+        {question: 'Wie bezahlt er?', options: ['Bar', 'Mit Scheck', 'Mit Karte', 'Mit Handy'], correct: 2},
+        {question: 'Wie viel kostet die Tüte?', options: ['5 Cent', '10 Cent', 'Kostenlos', '20 Cent'], correct: 1},
       ],
     },
   ],
@@ -1434,16 +992,16 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'Per quante persone?', options: ['Due', 'Tre', 'Quattro', 'Cinque'], correct: 1},
-        {question: 'Cosa ordina il cliente?', options: ['Pizza', 'Spaghetti', 'Risotto', 'Lasagna'], correct: 1},
-        {question: 'Che dolce vuole?', options: ['Gelato', 'Tiramisù', 'Cannoli', 'Torta'], correct: 1},
+        {question: 'Per quante persone?', options: ['Cinque', 'Due', 'Quattro', 'Tre'], correct: 3},
+        {question: 'Cosa ordina il cliente?', options: ['Risotto', 'Spaghetti', 'Lasagna', 'Pizza'], correct: 1},
+        {question: 'Che dolce vuole?', options: ['Gelato', 'Cannoli', 'Tiramisù', 'Torta'], correct: 2},
       ],
     },
     {
       id: 'it-drama-2',
       title: 'Al Mercato',
       titleCn: '在市场',
-      difficulty: 'beginner',
+      difficulty: 'intermediate',
       description: 'Shopping at an Italian market. Practice food and price vocabulary.',
       cover: '🍅',
       scenes: [
@@ -1461,9 +1019,9 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'Quanto costano i pomodori?', options: ['1,50', '2,50', '3,50', '4,50'], correct: 1},
-        {question: 'Quanti chili prende la cliente?', options: ['Uno', 'Uno e mezzo', 'Due', 'Mezzo'], correct: 1},
-        {question: 'Quanto paga in totale?', options: ['5,50', '6,50', '7,50', '8,50'], correct: 1},
+        {question: 'Quanto costano i pomodori?', options: ['2,50', '1,50', '4,50', '3,50'], correct: 0},
+        {question: 'Quanti chili prende la cliente?', options: ['Mezzo', 'Due', 'Uno', 'Uno e mezzo'], correct: 3},
+        {question: 'Quanto paga in totale?', options: ['7,50', '8,50', '6,50', '5,50'], correct: 2},
       ],
     },
   ],
@@ -1490,16 +1048,16 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'O que o cliente quer beber?', options: ['Chá', 'Café com leite', 'Suco', 'Água'], correct: 1},
-        {question: 'O que ele quer comer?', options: ['Pão', 'Pão de queijo', 'Bolo', 'Tapioca'], correct: 1},
-        {question: 'Quanto custa?', options: ['10', '12', '15', '8'], correct: 1},
+        {question: 'O que o cliente quer beber?', options: ['Suco', 'Café com leite', 'Chá', 'Água'], correct: 1},
+        {question: 'O que ele quer comer?', options: ['Pão de queijo', 'Tapioca', 'Bolo', 'Pão'], correct: 0},
+        {question: 'Quanto custa?', options: ['10', '15', '12', '8'], correct: 2},
       ],
     },
     {
       id: 'pt-drama-2',
       title: 'Na Farmácia',
       titleCn: '在药店',
-      difficulty: 'beginner',
+      difficulty: 'intermediate',
       description: 'Buying medicine at a Portuguese pharmacy. Practice health vocabulary.',
       cover: '💊',
       scenes: [
@@ -1517,9 +1075,9 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'O que o cliente sente?', options: ['Dor de cabeça', 'Dor de garganta', 'Dor nas costas', 'Dor de dente'], correct: 1},
-        {question: 'Quando teve febre?', options: ['Hoje', 'Ontem à noite', 'Dois dias', 'Semana passada'], correct: 1},
-        {question: 'Quantas vezes ao dia?', options: ['Duas', 'Três', 'Quatro', 'Uma'], correct: 1},
+        {question: 'O que o cliente sente?', options: ['Dor nas costas', 'Dor de garganta', 'Dor de cabeça', 'Dor de dente'], correct: 1},
+        {question: 'Quando teve febre?', options: ['Ontem à noite', 'Semana passada', 'Dois dias', 'Hoje'], correct: 0},
+        {question: 'Quantas vezes ao dia?', options: ['Uma', 'Quatro', 'Duas', 'Três'], correct: 3},
       ],
     },
   ],
@@ -1546,16 +1104,16 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'كم شخص؟', options: ['واحد', 'اثنان', 'ثلاثة', 'أربعة'], correct: 1},
-        {question: 'ماذا يريد الزبون?', options: ['دجاج', 'كباب', 'سمك', 'أرز'], correct: 1},
-        {question: 'ماذا يشرب?', options: ['ماء', 'عصير برتقال', 'شاي', 'قهوة'], correct: 1},
+        {question: 'كم شخص؟', options: ['أربعة', 'ثلاثة', 'واحد', 'اثنان'], correct: 3},
+        {question: 'ماذا يريد الزبون?', options: ['دجاج', 'كباب', 'أرز', 'سمك'], correct: 1},
+        {question: 'ماذا يشرب?', options: ['شاي', 'ماء', 'عصير برتقال', 'قهوة'], correct: 2},
       ],
     },
     {
       id: 'ar-drama-2',
       title: 'في السوق',
       titleCn: '在市场',
-      difficulty: 'beginner',
+      difficulty: 'advanced',
       description: 'Shopping at an Arabic market. Practice bargaining and numbers with romanization.',
       cover: '🛒',
       scenes: [
@@ -1573,9 +1131,9 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'كم كان السعر الأول?', options: ['ثلاثة', 'خمسة', 'أربعة', 'ستة'], correct: 1},
-        {question: 'كم دفعت في النهاية?', options: ['أربعة', 'أربعة ونصف', 'خمسة', 'ثلاثة ونصف'], correct: 1},
-        {question: 'ماذا اشترت?', options: ['برتقال', 'تفاح', 'موز', 'عنب'], correct: 1},
+        {question: 'كم كان السعر الأول?', options: ['أربعة', 'ستة', 'ثلاثة', 'خمسة'], correct: 3},
+        {question: 'كم دفعت في النهاية?', options: ['خمسة', 'أربعة ونصف', 'أربعة', 'ثلاثة ونصف'], correct: 1},
+        {question: 'ماذا اشترت?', options: ['تفاح', 'عنب', 'موز', 'برتقال'], correct: 0},
       ],
     },
   ],
@@ -1602,16 +1160,16 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'बेटा किसकी मदद कर रहा है?', options: ['पापा', 'माँ', 'दादी', 'बहन'], correct: 1},
-        {question: 'क्या काटना है?', options: ['टमाटर', 'प्याज', 'आलू', 'गाजर'], correct: 1},
-        {question: 'आज क्या बनेगा?', options: ['चावल', 'दाल', 'रोटी', 'सब्जी'], correct: 1},
+        {question: 'बेटा किसकी मदद कर रहा है?', options: ['दादी', 'पापा', 'माँ', 'बहन'], correct: 2},
+        {question: 'क्या काटना है?', options: ['आलू', 'टमाटर', 'गाजर', 'प्याज'], correct: 3},
+        {question: 'आज क्या बनेगा?', options: ['दाल', 'रोटी', 'सब्जी', 'चावल'], correct: 0},
       ],
     },
     {
       id: 'hi-drama-2',
       title: 'दुकान पर',
       titleCn: '在商店',
-      difficulty: 'beginner',
+      difficulty: 'advanced',
       description: 'Shopping in Hindi. Practice numbers and polite expressions with romanization.',
       cover: '🛍️',
       scenes: [
@@ -1630,8 +1188,8 @@ const DRAMA_SCRIPTS = {
       ],
       quiz: [
         {question: 'ग्राहक को क्या चाहिए?', options: ['रोटी', 'दूध', 'चाय', 'चावल'], correct: 1},
-        {question: 'कितना दूध?', options: ['आधा लीटर', 'एक लीटर', 'दो लीटर', 'तीन लीटर'], correct: 1},
-        {question: 'कुल कितने रुपये?', options: ['150', '200', '250', '100'], correct: 1},
+        {question: 'कितना दूध?', options: ['तीन लीटर', 'दो लीटर', 'एक लीटर', 'आधा लीटर'], correct: 2},
+        {question: 'कुल कितने रुपये?', options: ['200', '100', '250', '150'], correct: 0},
       ],
     },
   ],
@@ -1658,16 +1216,16 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'Khách muốn uống gì?', options: ['Trà', 'Cà phê sữa đá', 'Nước cam', 'Sinh tố'], correct: 1},
-        {question: 'Khách ăn gì?', options: ['Phở', 'Bánh mì thịt', 'Cơm', 'Bún'], correct: 1},
-        {question: 'Tổng bao nhiêu tiền?', options: ['35 nghìn', '45 nghìn', '55 nghìn', '25 nghìn'], correct: 1},
+        {question: 'Khách muốn uống gì?', options: ['Sinh tố', 'Cà phê sữa đá', 'Trà', 'Nước cam'], correct: 1},
+        {question: 'Khách ăn gì?', options: ['Bánh mì thịt', 'Bún', 'Phở', 'Cơm'], correct: 0},
+        {question: 'Tổng bao nhiêu tiền?', options: ['55 nghìn', '35 nghìn', '25 nghìn', '45 nghìn'], correct: 3},
       ],
     },
     {
       id: 'vi-drama-2',
       title: 'Đi Chợ',
       titleCn: '去市场',
-      difficulty: 'beginner',
+      difficulty: 'intermediate',
       description: 'Shopping at a Vietnamese market. Practice numbers and bargaining.',
       cover: '🥬',
       scenes: [
@@ -1685,9 +1243,9 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'Giá ban đầu là bao nhiêu?', options: ['8 nghìn', '10 nghìn', '9 nghìn', '12 nghìn'], correct: 1},
-        {question: 'Giá cuối cùng?', options: ['8 nghìn', '9 nghìn', '10 nghìn', '7 nghìn'], correct: 1},
-        {question: 'Khách mua bao nhiêu bó?', options: ['Một', 'Hai', 'Ba', 'Bốn'], correct: 1},
+        {question: 'Giá ban đầu là bao nhiêu?', options: ['10 nghìn', '9 nghìn', '12 nghìn', '8 nghìn'], correct: 0},
+        {question: 'Giá cuối cùng?', options: ['10 nghìn', '8 nghìn', '9 nghìn', '7 nghìn'], correct: 2},
+        {question: 'Khách mua bao nhiêu bó?', options: ['Bốn', 'Một', 'Ba', 'Hai'], correct: 3},
       ],
     },
   ],
@@ -1714,8 +1272,8 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'Müşteri ne içiyor?', options: ['Çay', 'Türk kahvesi', 'Suyu', 'Limonata'], correct: 1},
-        {question: 'Tatlı ne istiyor?', options: ['Künefe', 'Baklava', 'Sütlaç', 'Dondurma'], correct: 1},
+        {question: 'Müşteri ne içiyor?', options: ['Suyu', 'Çay', 'Limonata', 'Türk kahvesi'], correct: 3},
+        {question: 'Tatlı ne istiyor?', options: ['Sütlaç', 'Künefe', 'Baklava', 'Dondurma'], correct: 2},
         {question: 'Toplam ne kadar?', options: ['75', '85', '95', '65'], correct: 1},
       ],
     },
@@ -1723,7 +1281,7 @@ const DRAMA_SCRIPTS = {
       id: 'tr-drama-2',
       title: 'Pazarda',
       titleCn: '在市场',
-      difficulty: 'beginner',
+      difficulty: 'intermediate',
       description: 'Shopping at a Turkish market. Practice numbers and bargaining.',
       cover: '🍅',
       scenes: [
@@ -1741,9 +1299,9 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'İlk fiyat neydi?', options: ['12', '15', '13', '10'], correct: 1},
-        {question: 'Son fiyat ne oldu?', options: ['12', '13', '15', '14'], correct: 1},
-        {question: 'Ne kadar aldı?', options: ['Bir kilo', 'Yarım kilo', 'İki kilo', 'Bir buçuk kilo'], correct: 1},
+        {question: 'İlk fiyat neydi?', options: ['13', '15', '10', '12'], correct: 1},
+        {question: 'Son fiyat ne oldu?', options: ['13', '15', '12', '14'], correct: 0},
+        {question: 'Ne kadar aldı?', options: ['Bir buçuk kilo', 'İki kilo', 'Yarım kilo', 'Bir kilo'], correct: 2},
       ],
     },
   ],
@@ -1770,16 +1328,16 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'Co zamawia klient?', options: ['Herbatę', 'Kawę z mlekiem', 'Sok', 'Wodę'], correct: 1},
-        {question: 'Co jeszcze chce?', options: ['Ciasto', 'Drożdżówkę', 'Bułkę', 'Rogal'], correct: 1},
-        {question: 'Ile płaci?', options: ['15', '18', '20', '12'], correct: 1},
+        {question: 'Co zamawia klient?', options: ['Kawę z mlekiem', 'Wodę', 'Sok', 'Herbatę'], correct: 0},
+        {question: 'Co jeszcze chce?', options: ['Rogal', 'Drożdżówkę', 'Bułkę', 'Ciasto'], correct: 1},
+        {question: 'Ile płaci?', options: ['20', '12', '15', '18'], correct: 3},
       ],
     },
     {
       id: 'pl-drama-2',
       title: 'W Sklepie',
       titleCn: '在商店',
-      difficulty: 'beginner',
+      difficulty: 'intermediate',
       description: 'Shopping in Polish. Practice numbers and polite expressions.',
       cover: '🛒',
       scenes: [
@@ -1797,9 +1355,9 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'Czego szuka klient?', options: ['Masło', 'Mleko i chleb', 'Ser', 'Jajka'], correct: 1},
-        {question: 'Gdzie jest chleb?', options: ['W lodówce', 'Na półce drugiej', 'Przy kasie', 'Na stoliku'], correct: 1},
-        {question: 'Ile płaci?', options: ['12', '14', '16', '10'], correct: 1},
+        {question: 'Czego szuka klient?', options: ['Jajka', 'Mleko i chleb', 'Ser', 'Masło'], correct: 1},
+        {question: 'Gdzie jest chleb?', options: ['Na stoliku', 'Przy kasie', 'Na półce drugiej', 'W lodówce'], correct: 2},
+        {question: 'Ile płaci?', options: ['14', '16', '10', '12'], correct: 0},
       ],
     },
   ],
@@ -1826,16 +1384,16 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'Wat drinkt de klant?', options: ['Thee', 'Koffie met melk', 'Sap', 'Water'], correct: 1},
-        {question: 'Wat eet de klant?', options: ['Brood', 'Croissant', 'Koek', 'Taart'], correct: 1},
-        {question: 'Hoeveel kost het?', options: ['6,50', '7,50', '8,50', '5,50'], correct: 1},
+        {question: 'Wat drinkt de klant?', options: ['Sap', 'Thee', 'Water', 'Koffie met melk'], correct: 3},
+        {question: 'Wat eet de klant?', options: ['Koek', 'Croissant', 'Brood', 'Taart'], correct: 1},
+        {question: 'Hoeveel kost het?', options: ['5,50', '8,50', '7,50', '6,50'], correct: 2},
       ],
     },
     {
       id: 'nl-drama-2',
       title: 'In de Winkel',
       titleCn: '在商店',
-      difficulty: 'beginner',
+      difficulty: 'intermediate',
       description: 'Shopping in Dutch. Practice food vocabulary and numbers.',
       cover: '🛒',
       scenes: [
@@ -1853,9 +1411,9 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'Wat zoekt de klant?', options: ['Peren', 'Appels en bananen', 'Druiven', 'Sinaasappels'], correct: 1},
-        {question: 'Hoeveel kosten de appels?', options: ['1,80', '2,00', '2,50', '1,50'], correct: 1},
-        {question: 'Wat is het totaal?', options: ['3,80', '4,80', '2,80', '5,80'], correct: 0},
+        {question: 'Wat zoekt de klant?', options: ['Appels en bananen', 'Peren', 'Druiven', 'Sinaasappels'], correct: 0},
+        {question: 'Hoeveel kosten de appels?', options: ['2,50', '1,80', '2,00', '1,50'], correct: 2},
+        {question: 'Wat is het totaal?', options: ['4,80', '2,80', '5,80', '3,80'], correct: 3},
       ],
     },
   ],
@@ -1882,16 +1440,16 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'Τι πίνει ο πελάτης?', options: ['Τσάι', 'Φραπέ', 'Χυμό', 'Νερό'], correct: 1},
-        {question: 'Τι τρώει?', options: ['Σπανακόπιτα', 'Τυρόπιτα', 'Μπουγάτσα', 'Κέικ'], correct: 1},
-        {question: 'Πόσο κοστίζει?', options: ['5', '6', '7', '4'], correct: 1},
+        {question: 'Τι πίνει ο πελάτης?', options: ['Φραπέ', 'Νερό', 'Χυμό', 'Τσάι'], correct: 0},
+        {question: 'Τι τρώει?', options: ['Μπουγάτσα', 'Σπανακόπιτα', 'Κέικ', 'Τυρόπιτα'], correct: 3},
+        {question: 'Πόσο κοστίζει?', options: ['5', '4', '6', '7'], correct: 2},
       ],
     },
     {
       id: 'el-drama-2',
       title: 'Στο Μαγαζί',
       titleCn: '在商店',
-      difficulty: 'beginner',
+      difficulty: 'advanced',
       description: 'Shopping in Greek. Practice numbers and polite expressions with romanization.',
       cover: '🛒',
       scenes: [
@@ -1909,9 +1467,9 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: 'Τι ψάχνει ο πελάτης?', options: ['Τυρί', 'Ψωμί και γάλα', 'Κρέας', 'Φρούτα'], correct: 1},
-        {question: 'Πού είναι το γάλα?', options: ['Στο ράφι', 'Στο ψυγείο', 'Στον πάγκο', 'Στην πόρτα'], correct: 1},
-        {question: 'Πόσο πληρώνει?', options: ['4', '5', '6', '3'], correct: 1},
+        {question: 'Τι ψάχνει ο πελάτης?', options: ['Τυρί', 'Κρέας', 'Ψωμί και γάλα', 'Φρούτα'], correct: 2},
+        {question: 'Πού είναι το γάλα?', options: ['Στην πόρτα', 'Στο ψυγείο', 'Στον πάγκο', 'Στο ράφι'], correct: 1},
+        {question: 'Πόσο πληρώνει?', options: ['6', '3', '4', '5'], correct: 3},
       ],
     },
   ],
@@ -1938,16 +1496,16 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: '客人欲啉啥？', options: ['茶', '咖啡', '水', '果汁'], correct: 1},
-        {question: '欲加啥甜頭？', options: ['多糖', '少寡糖', '無糖', '蜂蜜'], correct: 1},
-        {question: '總共幾箍？', options: ['一百', '兩百', '三百', '四百'], correct: 1},
+        {question: '客人欲啉啥？', options: ['水', '咖啡', '果汁', '茶'], correct: 1},
+        {question: '欲加啥甜頭？', options: ['無糖', '多糖', '蜂蜜', '少寡糖'], correct: 3},
+        {question: '總共幾箍？', options: ['兩百', '四百', '一百', '三百'], correct: 0},
       ],
     },
     {
       id: 'nan-drama-2',
       title: '佇菜市仔',
       titleCn: '在菜市场',
-      difficulty: 'beginner',
+      difficulty: 'advanced',
       description: 'Shopping at a Hokkien market. Practice numbers and bargaining.',
       cover: '🥬',
       scenes: [
@@ -1965,9 +1523,9 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: '青菜一斤幾箍？', options: ['二十', '三十', '四十', '五十'], correct: 1},
-        {question: '最後一斤賣幾箍？', options: ['二十', '二十五', '三十', '三十五'], correct: 1},
-        {question: '客人買幾斤？', options: ['一斤', '兩斤', '三斤', '四斤'], correct: 1},
+        {question: '青菜一斤幾箍？', options: ['四十', '三十', '二十', '五十'], correct: 1},
+        {question: '最後一斤賣幾箍？', options: ['二十五', '三十', '三十五', '二十'], correct: 0},
+        {question: '客人買幾斤？', options: ['一斤', '三斤', '兩斤', '四斤'], correct: 2},
       ],
     },
   ],
@@ -1994,16 +1552,16 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: '客人想喝啥子？', options: ['咖啡', '盖碗茶', '可乐', '果汁'], correct: 1},
-        {question: '还要了啥子？', options: ['瓜子', '担担面', '花生', '豆花'], correct: 1},
-        {question: '一共好多钱？', options: ['二十', '二十五', '三十', '三十五'], correct: 1},
+        {question: '客人想喝啥子？', options: ['咖啡', '盖碗茶', '果汁', '可乐'], correct: 1},
+        {question: '还要了啥子？', options: ['花生', '瓜子', '担担面', '豆花'], correct: 2},
+        {question: '一共好多钱？', options: ['二十', '三十', '三十五', '二十五'], correct: 3},
       ],
     },
     {
       id: 'zh-SC-drama-2',
       title: '菜市场',
       titleCn: '菜市场',
-      difficulty: 'beginner',
+      difficulty: 'advanced',
       description: 'Shopping at a Sichuan market. Practice bargaining in dialect.',
       cover: '🌶️',
       scenes: [
@@ -2021,9 +1579,9 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: '海椒好多钱一斤？', options: ['七块', '八块', '九块', '十块'], correct: 1},
-        {question: '最后好多钱一斤？', options: ['七块', '七块五', '八块', '六块'], correct: 1},
-        {question: '顾客买了几斤？', options: ['一斤', '两斤', '三斤', '四斤'], correct: 1},
+        {question: '海椒好多钱一斤？', options: ['九块', '八块', '十块', '七块'], correct: 1},
+        {question: '最后好多钱一斤？', options: ['六块', '八块', '七块五', '七块'], correct: 2},
+        {question: '顾客买了几斤？', options: ['两斤', '三斤', '四斤', '一斤'], correct: 0},
       ],
     },
   ],
@@ -2050,16 +1608,16 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: '客人点了啥？', options: ['羊肉串', '牛肉串', '鸡翅', '鱼'], correct: 0},
-        {question: '还喝了啥？', options: ['白酒', '啤酒', '可乐', '果汁'], correct: 1},
-        {question: '一共多少钱？', options: ['四十', '四十五', '五十', '三十五'], correct: 1},
+        {question: '客人点了啥？', options: ['鱼', '牛肉串', '鸡翅', '羊肉串'], correct: 3},
+        {question: '还喝了啥？', options: ['啤酒', '可乐', '果汁', '白酒'], correct: 0},
+        {question: '一共多少钱？', options: ['五十', '四十', '四十五', '三十五'], correct: 2},
       ],
     },
     {
       id: 'zh-DB-drama-2',
       title: '早市',
       titleCn: '早市',
-      difficulty: 'beginner',
+      difficulty: 'advanced',
       description: 'Shopping at a Northeast morning market. Practice bargaining.',
       cover: '🥟',
       scenes: [
@@ -2077,8 +1635,8 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: '白菜原价多少？', options: ['一块', '一块二', '一块五', '两块'], correct: 2},
-        {question: '最后多少钱一斤？', options: ['一块', '一块二', '一块五', '八毛'], correct: 1},
+        {question: '白菜原价多少？', options: ['一块', '两块', '一块二', '一块五'], correct: 3},
+        {question: '最后多少钱一斤？', options: ['一块二', '八毛', '一块五', '一块'], correct: 0},
         {question: '顾客买了几棵？', options: ['一棵', '两棵', '三棵', '四棵'], correct: 1},
       ],
     },
@@ -2106,16 +1664,16 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: '客人想喫啥茶？', options: ['普洱', '龙井', '铁观音', '菊花'], correct: 1},
-        {question: '还要了啥？', options: ['小笼', '生煎', '馄饨', '汤圆'], correct: 1},
-        {question: '一共几钿？', options: ['十五', '廿', '廿五', '三十'], correct: 1},
+        {question: '客人想喫啥茶？', options: ['铁观音', '普洱', '龙井', '菊花'], correct: 2},
+        {question: '还要了啥？', options: ['馄饨', '汤圆', '小笼', '生煎'], correct: 3},
+        {question: '一共几钿？', options: ['廿', '廿五', '十五', '三十'], correct: 0},
       ],
     },
     {
       id: 'sh-drama-2',
       title: '小菜场',
       titleCn: '小菜场',
-      difficulty: 'beginner',
+      difficulty: 'advanced',
       description: 'Shopping at a Shanghai market. Practice Wu dialect bargaining.',
       cover: '🥬',
       scenes: [
@@ -2133,9 +1691,9 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: '青菜原价几块？', options: ['两', '三', '四', '五'], correct: 1},
-        {question: '最后几块一斤？', options: ['两块五', '两块八', '三块', '两块'], correct: 1},
-        {question: '顾客买了几斤？', options: ['一斤', '两斤', '三斤', '四斤'], correct: 1},
+        {question: '青菜原价几块？', options: ['五', '三', '两', '四'], correct: 1},
+        {question: '最后几块一斤？', options: ['两块', '三块', '两块八', '两块五'], correct: 2},
+        {question: '顾客买了几斤？', options: ['两斤', '一斤', '四斤', '三斤'], correct: 0},
       ],
     },
   ],
@@ -2162,8 +1720,8 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: '客人愛食麼茶？', options: ['紅茶', '綠茶', '烏龍', '普洱'], correct: 1},
-        {question: '還愛麼个？', options: ['蘿蔔粄', '菜包', '粽子', '年糕'], correct: 0},
+        {question: '客人愛食麼茶？', options: ['烏龍', '紅茶', '普洱', '綠茶'], correct: 3},
+        {question: '還愛麼个？', options: ['蘿蔔粄', '年糕', '粽子', '菜包'], correct: 0},
         {question: '總共幾多錢？', options: ['十塊', '十五塊', '二十塊', '二十五塊'], correct: 1},
       ],
     },
@@ -2171,7 +1729,7 @@ const DRAMA_SCRIPTS = {
       id: 'hak-drama-2',
       title: '菜市場',
       titleCn: '菜市场',
-      difficulty: 'beginner',
+      difficulty: 'advanced',
       description: 'Shopping at a Hakka market. Practice numbers and bargaining.',
       cover: '🥬',
       scenes: [
@@ -2189,8 +1747,8 @@ const DRAMA_SCRIPTS = {
         },
       ],
       quiz: [
-        {question: '青菜一斤幾多錢？', options: ['四塊', '五塊', '六塊', '七塊'], correct: 1},
-        {question: '最後幾多錢一斤？', options: ['四塊', '四塊五', '五塊', '三塊五'], correct: 1},
+        {question: '青菜一斤幾多錢？', options: ['四塊', '七塊', '五塊', '六塊'], correct: 2},
+        {question: '最後幾多錢一斤？', options: ['五塊', '四塊', '三塊五', '四塊五'], correct: 3},
         {question: '顧客買幾斤？', options: ['一斤', '兩斤', '三斤', '四斤'], correct: 1},
       ],
     },

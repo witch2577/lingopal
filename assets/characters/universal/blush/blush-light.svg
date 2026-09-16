@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600">
+  <!-- Left cheek blush -->
+  <ellipse cx="155" cy="268" rx="18" ry="12" fill="#FFB6C1" opacity="0.35"/>
+  <!-- Right cheek blush -->
+  <ellipse cx="245" cy="268" rx="18" ry="12" fill="#FFB6C1" opacity="0.35"/>
+</svg>

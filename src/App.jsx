@@ -4,7 +4,10 @@ const App = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [isInitialized, setIsInitialized] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [postOnboarding, setPostOnboarding] = useState(false);
   const [showAdmin, setShowAdmin] = useState(false);
+  const [showCharacterEditor, setShowCharacterEditor] = useState(false);
+  const [loadedCharacter, setLoadedCharacter] = useState(false);
   const [loadedModules, setLoadedModules] = useState({
     home: true,
     translation: true,
@@ -56,6 +59,16 @@ const App = () => {
     }
   }, [showAdmin]);
 
+  // Lazy-load character module when editor is shown
+  useEffect(() => {
+    if (showCharacterEditor && !loadedCharacter && window.loadLazyModule) {
+      window.loadLazyModule('character').then(() => {
+        setLoadedCharacter(true);
+        useCharacterStore.getState().init();
+      });
+    }
+  }, [showCharacterEditor]);
+
   // Lazy-load module when tab changes
   useEffect(() => {
     const group = tabModuleMap[activeTab];
@@ -73,6 +86,7 @@ const App = () => {
   // Expose tab switcher for empty state actions
   useEffect(() => {
     window.setActiveTab = setActiveTab;
+    window.openCharacterEditor = () => setShowCharacterEditor(true);
     if (isLoggedIn && isAdmin) {
       window.openAdmin = () => setShowAdmin(true);
     } else {
@@ -81,6 +95,7 @@ const App = () => {
     return () => {
       delete window.setActiveTab;
       delete window.openAdmin;
+      delete window.openCharacterEditor;
     };
   }, [isLoggedIn, isAdmin]);
 
@@ -149,8 +164,9 @@ const App = () => {
 
   const handleOnboardingComplete = () => {
     setShowOnboarding(false);
+    setPostOnboarding(true);
     localStorage.setItem('lingopal_onboarded', 'true');
-    setActiveTab('learning');
+    setActiveTab('home');
   };
 
   // Lazy-load login module when onboarding is shown
@@ -203,7 +219,7 @@ const App = () => {
       ? { duration: 0.12 }
       : { duration: 0.15 };
 
-  const requireAuth = IS_SUPABASE_CONFIGURED && !isLoggedIn && !authLoading;
+  const requireAuth = IS_SUPABASE_CONFIGURED && !isLoggedIn && !authLoading && !postOnboarding;
 
   if (showAdmin && loadedModules.admin && isLoggedIn && isAdmin) {
     return (
@@ -290,10 +306,42 @@ const App = () => {
       <ConfettiEffect />
 
       <AnimatePresence>
-        {showOnboarding && loadedModules.login && !requireAuth && (
+        {showOnboarding && (
           <div className="fixed inset-0 z-50 bg-slate-50 overflow-y-auto">
-            <LoginPage onComplete={handleOnboardingComplete} />
+            <OnboardingFlow onComplete={handleOnboardingComplete} />
           </div>
+        )}
+      </AnimatePresence>
+
+      {/* Character Editor overlay */}
+      <AnimatePresence>
+        {showCharacterEditor && (
+          <motion.div
+            key="character-editor"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[55]"
+          >
+            {typeof CharacterEditor !== 'undefined' ? (
+              <CharacterEditor
+                onClose={() => setShowCharacterEditor(false)}
+                onSave={() => {
+                  /* saved via store */
+                }}
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-slate-50">
+                <div className="flex flex-col items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-brand-gradient flex items-center justify-center text-white text-xl animate-pulse">
+                    🎨
+                  </div>
+                  <p className="text-sm text-slate-500">加载捏脸编辑器...</p>
+                </div>
+              </div>
+            )}
+          </motion.div>
         )}
       </AnimatePresence>
     </div>

@@ -20,6 +20,7 @@ const QuizEngine = ({ level, onFinish }) => {
   const [isListening, setIsListening] = useState(false);
   const [recognizedText, setRecognizedText] = useState('');
   const [isRepeatDemo, setIsRepeatDemo] = useState(false);
+  const [characterFeedback, setCharacterFeedback] = useState(null);
   const recognitionRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -175,6 +176,10 @@ const QuizEngine = ({ level, onFinish }) => {
       setAnswerResult(result);
       setShowResult(true);
       setShowFeedback(true);
+      if (typeof FeedbackEngine !== 'undefined') {
+        const fb = FeedbackEngine.onAnswer(true, { source: 'quiz', combo: result.combo });
+        if (fb) setCharacterFeedback(fb);
+      }
       return;
     }
 
@@ -184,6 +189,10 @@ const QuizEngine = ({ level, onFinish }) => {
     setAnswerResult(result);
     setShowResult(true);
     setShowFeedback(true);
+    if (typeof FeedbackEngine !== 'undefined') {
+      const fb = FeedbackEngine.onAnswer(result.isCorrect, { source: 'quiz', combo: result.combo });
+      if (fb) setCharacterFeedback(fb);
+    }
   };
 
   const handleRepeatListen = () => {
@@ -205,6 +214,10 @@ const QuizEngine = ({ level, onFinish }) => {
       setAnswerResult({ ...result, repeatScore: demoScore, isDemo: true });
       setShowResult(true);
       setShowFeedback(true);
+      if (typeof FeedbackEngine !== 'undefined') {
+        const fb = FeedbackEngine.onAnswer(false, { source: 'quiz', combo: 0 });
+        if (fb) setCharacterFeedback(fb);
+      }
       return;
     }
 
@@ -218,6 +231,10 @@ const QuizEngine = ({ level, onFinish }) => {
       setAnswerResult({ ...result, repeatScore: demoScore, isDemo: true });
       setShowResult(true);
       setShowFeedback(true);
+      if (typeof FeedbackEngine !== 'undefined') {
+        const fb = FeedbackEngine.onAnswer(false, { source: 'quiz', combo: 0 });
+        if (fb) setCharacterFeedback(fb);
+      }
       return;
     }
 
@@ -246,6 +263,10 @@ const QuizEngine = ({ level, onFinish }) => {
         const result = submitAnswer(currentQuestion.id, 'repeat', 'wrong');
         setAnswerResult({ ...result, repeatScore: demoScore, isDemo: true });
         setShowResult(true);
+        if (typeof FeedbackEngine !== 'undefined') {
+          const fb = FeedbackEngine.onAnswer(false, { source: 'quiz', combo: 0 });
+          if (fb) setCharacterFeedback(fb);
+        }
       } else {
         useUIStore.getState().showNotification('语音识别出错，本次练习不计分', 'warning');
         setIsRepeatDemo(true);
@@ -254,6 +275,10 @@ const QuizEngine = ({ level, onFinish }) => {
         const result = submitAnswer(currentQuestion.id, 'repeat', 'wrong');
         setAnswerResult({ ...result, repeatScore: demoScore, isDemo: true });
         setShowResult(true);
+        if (typeof FeedbackEngine !== 'undefined') {
+          const fb = FeedbackEngine.onAnswer(false, { source: 'quiz', combo: 0 });
+          if (fb) setCharacterFeedback(fb);
+        }
       }
     };
 
@@ -268,6 +293,10 @@ const QuizEngine = ({ level, onFinish }) => {
         const result = submitAnswer(currentQuestion.id, 'repeat', isCorrect ? currentQuestion.correctAnswer : 'wrong');
         setAnswerResult({ ...result, repeatScore: scoreResult.total, details: scoreResult.details, recognizedText: finalTranscript });
         setShowResult(true);
+        if (typeof FeedbackEngine !== 'undefined') {
+          const fb = FeedbackEngine.onAnswer(isCorrect, { source: 'quiz', combo: result.combo });
+          if (fb) setCharacterFeedback(fb);
+        }
 
         // Achievement check for perfect pronunciation
         if (scoreResult.total >= 90) {
@@ -291,6 +320,10 @@ const QuizEngine = ({ level, onFinish }) => {
     if (!hasNext) {
       // End of level
       const result = await finishLevel();
+      if (typeof FeedbackEngine !== 'undefined' && result) {
+        const fb = FeedbackEngine.onSessionEnd(result.correctCount, result.totalQuestions, { source: 'quiz', stars: result.stars });
+        if (fb) setCharacterFeedback(fb);
+      }
       onFinish?.(result);
     }
   };
@@ -700,6 +733,14 @@ const QuizEngine = ({ level, onFinish }) => {
           isCorrect={answerResult?.isCorrect}
           combo={combo}
           onComplete={() => setShowFeedback(false)}
+        />
+      )}
+
+      {/* Character feedback overlay (non-blocking) */}
+      {characterFeedback && (
+        <CharacterFeedbackOverlay
+          feedback={characterFeedback}
+          onComplete={() => setCharacterFeedback(null)}
         />
       )}
     </div>

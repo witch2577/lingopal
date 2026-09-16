@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600">
+  <!-- Neck -->
+  <rect x="188" y="280" width="24" height="40" fill="currentColor" rx="4"/>
+  <!-- Torso -->
+  <path d="M 165 320 Q 150 350 155 420 Q 160 500 200 520 Q 240 500 245 420 Q 250 350 235 320 Z" fill="currentColor"/>
+  <!-- Shoulders -->
+  <ellipse cx="150" cy="330" rx="22" ry="16" fill="currentColor"/>
+  <ellipse cx="250" cy="330" rx="22" ry="16" fill="currentColor"/>
+  <!-- Arms -->
+  <path d="M 132 335 Q 115 400 120 480" stroke="currentColor" stroke-width="18" fill="none" stroke-linecap="round"/>
+  <path d="M 268 335 Q 285 400 280 480" stroke="currentColor" stroke-width="18" fill="none" stroke-linecap="round"/>
+  <!-- Hands -->
+  <circle cx="120" cy="490" r="12" fill="currentColor"/>
+  <circle cx="280" cy="490" r="12" fill="currentColor"/>
+</svg>

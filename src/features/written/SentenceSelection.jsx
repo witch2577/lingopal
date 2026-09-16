@@ -19,6 +19,7 @@ const SentenceSelection = () => {
   const [totalQuestions, setTotalQuestions] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
   const [wrongAnswers, setWrongAnswers] = useState([]);
+  const [characterFeedback, setCharacterFeedback] = useState(null);
 
   const questionPool = useMemo(() => {
     const pool = SENTENCE_SELECTION_DATA[currentLanguage]?.[difficulty] || [];
@@ -59,6 +60,10 @@ const SentenceSelection = () => {
     const result = answerQuestion(isCorrect, points);
 
     setTotalQuestions(prev => prev + 1);
+    if (typeof FeedbackEngine !== 'undefined') {
+      const fb = FeedbackEngine.onAnswer(isCorrect, { source: 'written', combo: result.newStreak });
+      if (fb) setCharacterFeedback(fb);
+    }
     if (isCorrect) {
       setCorrectCount(prev => prev + 1);
       useUIStore.getState().showNotification(`正确！+${points} 分`, 'success');
@@ -180,6 +185,10 @@ const SentenceSelection = () => {
           correct: correctCount,
         });
       }
+      if (typeof FeedbackEngine !== 'undefined' && totalQuestions > 0) {
+        const fb = FeedbackEngine.onSessionEnd(correctCount, totalQuestions, { source: 'written' });
+        if (fb) setCharacterFeedback(fb);
+      }
     }, []);
 
     return (
@@ -221,6 +230,14 @@ const SentenceSelection = () => {
             再来一次
           </Button>
         </div>
+
+        {/* Character feedback overlay (non-blocking) */}
+        {characterFeedback && (
+          <CharacterFeedbackOverlay
+            feedback={characterFeedback}
+            onComplete={() => setCharacterFeedback(null)}
+          />
+        )}
       </div>
     );
   }
@@ -313,6 +330,14 @@ const SentenceSelection = () => {
           </motion.div>
         )}
       </Card>
+
+      {/* Character feedback overlay (non-blocking) */}
+      {characterFeedback && (
+        <CharacterFeedbackOverlay
+          feedback={characterFeedback}
+          onComplete={() => setCharacterFeedback(null)}
+        />
+      )}
     </div>
   );
 };

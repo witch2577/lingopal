@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600">
+  <!-- Star hair clip on left side -->
+  <polygon points="140,165 143,173 151,173 145,178 147,186 140,181 133,186 135,178 129,173 137,173" fill="#FCD34D" stroke="#F59E0B" stroke-width="1"/>
+  <circle cx="140" cy="175" r="2" fill="#FEF3C7"/>
+</svg>
