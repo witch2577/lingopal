@@ -6,6 +6,7 @@ const App = () => {
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [showCeremony, setShowCeremony] = useState(false);
   const [pendingThemeMode, setPendingThemeMode] = useState(null);
+  const [postOnboarding, setPostOnboarding] = useState(false);
   const [loadedModules, setLoadedModules] = useState({
     translation: true,
     learning: false,
@@ -14,8 +15,11 @@ const App = () => {
     content: false,
     user: false,
     login: false,
+    auth: false,
   });
-  const isLoggedIn = useUserStore(s => s.isLoggedIn);
+  const isLoggedIn = useAuthStore(s => s.isLoggedIn);
+  const isAdmin = useAuthStore(s => s.isAdmin);
+  const authLoading = useAuthStore(s => s.isLoading);
   const profile = useUserStore(s => s.profile);
   const { isMobile, isLandscape } = useMobileDetect();
   const { isOpen: keyboardOpen } = useKeyboard();
@@ -31,6 +35,15 @@ const App = () => {
     user: 'user',
   };
 
+  // Lazy-load auth module on first need
+  useEffect(() => {
+    if (!loadedModules.auth && window.loadLazyModule) {
+      window.loadLazyModule('auth').then(() => {
+        setLoadedModules(prev => ({ ...prev, auth: true }));
+      });
+    }
+  }, []);
+
   // Lazy-load module when tab changes
   useEffect(() => {
     const group = tabModuleMap[activeTab];
@@ -45,7 +58,7 @@ const App = () => {
   useEffect(() => {
     window.setActiveTab = setActiveTab;
     return () => { delete window.setActiveTab; };
-  }, []);
+  }, [isLoggedIn, isAdmin]);
 
   // Initialize app
   useEffect(() => {
@@ -58,8 +71,9 @@ const App = () => {
         useUserStore.getState().loadPreferences();
         // Theme already applied by loadPreferences via data-theme attribute
 
-        // Init user and load history in parallel
-        const [userProfile] = await Promise.all([
+        // Init auth, user and load history in parallel
+        const [authProfile, userProfile] = await Promise.all([
+          useAuthStore.getState().init(),
           useUserStore.getState().init(),
           useTranslationStore.getState().loadHistory(),
         ]);
@@ -82,7 +96,11 @@ const App = () => {
 
         // Check if onboarding needed (new user without nickname)
         const userState = useUserStore.getState();
-        if (!userState.profile?.nickname || userState.profile.nickname === '语言学习者') {
+        const authState = useAuthStore.getState();
+        const needsOnboarding = !IS_SUPABASE_CONFIGURED || !authState.isLoggedIn
+          ? (!userState.profile?.nickname || userState.profile.nickname === '语言学习者')
+          : (!authState.supabaseProfile?.nickname || authState.supabaseProfile.nickname === '语言学习者');
+        if (needsOnboarding) {
           const dismissed = localStorage.getItem('lingopal_onboarded');
           if (!dismissed) {
             setShowOnboarding(true);
@@ -115,6 +133,7 @@ const App = () => {
 
   const handleOnboardingComplete = () => {
     setShowOnboarding(false);
+    setPostOnboarding(true);
     localStorage.setItem('lingopal_onboarded', 'true');
     setActiveTab('learning');
   };
@@ -171,6 +190,8 @@ const App = () => {
       ? { duration: 0.12 }
       : { duration: 0.15 };
 
+  const requireAuth = IS_SUPABASE_CONFIGURED && !isLoggedIn && !authLoading && !postOnboarding;
+
   return (
     <div className={`h-full flex flex-col theme-transition ${isMobile ? 'mobile-compact' : ''}`}
       style={{ background: 'var(--bg-body)' }}>
@@ -194,27 +215,45 @@ const App = () => {
           }}
         >
           <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 12, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -8, scale: 0.98 }}
-              transition={pageTransition}
-              className="h-full"
-            >
-              {activeTab === 'translation' && <TranslationPage />}
-              {activeTab === 'learning' && loadedModules.learning && <LearningPage />}
-              {activeTab === 'oral' && loadedModules.oral && <OralPage />}
-              {activeTab === 'written' && loadedModules.written && <WrittenPage />}
-              {activeTab === 'content' && loadedModules.content && <ContentPage />}
-              {activeTab === 'user' && loadedModules.user && <UserPage />}
-            </motion.div>
+            {requireAuth ? (
+              <motion.div
+                key="auth"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="h-full"
+              >
+                {loadedModules.auth ? <AuthPage /> : (
+                  <div className="h-full flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-xl bg-brand-gradient flex items-center justify-center text-white text-2xl animate-pulse">
+                      🌍
+                    </div>
+                  </div>
+                )}
+              </motion.div>
+            ) : (
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0, y: 12, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                transition={pageTransition}
+                className="h-full"
+              >
+                {activeTab === 'translation' && <TranslationPage />}
+                {activeTab === 'learning' && loadedModules.learning && <LearningPage />}
+                {activeTab === 'oral' && loadedModules.oral && <OralPage />}
+                {activeTab === 'written' && loadedModules.written && <WrittenPage />}
+                {activeTab === 'content' && loadedModules.content && <ContentPage />}
+                {activeTab === 'user' && loadedModules.user && <UserPage />}
+              </motion.div>
+            )}
           </AnimatePresence>
         </div>
       </main>
 
       {/* Bottom navigation - hidden when keyboard is open on mobile */}
-      {(!isMobile || !keyboardOpen) && (
+      {(!isMobile || !keyboardOpen) && !requireAuth && (
         <BottomNav active={activeTab} onChange={setActiveTab} />
       )}
 
