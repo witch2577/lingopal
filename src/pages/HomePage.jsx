@@ -4,6 +4,15 @@
 const HomePage = () => {
   const [activeTab, setActiveTab] = useState('home');
   const { isMobile } = useMobileDetect();
+
+  // Lazy-load character group for home widget
+  React.useEffect(() => {
+    if (window.loadLazyModule && !window._characterGroupLoaded) {
+      window.loadLazyModule('character').then(() => {
+        window._characterGroupLoaded = true;
+      }).catch(() => {});
+    }
+  }, []);
   const profile = useUserStore(s => s.profile);
   const totalXP = useUserStore(s => s.totalXP);
   const streakDays = useUserStore(s => s.streakDays);
@@ -148,6 +157,11 @@ const HomePage = () => {
           </button>
         </div>
       </div>
+
+      {/* Character Home Widget */}
+      {typeof CharacterHomeWidget !== 'undefined' && (
+        <CharacterHomeWidget />
+      )}
     </div>
   );
 };

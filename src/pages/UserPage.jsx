@@ -4,6 +4,7 @@
 const UserPage = () => {
   const [activeTab, setActiveTab] = useState('profile'); // profile | dashboard | achievements | wordbook | streak | xplevel | suggestions | compare
   const { isMobile, windowWidth } = useMobileDetect();
+  const isAdmin = useAuthStore(s => s.isAdmin);
 
   const tabs = [
     { key: 'profile',      label: '我的',     icon: 'user' },
@@ -41,37 +42,69 @@ const UserPage = () => {
         ))}
       </div>
 
-      {/* Theme Toggle Card */}
-      <div className="card-c2 p-3 mb-3 theme-transition">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-lg">{useUserStore.getState().preferences.themeMode === 'immortal' ? '⚡' : '✨'}</span>
-            <div>
-              <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
-                {useUserStore.getState().preferences.themeMode === 'immortal' ? '仙族 · 修仙模式' : '人族 · 日常模式'}
-              </p>
-              <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
-                {useUserStore.getState().preferences.themeMode === 'immortal' ? '已觉醒仙缘，踏上语修之路' : '温馨陪伴，共同成长'}
-              </p>
+      {/* Theme Toggle Card — admin preview only; regular users get auto-switch via cultivation unlock */}
+      {isAdmin && (
+        <div className="card-c2 p-3 mb-3 theme-transition">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span className="text-lg">{useUserStore.getState().preferences.themeMode === 'immortal' ? '⚡' : '✨'}</span>
+              <div>
+                <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
+                  {useUserStore.getState().preferences.themeMode === 'immortal' ? '仙族 · 修仙模式' : '人族 · 日常模式'}
+                </p>
+                <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
+                  {useUserStore.getState().preferences.themeMode === 'immortal' ? '已觉醒仙缘，踏上语修之路' : '温馨陪伴，共同成长'}
+                </p>
+              </div>
             </div>
+            <button
+              onClick={() => {
+                const store = useUserStore.getState();
+                const current = store.preferences.themeMode || 'human';
+                if (current === 'human') {
+                  // Admin preview: trigger ceremony animation for human -> immortal
+                  if (window.triggerThemeCeremony) {
+                    window.triggerThemeCeremony('immortal');
+                  } else {
+                    store.setThemeMode('immortal');
+                  }
+                } else {
+                  store.setThemeMode('human');
+                }
+              }}
+              className="px-2 py-1 text-xs text-theme-tertiary bg-transparent border border-theme-border rounded hover:bg-theme-elevated transition-colors"
+            >
+              {useUserStore.getState().preferences.themeMode === 'immortal' ? '预览人族' : '预览仙族'}
+            </button>
           </div>
-          <button
-            onClick={() => {
-              const store = useUserStore.getState();
-              const current = store.preferences.themeMode || 'human';
-              if (current === 'human') {
-                // Trigger ceremony for human -> immortal
-                // In production this would be triggered by cultivation unlock
-                // For dev testing, direct toggle
-                store.setThemeMode('immortal');
-              } else {
-                store.setThemeMode('human');
-              }
-            }}
-            className="btn-secondary px-3 py-1.5 text-xs font-medium touch-target-sm"
-          >
-            {useUserStore.getState().preferences.themeMode === 'immortal' ? '切换人族' : '切换仙族'}
-          </button>
+          <p className="text-[10px] mt-1.5" style={{ color: 'var(--text-tertiary)' }}>
+            管理员预览 · 普通用户将在修仙解锁后自动切换
+          </p>
+        </div>
+      )}
+
+      {/* Account Info Card */}
+      <div className="card-c2 p-3 mb-3 theme-transition">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="w-10 h-10 rounded-xl bg-brand-gradient flex items-center justify-center text-white text-lg">
+            {useAuthStore.getState().supabaseUser?.email?.[0]?.toUpperCase() || '👤'}
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-semibold truncate" style={{ color: 'var(--text-primary)' }}>
+              {useAuthStore.getState().supabaseUser?.email || '未登录'}
+            </p>
+            <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
+              ID: {(useAuthStore.getState().supabaseUser?.id || '—').slice(0, 8)}…
+            </p>
+          </div>
+          {useAuthStore.getState().supabaseProfile?.tier && (
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-bold">
+              {useAuthStore.getState().supabaseProfile.tier}
+            </span>
+          )}
+        </div>
+        <div className="flex items-center gap-2 text-xs" style={{ color: 'var(--text-tertiary)' }}>
+          <span>昵称: {useAuthStore.getState().supabaseProfile?.nickname || useUserStore.getState().profile?.nickname || '—'}</span>
         </div>
       </div>
 
@@ -95,6 +128,20 @@ const UserPage = () => {
             {activeTab === 'wordbook' && <WordBook />}
           </motion.div>
         </AnimatePresence>
+      </div>
+
+      {/* Logout Button */}
+      <div className="mt-3 pb-2">
+        <button
+          onClick={() => {
+            if (confirm('确定要退出登录吗？')) {
+              useAuthStore.getState().signOut();
+            }
+          }}
+          className="w-full py-2.5 rounded-xl text-sm font-medium text-red-600 bg-red-50 border border-red-100 hover:bg-red-100 transition-colors touch-target"
+        >
+          退出登录
+        </button>
       </div>
     </div>
   );

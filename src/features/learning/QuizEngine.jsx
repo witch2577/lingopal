@@ -20,6 +20,10 @@ const QuizEngine = ({ level, onFinish }) => {
   const [isListening, setIsListening] = useState(false);
   const [recognizedText, setRecognizedText] = useState('');
   const [isRepeatDemo, setIsRepeatDemo] = useState(false);
+  const [characterFeedback, setCharacterFeedback] = useState(null);
+  // Batch 1: combo effect states
+  const [comboEffectVisible, setComboEffectVisible] = useState(false);
+  const [lastCombo, setLastCombo] = useState(0);
   const recognitionRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -175,6 +179,13 @@ const QuizEngine = ({ level, onFinish }) => {
       setAnswerResult(result);
       setShowResult(true);
       setShowFeedback(true);
+      if (typeof FeedbackEngine !== 'undefined') {
+        const fb = FeedbackEngine.onAnswer(true, { source: 'quiz', combo: result.combo });
+        if (fb) setCharacterFeedback(fb);
+      }
+      // Batch 1: combo effect trigger
+      setLastCombo(result.combo);
+      if (result.combo >= 3) setComboEffectVisible(true);
       return;
     }
 
@@ -184,6 +195,15 @@ const QuizEngine = ({ level, onFinish }) => {
     setAnswerResult(result);
     setShowResult(true);
     setShowFeedback(true);
+    // Batch 1: combo effect trigger
+    setLastCombo(result.combo);
+    if (result.combo >= 3 || !result.isCorrect) {
+      setComboEffectVisible(true);
+    }
+    if (typeof FeedbackEngine !== 'undefined') {
+      const fb = FeedbackEngine.onAnswer(result.isCorrect, { source: 'quiz', combo: result.combo });
+      if (fb) setCharacterFeedback(fb);
+    }
   };
 
   const handleRepeatListen = () => {
@@ -205,6 +225,10 @@ const QuizEngine = ({ level, onFinish }) => {
       setAnswerResult({ ...result, repeatScore: demoScore, isDemo: true });
       setShowResult(true);
       setShowFeedback(true);
+      if (typeof FeedbackEngine !== 'undefined') {
+        const fb = FeedbackEngine.onAnswer(false, { source: 'quiz', combo: 0 });
+        if (fb) setCharacterFeedback(fb);
+      }
       return;
     }
 
@@ -218,6 +242,10 @@ const QuizEngine = ({ level, onFinish }) => {
       setAnswerResult({ ...result, repeatScore: demoScore, isDemo: true });
       setShowResult(true);
       setShowFeedback(true);
+      if (typeof FeedbackEngine !== 'undefined') {
+        const fb = FeedbackEngine.onAnswer(false, { source: 'quiz', combo: 0 });
+        if (fb) setCharacterFeedback(fb);
+      }
       return;
     }
 
@@ -246,6 +274,10 @@ const QuizEngine = ({ level, onFinish }) => {
         const result = submitAnswer(currentQuestion.id, 'repeat', 'wrong');
         setAnswerResult({ ...result, repeatScore: demoScore, isDemo: true });
         setShowResult(true);
+        if (typeof FeedbackEngine !== 'undefined') {
+          const fb = FeedbackEngine.onAnswer(false, { source: 'quiz', combo: 0 });
+          if (fb) setCharacterFeedback(fb);
+        }
       } else {
         useUIStore.getState().showNotification('语音识别出错，本次练习不计分', 'warning');
         setIsRepeatDemo(true);
@@ -254,6 +286,10 @@ const QuizEngine = ({ level, onFinish }) => {
         const result = submitAnswer(currentQuestion.id, 'repeat', 'wrong');
         setAnswerResult({ ...result, repeatScore: demoScore, isDemo: true });
         setShowResult(true);
+        if (typeof FeedbackEngine !== 'undefined') {
+          const fb = FeedbackEngine.onAnswer(false, { source: 'quiz', combo: 0 });
+          if (fb) setCharacterFeedback(fb);
+        }
       }
     };
 
@@ -268,6 +304,10 @@ const QuizEngine = ({ level, onFinish }) => {
         const result = submitAnswer(currentQuestion.id, 'repeat', isCorrect ? currentQuestion.correctAnswer : 'wrong');
         setAnswerResult({ ...result, repeatScore: scoreResult.total, details: scoreResult.details, recognizedText: finalTranscript });
         setShowResult(true);
+        if (typeof FeedbackEngine !== 'undefined') {
+          const fb = FeedbackEngine.onAnswer(isCorrect, { source: 'quiz', combo: result.combo });
+          if (fb) setCharacterFeedback(fb);
+        }
 
         // Achievement check for perfect pronunciation
         if (scoreResult.total >= 90) {
@@ -287,10 +327,15 @@ const QuizEngine = ({ level, onFinish }) => {
 
   const handleNext = async () => {
     setShowFeedback(false);
+    setComboEffectVisible(false); // Batch 1: hide combo effect on next question
     const hasNext = nextQuestion();
     if (!hasNext) {
       // End of level
       const result = await finishLevel();
+      if (typeof FeedbackEngine !== 'undefined' && result) {
+        const fb = FeedbackEngine.onSessionEnd(result.correctCount, result.totalQuestions, { source: 'quiz', stars: result.stars });
+        if (fb) setCharacterFeedback(fb);
+      }
       onFinish?.(result);
     }
   };
@@ -362,14 +407,14 @@ const QuizEngine = ({ level, onFinish }) => {
       <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between mb-1">
-            <span className="text-xs text-theme-muted font-medium">
+            <span className="text-xs text-slate-400 font-medium">
               {currentQuestionIndex + 1} / {totalQuestions}
             </span>
-            <span className="text-xs text-theme-muted">
+            <span className="text-xs text-slate-400">
               {questionTypeLabels[currentQuestion.type]}
             </span>
           </div>
-          <div className="h-2 bg-theme-elevated rounded-full overflow-hidden">
+          <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
             <motion.div
               className="h-full bg-brand-gradient rounded-full"
               initial={{ width: 0 }}
@@ -414,7 +459,7 @@ const QuizEngine = ({ level, onFinish }) => {
         className="flex-1 flex flex-col"
       >
         <Card className="flex-1 mb-3 sm:mb-4" padding={isMobile ? 'p-4' : 'p-6'}>
-          <h2 className="text-lg sm:text-xl font-bold text-theme-primary text-center mb-4 sm:mb-6">
+          <h2 className="text-lg sm:text-xl font-bold text-slate-800 text-center mb-4 sm:mb-6">
             {currentQuestion.question}
           </h2>
 
@@ -427,14 +472,14 @@ const QuizEngine = ({ level, onFinish }) => {
               >
                 <Icon name="volume" size={isMobile ? 24 : 28} />
               </button>
-              <p className="text-xs text-theme-muted">点击播放发音</p>
+              <p className="text-xs text-slate-400">点击播放发音</p>
             </div>
           )}
 
           {currentQuestion.type === 'repeat' && (
             <div className="flex flex-col items-center mb-4 sm:mb-6">
               <AudioPlayer text={currentQuestion.sentence} lang={currentLang} showSpeed />
-              <p className="text-xs text-theme-muted mt-2">
+              <p className="text-xs text-slate-400 mt-2">
                 {isListening ? '正在聆听，请朗读...' : '先听示范，再跟读打分'}
               </p>
               {!showResult && (
@@ -469,15 +514,15 @@ const QuizEngine = ({ level, onFinish }) => {
                   }`}>
                     {repeatScore}
                   </div>
-                  <div className="text-xs text-theme-muted mt-1">
+                  <div className="text-xs text-slate-500 mt-1">
                     跟读评分（基于语音识别文本对比估算）
                   </div>
                   {answerResult?.recognizedText && (
-                    <div className="mt-2 text-xs text-theme-muted">
-                      识别结果: <span className="text-theme-secondary font-medium">{answerResult.recognizedText}</span>
+                    <div className="mt-2 text-xs text-slate-400">
+                      识别结果: <span className="text-slate-600 font-medium">{answerResult.recognizedText}</span>
                     </div>
                   )}
-                  <div className="text-sm text-theme-muted mt-1">
+                  <div className="text-sm text-slate-500 mt-1">
                     {repeatScore >= 90 ? '完美发音！' : repeatScore >= 70 ? '不错哦！' : '继续加油'}
                   </div>
                 </motion.div>
@@ -502,7 +547,7 @@ const QuizEngine = ({ level, onFinish }) => {
                           ? 'bg-emerald-100 text-emerald-700 opacity-60'
                           : isSelected
                             ? 'bg-brand-500 text-white shadow-md'
-                            : 'bg-theme-elevated text-theme-secondary hover:bg-theme-elevated'
+                            : 'bg-slate-50 text-slate-700 hover:bg-slate-100'
                       }`}
                     >
                       {item.text}
@@ -522,8 +567,8 @@ const QuizEngine = ({ level, onFinish }) => {
                         isMatched
                           ? 'bg-emerald-100 text-emerald-700 opacity-60'
                           : matchState.selectedLeft
-                            ? 'bg-theme-elevated text-theme-secondary hover:bg-brand-50 hover:text-brand-600'
-                            : 'bg-theme-elevated text-theme-disabled cursor-not-allowed'
+                            ? 'bg-slate-50 text-slate-700 hover:bg-brand-50 hover:text-brand-600'
+                            : 'bg-slate-50 text-slate-300 cursor-not-allowed'
                       }`}
                     >
                       {item.text}
@@ -542,7 +587,7 @@ const QuizEngine = ({ level, onFinish }) => {
                 const isCorrect = option === currentQuestion.correctAnswer;
                 const showCorrectWrong = showResult;
 
-                let optClass = 'bg-theme-elevated hover:bg-theme-elevated text-theme-secondary border-transparent';
+                let optClass = 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-transparent';
                 if (isSelected && !showCorrectWrong) {
                   optClass = 'bg-brand-50 text-brand-700 border-2 border-brand-400';
                 }
@@ -572,7 +617,7 @@ const QuizEngine = ({ level, onFinish }) => {
                             ? 'bg-red-500 text-white'
                             : isSelected
                               ? 'bg-brand-500 text-white'
-                              : 'bg-theme-elevated text-theme-muted'
+                              : 'bg-slate-200 text-slate-500'
                       }`}>
                         {String.fromCharCode(65 + idx)}
                       </span>
@@ -616,7 +661,7 @@ const QuizEngine = ({ level, onFinish }) => {
                     ? answerResult?.isCorrect
                       ? 'border-emerald-400 bg-emerald-50'
                       : 'border-red-400 bg-red-50'
-                    : 'border-theme-light focus:border-brand-400'
+                    : 'border-slate-200 focus:border-brand-400'
                 }`}
                 disabled={showResult}
               />
@@ -700,6 +745,29 @@ const QuizEngine = ({ level, onFinish }) => {
           isCorrect={answerResult?.isCorrect}
           combo={combo}
           onComplete={() => setShowFeedback(false)}
+        />
+      )}
+
+      {/* Character feedback overlay (non-blocking) */}
+      {characterFeedback && (
+        <CharacterFeedbackOverlay
+          feedback={characterFeedback}
+          onComplete={() => setCharacterFeedback(null)}
+        />
+      )}
+
+      {/* Batch 1: Combo effect overlay */}
+      {comboEffectVisible && typeof ComboEffect !== 'undefined' && (
+        <ComboEffect
+          combo={lastCombo}
+          maxCombo={maxCombo}
+          isCorrect={answerResult?.isCorrect ?? true}
+          feedbackActive={!!characterFeedback}
+          onBreak={(brokenCombo) => {
+            if (typeof Analytics !== 'undefined') {
+              Analytics.track('combo_break_recovery', { combo: brokenCombo });
+            }
+          }}
         />
       )}
     </div>

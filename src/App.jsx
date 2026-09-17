@@ -12,6 +12,7 @@ const App = () => {
     learning: false,
     oral: false,
     written: false,
+    practice: false,
     content: false,
     user: false,
     login: false,
@@ -21,6 +22,7 @@ const App = () => {
   const isAdmin = useAuthStore(s => s.isAdmin);
   const authLoading = useAuthStore(s => s.isLoading);
   const profile = useUserStore(s => s.profile);
+  const realm = useUserStore(s => s.realm);
   const { isMobile, isLandscape } = useMobileDetect();
   const { isOpen: keyboardOpen } = useKeyboard();
   const reducedMotion = useReducedMotion();
@@ -29,8 +31,9 @@ const App = () => {
   const tabModuleMap = {
     translation: null, // P0, already loaded
     learning: 'learning',
-    oral: 'oral',
-    written: 'written',
+    oral: 'practice',
+    written: 'practice',
+    practice: 'practice',
     content: 'content',
     user: 'user',
   };
@@ -59,6 +62,26 @@ const App = () => {
     window.setActiveTab = setActiveTab;
     return () => { delete window.setActiveTab; };
   }, [isLoggedIn, isAdmin]);
+
+  // Expose theme ceremony trigger for admin preview and auto-unlock
+  useEffect(() => {
+    window.triggerThemeCeremony = (targetMode) => {
+      setPendingThemeMode(targetMode);
+      setShowCeremony(true);
+    };
+    return () => { delete window.triggerThemeCeremony; };
+  }, []);
+
+  // Auto-unlock immortal theme when cultivation realm reaches >= 1
+  // Hook point: 修仙 system v0.2.3 will drive realm from completed languages
+  useEffect(() => {
+    if (isAdmin) return;
+    const userState = useUserStore.getState();
+    if ((userState.realm || 0) >= 1 && userState.preferences.themeMode === 'human') {
+      setPendingThemeMode('immortal');
+      setShowCeremony(true);
+    }
+  }, [realm, isAdmin]);
 
   // Initialize app
   useEffect(() => {
@@ -242,8 +265,9 @@ const App = () => {
               >
                 {activeTab === 'translation' && <TranslationPage />}
                 {activeTab === 'learning' && loadedModules.learning && <LearningPage />}
-                {activeTab === 'oral' && loadedModules.oral && <OralPage />}
-                {activeTab === 'written' && loadedModules.written && <WrittenPage />}
+                {activeTab === 'oral' && loadedModules.practice && <OralPage />}
+                {activeTab === 'written' && loadedModules.practice && <WrittenPage />}
+                {activeTab === 'practice' && loadedModules.practice && <PracticePage />}
                 {activeTab === 'content' && loadedModules.content && <ContentPage />}
                 {activeTab === 'user' && loadedModules.user && <UserPage />}
               </motion.div>

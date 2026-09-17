@@ -7,7 +7,7 @@
  * - 图片资源：Cache First
  */
 
-const CACHE_VERSION = 'v10.7.3';
+const CACHE_VERSION = 'v10.7.4';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const CDN_CACHE = `${CACHE_VERSION}-cdn`;
 const IMAGE_CACHE = `${CACHE_VERSION}-images`;
@@ -18,6 +18,7 @@ const APP_CORE_URLS = [
   './',
   './index.html',
   './manifest.json',
+  './vendor/supabase.min.js',
 ];
 
 // CDN 白名单域名（Cache First 策略）
