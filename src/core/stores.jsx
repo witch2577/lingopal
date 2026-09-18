@@ -524,7 +524,14 @@ const useWrittenStore = create((set, get) => ({
   reset: () => set({ score: 0, streak: 0, maxStreak: 0, totalAnswered: 0, correctCount: 0, isPlaying: false }),
 }));
 
+// ---- Practice Store (for consolidated practice hub) ----
+const usePracticeStore = create((set) => ({
+  activeTab: 'oral',
+  setActiveTab: (tab) => set({ activeTab: tab }),
+}));
+
 Object.assign(window, {
   useOralStore,
   useWrittenStore,
+  usePracticeStore,
 });

@@ -9,6 +9,7 @@ const App = () => {
   const [postOnboarding, setPostOnboarding] = useState(false);
   const [loadedModules, setLoadedModules] = useState({
     translation: true,
+    home: true,
     learning: false,
     oral: false,
     written: false,
@@ -30,6 +31,7 @@ const App = () => {
   // Module loading map: which lazy group each tab needs
   const tabModuleMap = {
     translation: null, // P0, already loaded
+    home: null, // P0, already loaded
     learning: 'learning',
     oral: 'practice',
     written: 'practice',
@@ -228,6 +230,7 @@ const App = () => {
               ? 'max-w-none px-4 pt-3 pb-16'
               : 'max-w-xl px-4 pt-4 pb-20'
           } ${
+            activeTab === 'home' ? 'scene-home' :
             activeTab === 'translation' ? 'scene-home' :
             activeTab === 'learning' ? 'scene-learning' :
             activeTab === 'practice' || activeTab === 'oral' || activeTab === 'written' ? 'scene-practice' :
@@ -263,6 +266,7 @@ const App = () => {
                 transition={pageTransition}
                 className="h-full"
               >
+                {activeTab === 'home' && <HomePage />}
                 {activeTab === 'translation' && <TranslationPage />}
                 {activeTab === 'learning' && loadedModules.learning && <LearningPage />}
                 {activeTab === 'oral' && loadedModules.practice && <OralPage />}

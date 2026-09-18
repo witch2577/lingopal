@@ -5,6 +5,22 @@ const UserPage = () => {
   const [activeTab, setActiveTab] = useState('profile'); // profile | dashboard | achievements | wordbook | streak | xplevel | suggestions | compare
   const { isMobile, windowWidth } = useMobileDetect();
   const isAdmin = useAuthStore(s => s.isAdmin);
+  const themeMode = useUserStore(s => s.preferences.themeMode);
+  const [showAdmin, setShowAdmin] = useState(false);
+  const [adminLoaded, setAdminLoaded] = useState(false);
+
+  const openAdmin = () => {
+    if (adminLoaded) {
+      setShowAdmin(true);
+      return;
+    }
+    if (window.loadLazyModule) {
+      window.loadLazyModule('admin').then(() => {
+        setAdminLoaded(true);
+        setShowAdmin(true);
+      });
+    }
+  };
 
   const tabs = [
     { key: 'profile',      label: '我的',     icon: 'user' },
@@ -21,7 +37,7 @@ const UserPage = () => {
   const isVerySmall = isMobile && windowWidth < 375;
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col min-h-full">
       {/* Top tab bar */}
       <div className={`flex rounded-2xl p-1 mb-3 sm:mb-4 ${isVerySmall ? 'flex-wrap' : 'overflow-x-auto hide-scrollbar'}`} style={{ background: 'var(--bg-elevated)' }}>
         {tabs.map(tab => (
@@ -47,20 +63,20 @@ const UserPage = () => {
         <div className="card-c2 p-3 mb-3 theme-transition">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="text-lg">{useUserStore.getState().preferences.themeMode === 'immortal' ? '⚡' : '✨'}</span>
+              <span className="text-lg">{themeMode === 'immortal' ? '⚡' : '✨'}</span>
               <div>
                 <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
-                  {useUserStore.getState().preferences.themeMode === 'immortal' ? '仙族 · 修仙模式' : '人族 · 日常模式'}
+                  {themeMode === 'immortal' ? '仙族 · 修仙模式' : '人族 · 日常模式'}
                 </p>
                 <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
-                  {useUserStore.getState().preferences.themeMode === 'immortal' ? '已觉醒仙缘，踏上语修之路' : '温馨陪伴，共同成长'}
+                  {themeMode === 'immortal' ? '已觉醒仙缘，踏上语修之路' : '温馨陪伴，共同成长'}
                 </p>
               </div>
             </div>
             <button
               onClick={() => {
                 const store = useUserStore.getState();
-                const current = store.preferences.themeMode || 'human';
+                const current = themeMode || 'human';
                 if (current === 'human') {
                   // Admin preview: trigger ceremony animation for human -> immortal
                   if (window.triggerThemeCeremony) {
@@ -74,7 +90,7 @@ const UserPage = () => {
               }}
               className="px-2 py-1 text-xs text-theme-tertiary bg-transparent border border-theme-border rounded hover:bg-theme-elevated transition-colors"
             >
-              {useUserStore.getState().preferences.themeMode === 'immortal' ? '预览人族' : '预览仙族'}
+              {themeMode === 'immortal' ? '预览人族' : '预览仙族'}
             </button>
           </div>
           <p className="text-[10px] mt-1.5" style={{ color: 'var(--text-tertiary)' }}>
@@ -108,8 +124,31 @@ const UserPage = () => {
         </div>
       </div>
 
+      {/* Admin Dashboard Entry */}
+      {isAdmin && (
+        <div className="card-c2 p-3 mb-3 theme-transition">
+          <button
+            onClick={openAdmin}
+            className="w-full flex items-center gap-3 text-left"
+          >
+            <div className="w-9 h-9 rounded-xl bg-brand-50 flex items-center justify-center text-brand-500">
+              <span className="text-lg">🛡️</span>
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
+                管理后台
+              </p>
+              <p className="text-xs" style={{ color: 'var(--text-tertiary)' }}>
+                邀请码管理 · 用户管理
+              </p>
+            </div>
+            <Icon name="chevron" size={16} className="text-theme-disabled" />
+          </button>
+        </div>
+      )}
+
       {/* Content */}
-      <div className="flex-1 overflow-y-auto hide-scrollbar">
+      <div>
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
@@ -143,6 +182,13 @@ const UserPage = () => {
           退出登录
         </button>
       </div>
+
+      {/* Admin Page Modal */}
+      {showAdmin && adminLoaded && (
+        <div className="fixed inset-0 z-50 bg-theme-elevated overflow-y-auto">
+          <AdminPage onClose={() => setShowAdmin(false)} />
+        </div>
+      )}
     </div>
   );
 };
