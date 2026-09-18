@@ -50,7 +50,7 @@ const SONG_LIBRARY = {
         { lineIndex: 4, blankIndex: 0, answer: 'city', hint: 'c_ty' },
       ],
       liaisons: [
-        { lineIndex: 0, positions: [[0, 10]], note: 'pack your → pa(k) your' },
+        { lineIndex: 0, positions: [[0, 9]], note: 'pack your → pa(k) your' },
         { lineIndex: 5, positions: [[5, 16]], note: 'every hello → every(y) hello' },
       ],
     },
@@ -75,8 +75,8 @@ const SONG_LIBRARY = {
         { lineIndex: 2, blankIndex: 0, answer: 'breakfast', hint: 'br__kf_st' },
       ],
       liaisons: [
-        { lineIndex: 1, positions: [[0, 11]], note: 'brush your → brus(h) your' },
-        { lineIndex: 2, positions: [[0, 9]], note: 'eat your → ea(t) your' },
+        { lineIndex: 1, positions: [[0, 10]], note: 'brush your → brus(h) your' },
+        { lineIndex: 2, positions: [[0, 8]], note: 'eat your → ea(t) your' },
       ],
     },
     {
@@ -102,8 +102,8 @@ const SONG_LIBRARY = {
         { lineIndex: 3, blankIndex: 0, answer: 'sister', hint: 's_st_r' },
       ],
       liaisons: [
-        { lineIndex: 0, positions: [[8, 18]], note: 'my family → my(y) family' },
-        { lineIndex: 2, positions: [[0, 10]], note: 'my mother → my(y) mother' },
+        { lineIndex: 0, positions: [[8, 17]], note: 'my family → my(y) family' },
+        { lineIndex: 2, positions: [[0, 9]], note: 'my mother → my(y) mother' },
         { lineIndex: 4, positions: [[9, 17]], note: 'we laugh → we(e) laugh' },
       ],
     },
@@ -157,7 +157,7 @@ const SONG_LIBRARY = {
         { lineIndex: 3, blankIndex: 0, answer: 'Yellow', hint: 'Y_ll_w' },
       ],
       liaisons: [
-        { lineIndex: 0, positions: [[3, 10]], note: 'is the → is(s) the' },
+        { lineIndex: 0, positions: [[4, 10]], note: 'is the → is(s) the' },
         { lineIndex: 4, positions: [[7, 17]], note: 'all around → al(l) around' },
       ],
     },
@@ -184,8 +184,8 @@ const SONG_LIBRARY = {
         { lineIndex: 4, blankIndex: 0, answer: 'water', hint: 'wat_r' },
       ],
       liaisons: [
-        { lineIndex: 0, positions: [[6, 19]], note: 'and bananas → an(d) bananas' },
-        { lineIndex: 3, positions: [[6, 17]], note: 'every bite → ever(y) bite' },
+        { lineIndex: 0, positions: [[7, 18]], note: 'and bananas → an(d) bananas' },
+        { lineIndex: 3, positions: [[7, 17]], note: 'every bite → ever(y) bite' },
       ],
     },
     {
