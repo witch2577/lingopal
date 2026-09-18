@@ -1,6 +1,5 @@
 // ========== Language Preferences Settings ==========
 // Target languages (max 5), per-language difficulty, learning goal, default language
-
 const LanguagePreferences = ({ onBack }) => {
   const { profile, userId, updateProfile } = useUserStore();
   const [form, setForm] = useState({
@@ -10,11 +9,9 @@ const LanguagePreferences = ({ onBack }) => {
     defaultLanguage: profile?.defaultLanguage || 'en',
   });
   const [isSaving, setIsSaving] = useState(false);
-
   const learnableLanguages = useMemo(() =>
     LANGUAGES.filter(l => l.type !== 'system'),
   []);
-
   const handleToggleLanguage = (code) => {
     setForm(prev => {
       const has = prev.targetLanguages.includes(code);
@@ -36,14 +33,12 @@ const LanguagePreferences = ({ onBack }) => {
       return { ...prev, targetLanguages: nextTargets, currentLevel: nextLevels };
     });
   };
-
   const handleSetLevel = (code, level) => {
     setForm(prev => ({
       ...prev,
       currentLevel: { ...prev.currentLevel, [code]: level },
     }));
   };
-
   const handleSave = async () => {
     if (!userId) {
       useUIStore.getState().showNotification('请先登录', 'warning');
@@ -56,21 +51,62 @@ const LanguagePreferences = ({ onBack }) => {
       learningGoal: form.learningGoal,
       defaultLanguage: form.defaultLanguage,
     };
+
+    // Local save first
     try {
       if (window.db) {
         await db.userProfiles.update(userId, updates);
       }
       updateProfile(updates);
-      useUIStore.getState().showNotification('语言偏好已保存', 'success');
-      onBack?.();
     } catch (e) {
-      console.error('[LanguagePreferences] 保存失败:', e);
+      console.error('[LanguagePreferences] 本地保存失败:', e);
       useUIStore.getState().showNotification('保存失败', 'error');
-    } finally {
       setIsSaving(false);
+      return;
     }
-  };
 
+    // Cloud sync
+    const authState = useAuthStore.getState();
+    const supabaseUser = authState.supabaseUser;
+    let cloudError = null;
+    if (supabaseUser?.id) {
+      try {
+        const sb = getSupabaseClient?.();
+        if (sb) {
+          const { error } = await sb
+            .from('profiles')
+            .update({
+              target_languages: form.targetLanguages,
+              current_level: form.currentLevel,
+              learning_goal: form.learningGoal,
+              default_language: form.defaultLanguage,
+            })
+            .eq('id', supabaseUser.id);
+          if (error) throw error;
+          useAuthStore.setState(state => ({
+            supabaseProfile: {
+              ...state.supabaseProfile,
+              target_languages: form.targetLanguages,
+              current_level: form.currentLevel,
+              learning_goal: form.learningGoal,
+              default_language: form.defaultLanguage,
+            }
+          }));
+        }
+      } catch (e) {
+        console.error('[LanguagePreferences] 云端同步失败:', e);
+        cloudError = e;
+      }
+    }
+
+    if (cloudError) {
+      useUIStore.getState().showNotification('云端同步失败，已保存在本机', 'warning');
+    } else {
+      useUIStore.getState().showNotification('语言偏好已保存', 'success');
+    }
+    setIsSaving(false);
+    onBack?.();
+  };
   return (
     <div className="flex flex-col gap-4">
       {/* Header */}
@@ -83,7 +119,6 @@ const LanguagePreferences = ({ onBack }) => {
         </button>
         <h2 className="text-lg font-bold text-slate-800">语言偏好设置</h2>
       </div>
-
       {/* Target Languages */}
       <Card padding="p-4">
         <h3 className="font-semibold text-slate-800 text-sm mb-3 flex items-center gap-2">
@@ -111,7 +146,6 @@ const LanguagePreferences = ({ onBack }) => {
           })}
         </div>
       </Card>
-
       {/* Per-language Difficulty */}
       {form.targetLanguages.length > 0 && (
         <Card padding="p-4">
@@ -150,7 +184,6 @@ const LanguagePreferences = ({ onBack }) => {
           </div>
         </Card>
       )}
-
       {/* Learning Goal */}
       <Card padding="p-4">
         <h3 className="font-semibold text-slate-800 text-sm mb-3 flex items-center gap-2">
@@ -173,7 +206,6 @@ const LanguagePreferences = ({ onBack }) => {
           ))}
         </div>
       </Card>
-
       {/* Default Language */}
       <Card padding="p-4">
         <h3 className="font-semibold text-slate-800 text-sm mb-3 flex items-center gap-2">
@@ -202,7 +234,6 @@ const LanguagePreferences = ({ onBack }) => {
           )}
         </div>
       </Card>
-
       {/* Save */}
       <Button
         fullWidth
@@ -215,5 +246,4 @@ const LanguagePreferences = ({ onBack }) => {
     </div>
   );
 };
-
 Object.assign(window, { LanguagePreferences });

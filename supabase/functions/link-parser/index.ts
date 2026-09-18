@@ -8,6 +8,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 // ===== CORS: Origin whitelist =====
 const ALLOWED_ORIGINS = [
   'https://lingopal.app',
+  'https://witch2577.github.io',
   'https://4kxsfcq9fyq10.feishu.cn',
   'http://localhost:5173',
   'http://localhost:3000',

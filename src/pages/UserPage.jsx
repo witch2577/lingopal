@@ -5,6 +5,8 @@ const UserPage = () => {
   const [activeTab, setActiveTab] = useState('profile'); // profile | dashboard | achievements | wordbook | streak | xplevel | suggestions | compare
   const { isMobile, windowWidth } = useMobileDetect();
   const isAdmin = useAuthStore(s => s.isAdmin);
+  const supabaseProfile = useAuthStore(s => s.supabaseProfile);
+  const localProfile = useUserStore(s => s.profile);
   const themeMode = useUserStore(s => s.preferences.themeMode);
   const [showAdmin, setShowAdmin] = useState(false);
   const [adminLoaded, setAdminLoaded] = useState(false);
@@ -120,7 +122,7 @@ const UserPage = () => {
           )}
         </div>
         <div className="flex items-center gap-2 text-xs" style={{ color: 'var(--text-tertiary)' }}>
-          <span>昵称: {useAuthStore.getState().supabaseProfile?.nickname || useUserStore.getState().profile?.nickname || '—'}</span>
+          <span>昵称: {supabaseProfile?.nickname || localProfile?.nickname || '—'}</span>
         </div>
       </div>
 

@@ -1,10 +1,9 @@
 // ========== User Profile Component ==========
 // Displays and edits 7-dimension user profile
-
 const UserProfile = () => {
   const { profile, userId, updateProfile } = useUserStore();
   const [isEditing, setIsEditing] = useState(false);
-
+  const [subPage, setSubPage] = useState(null);
   // Form state includes all 7 dimensions + legacy fields
   const [form, setForm] = useState({
     nickname: profile?.nickname || '',
@@ -21,7 +20,6 @@ const UserProfile = () => {
     weakAreas: profile?.weakAreas || ['vocabulary'],
     studyTimePreference: profile?.studyTimePreference || 'evening',
   });
-
   useEffect(() => {
     if (profile) {
       setForm({
@@ -40,13 +38,35 @@ const UserProfile = () => {
       });
     }
   }, [profile?.nickname]);
-
-  const handleSave = () => {
+  const handleSave = async () => {
     updateProfile(form);
     setIsEditing(false);
-    useUIStore.getState().showNotification('资料已更新', 'success');
-  };
 
+    const authState = useAuthStore.getState();
+    const supabaseUser = authState.supabaseUser;
+
+    if (supabaseUser?.id) {
+      try {
+        const sb = getSupabaseClient?.();
+        if (sb) {
+          const { error } = await sb
+            .from('profiles')
+            .update({ nickname: form.nickname })
+            .eq('id', supabaseUser.id);
+          if (error) throw error;
+          useAuthStore.setState(state => ({
+            supabaseProfile: { ...state.supabaseProfile, nickname: form.nickname }
+          }));
+          useUIStore.getState().showNotification('资料已更新', 'success');
+        }
+      } catch (e) {
+        console.error('[UserProfile] 云端同步失败:', e);
+        useUIStore.getState().showNotification('云端同步失败，已保存在本机', 'warning');
+      }
+    } else {
+      useUIStore.getState().showNotification('资料已更新', 'success');
+    }
+  };
   const handleClearAllData = () => {
     if (!confirm('确定要清除所有数据吗？此操作不可恢复！')) return;
     if (window.db) {
@@ -55,7 +75,6 @@ const UserProfile = () => {
       });
     }
   };
-
   const streakDays = useUserStore(s => s.streakDays);
   const totalXP = useUserStore(s => s.totalXP);
   const achievements = useUserStore(s => s.achievements);
@@ -64,7 +83,6 @@ const UserProfile = () => {
   const [oralRecords, setOralRecords] = useState([]);
   const [playingRecordId, setPlayingRecordId] = useState(null);
   const audioRef = useRef(null);
-
   useEffect(() => {
     const load = async () => {
       if (!userId || !window.db) return;
@@ -79,7 +97,6 @@ const UserProfile = () => {
     };
     load();
   }, [userId]);
-
   const playRecord = (record) => {
     if (!record.blob || playingRecordId === record.id) {
       if (audioRef.current) {
@@ -107,7 +124,6 @@ const UserProfile = () => {
     setPlayingRecordId(record.id);
     audio.play();
   };
-
   useEffect(() => {
     return () => {
       if (audioRef.current) {
@@ -116,7 +132,6 @@ const UserProfile = () => {
       }
     };
   }, []);
-
   // Helper: render a dimension as read-only chip
   const DimChip = ({ label, value, options }) => {
     const opt = options?.find(o => o.key === value);
@@ -129,7 +144,6 @@ const UserProfile = () => {
       </div>
     );
   };
-
   // Helper: render multi-select chips
   const MultiDimChips = ({ label, values, options }) => {
     const selected = options?.filter(o => values?.includes(o.key));
@@ -146,7 +160,6 @@ const UserProfile = () => {
       </div>
     );
   };
-
   if (isEditing) {
     return (
       <div className="flex flex-col gap-4">
@@ -202,11 +215,9 @@ const UserProfile = () => {
                 className="w-full px-4 py-2.5 rounded-xl border-2 border-theme-light focus:border-brand-400 focus:outline-none text-sm"
               />
             </div>
-
             {/* 7-dimension profile */}
             <div className="border-t border-theme-light pt-4">
               <h4 className="text-sm font-semibold text-theme-secondary mb-3">学习画像</h4>
-
               {/* Language Level */}
               <div className="mb-3">
                 <label className="text-sm text-theme-secondary mb-1 block">当前语言水平</label>
@@ -226,7 +237,6 @@ const UserProfile = () => {
                   ))}
                 </div>
               </div>
-
               {/* Learning Goal */}
               <div className="mb-3">
                 <label className="text-sm text-theme-secondary mb-1 block">学习目标</label>
@@ -246,7 +256,6 @@ const UserProfile = () => {
                   ))}
                 </div>
               </div>
-
               {/* Daily Minutes */}
               <div className="mb-3">
                 <label className="text-sm text-theme-secondary mb-1 block">每日可用时长</label>
@@ -266,7 +275,6 @@ const UserProfile = () => {
                   ))}
                 </div>
               </div>
-
               {/* Learning Style */}
               <div className="mb-3">
                 <label className="text-sm text-theme-secondary mb-1 block">学习偏好</label>
@@ -286,7 +294,6 @@ const UserProfile = () => {
                   ))}
                 </div>
               </div>
-
               {/* Known Languages */}
               <div className="mb-3">
                 <label className="text-sm text-theme-secondary mb-1 block">已掌握语言</label>
@@ -314,7 +321,6 @@ const UserProfile = () => {
                   })}
                 </div>
               </div>
-
               {/* Weak Areas */}
               <div className="mb-3">
                 <label className="text-sm text-theme-secondary mb-1 block">薄弱环节</label>
@@ -342,7 +348,6 @@ const UserProfile = () => {
                   })}
                 </div>
               </div>
-
               {/* Study Time Preference */}
               <div className="mb-3">
                 <label className="text-sm text-theme-secondary mb-1 block">学习时段偏好</label>
@@ -376,7 +381,9 @@ const UserProfile = () => {
       </div>
     );
   }
-
+  if (subPage === 'language') return <LanguagePreferences onBack={() => setSubPage(null)} />;
+  if (subPage === 'learning') return <LearningPlan onBack={() => setSubPage(null)} />;
+  if (subPage === 'favorites') return <MyFavorites onBack={() => setSubPage(null)} />;
   return (
     <div className="flex flex-col gap-4">
       {/* Profile header */}
@@ -387,6 +394,7 @@ const UserProfile = () => {
           </div>
           <div className="flex-1 min-w-0">
             <h2 className="text-xl font-bold truncate">{profile?.nickname || '学习者'}</h2>
+
             <p className="text-sm opacity-80">ID: {userId?.slice(0, 12)}</p>
           </div>
           <button
@@ -396,7 +404,6 @@ const UserProfile = () => {
             <Icon name="settings" size={20} />
           </button>
         </div>
-
         {/* Level + XP bar */}
         <div className="mt-3">
           <div className="flex items-center justify-between text-xs opacity-80 mb-1">
@@ -407,7 +414,6 @@ const UserProfile = () => {
             <div className="h-full bg-theme-card/80 rounded-full" style={{ width: `${xpProgress.progress * 100}%` }} />
           </div>
         </div>
-
         <div className="grid grid-cols-4 gap-2 mt-4">
           <div className="bg-theme-card/15 backdrop-blur-sm rounded-xl p-2.5 text-center">
             <div className="text-xl font-bold">{streakDays || 0}</div>
@@ -427,7 +433,6 @@ const UserProfile = () => {
           </div>
         </div>
       </Card>
-
       {/* 7-dimension profile summary */}
       <Card padding="p-4">
         <h3 className="font-semibold text-theme-primary text-sm mb-3 flex items-center gap-2">
@@ -448,7 +453,6 @@ const UserProfile = () => {
           <MultiDimChips label="薄弱项" values={profile?.weakAreas} options={PROFILE_DIMENSIONS.weakAreas.options} />
         </div>
       </Card>
-
       {/* Quick stats */}
       <Card padding="p-4">
         <h3 className="font-semibold text-theme-primary text-sm mb-3">学习语言</h3>
@@ -466,7 +470,6 @@ const UserProfile = () => {
           )}
         </div>
       </Card>
-
       {/* Oral training records */}
       {oralRecords.length > 0 && (
         <Card padding="p-4">
@@ -502,7 +505,6 @@ const UserProfile = () => {
           </div>
         </Card>
       )}
-
       {/* PWA & Offline */}
       <Card padding="p-0">
         {/* 安装到主屏 */}
@@ -510,11 +512,10 @@ const UserProfile = () => {
         {/* 离线数据管理 */}
         <OfflineStorageInfo />
       </Card>
-
       {/* Settings list */}
       <Card padding="p-0">
         <button
-          onClick={() => useUIStore.getState().showNotification('功能开发中', 'info')}
+          onClick={() => setSubPage('language')}
           className="w-full flex items-center gap-3 p-4 hover:bg-theme-elevated transition-colors text-left border-b border-theme-light"
         >
           <div className="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center text-blue-500">
@@ -524,7 +525,7 @@ const UserProfile = () => {
           <Icon name="chevron" size={16} className="text-theme-disabled" />
         </button>
         <button
-          onClick={() => useUIStore.getState().showNotification('功能开发中', 'info')}
+          onClick={() => setSubPage('learning')}
           className="w-full flex items-center gap-3 p-4 hover:bg-theme-elevated transition-colors text-left border-b border-theme-light"
         >
           <div className="w-9 h-9 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-500">
@@ -534,7 +535,7 @@ const UserProfile = () => {
           <Icon name="chevron" size={16} className="text-theme-disabled" />
         </button>
         <button
-          onClick={() => useUIStore.getState().showNotification('功能开发中', 'info')}
+          onClick={() => setSubPage('favorites')}
           className="w-full flex items-center gap-3 p-4 hover:bg-theme-elevated transition-colors text-left border-b border-theme-light"
         >
           <div className="w-9 h-9 rounded-xl bg-amber-50 flex items-center justify-center text-amber-500">
@@ -554,7 +555,6 @@ const UserProfile = () => {
           <Icon name="chevron" size={16} className="text-red-300" />
         </button>
       </Card>
-
       {/* Version info */}
       <div className="text-center text-xs text-theme-disabled pt-4 pb-2">
         LingoPal v1.2.0 · 语伴 · PWA
@@ -562,12 +562,10 @@ const UserProfile = () => {
     </div>
   );
 };
-
 // ========== PWA 设置项 ==========
 const PWASettingsItem = () => {
   const [isInstalled, setIsInstalled] = useState(false);
   const [installPrompt, setInstallPrompt] = useState(null);
-
   useEffect(() => {
     const checkStatus = () => {
       const installed =
@@ -577,17 +575,14 @@ const PWASettingsItem = () => {
       setIsInstalled(installed);
     };
     checkStatus();
-
     const handlePrompt = (e) => {
       e.preventDefault();
       setInstallPrompt(e);
     };
     window.addEventListener('beforeinstallprompt', handlePrompt);
     window.addEventListener('appinstalled', () => setIsInstalled(true));
-
     return () => window.removeEventListener('beforeinstallprompt', handlePrompt);
   }, []);
-
   const handleInstall = async () => {
     if (installPrompt) {
       installPrompt.prompt();
@@ -601,7 +596,6 @@ const PWASettingsItem = () => {
       );
     }
   };
-
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
@@ -614,7 +608,6 @@ const PWASettingsItem = () => {
       useUIStore.getState().showNotification('链接已复制', 'success');
     }
   };
-
   return (
     <>
       <button
@@ -651,11 +644,9 @@ const PWASettingsItem = () => {
     </>
   );
 };
-
 // ========== 离线存储信息 ==========
 const OfflineStorageInfo = () => {
   const [storageInfo, setStorageInfo] = useState({ used: 0, total: 0, dbRecords: 0 });
-
   useEffect(() => {
     const fetchStorage = async () => {
       try {
@@ -682,16 +673,13 @@ const OfflineStorageInfo = () => {
     };
     fetchStorage();
   }, []);
-
   const formatBytes = (bytes) => {
     if (bytes < 1024) return `${bytes} B`;
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
-
   const usagePercent = storageInfo.total > 0
     ? (storageInfo.used / storageInfo.total) * 100 : 0;
-
   return (
     <button
       onClick={() => {
@@ -722,5 +710,4 @@ const OfflineStorageInfo = () => {
     </button>
   );
 };
-
 Object.assign(window, { UserProfile, PWASettingsItem, OfflineStorageInfo });
