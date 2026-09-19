@@ -1,6 +1,13 @@
 // ========== Splash Screen ==========
 const SplashScreen = ({ onComplete }) => {
   const [isExiting, setIsExiting] = useState(false);
+  const raceVariant = (() => {
+    try {
+      return localStorage.getItem('lingopal_splash_race') || 'human';
+    } catch (e) {
+      return 'human';
+    }
+  })();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -35,8 +42,21 @@ const SplashScreen = ({ onComplete }) => {
         }}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       >
-        <div className="w-24 h-24 rounded-3xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-white text-5xl shadow-2xl animate-breathe">
-          🌍
+        <div className="flex items-end gap-1 px-4">
+          <motion.img
+            src={`assets/splash/${raceVariant}_boy.png`}
+            className="h-36 w-auto object-contain drop-shadow-2xl"
+            alt=""
+            animate={{ y: [0, -6, 0] }}
+            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+          />
+          <motion.img
+            src={`assets/splash/${raceVariant}_girl.png`}
+            className="h-40 w-auto object-contain drop-shadow-2xl"
+            alt=""
+            animate={{ y: [0, -8, 0] }}
+            transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+          />
         </div>
         <div className="flex flex-col items-center gap-2">
           <h1 className="text-3xl font-bold text-white tracking-wide">语伴</h1>
