@@ -1,8 +1,58 @@
-// ========== App Root ==========
+// ========== Splash Screen ==========
+const SplashScreen = ({ onComplete }) => {
+  const [isExiting, setIsExiting] = useState(false);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsExiting(true);
+    }, 1200);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleExit = () => {
+    if (!isExiting) setIsExiting(true);
+  };
+
+  return (
+    <motion.div
+      className="fixed inset-0 z-[60] flex items-center justify-center cursor-pointer"
+      style={{ background: 'var(--brand-gradient)' }}
+      initial={{ opacity: 1 }}
+      animate={{ opacity: isExiting ? 0 : 1 }}
+      transition={{ duration: 0.4, ease: 'easeInOut' }}
+      onAnimationComplete={() => {
+        if (isExiting) onComplete();
+      }}
+      onClick={handleExit}
+    >
+      <motion.div
+        className="flex flex-col items-center gap-6 select-none"
+        initial={{ scale: 0.85, opacity: 0, y: 20 }}
+        animate={{
+          scale: isExiting ? 0.95 : 1,
+          opacity: isExiting ? 0 : 1,
+          y: isExiting ? -10 : 0,
+        }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <div className="w-24 h-24 rounded-3xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-white text-5xl shadow-2xl animate-breathe">
+          🌍
+        </div>
+        <div className="flex flex-col items-center gap-2">
+          <h1 className="text-3xl font-bold text-white tracking-wide">语伴</h1>
+          <p className="text-lg font-medium text-white/80">LingoPal</p>
+        </div>
+        <p className="text-sm text-white/50 mt-2">点击任意处跳过</p>
+      </motion.div>
+    </motion.div>
+  );
+};
+
+// ========== App Root ==========
 const App = () => {
-  const [activeTab, setActiveTab] = useState('translation');
+  const [activeTab, setActiveTab] = useState('home');
   const [isInitialized, setIsInitialized] = useState(false);
+  const [showSplash, setShowSplash] = useState(true);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [showCeremony, setShowCeremony] = useState(false);
   const [pendingThemeMode, setPendingThemeMode] = useState(null);
@@ -27,7 +77,6 @@ const App = () => {
   const { isMobile, isLandscape } = useMobileDetect();
   const { isOpen: keyboardOpen } = useKeyboard();
   const reducedMotion = useReducedMotion();
-
   // Module loading map: which lazy group each tab needs
   const tabModuleMap = {
     translation: null, // P0, already loaded
@@ -39,7 +88,6 @@ const App = () => {
     content: 'content',
     user: 'user',
   };
-
   // Lazy-load auth module on first need
   useEffect(() => {
     if (!loadedModules.auth && window.loadLazyModule) {
@@ -48,7 +96,6 @@ const App = () => {
       });
     }
   }, []);
-
   // Lazy-load module when tab changes
   useEffect(() => {
     const group = tabModuleMap[activeTab];
@@ -58,13 +105,11 @@ const App = () => {
       });
     }
   }, [activeTab]);
-
   // Expose tab switcher for empty state actions
   useEffect(() => {
     window.setActiveTab = setActiveTab;
     return () => { delete window.setActiveTab; };
   }, [isLoggedIn, isAdmin]);
-
   // Expose theme ceremony trigger for admin preview and auto-unlock
   useEffect(() => {
     window.triggerThemeCeremony = (targetMode) => {
@@ -73,7 +118,6 @@ const App = () => {
     };
     return () => { delete window.triggerThemeCeremony; };
   }, []);
-
   // Auto-unlock immortal theme when cultivation realm reaches >= 1
   // Hook point: 修仙 system v0.2.3 will drive realm from completed languages
   useEffect(() => {
@@ -84,27 +128,22 @@ const App = () => {
       setShowCeremony(true);
     }
   }, [realm, isAdmin]);
-
   // Initialize app
   useEffect(() => {
     let cancelled = false;
     let timeoutId = null;
-
     const init = async () => {
       try {
         // Load preferences (sync, fast) — includes themeMode restoration
         useUserStore.getState().loadPreferences();
         // Theme already applied by loadPreferences via data-theme attribute
-
         // Init auth, user and load history in parallel
         const [authProfile, userProfile] = await Promise.all([
           useAuthStore.getState().init(),
           useUserStore.getState().init(),
           useTranslationStore.getState().loadHistory(),
         ]);
-
         if (cancelled) return;
-
         // Check weekly content rotation
         const weekChanged = hasWeekChanged();
         if (weekChanged) {
@@ -118,7 +157,6 @@ const App = () => {
             localStorage.removeItem('lingopal_content_week_3_dismissed');
           } catch (e) {}
         }
-
         // Check if onboarding needed (new user without nickname)
         const userState = useUserStore.getState();
         const authState = useAuthStore.getState();
@@ -139,7 +177,6 @@ const App = () => {
         }
       }
     };
-
     // 5 秒超时兜底：无论 init 成功/失败/挂起，5 秒内必须解除初始化状态
     timeoutId = setTimeout(() => {
       if (!cancelled) {
@@ -147,22 +184,18 @@ const App = () => {
         setIsInitialized(true);
       }
     }, 5000);
-
     init();
-
     return () => {
       cancelled = true;
       if (timeoutId) clearTimeout(timeoutId);
     };
   }, []);
-
   const handleOnboardingComplete = () => {
     setShowOnboarding(false);
     setPostOnboarding(true);
     localStorage.setItem('lingopal_onboarded', 'true');
     setActiveTab('learning');
   };
-
   // Lazy-load login module when onboarding is shown
   useEffect(() => {
     if (showOnboarding && !loadedModules.login && window.loadLazyModule) {
@@ -171,53 +204,53 @@ const App = () => {
       });
     }
   }, [showOnboarding]);
-
-  if (!isInitialized) {
-    return (
-      <div className="h-full flex items-center justify-center scene-home">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.3 }}
-          className="flex flex-col items-center gap-5"
-        >
-          <div className="relative">
-            <div className="w-16 h-16 rounded-2xl bg-brand-gradient flex items-center justify-center text-white text-3xl shadow-lg shadow-brand-500/30 animate-breathe">
-              🌍
-            </div>
-            <motion.div
-              className="absolute inset-0 rounded-2xl border-2 border-brand-400"
-              animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0, 0.5] }}
-              transition={{ repeat: Infinity, duration: 1.5 }}
-            />
-          </div>
-          <div className="flex flex-col items-center gap-2">
-            <p className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>语伴 LingoPal</p>
-            <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>正在初始化...</p>
-          </div>
-          <div className="w-48 h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--border-light)' }}>
-            <motion.div
-              className="h-full rounded-full"
-              style={{ background: 'var(--brand-gradient)' }}
-              animate={{ width: ['0%', '70%', '90%', '100%'] }}
-              transition={{ duration: 2, ease: 'easeInOut' }}
-            />
-          </div>
-        </motion.div>
-      </div>
-    );
-  }
-
   // Animation config based on device capabilities
   const pageTransition = reducedMotion
     ? { duration: 0 }
     : isMobile
       ? { duration: 0.12 }
       : { duration: 0.15 };
-
   const requireAuth = IS_SUPABASE_CONFIGURED && !isLoggedIn && !authLoading && !postOnboarding;
-
   return (
+    <>
+      <AnimatePresence>
+        {showSplash && (
+          <SplashScreen onComplete={() => setShowSplash(false)} />
+        )}
+      </AnimatePresence>
+      {!isInitialized ? (
+        <div className="h-full flex items-center justify-center scene-home">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+            className="flex flex-col items-center gap-5"
+          >
+            <div className="relative">
+              <div className="w-16 h-16 rounded-2xl bg-brand-gradient flex items-center justify-center text-white text-3xl shadow-lg shadow-brand-500/30 animate-breathe">
+                🌍
+              </div>
+              <motion.div
+                className="absolute inset-0 rounded-2xl border-2 border-brand-400"
+                animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0, 0.5] }}
+                transition={{ repeat: Infinity, duration: 1.5 }}
+              />
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <p className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>语伴 LingoPal</p>
+              <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>正在初始化...</p>
+            </div>
+            <div className="w-48 h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--border-light)' }}>
+              <motion.div
+                className="h-full rounded-full"
+                style={{ background: 'var(--brand-gradient)' }}
+                animate={{ width: ['0%', '70%', '90%', '100%'] }}
+                transition={{ duration: 2, ease: 'easeInOut' }}
+              />
+            </div>
+          </motion.div>
+        </div>
+      ) : (
     <div className={`h-full flex flex-col theme-transition ${isMobile ? 'mobile-compact' : ''}`}
       style={{ background: 'var(--bg-body)' }}>
       {/* PWA Manager: 离线状态、安装提示、更新检测 */}
@@ -279,18 +312,14 @@ const App = () => {
           </AnimatePresence>
         </div>
       </main>
-
       {/* Bottom navigation - hidden when keyboard is open on mobile */}
       {(!isMobile || !keyboardOpen) && !requireAuth && (
         <BottomNav active={activeTab} onChange={setActiveTab} />
       )}
-
       {/* Global notification */}
       <Notification />
-
       {/* Confetti */}
       <ConfettiEffect />
-
       {/* Theme Switching Ceremony */}
       <ThemeCeremony
         isActive={showCeremony}
@@ -302,7 +331,6 @@ const App = () => {
           }
         }}
       />
-
       {/* Onboarding Modal */}
       <AnimatePresence>
         {showOnboarding && loadedModules.login && (
@@ -312,9 +340,10 @@ const App = () => {
         )}
       </AnimatePresence>
     </div>
+      )}
+    </>
   );
 };
-
 // Mount app
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
