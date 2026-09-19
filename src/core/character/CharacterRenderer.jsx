@@ -328,3 +328,4 @@ Object.assign(window, {
   CharacterPreview,
   extractSVGInner,
 });
+
