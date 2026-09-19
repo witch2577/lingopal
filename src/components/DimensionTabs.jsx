@@ -141,3 +141,4 @@ Object.assign(window, {
   CATEGORY_META,
   DIMENSIONS_BY_CATEGORY,
 });
+
