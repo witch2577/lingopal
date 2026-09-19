@@ -3,6 +3,7 @@
 
 const HomePage = () => {
   const [activeTab, setActiveTab] = useState('home');
+  const [charReady, setCharReady] = useState(typeof CharacterHomeWidget !== 'undefined');
   const { isMobile } = useMobileDetect();
 
   // Lazy-load character group for home widget
@@ -10,7 +11,10 @@ const HomePage = () => {
     if (window.loadLazyModule && !window._characterGroupLoaded) {
       window.loadLazyModule('character').then(() => {
         window._characterGroupLoaded = true;
+        setCharReady(true);
       }).catch(() => {});
+    } else if (window._characterGroupLoaded) {
+      setCharReady(true);
     }
   }, []);
   const profile = useUserStore(s => s.profile);
@@ -159,7 +163,7 @@ const HomePage = () => {
       </div>
 
       {/* Character Home Widget */}
-      {typeof CharacterHomeWidget !== 'undefined' && (
+      {charReady && typeof CharacterHomeWidget !== 'undefined' && (
         <CharacterHomeWidget />
       )}
     </div>
@@ -212,3 +216,4 @@ const WeeklyCalendar = ({ streakDays }) => {
 };
 
 Object.assign(window, { HomePage });
+
