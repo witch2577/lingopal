@@ -16,7 +16,6 @@ const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
   const detectPlatform = (input) => {
     const u = input.trim();
     if (/youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\//.test(u)) return { platform: 'youtube', name: 'YouTube', icon: '📺', color: 'bg-red-50 text-red-600' };
-    if (/bilibili\.com\/video\/BV|b23\.tv\/BV/.test(u)) return { platform: 'bilibili', name: 'Bilibili', icon: '📺', color: 'bg-pink-50 text-pink-600' };
     if (/open\.spotify\.com\/(track|album)/.test(u)) return { platform: 'spotify', name: 'Spotify', icon: '🎵', color: 'bg-green-50 text-green-600' };
     if (/music\.apple\.com/.test(u)) return { platform: 'apple_music', name: 'Apple Music', icon: '🎵', color: 'bg-rose-50 text-rose-600' };
     if (/lrclib\.net/.test(u)) return { platform: 'lrclib', name: 'LRCLIB', icon: '🎵', color: 'bg-slate-50 text-slate-600' };
@@ -248,7 +247,7 @@ const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
               type="text"
               value={url}
               onChange={e => setUrl(e.target.value)}
-              placeholder={typeHint === 'music' ? 'Spotify / Apple Music / LRCLIB 链接...' : 'YouTube / Bilibili 视频链接...'}
+              placeholder={typeHint === 'music' ? 'Spotify / Apple Music / LRCLIB 链接...' : 'YouTube 视频链接...'}
               className="w-full px-3 py-2.5 pr-10 rounded-xl border border-slate-200 text-sm focus:border-brand-400 focus:outline-none"
             />
             {detectedPlatform && (
@@ -258,7 +257,7 @@ const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
             )}
           </div>
           <p className="text-[10px] text-slate-400 mt-1">
-            支持：YouTube、Bilibili{ typeHint === 'music' ? '、Spotify、Apple Music、LRCLIB' : '' }
+            支持：YouTube{ typeHint === 'music' ? '、Spotify、Apple Music、LRCLIB' : '' }
           </p>
         </div>
 
@@ -339,3 +338,4 @@ const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
 };
 
 Object.assign(window, { LinkImport });
+
