@@ -381,3 +381,4 @@ function CharacterEditor({ onClose, onSave, embedded }) {
 }
 
 Object.assign(window, { CharacterEditor });
+
