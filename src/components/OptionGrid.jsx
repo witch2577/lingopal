@@ -87,3 +87,4 @@ function OptionGrid({ items, selectedId, onSelect, lockedIds = [], showLock = tr
 }
 
 Object.assign(window, { OptionGrid });
+
