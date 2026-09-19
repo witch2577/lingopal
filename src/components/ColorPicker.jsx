@@ -99,3 +99,4 @@ function ColorPicker({ value, onChange, label }) {
 }
 
 Object.assign(window, { ColorPicker });
+
