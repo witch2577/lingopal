@@ -530,8 +530,79 @@ const usePracticeStore = create((set) => ({
   setActiveTab: (tab) => set({ activeTab: tab }),
 }));
 
+// ---- Character Store (for character growth & config) ----
+const useCharacterStore = create((set, get) => ({
+  config: null,
+  growth: null,
+  naming: null,
+  snapshots: [],
+  loading: true,
+  initialized: false,
+
+  init: async () => {
+    set({ loading: true });
+    try {
+      const userId = await window.ensureDefaultUser?.() || 'local';
+      await CharacterSave.runMigration(userId);
+      const { config, growth, naming, snapshots } = await CharacterSave.loadAll(userId);
+      set({ config, growth, naming, snapshots, loading: false, initialized: true });
+    } catch (e) {
+      console.error('[CharacterStore] init error:', e);
+      set({ loading: false, initialized: true });
+    }
+  },
+
+  setConfig: (config) => {
+    set({ config });
+    CharacterSave.saveConfig(config);
+  },
+
+  setGrowth: (growth) => {
+    set({ growth });
+    CharacterSave.saveGrowth(growth);
+  },
+
+  addGP: (amount) => {
+    const state = get();
+    if (!state.growth) return;
+    const newGP = state.growth.totalGP + amount;
+    const newGrowth = {
+      ...state.growth,
+      totalGP: newGP,
+      gpHistory: [...(state.growth.gpHistory || []), { amount, at: Date.now() }],
+    };
+    const stage = getStageByGP(newGP);
+    if (stage.stage !== state.growth.currentStage) {
+      newGrowth.currentStage = stage.stage;
+      newGrowth.stageName = stage.name;
+      newGrowth.stageGPRequired = stage.gpRequired;
+      newGrowth.nextStageGP = getNextStage(stage.stage)?.gpRequired || null;
+      newGrowth.evolutionHistory = [
+        ...(newGrowth.evolutionHistory || []),
+        { from: state.growth.currentStage, to: stage.stage, at: Date.now() },
+      ];
+    }
+    set({ growth: newGrowth });
+    CharacterSave.saveGrowth(newGrowth);
+  },
+
+  updateMood: (mood) => {
+    const state = get();
+    if (!state.growth) return;
+    const newGrowth = {
+      ...state.growth,
+      currentMood: mood,
+      moodHistory: [...(state.growth.moodHistory || []), { mood, at: Date.now() }],
+    };
+    set({ growth: newGrowth });
+    CharacterSave.saveGrowth(newGrowth);
+  },
+}));
+
 Object.assign(window, {
   useOralStore,
   useWrittenStore,
   usePracticeStore,
+  useCharacterStore,
 });
+
