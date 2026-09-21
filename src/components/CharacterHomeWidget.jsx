@@ -25,6 +25,11 @@ function CharacterHomeWidget({ className = '', compact = false }) {
 
   // Subscribe to character store changes
   useEffect(function() {
+    // Trigger initialization if not already initialized (fixes P0: new users stuck on skeleton)
+    if (!useCharacterStore.getState().initialized) {
+      useCharacterStore.getState().init();
+    }
+
     const unsub = useCharacterStore.subscribe(function(state) {
       setGrowth(state.growth);
       setConfig(state.config);
@@ -359,3 +364,4 @@ function CharacterHomeWidget({ className = '', compact = false }) {
 }
 
 Object.assign(window, { CharacterHomeWidget });
+
