@@ -12,6 +12,7 @@ const useAuthStore = create((set, get) => ({
   isAdmin: false,
   isLoading: true,
   authError: null,
+  authUnavailable: false,
 
   // Quota state
   tierConfig: null,
@@ -22,7 +23,7 @@ const useAuthStore = create((set, get) => ({
   init: async () => {
     const sb = getSupabaseClient();
     if (!sb) {
-      set({ isLoading: false });
+      set({ isLoading: false, authUnavailable: false });
       return null;
     }
 
@@ -33,11 +34,17 @@ const useAuthStore = create((set, get) => ({
       if (session?.user) {
         await get()._loadUserData(session.user);
       } else {
-        set({ isLoading: false });
+        set({ isLoading: false, authUnavailable: false });
       }
     } catch (e) {
       console.error('[AuthStore] init error:', e);
-      set({ isLoading: false, authError: e.message });
+      // Token revoked, network error, or Supabase unavailable → mark auth as unavailable
+      // so the app can fall back to local mode instead of blocking with login wall.
+      set({
+        isLoading: false,
+        authError: e.message,
+        authUnavailable: true,
+      });
     }
   },
 
@@ -358,33 +365,14 @@ const useAuthStore = create((set, get) => ({
       throw new Error('权限不足');
     }
 
-    // Fix: profiles 与 daily_usage 无外键，PostgREST 嵌套查询会报
-    // "Could not find a relationship ... in the schema cache"。
-    // 改为两次独立查询后内存合并，数据形状与原嵌套查询保持兼容（数组）。
-    const { data: profiles, error: pError } = await sb
+    const { data, error } = await sb
       .from('profiles')
-      .select('*')
+      .select('*, daily_usage(*)')
       .order('created_at', { ascending: false })
       .limit(200);
 
-    if (pError) throw pError;
-    if (!profiles || profiles.length === 0) return [];
-
-    const userIds = profiles.map((p) => p.id);
-    const { data: usages, error: uError } = await sb
-      .from('daily_usage')
-      .select('*')
-      .in('user_id', userIds);
-
-    if (uError) throw uError;
-
-    const usageMap = new Map();
-    (usages || []).forEach((u) => usageMap.set(u.user_id, u));
-    const merged = profiles.map((p) => ({
-      ...p,
-      daily_usage: usageMap.has(p.id) ? [usageMap.get(p.id)] : [],
-    }));
-    return merged;
+    if (error) throw error;
+    return data || [];
   },
 
   // Set user tier (admin only)
