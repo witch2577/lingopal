@@ -1,8 +1,8 @@
 // ========== Auth Page ==========
 // Login / Register with mandatory invitation code.
-// Unauthenticated users see ONLY this page.
+// Shown as an overlay when the user actively chooses to log in.
 
-const AuthPage = () => {
+const AuthPage = ({ onClose }) => {
   const [mode, setMode] = React.useState('login'); // 'login' | 'register'
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -32,7 +32,8 @@ const AuthPage = () => {
     setIsSubmitting(true);
     try {
       await authStore.signIn(email.trim(), password);
-      // Success: App will re-render and show main content
+      // Success: auth state updates, App auto-closes this overlay
+      onClose?.();
     } catch (e) {
       setError(e.message || '登录失败，请检查邮箱和密码');
     } finally {
@@ -65,7 +66,8 @@ const AuthPage = () => {
         nickname.trim() || '语言学习者',
         invitationCode.trim()
       );
-      // Success: App will re-render
+      // Success: auth state updates, App auto-closes this overlay
+      onClose?.();
     } catch (e) {
       setError(e.message || '注册失败');
     } finally {
@@ -99,6 +101,21 @@ const AuthPage = () => {
         transition={{ duration: animDuration }}
         className="w-full max-w-sm"
       >
+        {/* Header with close button */}
+        <div className="flex items-center justify-between mb-4">
+          <button
+            onClick={() => onClose?.()}
+            className="flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700 transition-colors px-2 py-1 rounded-lg hover:bg-slate-100"
+          >
+            <Icon name="chevron-left" size={16} />
+            <span>返回</span>
+          </button>
+          <span className="text-xs text-slate-400">
+            {mode === 'login' ? '登录账号' : '注册账号'}
+          </span>
+          <div className="w-12" />
+        </div>
+
         {/* Logo */}
         <div className="text-center mb-6">
           <motion.div
