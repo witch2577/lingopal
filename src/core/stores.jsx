@@ -542,9 +542,18 @@ const useCharacterStore = create((set, get) => ({
   init: async () => {
     set({ loading: true });
     try {
-      const userId = await window.ensureDefaultUser?.() || 'local';
-      await CharacterSave.runMigration(userId);
-      const { config, growth, naming, snapshots } = await CharacterSave.loadAll(userId);
+      const userId = await Promise.race([
+        window.ensureDefaultUser?.(),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('ensureDefaultUser timeout')), 5000))
+      ]) || 'local';
+      await Promise.race([
+        CharacterSave.runMigration(userId),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('runMigration timeout')), 5000))
+      ]);
+      const { config, growth, naming, snapshots } = await Promise.race([
+        CharacterSave.loadAll(userId),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('loadAll timeout')), 5000))
+      ]);
       set({ config, growth, naming, snapshots, loading: false, initialized: true });
     } catch (e) {
       console.error('[CharacterStore] init error:', e);
