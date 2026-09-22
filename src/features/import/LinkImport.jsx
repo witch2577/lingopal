@@ -17,8 +17,8 @@ const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
     if (/bilibili\.com\/video\/BV|bilibili\.com\/BV|b23\.tv\//.test(u)) return { platform: 'bilibili', name: 'Bilibili', icon: '📺', color: 'bg-pink-50 text-pink-600' };
     if (/open\.spotify\.com\/(track|album)/.test(u)) return { platform: 'spotify', name: 'Spotify', icon: '🎵', color: 'bg-green-50 text-green-600' };
     if (/music\.apple\.com/.test(u)) return { platform: 'apple_music', name: 'Apple Music', icon: '🎵', color: 'bg-rose-50 text-rose-600' };
-    if (/y\.qq\.com\/n\/ryqq\/(song|album|playlist)/.test(u)) return { platform: 'qq_music', name: 'QQ音乐', icon: '🎵', color: 'bg-yellow-50 text-yellow-600' };
-    if (/music\.163\.com\/(#\/)?(song|album)/.test(u)) return { platform: 'netease', name: '网易云音乐', icon: '🎵', color: 'bg-red-50 text-red-600' };
+    if (/y\.qq\.com/.test(u)) return { platform: 'qq_music', name: 'QQ音乐', icon: '🎵', color: 'bg-yellow-50 text-yellow-600' };
+    if (/music\.163\.com/.test(u)) return { platform: 'netease', name: '网易云音乐', icon: '🎵', color: 'bg-red-50 text-red-600' };
     if (/lrclib\.net/.test(u)) return { platform: 'lrclib', name: 'LRCLIB', icon: '🎵', color: 'bg-slate-50 text-slate-600' };
     return null;
   };
