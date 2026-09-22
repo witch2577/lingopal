@@ -21,10 +21,22 @@ const SplashScreen = ({ onComplete }) => {
   };
 
   // 多层白色发光描边 + 悬浮投影样式
-  const glowFilter = 'drop-shadow(0 0 4px rgba(255,255,255,0.95)) drop-shadow(0 0 10px rgba(255,255,255,0.6)) drop-shadow(0 0 20px rgba(255,255,255,0.3))';
+  const glowFilter = 'drop-shadow(0 0 5px rgba(255,255,255,0.98)) drop-shadow(0 0 12px rgba(255,255,255,0.7)) drop-shadow(0 0 24px rgba(255,255,255,0.4)) brightness(1.08) contrast(1.05)';
   const floorShadowStyle = {
-    background: 'radial-gradient(ellipse at center, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.15) 45%, transparent 70%)',
+    background: 'radial-gradient(ellipse at center, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.2) 45%, transparent 70%)',
     filter: 'blur(2px)',
+  };
+  // 角色身后衬托光板：把大面积填色区域从紫底上托出
+  const glowBackdropStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '140%',
+    height: '110%',
+    background: 'radial-gradient(circle at center, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.25) 35%, transparent 70%)',
+    zIndex: 1,
+    pointerEvents: 'none',
   };
 
   return (
@@ -51,9 +63,11 @@ const SplashScreen = ({ onComplete }) => {
       >
         <div className="flex items-end gap-1 px-4">
           <div className="relative">
+            {/* 角色身后衬托光板 */}
+            <div style={glowBackdropStyle} />
             <motion.img
               src={`assets/splash/${raceVariant}_boy.png`}
-              className="h-36 w-auto object-contain relative z-10"
+              className="h-44 w-auto object-contain relative z-10"
               style={{ filter: glowFilter }}
               alt=""
               animate={{ y: [0, -6, 0] }}
@@ -61,14 +75,16 @@ const SplashScreen = ({ onComplete }) => {
             />
             {/* 脚下椭圆柔光投影 */}
             <div
-              className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-16 h-3 rounded-[100%]"
+              className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-20 h-3.5 rounded-[100%]"
               style={floorShadowStyle}
             />
           </div>
           <div className="relative">
+            {/* 角色身后衬托光板 */}
+            <div style={glowBackdropStyle} />
             <motion.img
               src={`assets/splash/${raceVariant}_girl.png`}
-              className="h-40 w-auto object-contain relative z-10"
+              className="h-48 w-auto object-contain relative z-10"
               style={{ filter: glowFilter }}
               alt=""
               animate={{ y: [0, -8, 0] }}
@@ -76,7 +92,7 @@ const SplashScreen = ({ onComplete }) => {
             />
             {/* 脚下椭圆柔光投影 */}
             <div
-              className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-20 h-3.5 rounded-[100%]"
+              className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-24 h-4 rounded-[100%]"
               style={floorShadowStyle}
             />
           </div>
