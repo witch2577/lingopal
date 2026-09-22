@@ -33,6 +33,13 @@ db.version(5).stores({
   contentMetadata: 'key',
 });
 
+db.version(6).stores({
+  characterConfigs: 'id',
+  characterGrowth: 'id',
+  characterNaming: 'id',
+  characterSnapshots: 'id',
+});
+
 // Seed default user if none exists
 async function ensureDefaultUser() {
   const count = await db.userProfiles.count();
