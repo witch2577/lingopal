@@ -557,7 +557,14 @@ const useCharacterStore = create((set, get) => ({
       set({ config, growth, naming, snapshots, loading: false, initialized: true });
     } catch (e) {
       console.error('[CharacterStore] init error:', e);
-      set({ loading: false, initialized: true });
+      set({
+        config: typeof getDefaultCharacterConfig === 'function' ? getDefaultCharacterConfig() : (window.getDefaultCharacterConfig ? window.getDefaultCharacterConfig() : null),
+        growth: typeof getDefaultCharacterGrowth === 'function' ? getDefaultCharacterGrowth() : (window.getDefaultCharacterGrowth ? window.getDefaultCharacterGrowth() : null),
+        naming: typeof getDefaultCharacterNaming === 'function' ? getDefaultCharacterNaming() : (window.getDefaultCharacterNaming ? window.getDefaultCharacterNaming() : null),
+        snapshots: [],
+        loading: false,
+        initialized: true,
+      });
     }
   },
 
