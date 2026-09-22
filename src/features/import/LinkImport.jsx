@@ -1,6 +1,5 @@
 // ========== Link Import ==========
 // Paste video/music links, parse via Edge Function, enter learning loop
-
 const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
   const [url, setUrl] = useState('');
   const [isParsing, setIsParsing] = useState(false);
@@ -11,24 +10,23 @@ const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
   const [manualTitle, setManualTitle] = useState('');
   const [manualType, setManualType] = useState(typeHint || 'video');
   const { isMobile } = useMobileDetect();
-
   // Platform detection regex (mirrors Edge Function)
   const detectPlatform = (input) => {
     const u = input.trim();
     if (/youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\//.test(u)) return { platform: 'youtube', name: 'YouTube', icon: '📺', color: 'bg-red-50 text-red-600' };
+    if (/bilibili\.com\/video\/BV|bilibili\.com\/BV|b23\.tv\//.test(u)) return { platform: 'bilibili', name: 'Bilibili', icon: '📺', color: 'bg-pink-50 text-pink-600' };
     if (/open\.spotify\.com\/(track|album)/.test(u)) return { platform: 'spotify', name: 'Spotify', icon: '🎵', color: 'bg-green-50 text-green-600' };
     if (/music\.apple\.com/.test(u)) return { platform: 'apple_music', name: 'Apple Music', icon: '🎵', color: 'bg-rose-50 text-rose-600' };
+    if (/y\.qq\.com\/n\/ryqq\/(song|album|playlist)/.test(u)) return { platform: 'qq_music', name: 'QQ音乐', icon: '🎵', color: 'bg-yellow-50 text-yellow-600' };
+    if (/music\.163\.com\/(#\/)?(song|album)/.test(u)) return { platform: 'netease', name: '网易云音乐', icon: '🎵', color: 'bg-red-50 text-red-600' };
     if (/lrclib\.net/.test(u)) return { platform: 'lrclib', name: 'LRCLIB', icon: '🎵', color: 'bg-slate-50 text-slate-600' };
     return null;
   };
-
   useEffect(() => {
     setDetectedPlatform(detectPlatform(url));
   }, [url]);
-
   const handleParse = async () => {
     if (!url.trim()) return;
-
     // Pre-check: must be logged in
     const sb = getSupabaseClient();
     let session = null;
@@ -45,10 +43,28 @@ const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
       });
       return;
     }
-
+    // 国内平台预拦截：给出明确提示与降级引导，不发给不支持这些域名的解析服务
+    const detected = detectPlatform(url.trim());
+    if (detected?.platform === 'bilibili') {
+      setError({
+        type: 'unsupported',
+        title: 'Bilibili 暂不支持',
+        detail: 'Bilibili 视频字幕解析暂不支持，敬请期待',
+        fallback: { available: [] },
+      });
+      return;
+    }
+    if (detected?.platform === 'qq_music' || detected?.platform === 'netease') {
+      setError({
+        type: 'unsupported',
+        title: detected.name + ' 暂不支持自动解析',
+        detail: '该平台未开放歌词接口，请点击下方「手动粘贴」粘贴歌词继续学习',
+        fallback: { available: ['manual_paste'] },
+      });
+      return;
+    }
     setIsParsing(true);
     setError(null);
-
     try {
       const targetLang = useLearningStore.getState().currentLanguage || 'en';
       const res = await fetch(`${SUPABASE_URL}/functions/v1/link-parser`, {
@@ -59,15 +75,12 @@ const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
         },
         body: JSON.stringify({ url: url.trim(), type_hint: typeHint, target_language: targetLang }),
       });
-
       const data = await res.json().catch(() => ({}));
-
       if (!res.ok) {
         const errType = data.type || '';
         const errTitle = data.title || '解析失败';
         const errDetail = data.detail || '无法解析该链接';
         const fallback = data.fallback || {};
-
         if (res.status === 401 || errType.includes('unauthorized')) {
           setError({ type: 'unauthorized', title: '登录已过期', detail: '请重新登录后再试', fallback: { available: ['login'] } });
         } else if (errType.includes('unsupported-platform')) {
@@ -84,7 +97,6 @@ const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
         setIsParsing(false);
         return;
       }
-
       if (data.ok && data.data) {
         onMaterialParsed && onMaterialParsed(data.data);
       } else {
@@ -97,7 +109,6 @@ const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
       setIsParsing(false);
     }
   };
-
   const handleManualGenerate = () => {
     if (!manualText.trim() || !manualTitle.trim()) return;
     const targetLang = useLearningStore.getState().currentLanguage || 'en';
@@ -110,7 +121,6 @@ const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
       explanation: '',
       keywords: [],
     }));
-
     // Auto-generate fill blanks for music
     const allWords = manualText.toLowerCase().match(/[a-z\u4e00-\u9fa5]+/g) || [];
     const uniqueWords = [...new Set(allWords)].filter(w => w.length >= 4);
@@ -125,7 +135,6 @@ const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
         hint: word.replace(/[aeiou\u4e00-\u9fa5]/g, '_'),
       };
     });
-
     const material = {
       material_id: 'manual-' + Date.now(),
       status: 'parsed',
@@ -143,7 +152,6 @@ const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
     };
     onMaterialParsed && onMaterialParsed(material);
   };
-
   if (showManualPaste) {
     return (
       <div className="flex flex-col h-full">
@@ -153,7 +161,6 @@ const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
           </button>
           <h2 className="text-sm font-bold text-slate-800">手动导入</h2>
         </div>
-
         <div className="p-3 rounded-xl bg-amber-50 border border-amber-100 mb-3">
           <div className="flex items-start gap-2">
             <Icon name="alert-circle" size={14} className="text-amber-500 flex-shrink-0 mt-0.5" />
@@ -162,7 +169,6 @@ const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
             </p>
           </div>
         </div>
-
         <div className="flex flex-col gap-3 flex-1">
           <div>
             <label className="text-xs font-medium text-slate-600 mb-1 block">内容类型</label>
@@ -181,7 +187,6 @@ const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
               </button>
             </div>
           </div>
-
           <div>
             <label className="text-xs font-medium text-slate-600 mb-1 block">标题</label>
             <input
@@ -192,7 +197,6 @@ const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
               className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-400 focus:outline-none"
             />
           </div>
-
           <div className="flex-1 flex flex-col">
             <label className="text-xs font-medium text-slate-600 mb-1 block">
               {manualType === 'video' ? '字幕文本（每行一句）' : '歌词文本（每行一句）'}
@@ -204,7 +208,6 @@ const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
               className="flex-1 w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-brand-400 focus:outline-none resize-none"
             />
           </div>
-
           <button
             onClick={handleManualGenerate}
             disabled={!manualText.trim() || !manualTitle.trim()}
@@ -216,7 +219,6 @@ const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
       </div>
     );
   }
-
   return (
     <div className="flex flex-col h-full">
       <div className="flex items-center gap-2 mb-3">
@@ -227,7 +229,6 @@ const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
           {typeHint === 'music' ? '导入音乐/MV' : '导入视频字幕'}
         </h2>
       </div>
-
       {/* Copyright notice */}
       <div className="p-3 rounded-xl bg-amber-50 border border-amber-100 mb-3">
         <div className="flex items-start gap-2">
@@ -237,7 +238,6 @@ const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
           </p>
         </div>
       </div>
-
       {/* URL Input */}
       <div className="flex flex-col gap-3 flex-1">
         <div>
@@ -247,7 +247,7 @@ const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
               type="text"
               value={url}
               onChange={e => setUrl(e.target.value)}
-              placeholder={typeHint === 'music' ? 'Spotify / Apple Music / LRCLIB 链接...' : 'YouTube 视频链接...'}
+              placeholder={typeHint === 'music' ? 'Spotify / Apple Music / QQ音乐 / 网易云音乐 / LRCLIB 链接...' : 'YouTube 视频链接...'}
               className="w-full px-3 py-2.5 pr-10 rounded-xl border border-slate-200 text-sm focus:border-brand-400 focus:outline-none"
             />
             {detectedPlatform && (
@@ -257,10 +257,9 @@ const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
             )}
           </div>
           <p className="text-[10px] text-slate-400 mt-1">
-            支持：YouTube{ typeHint === 'music' ? '、Spotify、Apple Music、LRCLIB' : '' }
+            支持：YouTube{ typeHint === 'music' ? '、Spotify、Apple Music、QQ音乐、网易云音乐（点击后引导手动粘贴歌词）、LRCLIB' : '' }
           </p>
         </div>
-
         {/* Error display */}
         {error && (
           <motion.div
@@ -303,9 +302,7 @@ const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
             </div>
           </motion.div>
         )}
-
         <div className="flex-1" />
-
         {/* Action buttons */}
         <div className="flex flex-col gap-2">
           <button
@@ -336,6 +333,4 @@ const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
     </div>
   );
 };
-
 Object.assign(window, { LinkImport });
-
