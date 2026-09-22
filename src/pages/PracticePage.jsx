@@ -1,11 +1,9 @@
 // ========== Practice Page ==========
 // Consolidated practice hub: Oral + Written + Drama + Music
-
 const PracticePage = () => {
   const activeTab = usePracticeStore(s => s.activeTab);
   const setActiveTab = usePracticeStore(s => s.setActiveTab);
   const { isMobile } = useMobileDetect();
-
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
@@ -20,7 +18,6 @@ const PracticePage = () => {
           </div>
         </div>
       </div>
-
       {/* Sub-tab navigation */}
       <div className="flex items-center gap-1 mb-3 sm:mb-4 border-b border-theme-light pb-1 -mx-1 px-1 overflow-x-auto hide-scrollbar">
         {PRACTICE_TABS.map(tab => {
@@ -44,7 +41,6 @@ const PracticePage = () => {
           );
         })}
       </div>
-
       {/* Content */}
       <div className="flex-1 overflow-y-auto hide-scrollbar">
         <AnimatePresence mode="wait">
@@ -66,13 +62,11 @@ const PracticePage = () => {
     </div>
   );
 };
-
 // Inline oral content (reuses existing components)
 const OralPageContent = () => {
   const activeTab = useOralStore(s => s.activeTab);
   const setActiveTab = useOralStore(s => s.setActiveTab);
   const { isMobile } = useMobileDetect();
-
   return (
     <div className="flex flex-col h-full">
       <div className="flex items-center gap-1 mb-3 overflow-x-auto hide-scrollbar">
@@ -97,12 +91,10 @@ const OralPageContent = () => {
     </div>
   );
 };
-
 // Inline written content
 const WrittenPageContent = () => {
   const activeTab = useWrittenStore(s => s.activeTab);
   const setActiveTab = useWrittenStore(s => s.setActiveTab);
-
   return (
     <div className="flex flex-col h-full">
       <div className="flex items-center gap-1 mb-3 overflow-x-auto hide-scrollbar">
@@ -126,7 +118,6 @@ const WrittenPageContent = () => {
     </div>
   );
 };
-
 // Drama Hub: list of scripts with entry points + video link import
 const DramaHub = () => {
   const [view, setView] = useState('list'); // list | reader | roleplay | quiz | import | viewer
@@ -136,36 +127,30 @@ const DramaHub = () => {
   const { isMobile } = useMobileDetect();
   const currentLang = useLearningStore(s => s.currentLanguage) || 'en';
   const scripts = getDramaScripts(currentLang);
-
   const handleRead = (script, scene) => {
     setSelectedScript(script);
     setSelectedScene(scene || script.scenes[0]);
     setView('reader');
   };
-
   const handleRolePlay = (script, scene) => {
     setSelectedScript(script);
     setSelectedScene(scene || script.scenes[0]);
     setView('roleplay');
   };
-
   const handleQuiz = (script) => {
     setSelectedScript(script);
     setView('quiz');
   };
-
   const handleBack = () => {
     setView('list');
     setSelectedScript(null);
     setSelectedScene(null);
     setImportedMaterial(null);
   };
-
   const handleMaterialParsed = (material) => {
     setImportedMaterial(material);
     setView('viewer');
   };
-
   if (view === 'reader' && selectedScript && selectedScene) {
     return <DramaReader script={selectedScript} scene={selectedScene} onBack={handleBack} />;
   }
@@ -181,7 +166,6 @@ const DramaHub = () => {
   if (view === 'viewer' && importedMaterial) {
     return <ImportedMaterialViewer material={importedMaterial} onBack={handleBack} />;
   }
-
   return (
     <div className="flex flex-col gap-3">
       {/* Header */}
@@ -192,7 +176,6 @@ const DramaHub = () => {
         </div>
         <div className="text-xs text-theme-muted">{scripts.length} 部剧本</div>
       </div>
-
       {scripts.length === 0 ? (
         <EmptyState icon="🎭" title="暂无剧本" description="该语种的剧本正在建设中，请先切换至英语体验" />
       ) : (
@@ -236,7 +219,6 @@ const DramaHub = () => {
           </motion.div>
         ))
       )}
-
       {/* Video link import */}
       <button
         onClick={() => setView('import')}
@@ -244,36 +226,32 @@ const DramaHub = () => {
       >
         <div className="text-2xl mb-2">📹</div>
         <p className="text-sm font-medium text-theme-secondary">视频链接导入</p>
-        <p className="text-xs text-theme-muted mt-1">粘贴 YouTube / Bilibili 链接提取字幕学习</p>
+        <p className="text-xs text-theme-muted mt-1">粘贴 YouTube 链接提取字幕学习</p>
       </button>
     </div>
   );
 };
-
 // Music Hub: list of songs with entry points + music/MV link import
+// Supports: Spotify, Apple Music, QQ Music, NetEase Cloud Music, LRCLIB
 const MusicHub = () => {
   const [view, setView] = useState('list'); // list | practice | import | linkimport | viewer
   const [selectedSong, setSelectedSong] = useState(null);
   const [importedMaterial, setImportedMaterial] = useState(null);
   const currentLang = useLearningStore(s => s.currentLanguage) || 'en';
   const songs = getSongs(currentLang);
-
   const handlePractice = (song) => {
     setSelectedSong(song);
     setView('practice');
   };
-
   const handleBack = () => {
     setView('list');
     setSelectedSong(null);
     setImportedMaterial(null);
   };
-
   const handleMaterialParsed = (material) => {
     setImportedMaterial(material);
     setView('viewer');
   };
-
   if (view === 'practice' && selectedSong) {
     return <LyricsPractice song={selectedSong} onBack={handleBack} />;
   }
@@ -286,7 +264,6 @@ const MusicHub = () => {
   if (view === 'viewer' && importedMaterial) {
     return <ImportedMaterialViewer material={importedMaterial} onBack={handleBack} />;
   }
-
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center justify-between">
@@ -309,7 +286,9 @@ const MusicHub = () => {
           </button>
         </div>
       </div>
-
+      <p className="text-[10px] text-theme-muted">
+        支持平台：Spotify、Apple Music、QQ音乐、网易云音乐、LRCLIB
+      </p>
       {songs.length === 0 ? (
         <EmptyState icon="🎵" title="暂无歌曲" description="该语种的歌曲正在建设中，请先切换至英语体验" />
       ) : (
@@ -351,5 +330,4 @@ const MusicHub = () => {
     </div>
   );
 };
-
 Object.assign(window, { PracticePage });
