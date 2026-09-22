@@ -833,8 +833,34 @@ const TierBadge = () => {
 
 // ========== Quota Status Card ==========
 const QuotaStatusCard = () => {
-  const quota = useAuthStore(s => s.getQuotaStatus?.() || null);
+  const tierConfig = useAuthStore(s => s.tierConfig);
+  const dailyUsage = useAuthStore(s => s.dailyUsage);
+  const supabaseProfile = useAuthStore(s => s.supabaseProfile);
   const [refreshing, setRefreshing] = React.useState(false);
+
+  const quota = React.useMemo(() => {
+    if (!tierConfig) return null;
+    const usage = dailyUsage || {};
+    return {
+      tier: supabaseProfile?.tier || 'free',
+      translation: {
+        used: usage.translation_count || 0,
+        limit: tierConfig.daily_translation_limit || 50,
+      },
+      aiDialogue: {
+        used: usage.ai_dialogue_count || 0,
+        limit: tierConfig.daily_ai_dialogue_limit || 20,
+      },
+      aiTTS: {
+        used: usage.ai_tts_count || 0,
+        limit: tierConfig.daily_ai_tts_limit || 50,
+      },
+      ocr: {
+        used: usage.ocr_count || 0,
+        limit: tierConfig.daily_ocr_limit || 20,
+      },
+    };
+  }, [tierConfig, dailyUsage, supabaseProfile]);
 
   const handleRefresh = async () => {
     setRefreshing(true);
