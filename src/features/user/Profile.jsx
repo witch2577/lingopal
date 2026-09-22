@@ -4,7 +4,13 @@
 const UserProfile = () => {
   const { profile, userId, updateProfile } = useUserStore();
   const isSupabaseLoggedIn = useAuthStore(s => s.isLoggedIn);
+  const isAdminUser = useAuthStore(s => s.isAdmin);
   const [isEditing, setIsEditing] = useState(false);
+  const [showLanguagePrefs, setShowLanguagePrefs] = useState(false);
+  const [showLearningPlan, setShowLearningPlan] = useState(false);
+  const [showMyFavorites, setShowMyFavorites] = useState(false);
+  const [showAdmin, setShowAdmin] = useState(false);
+  const [adminLoaded, setAdminLoaded] = useState(false);
 
   // Form state includes all 7 dimensions + legacy fields
   const [form, setForm] = useState({
@@ -546,7 +552,7 @@ const UserProfile = () => {
       {/* Settings list */}
       <Card padding="p-0">
         <button
-          onClick={() => useUIStore.getState().showNotification('功能开发中', 'info')}
+          onClick={() => setShowLanguagePrefs(true)}
           className="w-full flex items-center gap-3 p-4 hover:bg-slate-50 transition-colors text-left border-b border-slate-100"
         >
           <div className="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center text-blue-500">
@@ -556,7 +562,7 @@ const UserProfile = () => {
           <Icon name="chevron" size={16} className="text-slate-300" />
         </button>
         <button
-          onClick={() => useUIStore.getState().showNotification('功能开发中', 'info')}
+          onClick={() => setShowLearningPlan(true)}
           className="w-full flex items-center gap-3 p-4 hover:bg-slate-50 transition-colors text-left border-b border-slate-100"
         >
           <div className="w-9 h-9 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-500">
@@ -566,7 +572,7 @@ const UserProfile = () => {
           <Icon name="chevron" size={16} className="text-slate-300" />
         </button>
         <button
-          onClick={() => useUIStore.getState().showNotification('功能开发中', 'info')}
+          onClick={() => setShowMyFavorites(true)}
           className="w-full flex items-center gap-3 p-4 hover:bg-slate-50 transition-colors text-left border-b border-slate-100"
         >
           <div className="w-9 h-9 rounded-xl bg-amber-50 flex items-center justify-center text-amber-500">
@@ -576,9 +582,20 @@ const UserProfile = () => {
           <Icon name="chevron" size={16} className="text-slate-300" />
         </button>
         {/* Admin entry - only visible to admins */}
-        {useAuthStore(s => s.isAdmin) && (
+        {isAdminUser && (
           <button
-            onClick={() => window.openAdmin && window.openAdmin()}
+            onClick={() => {
+              if (adminLoaded) {
+                setShowAdmin(true);
+                return;
+              }
+              if (window.loadLazyModule) {
+                window.loadLazyModule('admin').then(() => {
+                  setAdminLoaded(true);
+                  setShowAdmin(true);
+                });
+              }
+            }}
             className="w-full flex items-center gap-3 p-4 hover:bg-brand-50 transition-colors text-left border-b border-slate-100"
           >
             <div className="w-9 h-9 rounded-xl bg-brand-50 flex items-center justify-center text-brand-500">
@@ -635,6 +652,29 @@ const UserProfile = () => {
       <div className="text-center text-xs text-slate-300 pt-4 pb-2">
         LingoPal v1.2.0 · 语伴 · PWA
       </div>
+
+      {/* Feature page modals */}
+      {showLanguagePrefs && window.LanguagePreferences && (
+        <div className="fixed inset-0 z-50 bg-white overflow-y-auto">
+          <LanguagePreferences onBack={() => setShowLanguagePrefs(false)} />
+        </div>
+      )}
+      {showLearningPlan && window.LearningPlan && (
+        <div className="fixed inset-0 z-50 bg-white overflow-y-auto">
+          <LearningPlan onBack={() => setShowLearningPlan(false)} />
+        </div>
+      )}
+      {showMyFavorites && window.MyFavorites && (
+        <div className="fixed inset-0 z-50 bg-white overflow-y-auto">
+          <MyFavorites onBack={() => setShowMyFavorites(false)} />
+        </div>
+      )}
+      {/* Admin Page Modal */}
+      {showAdmin && adminLoaded && (
+        <div className="fixed inset-0 z-50 bg-theme-elevated overflow-y-auto">
+          <AdminPage onClose={() => setShowAdmin(false)} />
+        </div>
+      )}
     </div>
   );
 };
