@@ -10,10 +10,25 @@ const SplashScreen = ({ onComplete }) => {
   })();
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsExiting(true);
-    }, 1200);
-    return () => clearTimeout(timer);
+    let timer = null;
+    let fallbackTimer = null;
+    let started = false;
+    const startDisplayTimer = () => {
+      if (started) return;
+      started = true;
+      timer = setTimeout(() => { setIsExiting(true); }, 1200);
+    };
+    // 预加载两张角色立绘：图片就绪后才开始 1.2s 展示计时；2.5s 兜底防断网卡死
+    const imgs = [raceVariant + '_boy', raceVariant + '_girl'].map(v => {
+      return new Promise(resolve => {
+        const im = new Image();
+        im.onload = im.onerror = () => resolve();
+        im.src = 'assets/splash/' + v + '.png';
+      });
+    });
+    Promise.all(imgs).then(startDisplayTimer);
+    fallbackTimer = setTimeout(startDisplayTimer, 2500);
+    return () => { clearTimeout(timer); clearTimeout(fallbackTimer); };
   }, []);
 
   const handleExit = () => {
@@ -21,7 +36,7 @@ const SplashScreen = ({ onComplete }) => {
   };
 
   // 多层白色发光描边 + 悬浮投影样式
-  const glowFilter = 'drop-shadow(0 0 5px rgba(255,255,255,0.98)) drop-shadow(0 0 12px rgba(255,255,255,0.7)) drop-shadow(0 0 24px rgba(255,255,255,0.4)) brightness(1.08) contrast(1.05)';
+  const glowFilter = 'drop-shadow(0 0 5px rgba(255,255,255,0.45)) drop-shadow(0 0 12px rgba(255,255,255,0.35)) drop-shadow(0 0 24px rgba(255,255,255,0.2)) brightness(1.04) contrast(1.02)';
   const floorShadowStyle = {
     background: 'radial-gradient(ellipse at center, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.2) 45%, transparent 70%)',
     filter: 'blur(2px)',
@@ -34,7 +49,7 @@ const SplashScreen = ({ onComplete }) => {
     transform: 'translate(-50%, -50%)',
     width: '140%',
     height: '110%',
-    background: 'radial-gradient(circle at center, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.25) 35%, transparent 70%)',
+    background: 'radial-gradient(circle at center, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 35%, transparent 70%)',
     zIndex: 1,
     pointerEvents: 'none',
   };
