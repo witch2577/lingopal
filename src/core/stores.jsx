@@ -1,8 +1,6 @@
 // ========== Zustand Stores ==========
 // Uses UMD bundle: window.zustand
-
 const { create } = zustand;
-
 // ---- Translation Store ----
 const useTranslationStore = create((set, get) => ({
   sourceText: '',
@@ -13,7 +11,6 @@ const useTranslationStore = create((set, get) => ({
   history: [],
   error: null,
   activeTab: 'text', // text | voice | ocr
-
   setSourceText: (text) => set({ sourceText: text }),
   setTranslatedText: (text) => set({ translatedText: text }),
   setSourceLang: (lang) => set({ sourceLang: lang }),
@@ -21,7 +18,6 @@ const useTranslationStore = create((set, get) => ({
   setIsTranslating: (v) => set({ isTranslating: v }),
   setActiveTab: (tab) => set({ activeTab: tab }),
   setError: (err) => set({ error: err }),
-
   swapLanguages: () => {
     const { sourceLang, targetLang, sourceText, translatedText } = get();
     if (sourceLang === 'auto') return;
@@ -32,7 +28,6 @@ const useTranslationStore = create((set, get) => ({
       translatedText: sourceText,
     });
   },
-
   addHistory: (record) => {
     const { history } = get();
     const newHistory = [record, ...history].slice(0, 50);
@@ -46,7 +41,6 @@ const useTranslationStore = create((set, get) => ({
       }).catch((e) => { console.error('[TranslationStore.addHistory] 保存翻译历史失败:', e); });
     }
   },
-
   loadHistory: async () => {
     if (!window.db) return;
     try {
@@ -59,7 +53,6 @@ const useTranslationStore = create((set, get) => ({
     } catch (e) { console.error('[TranslationStore.loadHistory] 加载翻译历史失败:', e); }
   },
 }));
-
 // ---- Learning Store ----
 const useLearningStore = create((set, get) => ({
   currentLanguage: 'en',
@@ -74,10 +67,8 @@ const useLearningStore = create((set, get) => ({
   timeRemaining: 0,
   isPlaying: false,
   levelResult: null, // { score, stars, newAchievements }
-
   setLanguage: (lang) => set({ currentLanguage: lang }),
   setLevel: (levelId) => set({ currentLevelId: levelId }),
-
   startLevel: (level) => {
     set({
       currentLevelId: level.levelId,
@@ -93,7 +84,6 @@ const useLearningStore = create((set, get) => ({
       levelResult: null,
     });
   },
-
   submitAnswer: (questionId, userAnswer, isCorrect, correctAnswer) => {
     const state = get();
     const newCombo = isCorrect ? state.combo + 1 : 0;
@@ -101,11 +91,9 @@ const useLearningStore = create((set, get) => ({
     const baseScore = isCorrect ? 10 : 0;
     const comboBonus = isCorrect && newCombo >= 2 ? newCombo * 2 : 0;
     const qScore = baseScore + comboBonus;
-
     const wrongAnswers = isCorrect
       ? state.wrongAnswers
       : [...state.wrongAnswers, { questionId, userAnswer, correctAnswer }];
-
     set({
       score: state.score + qScore,
       combo: newCombo,
@@ -113,7 +101,6 @@ const useLearningStore = create((set, get) => ({
       correctCount: state.correctCount + (isCorrect ? 1 : 0),
       wrongAnswers,
     });
-
     return {
       isCorrect,
       questionScore: qScore,
@@ -121,7 +108,6 @@ const useLearningStore = create((set, get) => ({
       totalScore: state.score + qScore,
     };
   },
-
   nextQuestion: () => {
     const state = get();
     const next = state.currentQuestionIndex + 1;
@@ -131,20 +117,16 @@ const useLearningStore = create((set, get) => ({
     set({ currentQuestionIndex: next });
     return true;
   },
-
   addTimeBonus: () => {
     const state = get();
     const bonus = Math.floor(state.timeRemaining) * 2;
     set({ score: state.score + bonus });
     return bonus;
   },
-
   setTimeRemaining: (t) => set({ timeRemaining: t }),
-
   finishLevel: (result) => {
     set({ isPlaying: false, levelResult: result });
   },
-
   resetLevel: () => {
     set({
       currentLevelId: null,
@@ -161,7 +143,6 @@ const useLearningStore = create((set, get) => ({
     });
   },
 }));
-
 // ---- User Store ----
 const useUserStore = create((set, get) => ({
   profile: null,
@@ -182,12 +163,10 @@ const useUserStore = create((set, get) => ({
   streakDays: 0,
   streakRecoveryAvailable: null,
   currentLevel: null,
-
   init: async () => {
     const userId = await window.ensureDefaultUser();
     const profile = await db.userProfiles.get(userId);
     const achRecords = await db.achievements.where('userId').equals(userId).toArray();
-
     // Ensure 7-dimension fields exist on legacy profiles
     if (profile && !profile.languageLevel) {
       const defaults = {
@@ -202,7 +181,6 @@ const useUserStore = create((set, get) => ({
       await db.userProfiles.update(userId, defaults);
       Object.assign(profile, defaults);
     }
-
     const totalXP = profile?.totalXP || 0;
     const currentLevel = getLevelByXP(totalXP);
     set({
@@ -219,14 +197,12 @@ const useUserStore = create((set, get) => ({
     await get().checkStreakStatus();
     return profile;
   },
-
   login: (nickname) => {
     set(state => ({
       profile: { ...state.profile, nickname },
       isLoggedIn: true,
     }));
   },
-
   updateProfile: (updates) => {
     const state = get();
     if (!state.userId) return;
@@ -236,7 +212,6 @@ const useUserStore = create((set, get) => ({
     });
     set(state => ({ profile: { ...state.profile, ...updates } }));
   },
-
   addXP: (amount, source = 'other') => {
     const state = get();
     if (!state.userId || amount <= 0) return;
@@ -258,7 +233,6 @@ const useUserStore = create((set, get) => ({
     }
     return { oldXP, newXP, levelUp: newLevel.level > oldLevel.level, newLevel };
   },
-
   checkDailyLogin: async () => {
     const state = get();
     if (!state.userId) return;
@@ -304,7 +278,6 @@ const useUserStore = create((set, get) => ({
       }
     }
   },
-
   recoverStreak: async () => {
     const state = get();
     if (!state.userId || !state.streakRecoveryAvailable) return false;
@@ -337,7 +310,6 @@ const useUserStore = create((set, get) => ({
     useUIStore.getState().showNotification(`连胜已恢复！当前 ${currentStreak} 天`, 'success');
     return true;
   },
-
   checkStreakStatus: async () => {
     const state = get();
     if (!state.userId) return;
@@ -358,7 +330,6 @@ const useUserStore = create((set, get) => ({
       }
     }
   },
-
   unlockAchievement: (achievementId, title, description, icon) => {
     const state = get();
     if (state.achievements.includes(achievementId)) return false;
@@ -377,14 +348,12 @@ const useUserStore = create((set, get) => ({
     set({ achievements: [...state.achievements, achievementId] });
     return true;
   },
-
   setPreferences: (prefs) => {
     set(state => ({ preferences: { ...state.preferences, ...prefs } }));
     try {
       localStorage.setItem('lingopal_prefs', JSON.stringify({ ...get().preferences, ...prefs }));
     } catch (e) { console.error('[UserStore.setPreferences] 保存偏好设置失败:', e); }
   },
-
   setThemeMode: (mode) => {
     const validModes = ['human', 'immortal'];
     if (!validModes.includes(mode)) return;
@@ -404,14 +373,12 @@ const useUserStore = create((set, get) => ({
       localStorage.setItem('lingopal_prefs', JSON.stringify(get().preferences));
     } catch (e) { console.error('[UserStore.setThemeMode] 保存主题设置失败:', e); }
   },
-
   toggleThemeMode: () => {
     const current = get().preferences.themeMode || 'human';
     const next = current === 'human' ? 'immortal' : 'human';
     get().setThemeMode(next);
     return next;
   },
-
   loadPreferences: () => {
     try {
       const saved = localStorage.getItem('lingopal_prefs');
@@ -432,14 +399,12 @@ const useUserStore = create((set, get) => ({
     } catch (e) { console.error('[UserStore.loadPreferences] 加载偏好设置失败:', e); }
   },
 }));
-
 // ---- UI Store ----
 const useUIStore = create((set) => ({
   theme: 'light',
   isLoading: false,
   notification: null,
   showConfetti: false,
-
   setTheme: (theme) => {
     set({ theme });
     if (theme === 'dark') {
@@ -448,27 +413,22 @@ const useUIStore = create((set) => ({
       document.documentElement.classList.remove('dark');
     }
   },
-
   setLoading: (v) => set({ isLoading: v }),
-
   showNotification: (message, type = 'info', duration = 2500) => {
     set({ notification: { message, type, id: Date.now() } });
     setTimeout(() => set({ notification: null }), duration);
   },
-
   triggerConfetti: (duration = 3000) => {
     set({ showConfetti: true });
     setTimeout(() => set({ showConfetti: false }), duration);
   },
 }));
-
 Object.assign(window, {
   useTranslationStore,
   useLearningStore,
   useUserStore,
   useUIStore,
 });
-
 // ---- Oral Store ----
 const useOralStore = create((set, get) => ({
   activeTab: 'learning',
@@ -478,7 +438,6 @@ const useOralStore = create((set, get) => ({
   isRecording: false,
   recordingBlob: null,
   lastScore: null,
-
   setActiveTab: (tab) => set({ activeTab: tab }),
   setLanguage: (lang) => set({ currentLanguage: lang }),
   setScenario: (scenario) => set({ currentScenario: scenario, dialogueHistory: [] }),
@@ -488,7 +447,6 @@ const useOralStore = create((set, get) => ({
   setLastScore: (score) => set({ lastScore: score }),
   resetDialogue: () => set({ dialogueHistory: [], currentScenario: null }),
 }));
-
 // ---- Written Store ----
 const useWrittenStore = create((set, get) => ({
   activeTab: 'spelling',
@@ -501,7 +459,6 @@ const useWrittenStore = create((set, get) => ({
   currentQuestion: null,
   isPlaying: false,
   gameMode: 'listen',
-
   setActiveTab: (tab) => set({ activeTab: tab }),
   setLanguage: (lang) => set({ currentLanguage: lang }),
   setGameMode: (mode) => set({ gameMode: mode }),
@@ -523,13 +480,11 @@ const useWrittenStore = create((set, get) => ({
   endGame: () => set({ isPlaying: false }),
   reset: () => set({ score: 0, streak: 0, maxStreak: 0, totalAnswered: 0, correctCount: 0, isPlaying: false }),
 }));
-
 // ---- Practice Store (for consolidated practice hub) ----
 const usePracticeStore = create((set) => ({
   activeTab: 'oral',
   setActiveTab: (tab) => set({ activeTab: tab }),
 }));
-
 // ---- Character Store (for character growth & config) ----
 const useCharacterStore = create((set, get) => ({
   config: null,
@@ -538,7 +493,6 @@ const useCharacterStore = create((set, get) => ({
   snapshots: [],
   loading: true,
   initialized: false,
-
   init: async () => {
     set({ loading: true });
     try {
@@ -567,17 +521,18 @@ const useCharacterStore = create((set, get) => ({
       });
     }
   },
-
   setConfig: (config) => {
     set({ config });
     CharacterSave.saveConfig(config);
   },
-
   setGrowth: (growth) => {
     set({ growth });
     CharacterSave.saveGrowth(growth);
   },
-
+  setNaming: (naming) => {
+    set({ naming });
+    CharacterSave.saveNaming(naming);
+  },
   addGP: (amount) => {
     const state = get();
     if (!state.growth) return;
@@ -601,7 +556,6 @@ const useCharacterStore = create((set, get) => ({
     set({ growth: newGrowth });
     CharacterSave.saveGrowth(newGrowth);
   },
-
   updateMood: (mood) => {
     const state = get();
     if (!state.growth) return;
@@ -613,12 +567,32 @@ const useCharacterStore = create((set, get) => ({
     set({ growth: newGrowth });
     CharacterSave.saveGrowth(newGrowth);
   },
+  // Reset character data for re-creation.  If preserveGrowth is true,
+  // only config + naming are reset; growth (GP / stage) is kept.
+  resetCharacter: (preserveGrowth = false) => {
+    const state = get();
+    const defaultConfig = typeof getDefaultCharacterConfig === 'function'
+      ? getDefaultCharacterConfig()
+      : (window.getDefaultCharacterConfig ? window.getDefaultCharacterConfig() : null);
+    const defaultNaming = typeof getDefaultCharacterNaming === 'function'
+      ? getDefaultCharacterNaming()
+      : (window.getDefaultCharacterNaming ? window.getDefaultCharacterNaming() : null);
+    const newConfig = { ...defaultConfig };
+    const newNaming = { ...defaultNaming };
+    const newGrowth = preserveGrowth && state.growth
+      ? { ...state.growth }
+      : (typeof getDefaultCharacterGrowth === 'function'
+          ? getDefaultCharacterGrowth()
+          : (window.getDefaultCharacterGrowth ? window.getDefaultCharacterGrowth() : null));
+    set({ config: newConfig, naming: newNaming, growth: newGrowth });
+    CharacterSave.saveConfig(newConfig);
+    CharacterSave.saveNaming(newNaming);
+    CharacterSave.saveGrowth(newGrowth);
+  },
 }));
-
 Object.assign(window, {
   useOralStore,
   useWrittenStore,
   usePracticeStore,
   useCharacterStore,
 });
-
