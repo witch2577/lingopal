@@ -1,5 +1,5 @@
 // ========== AI-Powered Oral Dialogue Component ==========
-// Hybrid: LLM API (with user key) + Enhanced Rule Engine (default)
+// Hybrid: LLM via Supabase Edge Function + Enhanced Rule Engine (default)
 // Supports multi-turn natural conversation across multiple scenarios
 
 const OralDialogue = () => {
@@ -13,7 +13,6 @@ const OralDialogue = () => {
   const [sessionId, setSessionId] = useState(null);
   const [showSettings, setShowSettings] = useState(false);
   const [aiMode, setAiMode] = useState(AIDialogueService.config.mode);
-  const [apiKey, setApiKey] = useState(AIDialogueService.config.apiKey || '');
   const [errorMsg, setErrorMsg] = useState(null);
   const messagesEndRef = useRef(null);
   const recognitionRef = useRef(null);
@@ -22,7 +21,6 @@ const OralDialogue = () => {
   useEffect(() => {
     AIDialogueService.loadConfig();
     setAiMode(AIDialogueService.config.mode);
-    setApiKey(AIDialogueService.config.apiKey || '');
   }, []);
 
   const startScenario = (scenarioId) => {
@@ -40,7 +38,7 @@ const OralDialogue = () => {
     setErrorMsg(null);
 
     // Init AI service session
-    AIDialogueService.initSession(sid, scenarioId, language);
+    AIDialogueService.initSession(sid, scenarioId, language, 'oral');
   };
 
   const handleUserSubmit = async (inputText) => {
@@ -54,16 +52,17 @@ const OralDialogue = () => {
     setIsAiThinking(true);
 
     try {
-      let aiText;
-
-      if (AIDialogueService.isLLMReady()) {
-        // Real AI mode
-        aiText = await AIDialogueService.generateResponse(sessionId, text);
-      } else {
-        // Enhanced rule engine
-        aiText = await AIDialogueService.generateResponse(sessionId, text);
+      // If AI mode is selected but user is not logged in, prompt login
+      if (AIDialogueService.config.mode === 'llm-api' && !useAuthStore.getState().isLoggedIn) {
+        useUIStore.getState().showNotification('AI 对话需登录后使用', 'warning');
+        if (typeof window.openAuthPage === 'function') {
+          window.openAuthPage();
+        }
+        setIsAiThinking(false);
+        return;
       }
 
+      const aiText = await AIDialogueService.generateResponse(sessionId, text);
       setMessages(prev => [...prev, { role: 'ai', text: aiText }]);
 
       // Check if conversation should end (optional: after N turns)
@@ -76,10 +75,12 @@ const OralDialogue = () => {
       }
     } catch (e) {
       console.error('[OralDialogue] AI响应失败:', e);
-      setErrorMsg('AI响应出错，已切换到规则引擎模式');
-      // Fallback to rule engine
+      // Explicit downgrade notification — never silently fallback
+      useUIStore.getState().showNotification('AI 服务暂不可用，已切换规则引擎', 'warning');
+      // Switch to rule engine and retry once
       try {
         AIDialogueService.setMode('enhanced-rule');
+        setAiMode('enhanced-rule');
         const aiText = await AIDialogueService.generateResponse(sessionId, text);
         setMessages(prev => [...prev, { role: 'ai', text: aiText }]);
       } catch (e2) {
@@ -150,10 +151,17 @@ const OralDialogue = () => {
   };
 
   const handleSaveSettings = () => {
-    AIDialogueService.setMode(aiMode);
-    if (apiKey.trim()) {
-      AIDialogueService.setApiKey(apiKey.trim());
+    // If switching to AI mode but not logged in, block and prompt login
+    if (aiMode === 'llm-api' && !useAuthStore.getState().isLoggedIn) {
+      useUIStore.getState().showNotification('AI 对话需登录后使用', 'warning');
+      if (typeof window.openAuthPage === 'function') {
+        window.openAuthPage();
+      }
+      setShowSettings(false);
+      return;
     }
+
+    AIDialogueService.setMode(aiMode);
     setShowSettings(false);
     useUIStore.getState().showNotification('设置已保存', 'success');
   };
@@ -244,35 +252,16 @@ const OralDialogue = () => {
                   <p className="text-xs text-theme-muted mt-1">
                     {aiMode === 'enhanced-rule'
                       ? '使用增强规则引擎，无需配置，即时响应'
-                      : '使用云端大模型，需要配置API Key'}
+                      : '使用云端大模型，需登录后使用'}
                   </p>
                 </div>
-
-                {aiMode === 'llm-api' && (
-                  <div>
-                    <label className="text-sm font-medium text-theme-secondary mb-2 block">API Key</label>
-                    <input
-                      type="password"
-                      value={apiKey}
-                      onChange={(e) => setApiKey(e.target.value)}
-                      placeholder="输入 DeepSeek API Key"
-                      className="w-full px-3 py-2 rounded-xl bg-theme-elevated text-sm border border-theme-light focus:outline-none focus:border-brand-400"
-                    />
-                    <p className="text-xs text-theme-muted mt-1">
-                      支持 DeepSeek/OpenAI 格式。Key 仅保存在本地。
-                    </p>
-                    <p className="text-xs text-amber-600 mt-1">
-                      DeepSeek 免费版：100万 tokens/天，个人使用足够
-                    </p>
-                  </div>
-                )}
 
                 <div className="bg-theme-elevated rounded-xl p-3">
                   <p className="text-xs text-theme-muted">
                     <span className="font-medium">能力边界：</span>
                     当前{aiMode === 'llm-api' ? '使用云端AI模型' : '使用本地规则引擎'}生成对话回复。
                     规则引擎覆盖餐厅、问路、酒店、商务、购物、机场等场景。
-                    如需更自然的对话体验，可切换到AI模式并配置API Key。
+                    {aiMode === 'llm-api' && ' AI 模式需登录，由服务端安全代理调用。'}
                   </p>
                 </div>
               </div>
@@ -461,20 +450,10 @@ const OralDialogue = () => {
                     AI 模型
                   </button>
                 </div>
+                <p className="text-xs text-theme-muted mt-1">
+                  {aiMode === 'llm-api' ? '需登录后使用云端AI模型' : '使用本地规则引擎，无需登录'}
+                </p>
               </div>
-              {aiMode === 'llm-api' && (
-                <div>
-                  <label className="text-sm font-medium text-theme-secondary mb-2 block">API Key</label>
-                  <input
-                    type="password"
-                    value={apiKey}
-                    onChange={(e) => setApiKey(e.target.value)}
-                    placeholder="输入 DeepSeek API Key"
-                    className="w-full px-3 py-2 rounded-xl bg-theme-elevated text-sm border border-theme-light focus:outline-none focus:border-brand-400"
-                  />
-                  <p className="text-xs text-amber-600 mt-1">DeepSeek 免费版：100万 tokens/天</p>
-                </div>
-              )}
             </div>
             <div className="flex gap-2 mt-5">
               <Button variant="secondary" fullWidth onClick={() => setShowSettings(false)}>取消</Button>
