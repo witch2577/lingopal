@@ -77,11 +77,12 @@ function CharacterImmersivePage({ onClose }) {
 
   // Derived values
   var stageProgress = useMemo(function() {
-    if (!growth) return null;
+    if (!growth || typeof getStageProgress === 'undefined') return null;
     return getStageProgress(growth.totalGP);
   }, [growth?.totalGP]);
 
   var moodDescriptor = useMemo(function() {
+    if (typeof getMoodDescriptor === 'undefined') return { label: '开心', emoji: '😊', color: '#6366F1' };
     if (!growth) return getMoodDescriptor('happy');
     return getMoodDescriptor(growth.currentMood);
   }, [growth?.currentMood]);
@@ -92,7 +93,7 @@ function CharacterImmersivePage({ onClose }) {
 
   var isAvatarMode = config?.mode === 'avatar';
   var displayMood = useMemo(function() {
-    if (!isAvatarMode) return moodDescriptor;
+    if (!isAvatarMode || typeof getAvatarMoodDescriptor === 'undefined') return moodDescriptor;
     var avatarDesc = getAvatarMoodDescriptor(growth?.currentMood || 'happy');
     return { ...moodDescriptor, label: avatarDesc.label, emoji: avatarDesc.emoji, color: avatarDesc.color };
   }, [isAvatarMode, growth?.currentMood, moodDescriptor]);
