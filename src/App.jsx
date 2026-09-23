@@ -133,6 +133,7 @@ const App = () => {
   const [pendingThemeMode, setPendingThemeMode] = useState(null);
   const [postOnboarding, setPostOnboarding] = useState(false);
   const [showAuthPage, setShowAuthPage] = useState(false);
+  const [showImmersiveCharacter, setShowImmersiveCharacter] = useState(false);
   const [loadedModules, setLoadedModules] = useState({
     translation: true,
     home: true,
@@ -205,6 +206,12 @@ const App = () => {
       delete window.openAuthPage;
     };
   }, [isLoggedIn, isAdmin]);
+
+  // Expose immersive character page opener (Scheme C P0)
+  useEffect(() => {
+    window.openCharacterImmersive = () => setShowImmersiveCharacter(true);
+    return () => { delete window.openCharacterImmersive; };
+  }, []);
 
   // Expose theme ceremony trigger for admin preview and auto-unlock
   useEffect(() => {
@@ -362,6 +369,23 @@ const App = () => {
           <SplashScreen onComplete={() => setShowSplash(false)} />
         )}
       </AnimatePresence>
+
+      {/* Immersive Character Overlay (Scheme C P0) */}
+      <AnimatePresence>
+        {showImmersiveCharacter && (
+          <motion.div
+            key="immersive-character"
+            initial={{ opacity: 0, y: '100%' }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: '100%' }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-50"
+          >
+            <CharacterImmersivePage onClose={() => setShowImmersiveCharacter(false)} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
     <div className={`h-full flex flex-col theme-transition ${isMobile ? 'mobile-compact' : ''}`}
       style={{ background: 'var(--bg-body)' }}>
       {/* PWA Manager: 离线状态、安装提示、更新检测 */}
@@ -405,8 +429,8 @@ const App = () => {
           </AnimatePresence>
         </div>
       </main>
-      {/* Bottom navigation - hidden when keyboard is open on mobile */}
-      {(!isMobile || !keyboardOpen) && (
+      {/* Bottom navigation - hidden when keyboard is open on mobile, or when immersive character is shown */}
+      {(!isMobile || !keyboardOpen) && !showImmersiveCharacter && (
         <BottomNav active={activeTab} onChange={setActiveTab} />
       )}
       {/* Global notification */}
