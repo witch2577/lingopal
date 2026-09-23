@@ -98,7 +98,10 @@ const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
         return;
       }
       if (data.ok && data.data) {
-        onMaterialParsed && onMaterialParsed(data.data);
+        const material = { ...data.data, importedAt: Date.now() };
+        saveImportedMaterial(material);
+        enhanceMaterialWithAI(material);
+        onMaterialParsed && onMaterialParsed(material);
       } else {
         setError({ type: 'unknown', title: '解析异常', detail: '返回数据格式不正确' });
       }
@@ -109,6 +112,102 @@ const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
       setIsParsing(false);
     }
   };
+  // Helper: generate fill blanks supporting multiple languages (Korean, Japanese, Chinese, English)
+  const generateFillBlanks = (text, segments) => {
+    const allWords = text.toLowerCase().match(/[a-z\u4e00-\u9fa5\uac00-\ud7af\u3040-\u30ff]+/g) || [];
+    const uniqueWords = [...new Set(allWords)].filter(w => {
+      if (/[\uac00-\ud7af\u3040-\u30ff]/.test(w)) return w.length >= 2;
+      return w.length >= 4;
+    });
+    return uniqueWords.slice(0, 5).map((word, i) => {
+      const lineIndex = Math.min(i, segments.length - 1);
+      const lineText = segments[lineIndex]?.original_text || '';
+      const lineWords = lineText.split(' ');
+      const blankIndex = lineWords.findIndex(w => w.toLowerCase().includes(word));
+      return {
+        lineIndex,
+        blankIndex: blankIndex >= 0 ? blankIndex : 0,
+        answer: word,
+        hint: word.charAt(0) + '_'.repeat(Math.max(0, word.length - 1)),
+      };
+    });
+  };
+
+  // Helper: call AI Edge Function for translation and romanization
+  const enhanceMaterialWithAI = async (material) => {
+    const sb = getSupabaseClient();
+    if (!sb) return;
+    const { data } = await sb.auth.getSession();
+    const session = data?.session;
+    if (!session) return;
+
+    const originalLines = material.segments.map(s => s.original_text).join('\n');
+    const targetLang = material.metadata?.target_language || 'zh-CN';
+    const hasKorean = /[\uac00-\ud7af]/.test(originalLines);
+    const hasJapanese = /[\u3040-\u30ff]/.test(originalLines);
+    const needsRomanization = hasKorean || hasJapanese;
+
+    try {
+      // Translation
+      const transRes = await fetch(`${SUPABASE_URL}/functions/v1/ai-dialogue`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({
+          messages: [{
+            role: 'user',
+            content: `请将以下歌词翻译成${targetLang === 'zh-CN' ? '中文' : '英文'}，逐行对应，只返回翻译后的文本，每行一行，不要添加编号或额外说明：\n\n${originalLines}`
+          }],
+          language: targetLang,
+          scenarioId: null,
+          mode: 'text',
+        }),
+      });
+      const transData = await transRes.json();
+      if (transData.success) {
+        const transLines = transData.data.content.split('\n').map(l => l.trim()).filter(l => l);
+        material.segments.forEach((seg, i) => {
+          if (transLines[i]) seg.translated_text = transLines[i];
+        });
+      }
+
+      // Romanization
+      if (needsRomanization) {
+        const romaLang = hasKorean ? 'ko' : 'ja';
+        const romaPrompt = hasKorean
+          ? `请为以下韩语歌词生成 Revised Romanization 罗马音，逐行对应，只返回罗马音，每行一行，不要添加编号或额外说明：\n\n${originalLines}`
+          : `请为以下日语歌词生成 Hepburn 罗马音，逐行对应，只返回罗马音，每行一行，不要添加编号或额外说明：\n\n${originalLines}`;
+        const romaRes = await fetch(`${SUPABASE_URL}/functions/v1/ai-dialogue`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${session.access_token}`,
+          },
+          body: JSON.stringify({
+            messages: [{ role: 'user', content: romaPrompt }],
+            language: romaLang,
+            scenarioId: null,
+            mode: 'text',
+          }),
+        });
+        const romaData = await romaRes.json();
+        if (romaData.success) {
+          const romaLines = romaData.data.content.split('\n').map(l => l.trim()).filter(l => l);
+          material.segments.forEach((seg, i) => {
+            if (romaLines[i]) seg.romanization = romaLines[i];
+          });
+        }
+      }
+
+      await saveImportedMaterial(material);
+    } catch (e) {
+      console.error('[LinkImport] AI enhancement error:', e);
+      useUIStore.getState().showNotification('AI 翻译/音译生成失败，材料已保存，可进入学习后重新生成', 'warning');
+    }
+  };
+
   const handleManualGenerate = () => {
     if (!manualText.trim() || !manualTitle.trim()) return;
     const targetLang = useLearningStore.getState().currentLanguage || 'en';
@@ -118,23 +217,11 @@ const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
       end_time: (i + 1) * 3,
       original_text: text.trim(),
       translated_text: '',
+      romanization: '',
       explanation: '',
       keywords: [],
     }));
-    // Auto-generate fill blanks for music
-    const allWords = manualText.toLowerCase().match(/[a-z\u4e00-\u9fa5]+/g) || [];
-    const uniqueWords = [...new Set(allWords)].filter(w => w.length >= 4);
-    const fillBlanks = uniqueWords.slice(0, 3).map((word, i) => {
-      const lineIndex = Math.min(i, lines.length - 1);
-      const lineWords = lines[lineIndex].original_text.split(' ');
-      const blankIndex = lineWords.findIndex(w => w.toLowerCase().includes(word));
-      return {
-        lineIndex,
-        blankIndex: blankIndex >= 0 ? blankIndex : 0,
-        answer: word,
-        hint: word.replace(/[aeiou\u4e00-\u9fa5]/g, '_'),
-      };
-    });
+    const fillBlanks = generateFillBlanks(manualText, lines);
     const material = {
       material_id: 'manual-' + Date.now(),
       status: 'parsed',
@@ -149,7 +236,10 @@ const LinkImport = ({ onBack, onMaterialParsed, typeHint }) => {
       source_type: manualType,
       platform: 'manual',
       fillBlanks: fillBlanks.filter(f => f.answer),
+      importedAt: Date.now(),
     };
+    saveImportedMaterial(material);
+    enhanceMaterialWithAI(material);
     onMaterialParsed && onMaterialParsed(material);
   };
   if (showManualPaste) {
