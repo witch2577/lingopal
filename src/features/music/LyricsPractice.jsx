@@ -8,6 +8,8 @@ const LyricsPractice = ({ song, onBack }) => {
   const [showResult, setShowResult] = useState(false);
   const [correctCount, setCorrectCount] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [showRomanization, setShowRomanization] = useState(false);
+  const [showTranslation, setShowTranslation] = useState(true);
   const { isMobile } = useMobileDetect();
 
   const lyrics = song.lyrics || [];
@@ -77,6 +79,22 @@ const LyricsPractice = ({ song, onBack }) => {
         </div>
       </div>
 
+      {/* Translation / Romanization controls */}
+      <div className="flex items-center gap-2 mb-3 flex-wrap">
+        <button
+          onClick={() => setShowTranslation(!showTranslation)}
+          className={`px-2 py-1 rounded-lg text-[10px] font-medium transition-colors ${showTranslation ? 'bg-brand-100 text-brand-600' : 'bg-slate-100 text-slate-500'}`}
+        >
+          {showTranslation ? '隐藏翻译' : '显示翻译'}
+        </button>
+        <button
+          onClick={() => setShowRomanization(!showRomanization)}
+          className={`px-2 py-1 rounded-lg text-[10px] font-medium transition-colors ${showRomanization ? 'bg-brand-100 text-brand-600' : 'bg-slate-100 text-slate-500'}`}
+        >
+          {showRomanization ? '隐藏音译' : '显示音译'}
+        </button>
+      </div>
+
       {/* Mode selector */}
       <div className="flex gap-2 mb-3">
         {Object.entries(modeLabels).map(([key, info]) => (
@@ -96,13 +114,13 @@ const LyricsPractice = ({ song, onBack }) => {
       {/* Lyrics display */}
       <div className="flex-1 overflow-y-auto hide-scrollbar space-y-3 pb-4">
         {mode === 'fill' && (
-          <FillBlankMode lyrics={lyrics} fillBlanks={fillBlanks} answers={fillAnswers} onAnswer={handleFillSubmit} />
+          <FillBlankMode lyrics={lyrics} fillBlanks={fillBlanks} answers={fillAnswers} onAnswer={handleFillSubmit} showRomanization={showRomanization} showTranslation={showTranslation} />
         )}
         {mode === 'repeat' && (
-          <RepeatMode lyrics={lyrics} currentLine={currentLine} onNext={() => setCurrentLine(i => Math.min(i + 1, lyrics.length - 1))} onSpeak={speakLine} isPlaying={isPlaying} />
+          <RepeatMode lyrics={lyrics} currentLine={currentLine} onNext={() => setCurrentLine(i => Math.min(i + 1, lyrics.length - 1))} onSpeak={speakLine} isPlaying={isPlaying} showRomanization={showRomanization} showTranslation={showTranslation} />
         )}
         {mode === 'liaison' && (
-          <LiaisonMode lyrics={lyrics} liaisons={liaisons} onSpeak={speakLine} isPlaying={isPlaying} />
+          <LiaisonMode lyrics={lyrics} liaisons={liaisons} onSpeak={speakLine} isPlaying={isPlaying} showRomanization={showRomanization} showTranslation={showTranslation} />
         )}
       </div>
 
@@ -120,7 +138,7 @@ const LyricsPractice = ({ song, onBack }) => {
 };
 
 // Fill-in-the-blank mode
-const FillBlankMode = ({ lyrics, fillBlanks, answers, onAnswer }) => {
+const FillBlankMode = ({ lyrics, fillBlanks, answers, onAnswer, showRomanization, showTranslation }) => {
   const blankMap = {};
   fillBlanks.forEach(b => {
     const key = `${b.lineIndex}-${b.blankIndex}`;
@@ -129,6 +147,9 @@ const FillBlankMode = ({ lyrics, fillBlanks, answers, onAnswer }) => {
 
   return (
     <div className="space-y-3">
+      <div className="p-2 rounded-lg bg-amber-50 border border-amber-100">
+        <p className="text-xs text-amber-700">🎵 听歌填词：根据听到的歌词，在空格处填入原文。答对可获得 XP 奖励，帮助巩固记忆！</p>
+      </div>
       {lyrics.map((line, li) => {
         const words = line.text.split(' ');
         const blanksInLine = fillBlanks.filter(b => b.lineIndex === li);
@@ -175,14 +196,20 @@ const FillBlankMode = ({ lyrics, fillBlanks, answers, onAnswer }) => {
 };
 
 // Repeat mode
-const RepeatMode = ({ lyrics, currentLine, onNext, onSpeak, isPlaying }) => {
+const RepeatMode = ({ lyrics, currentLine, onNext, onSpeak, isPlaying, showRomanization, showTranslation }) => {
   const line = lyrics[currentLine];
   if (!line) return null;
 
   return (
     <div className="flex flex-col items-center justify-center py-8">
       <div className="w-full bg-brand-50 rounded-2xl p-6 mb-6 text-center">
-        <p className="text-lg font-medium text-slate-800 mb-4">{line.text}</p>
+        <p className="text-lg font-medium text-slate-800 mb-2">{line.text}</p>
+        {showRomanization && line.romanization && (
+          <p className="text-sm text-slate-500 italic mb-2">{line.romanization}</p>
+        )}
+        {showTranslation && line.translated_text && (
+          <p className="text-sm text-slate-500 mb-4">{line.translated_text}</p>
+        )}
         <button
           onClick={() => onSpeak(line.text)}
           className={`w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all ${isPlaying ? 'bg-brand-400' : 'bg-brand-500 hover:bg-brand-600'}`}
@@ -205,7 +232,7 @@ const RepeatMode = ({ lyrics, currentLine, onNext, onSpeak, isPlaying }) => {
 };
 
 // Liaison mode
-const LiaisonMode = ({ lyrics, liaisons, onSpeak, isPlaying }) => {
+const LiaisonMode = ({ lyrics, liaisons, onSpeak, isPlaying, showRomanization, showTranslation }) => {
   const liaisonMap = {};
   liaisons.forEach(l => { liaisonMap[l.lineIndex] = l; });
 
@@ -223,6 +250,12 @@ const LiaisonMode = ({ lyrics, liaisons, onSpeak, isPlaying }) => {
             <p className="text-sm text-slate-800 leading-relaxed">
               {line.text}
             </p>
+            {showRomanization && line.romanization && (
+              <p className="text-xs text-slate-500 italic mt-1">{line.romanization}</p>
+            )}
+            {showTranslation && line.translated_text && (
+              <p className="text-xs text-slate-500 mt-1">{line.translated_text}</p>
+            )}
             {liaison && (
               <div className="mt-2 p-2 rounded-lg bg-emerald-50 border border-emerald-100">
                 <p className="text-xs text-emerald-700 font-medium">💡 连读提示</p>
