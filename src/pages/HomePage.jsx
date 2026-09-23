@@ -162,6 +162,35 @@ const HomePage = () => {
         </div>
       </div>
 
+      {/* Character Space Entry Card (Scheme C P0) */}
+      <div className="mb-4">
+        <button
+          onClick={function() {
+            if (window.openCharacterImmersive) {
+              window.openCharacterImmersive();
+            }
+          }}
+          className="w-full relative overflow-hidden rounded-2xl p-4 text-left btn-press group"
+          style={{ background: 'linear-gradient(135deg, #E0E7FF 0%, #F3E8FF 50%, #FCE7F3 100%)' }}
+        >
+          <div className="flex items-center gap-3 relative z-10">
+            <div className="w-12 h-12 rounded-xl bg-white/70 backdrop-blur-sm flex items-center justify-center text-2xl shadow-sm">
+              🧸
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-bold text-slate-800">进入角色空间</p>
+              <p className="text-xs text-slate-500 mt-0.5">沉浸式互动 · 查看成长状态</p>
+            </div>
+            <div className="w-8 h-8 rounded-full bg-white/60 backdrop-blur-sm flex items-center justify-center text-slate-400 group-hover:bg-white transition-colors">
+              <Icon name="chevron-right" size={16} />
+            </div>
+          </div>
+          {/* Decorative ambient glow */}
+          <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-white/25 blur-2xl" />
+          <div className="absolute -bottom-6 -left-6 w-20 h-20 rounded-full bg-brand-200/25 blur-2xl" />
+        </button>
+      </div>
+
       {/* Character Home Widget */}
       {charReady && typeof CharacterHomeWidget !== 'undefined' && (
         <CharacterHomeWidget />
