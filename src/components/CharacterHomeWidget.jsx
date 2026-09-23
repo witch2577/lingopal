@@ -3,10 +3,9 @@
 // Shows: character image (baby for infant / rendered for others),
 // current mood bubble, GP progress bar, stage progress.
 // Batch 1: hotzone interactions, dialogue bubbles, culture egg trigger, collection entry.
+// Fix 2026-09-22: creation onboarding + overflow-hidden removal + settings menu.
 // 日系二次元调性 styling via Tailwind classes.
-
 const { useState, useEffect, useRef, useMemo, useCallback } = React;
-
 function CharacterHomeWidget({ className = '', compact = false }) {
   const charState = useCharacterStore.getState();
   const [growth, setGrowth] = useState(charState.growth);
@@ -19,17 +18,21 @@ function CharacterHomeWidget({ className = '', compact = false }) {
   const [animClass, setAnimClass] = useState('');
   const [cultureEgg, setCultureEgg] = useState(null);
   const [showCollection, setShowCollection] = useState(false);
+  // Creation onboarding state
+  const [showCreationModal, setShowCreationModal] = useState(false);
+  const [showSettingsMenu, setShowSettingsMenu] = useState(false);
+  // Character editor overlay state
+  const [showCharacterEditor, setShowCharacterEditor] = useState(false);
   const unsubRef = useRef(null);
   const widgetRef = useRef(null);
   const bubbleTimerRef = useRef(null);
-
+  const settingsTimerRef = useRef(null);
   // Subscribe to character store changes
   useEffect(function() {
     // Trigger initialization if not already initialized (fixes P0: new users stuck on skeleton)
     if (!useCharacterStore.getState().initialized) {
       useCharacterStore.getState().init();
     }
-
     const unsub = useCharacterStore.subscribe(function(state) {
       setGrowth(state.growth);
       setConfig(state.config);
@@ -38,7 +41,15 @@ function CharacterHomeWidget({ className = '', compact = false }) {
     unsubRef.current = unsub;
     return function() { if (unsub) unsub(); };
   }, []);
-
+  // Auto-show creation modal for first-time users (after loading finishes)
+  useEffect(function() {
+    if (loading) return;
+    if (!config) return;
+    // If user has never completed creation onboarding, show modal
+    if (config.userCreated !== true) {
+      setShowCreationModal(true);
+    }
+  }, [loading, config]);
   // Check for evolution proximity (within 10% of next stage)
   useEffect(function() {
     if (!growth) return;
@@ -49,7 +60,6 @@ function CharacterHomeWidget({ className = '', compact = false }) {
       setShowEvolutionHint(false);
     }
   }, [growth]);
-
   // Mood bubble animation trigger
   useEffect(function() {
     if (!growth) return;
@@ -57,7 +67,6 @@ function CharacterHomeWidget({ className = '', compact = false }) {
     var t = setTimeout(function() { setMoodAnimating(false); }, 600);
     return function() { clearTimeout(t); };
   }, [growth?.currentMood]);
-
   // Batch 1: Check culture egg trigger on mount
   useEffect(function() {
     if (!growth || typeof CultureEggs === 'undefined') return;
@@ -69,22 +78,18 @@ function CharacterHomeWidget({ className = '', compact = false }) {
       Analytics.track('culture_egg_trigger_rate', { lang: eggs[0].lang });
     }
   }, [growth?.currentStage]);
-
   // Derived values
   const stageProgress = useMemo(function() {
     if (!growth) return null;
     return getStageProgress(growth.totalGP);
   }, [growth?.totalGP]);
-
   const moodDescriptor = useMemo(function() {
     if (!growth) return getMoodDescriptor('happy');
     return getMoodDescriptor(growth.currentMood);
   }, [growth?.currentMood]);
-
   const isInfant = useMemo(function() {
     return (growth?.currentStage || 1) === 1;
   }, [growth?.currentStage]);
-
   // Avatar mode re-interpretation
   const isAvatarMode = config?.mode === 'avatar';
   const displayMood = useMemo(function() {
@@ -92,14 +97,12 @@ function CharacterHomeWidget({ className = '', compact = false }) {
     const avatarDesc = getAvatarMoodDescriptor(growth?.currentMood || 'happy');
     return { ...moodDescriptor, label: avatarDesc.label, emoji: avatarDesc.emoji, color: avatarDesc.color };
   }, [isAvatarMode, growth?.currentMood, moodDescriptor]);
-
   // Batch 1: show bubble helper
   const showBubble = useCallback(function(text) {
     setBubble({ text });
     if (bubbleTimerRef.current) clearTimeout(bubbleTimerRef.current);
     bubbleTimerRef.current = setTimeout(function() { setBubble(null); }, 2000);
   }, []);
-
   // Batch 1: trigger animation helper
   const triggerAnim = useCallback(function(cls) {
     setAnimClass('');
@@ -108,17 +111,14 @@ function CharacterHomeWidget({ className = '', compact = false }) {
     setAnimClass(cls);
     setTimeout(function() { setAnimClass(''); }, 800);
   }, []);
-
   // Batch 1: hotzone click handler
   const handleHotzoneClick = useCallback(function(hotzone, e) {
     e.stopPropagation();
     if (!growth || typeof CharacterInteractions === 'undefined') return;
-
     const isRapid = CharacterInteractions.trackRapidClick(hotzone);
-    const name = config?.name || growth?.name || '小语伴';
+    const name = config?.characterName || config?.name || growth?.name || '小伙伴';
     const userState = useUserStore.getState();
-    const address = userState.profile?.nickname || '这里';
-
+    const address = config?.customTitle || userState.profile?.nickname || '这里';
     if (isRapid) {
       const line = CharacterInteractions.getRapidDialogue(growth, name, address);
       showBubble(line);
@@ -127,7 +127,6 @@ function CharacterHomeWidget({ className = '', compact = false }) {
       CharacterInteractions.recordCooldown(hotzone);
       return;
     }
-
     if (CharacterInteractions.isOnCooldown(hotzone)) {
       // Cooldown: static bubble only, no animation
       const line = CharacterInteractions.getDialogue(hotzone, growth, name, address);
@@ -135,14 +134,26 @@ function CharacterHomeWidget({ className = '', compact = false }) {
       Analytics.track('char_interact_total', { hotzone: hotzone + '_cooldown' });
       return;
     }
-
     const line = CharacterInteractions.getDialogue(hotzone, growth, name, address);
     showBubble(line);
     triggerAnim(CharacterInteractions.getAnimationClass(hotzone, false));
     CharacterInteractions.recordCooldown(hotzone);
     Analytics.track('char_interact_total', { hotzone });
   }, [growth, config, showBubble, triggerAnim]);
-
+  // Settings menu handlers
+  const handleOpenSettings = useCallback(function() {
+    setShowSettingsMenu(true);
+    if (settingsTimerRef.current) clearTimeout(settingsTimerRef.current);
+    settingsTimerRef.current = setTimeout(function() { setShowSettingsMenu(false); }, 4000);
+  }, []);
+  const handleCloseSettings = useCallback(function() {
+    setShowSettingsMenu(false);
+    if (settingsTimerRef.current) clearTimeout(settingsTimerRef.current);
+  }, []);
+  const handleRecreateCharacter = useCallback(function() {
+    setShowSettingsMenu(false);
+    setShowCreationModal(true);
+  }, []);
   if (loading) {
     return React.createElement('div', {
       ref: widgetRef,
@@ -150,37 +161,32 @@ function CharacterHomeWidget({ className = '', compact = false }) {
       style: { minHeight: compact ? 180 : 260 }
     }, React.createElement('div', { className: 'skeleton-shimmer rounded-2xl', style: { width: '100%', height: compact ? 180 : 260 } }));
   }
-
   if (!growth || !config) {
     return React.createElement('div', {
       ref: widgetRef,
       className: 'character-home-widget character-home-widget--empty ' + className,
     }, '角色加载中...');
   }
-
   const size = compact ? 140 : 200;
   const progressPct = stageProgress ? Math.round(stageProgress.progress * 100) : 0;
   const progressColor = displayMood.color || '#6366F1';
-
   // Batch 1: check if any culture eggs unlocked for collection entry
   const unlockedEggs = typeof CultureEggs !== 'undefined' ? CultureEggs.getUnlocked() : [];
-
   // --- Widget layout ---
   return React.createElement('div', {
     ref: widgetRef,
     'data-testid': 'character-home-widget',
-    className: 'character-home-widget relative overflow-hidden rounded-2xl bg-white shadow-sm border border-slate-100 ' + className + ' ' + animClass,
+    className: 'character-home-widget relative rounded-2xl bg-white shadow-sm border border-slate-100 ' + className + ' ' + animClass,
     style: { padding: compact ? '12px' : '16px' }
   }, [
     // Background ambient glow based on mood
     React.createElement('div', {
       key: 'bg-glow',
-      className: 'absolute inset-0 opacity-10 pointer-events-none',
+      className: 'absolute inset-0 opacity-10 pointer-events-none rounded-2xl overflow-hidden',
       style: {
         background: `radial-gradient(circle at 50% 40%, ${progressColor} 0%, transparent 70%)`,
       }
     }),
-
     // Evolution hint banner
     showEvolutionHint && React.createElement('div', {
       key: 'evo-hint',
@@ -188,12 +194,37 @@ function CharacterHomeWidget({ className = '', compact = false }) {
       className: 'absolute top-2 left-1/2 -translate-x-1/2 z-10 px-3 py-1 rounded-full text-xs font-medium text-white animate-pulse',
       style: { background: 'linear-gradient(135deg, #F59E0B, #EF4444)' }
     }, '✨ 即将进化！'),
-
+    // Settings button (top-right)
+    React.createElement('button', {
+      key: 'settings-btn',
+      className: 'absolute top-2 right-2 z-20 w-7 h-7 rounded-full bg-white/90 backdrop-blur-sm border border-slate-100 flex items-center justify-center text-slate-400 hover:text-slate-600 hover:bg-white transition-colors text-xs',
+      onClick: handleOpenSettings,
+      title: '角色设置',
+    }, '⚙️'),
+    // Settings dropdown
+    showSettingsMenu && React.createElement('div', {
+      key: 'settings-menu',
+      className: 'absolute top-10 right-2 z-30 bg-white rounded-xl shadow-lg border border-slate-100 py-1 min-w-[140px]',
+    }, [
+      React.createElement('button', {
+        key: 'settings-recreate',
+        className: 'w-full text-left px-3 py-2 text-xs text-slate-600 hover:bg-slate-50 transition-colors',
+        onClick: handleRecreateCharacter,
+      }, '重新创建角色'),
+      React.createElement('button', {
+        key: 'settings-editor',
+        className: 'w-full text-left px-3 py-2 text-xs text-slate-600 hover:bg-slate-50 transition-colors',
+        onClick: function() {
+          handleCloseSettings();
+          setShowCharacterEditor(true);
+        },
+      }, '捏脸编辑器'),
+    ]),
     // Character display area with hotzones
     React.createElement('div', {
       key: 'char-area',
       className: 'relative flex flex-col items-center justify-center',
-      style: { minHeight: compact ? 120 : 160 }
+      style: { minHeight: compact ? 120 : 160, paddingTop: '8px' }
     }, [
       // Character renderer wrapper with hotzones
       React.createElement('div', {
@@ -217,7 +248,6 @@ function CharacterHomeWidget({ className = '', compact = false }) {
               height: Math.round(size * 1.15),
               className: 'drop-shadow-md'
             }),
-
         // Hotzone overlays (absolute positioned over character)
         React.createElement('div', {
           key: 'hotzones',
@@ -249,7 +279,6 @@ function CharacterHomeWidget({ className = '', compact = false }) {
           }),
         ]),
       ]),
-
       // Mood bubble
       React.createElement('div', {
         key: 'mood-bubble',
@@ -264,14 +293,12 @@ function CharacterHomeWidget({ className = '', compact = false }) {
         React.createElement('span', { key: 'emoji', className: 'text-sm' }, displayMood.emoji),
         React.createElement('span', { key: 'label' }, displayMood.label),
       ]),
-
       // Interaction dialogue bubble (Batch 1)
       bubble && React.createElement('div', {
         key: 'interact-bubble',
         className: 'absolute -top-8 left-1/2 -translate-x-1/2 z-20 px-3 py-1.5 rounded-xl text-xs font-medium text-slate-700 bg-white shadow-lg border border-slate-100 whitespace-nowrap animate-pop',
       }, bubble.text),
     ]),
-
     // Stage name + GP info
     React.createElement('div', {
       key: 'stage-info',
@@ -282,18 +309,15 @@ function CharacterHomeWidget({ className = '', compact = false }) {
         'data-testid': 'stage-name',
         className: 'text-sm font-bold text-slate-800'
       }, growth.stageName),
-
       stageProgress && stageProgress.next && React.createElement('div', {
         key: 'stage-arrow',
         className: 'text-xs text-slate-400 mt-0.5'
       }, `${growth.stageName} → ${stageProgress.next.name}`),
-
       stageProgress && !stageProgress.next && React.createElement('div', {
         key: 'stage-max',
         className: 'text-xs text-slate-400 mt-0.5'
       }, '已满级'),
     ]),
-
     // GP Progress bar
     React.createElement('div', {
       key: 'gp-bar',
@@ -323,7 +347,6 @@ function CharacterHomeWidget({ className = '', compact = false }) {
         })
       ),
     ]),
-
     // Bottom hint + culture collection entry (Batch 1)
     React.createElement('div', {
       key: 'hint-row',
@@ -333,7 +356,6 @@ function CharacterHomeWidget({ className = '', compact = false }) {
         key: 'hint',
         className: 'text-center text-xs text-slate-400'
       }, '点击角色不同部位试试看~'),
-
       // Culture collection entry button
       unlockedEggs.length > 0 && React.createElement('button', {
         key: 'culture-btn',
@@ -341,7 +363,17 @@ function CharacterHomeWidget({ className = '', compact = false }) {
         onClick: function() { setShowCollection(true); Analytics.track('culture_collection_visit'); },
       }, '文化收藏 (' + unlockedEggs.length + ')'),
     ]),
-
+    // Creation onboarding modal
+    showCreationModal && typeof CharacterCreationModal !== 'undefined' && React.createElement(CharacterCreationModal, {
+      key: 'creation-modal',
+      isRedo: config.userCreated === true,
+      onComplete: function() {
+        setShowCreationModal(false);
+      },
+      onCancel: function() {
+        setShowCreationModal(false);
+      },
+    }),
     // Culture collection page overlay
     showCollection && typeof CultureEggs !== 'undefined' && React.createElement('div', {
       key: 'culture-collection',
@@ -351,17 +383,19 @@ function CharacterHomeWidget({ className = '', compact = false }) {
         onBack: function() { setShowCollection(false); }
       })
     ),
-
+    // Character editor overlay
+    showCharacterEditor && typeof CharacterEditor !== 'undefined' && React.createElement(CharacterEditor, {
+      key: 'character-editor',
+      onClose: function() { setShowCharacterEditor(false); },
+    }),
     // Culture egg trigger overlay
     cultureEgg && typeof CultureEggs !== 'undefined' && React.createElement(CultureEggs.CultureEasterEggTrigger, {
       key: 'culture-trigger',
       egg: cultureEgg,
-      characterName: config?.name || growth?.name,
+      characterName: config?.characterName || config?.name || growth?.name,
       userNickname: useUserStore.getState().profile?.nickname,
       onDismiss: function() { setCultureEgg(null); },
     }),
   ]);
 }
-
 Object.assign(window, { CharacterHomeWidget });
-
