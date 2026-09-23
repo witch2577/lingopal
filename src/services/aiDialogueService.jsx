@@ -1,26 +1,25 @@
 // ========== AI Dialogue Service ==========
-// Hybrid architecture: LLM API (primary) + Enhanced Rule Engine (fallback)
-// Supports user-configured API keys for zero-cost personal use
+// Hybrid architecture: LLM via Supabase Edge Function (primary) + Enhanced Rule Engine (fallback)
+// Frontend never touches API keys; all LLM calls go through Edge Function with JWT auth.
+
+const EDGE_FUNCTION_URL = 'https://enfbopillyyjwieddzjt.supabase.co/functions/v1/ai-dialogue';
 
 const AIDialogueService = {
   config: {
     mode: 'enhanced-rule', // 'llm-api' | 'enhanced-rule'
-    apiKey: null,
-    apiBase: 'https://api.deepseek.com',
-    model: 'deepseek-chat',
-    maxTokens: 256,
-    temperature: 0.8,
   },
 
-  _contexts: new Map(), // sessionId -> { messages: [], scenario: {}, language: '' }
+  _contexts: new Map(), // sessionId -> { messages: [], scenario: {}, language: '', mode: '' }
 
-  // Load config from localStorage
+  // Load config from localStorage (backward-compatible: ignores legacy apiKey/apiBase fields)
   loadConfig() {
     try {
       const saved = localStorage.getItem('lingopal_ai_config');
       if (saved) {
         const parsed = JSON.parse(saved);
-        this.config = { ...this.config, ...parsed };
+        // Only keep supported fields; drop legacy apiKey/apiBase/model/maxTokens/temperature
+        const { apiKey, apiBase, model, maxTokens, temperature, ...rest } = parsed;
+        this.config = { ...this.config, ...rest };
       }
     } catch (e) {
       console.warn('[AIDialogueService] 加载配置失败:', e);
@@ -40,29 +39,38 @@ const AIDialogueService = {
     this.saveConfig();
   },
 
-  setApiKey(key) {
-    this.config.apiKey = key;
-    this.saveConfig();
+  isLLMReady() {
+    return this.config.mode === 'llm-api';
   },
 
-  isLLMReady() {
-    return this.config.mode === 'llm-api' && !!this.config.apiKey;
+  // Try to get Supabase access token from the global client
+  async _getAccessToken() {
+    try {
+      const client = typeof getSupabaseClient === 'function' ? getSupabaseClient() : null;
+      if (!client || !client.auth) return null;
+      const { data, error } = await client.auth.getSession();
+      if (error || !data.session) return null;
+      return data.session.access_token || null;
+    } catch (e) {
+      return null;
+    }
   },
 
   // Initialize a new dialogue session
-  initSession(sessionId, scenarioId, language = 'zh-CN') {
+  initSession(sessionId, scenarioId, language = 'zh-CN', mode = 'oral') {
     const scenario = DIALOGUE_SCENARIOS[scenarioId];
     const context = {
       sessionId,
       scenarioId,
       scenario,
       language,
+      mode,
       messages: [],
       turnCount: 0,
       startTime: Date.now(),
     };
 
-    // Add system prompt for LLM mode
+    // Add system prompt for LLM mode (kept for potential direct use / future compatibility)
     if (scenario) {
       context.systemPrompt = this._buildSystemPrompt(scenario, language);
     }
@@ -113,12 +121,7 @@ const AIDialogueService = {
     let response;
 
     if (this.isLLMReady()) {
-      try {
-        response = await this._callLLM(context);
-      } catch (e) {
-        console.warn('[AIDialogueService] LLM调用失败，降级到规则引擎:', e);
-        response = this._generateEnhancedRuleResponse(context, userInput);
-      }
+      response = await this._callEdgeFunction(context);
     } else {
       response = this._generateEnhancedRuleResponse(context, userInput);
     }
@@ -127,40 +130,53 @@ const AIDialogueService = {
     return response;
   },
 
-  // Call LLM API (DeepSeek / OpenAI compatible)
-  async _callLLM(context) {
-    if (!this.config.apiKey) {
-      throw new Error('未配置API Key');
+  // Call Edge Function (Supabase proxy)
+  async _callEdgeFunction(context) {
+    const token = await this._getAccessToken();
+    if (!token) {
+      const err = new Error('未登录');
+      err.code = 'UNAUTHORIZED';
+      throw err;
     }
 
-    const messages = [
-      { role: 'system', content: context.systemPrompt },
-      ...context.messages.slice(-10).map(m => ({ role: m.role, content: m.content })),
-    ];
+    const messages = context.messages.slice(-10).map(m => ({
+      role: m.role,
+      content: m.content,
+    }));
 
-    const res = await fetch(`${this.config.apiBase}/v1/chat/completions`, {
+    const res = await fetch(EDGE_FUNCTION_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.config.apiKey}`,
+        'Authorization': `Bearer ${token}`,
       },
       body: JSON.stringify({
-        model: this.config.model,
         messages,
-        max_tokens: this.config.maxTokens,
-        temperature: this.config.temperature,
+        language: context.language,
+        scenarioId: context.scenarioId,
+        mode: context.mode || 'oral',
       }),
     });
 
-    if (!res.ok) {
-      const err = await res.text();
-      throw new Error(`API错误 (${res.status}): ${err}`);
+    let data;
+    try {
+      data = await res.json();
+    } catch (e) {
+      throw new Error(`AI 服务响应异常 (${res.status})`);
     }
 
-    const data = await res.json();
-    const content = data.choices?.[0]?.message?.content;
+    if (!res.ok || !data.success) {
+      const code = data.error?.code || `HTTP_${res.status}`;
+      const message = data.error?.message || `AI 服务错误 (${res.status})`;
+      const err = new Error(message);
+      err.code = code;
+      err.status = res.status;
+      throw err;
+    }
+
+    const content = data.data?.content;
     if (!content) {
-      throw new Error('API返回空内容');
+      throw new Error('AI 返回空内容');
     }
 
     return content.trim();
