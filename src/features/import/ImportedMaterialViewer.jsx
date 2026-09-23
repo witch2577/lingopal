@@ -7,6 +7,11 @@ const ImportedMaterialViewer = ({ material, onBack }) => {
   const [currentSegment, setCurrentSegment] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showTranslation, setShowTranslation] = useState(true);
+  const [showRomanization, setShowRomanization] = useState(false);
+  const [targetTranslationLang, setTargetTranslationLang] = useState(() => {
+    try { return localStorage.getItem('lingopal_target_lang') || 'zh-CN'; } catch { return 'zh-CN'; }
+  });
+  const [isRegenerating, setIsRegenerating] = useState(false);
   const [quizAnswers, setQuizAnswers] = useState({});
   const [quizFinished, setQuizFinished] = useState(false);
   const [quizCorrect, setQuizCorrect] = useState(0);
@@ -21,22 +26,25 @@ const ImportedMaterialViewer = ({ material, onBack }) => {
   const fillBlanks = material.fillBlanks || [];
   const title = material.metadata?.title || '未命名';
 
-  // Auto-generate fill blanks if none exist for music
+  // Auto-generate fill blanks if none exist for music (multi-language support)
   const effectiveFillBlanks = fillBlanks.length > 0 ? fillBlanks : (() => {
     if (!isMusic) return [];
     const allTexts = segments.map(s => s.original_text).join(' ');
-    const allWords = allTexts.toLowerCase().match(/[a-z]+/g) || [];
-    const uniqueWords = [...new Set(allWords)].filter(w => w.length >= 4);
+    const allWords = allTexts.toLowerCase().match(/[a-z\u4e00-\u9fa5\uac00-\ud7af\u3040-\u30ff]+/g) || [];
+    const uniqueWords = [...new Set(allWords)].filter(w => {
+      if (/[\uac00-\ud7af\u3040-\u30ff]/.test(w)) return w.length >= 2;
+      return w.length >= 4;
+    });
     return uniqueWords.slice(0, Math.min(5, segments.length)).map((word, i) => {
       const lineIndex = Math.min(i, segments.length - 1);
       const lineText = segments[lineIndex]?.original_text || '';
       const lineWords = lineText.split(' ');
-      const blankIndex = lineWords.findIndex(w => w.toLowerCase().replace(/[^a-z]/g, '') === word);
+      const blankIndex = lineWords.findIndex(w => w.toLowerCase().replace(/[^a-z\u4e00-\u9fa5\uac00-\ud7af\u3040-\u30ff]/g, '') === word);
       return {
         lineIndex,
         blankIndex: blankIndex >= 0 ? blankIndex : Math.min(i, lineWords.length - 1),
         answer: word,
-        hint: word.replace(/[aeiou]/g, '_'),
+        hint: word.charAt(0) + '_'.repeat(Math.max(0, word.length - 1)),
       };
     }).filter(f => f.answer && segments[f.lineIndex]);
   })();
@@ -85,6 +93,59 @@ const ImportedMaterialViewer = ({ material, onBack }) => {
   useEffect(() => {
     return () => { window.speechSynthesis?.cancel(); };
   }, []);
+
+  // Re-generate translation with selected target language
+  const handleRegenerateTranslation = async () => {
+    const sb = getSupabaseClient && getSupabaseClient();
+    if (!sb) {
+      useUIStore.getState().showNotification('请先登录后使用 AI 翻译', 'warning');
+      return;
+    }
+    const { data } = await sb.auth.getSession();
+    const session = data?.session;
+    if (!session) {
+      useUIStore.getState().showNotification('请先登录后使用 AI 翻译', 'warning');
+      return;
+    }
+    setIsRegenerating(true);
+    try {
+      const originalLines = segments.map(s => s.original_text).join('\n');
+      const langName = targetTranslationLang === 'zh-CN' ? '中文' : '英文';
+      const res = await fetch(`${SUPABASE_URL}/functions/v1/ai-dialogue`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({
+          messages: [{
+            role: 'user',
+            content: `请将以下歌词翻译成${langName}，逐行对应，只返回翻译后的文本，每行一行，不要添加编号或额外说明：\n\n${originalLines}`
+          }],
+          language: targetTranslationLang,
+          scenarioId: null,
+          mode: 'text',
+        }),
+      });
+      const resData = await res.json();
+      if (resData.success) {
+        const transLines = resData.data.content.split('\n').map(l => l.trim()).filter(l => l);
+        segments.forEach((seg, i) => {
+          if (transLines[i]) seg.translated_text = transLines[i];
+        });
+        material.metadata = { ...material.metadata, target_language: targetTranslationLang };
+        await saveImportedMaterial(material);
+        useUIStore.getState().showNotification('翻译已重新生成', 'success');
+      } else {
+        useUIStore.getState().showNotification('翻译生成失败：' + (resData.error?.message || '未知错误'), 'error');
+      }
+    } catch (e) {
+      console.error('[ImportedMaterialViewer] regenerate translation error:', e);
+      useUIStore.getState().showNotification('翻译生成失败，请检查网络后重试', 'error');
+    } finally {
+      setIsRegenerating(false);
+    }
+  };
 
   // XP handling
   const awardXP = (sourceType) => {
@@ -190,6 +251,41 @@ const ImportedMaterialViewer = ({ material, onBack }) => {
         </div>
       </div>
 
+      {/* Translation / Romanization controls */}
+      <div className="flex items-center gap-2 mb-3 flex-wrap">
+        <select
+          value={targetTranslationLang}
+          onChange={e => {
+            const val = e.target.value;
+            setTargetTranslationLang(val);
+            try { localStorage.setItem('lingopal_target_lang', val); } catch {}
+          }}
+          className="px-2 py-1 rounded-lg bg-slate-50 text-slate-600 text-[10px] border border-slate-200 focus:outline-none"
+        >
+          <option value="zh-CN">中文</option>
+          <option value="en">English</option>
+        </select>
+        <button
+          onClick={handleRegenerateTranslation}
+          disabled={isRegenerating}
+          className="px-2 py-1 rounded-lg bg-brand-50 text-brand-600 text-[10px] font-medium hover:bg-brand-100 transition-colors disabled:opacity-40"
+        >
+          {isRegenerating ? '生成中...' : '重新生成翻译'}
+        </button>
+        <button
+          onClick={() => setShowTranslation(!showTranslation)}
+          className={`px-2 py-1 rounded-lg text-[10px] font-medium transition-colors ${showTranslation ? 'bg-brand-100 text-brand-600' : 'bg-slate-100 text-slate-500'}`}
+        >
+          {showTranslation ? '隐藏翻译' : '显示翻译'}
+        </button>
+        <button
+          onClick={() => setShowRomanization(!showRomanization)}
+          className={`px-2 py-1 rounded-lg text-[10px] font-medium transition-colors ${showRomanization ? 'bg-brand-100 text-brand-600' : 'bg-slate-100 text-slate-500'}`}
+        >
+          {showRomanization ? '隐藏音译' : '显示音译'}
+        </button>
+      </div>
+
       {/* Mode selector */}
       <div className="flex gap-1.5 mb-3 overflow-x-auto hide-scrollbar">
         {modes.map(key => {
@@ -223,6 +319,7 @@ const ImportedMaterialViewer = ({ material, onBack }) => {
             setCurrentSegment={setCurrentSegment}
             showTranslation={showTranslation}
             setShowTranslation={setShowTranslation}
+            showRomanization={showRomanization}
             speakText={speakText}
             isPlaying={isPlaying}
             stopSpeaking={stopSpeaking}
@@ -234,6 +331,8 @@ const ImportedMaterialViewer = ({ material, onBack }) => {
             segments={segments}
             currentSegment={currentSegment}
             setCurrentSegment={setCurrentSegment}
+            showTranslation={showTranslation}
+            showRomanization={showRomanization}
             speakText={speakText}
             isPlaying={isPlaying}
             stopSpeaking={stopSpeaking}
@@ -245,6 +344,8 @@ const ImportedMaterialViewer = ({ material, onBack }) => {
             segments={segments}
             currentSegment={currentSegment}
             setCurrentSegment={setCurrentSegment}
+            showTranslation={showTranslation}
+            showRomanization={showRomanization}
             speakText={speakText}
             isPlaying={isPlaying}
           />
@@ -276,6 +377,8 @@ const ImportedMaterialViewer = ({ material, onBack }) => {
             liaisons={liaisons}
             speakText={speakText}
             isPlaying={isPlaying}
+            showTranslation={showTranslation}
+            showRomanization={showRomanization}
           />
         )}
       </div>
@@ -304,7 +407,7 @@ const ImportedMaterialViewer = ({ material, onBack }) => {
 };
 
 // ===== Watch Mode (bilingual segment viewer) =====
-const WatchMode = ({ segments, currentSegment, setCurrentSegment, showTranslation, setShowTranslation, speakText, isPlaying, stopSpeaking }) => {
+const WatchMode = ({ segments, currentSegment, setCurrentSegment, showTranslation, setShowTranslation, showRomanization, speakText, isPlaying, stopSpeaking }) => {
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between mb-2">
@@ -334,6 +437,9 @@ const WatchMode = ({ segments, currentSegment, setCurrentSegment, showTranslatio
             </button>
           </div>
           <p className="text-sm text-slate-800 leading-relaxed">{seg.original_text}</p>
+          {showRomanization && seg.romanization && (
+            <p className="text-xs text-brand-500 mt-0.5">{seg.romanization}</p>
+          )}
           {showTranslation && seg.translated_text && (
             <p className="text-xs text-slate-500 mt-1">{seg.translated_text}</p>
           )}
@@ -347,7 +453,7 @@ const WatchMode = ({ segments, currentSegment, setCurrentSegment, showTranslatio
 };
 
 // ===== Listen Mode (sequential TTS playback) =====
-const ListenMode = ({ segments, currentSegment, setCurrentSegment, speakText, isPlaying, stopSpeaking }) => {
+const ListenMode = ({ segments, currentSegment, setCurrentSegment, showTranslation, showRomanization, speakText, isPlaying, stopSpeaking }) => {
   const playCurrent = () => {
     if (currentSegment < segments.length) {
       speakText(segments[currentSegment].original_text);
@@ -362,14 +468,19 @@ const ListenMode = ({ segments, currentSegment, setCurrentSegment, speakText, is
     }
   };
 
+  const seg = segments[currentSegment];
+
   return (
     <div className="flex flex-col items-center justify-center py-8">
       <div className="w-full bg-brand-50 rounded-2xl p-6 mb-6 text-center">
         {currentSegment < segments.length ? (
           <>
-            <p className="text-lg font-medium text-slate-800 mb-2">{segments[currentSegment].original_text}</p>
-            {segments[currentSegment].translated_text && (
-              <p className="text-sm text-slate-500 mb-4">{segments[currentSegment].translated_text}</p>
+            <p className="text-lg font-medium text-slate-800 mb-2">{seg.original_text}</p>
+            {showRomanization && seg.romanization && (
+              <p className="text-sm text-brand-500 mb-1">{seg.romanization}</p>
+            )}
+            {showTranslation && seg.translated_text && (
+              <p className="text-sm text-slate-500 mb-4">{seg.translated_text}</p>
             )}
           </>
         ) : (
@@ -397,15 +508,22 @@ const ListenMode = ({ segments, currentSegment, setCurrentSegment, speakText, is
 };
 
 // ===== Repeat Mode (listen + read aloud) =====
-const RepeatMode = ({ segments, currentSegment, setCurrentSegment, speakText, isPlaying }) => {
+const RepeatMode = ({ segments, currentSegment, setCurrentSegment, showTranslation, showRomanization, speakText, isPlaying }) => {
+  const seg = segments[currentSegment];
   return (
     <div className="flex flex-col items-center justify-center py-8">
       <div className="w-full bg-emerald-50 rounded-2xl p-6 mb-6 text-center">
         {currentSegment < segments.length ? (
           <>
-            <p className="text-lg font-medium text-slate-800 mb-4">{segments[currentSegment].original_text}</p>
+            <p className="text-lg font-medium text-slate-800 mb-2">{seg.original_text}</p>
+            {showRomanization && seg.romanization && (
+              <p className="text-sm text-brand-500 mb-1">{seg.romanization}</p>
+            )}
+            {showTranslation && seg.translated_text && (
+              <p className="text-sm text-slate-500 mb-4">{seg.translated_text}</p>
+            )}
             <button
-              onClick={() => speakText(segments[currentSegment].original_text)}
+              onClick={() => speakText(seg.original_text)}
               className={`w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all mx-auto ${isPlaying ? 'bg-emerald-400' : 'bg-emerald-500 hover:bg-emerald-600'}`}
             >
               <Icon name={isPlaying ? 'volume' : 'play'} size={24} className="text-white" />
@@ -530,6 +648,9 @@ const FillMode = ({ segments, fillBlanks, answers, onAnswer }) => {
 
   return (
     <div className="space-y-3">
+      <div className="p-2 rounded-lg bg-amber-50 border border-amber-100">
+        <p className="text-xs text-amber-700">🎵 听歌填词：根据听到的歌词，在空格处填入原文。答对可获得 XP 奖励，帮助巩固记忆！</p>
+      </div>
       {segments.map((seg, li) => {
         const words = seg.original_text.split(' ');
         const blanksInLine = fillBlanks.filter(b => b.lineIndex === li);
@@ -576,7 +697,7 @@ const FillMode = ({ segments, fillBlanks, answers, onAnswer }) => {
 };
 
 // ===== Liaison Mode =====
-const LiaisonMode = ({ segments, liaisons, speakText, isPlaying }) => {
+const LiaisonMode = ({ segments, liaisons, speakText, isPlaying, showTranslation, showRomanization }) => {
   const liaisonMap = {};
   liaisons.forEach(l => { liaisonMap[l.lineIndex] = l; });
 
@@ -592,6 +713,12 @@ const LiaisonMode = ({ segments, liaisons, speakText, isPlaying }) => {
               </button>
             </div>
             <p className="text-sm text-slate-800 leading-relaxed">{seg.original_text}</p>
+            {showRomanization && seg.romanization && (
+              <p className="text-xs text-brand-500 mt-0.5">{seg.romanization}</p>
+            )}
+            {showTranslation && seg.translated_text && (
+              <p className="text-xs text-slate-500 mt-1">{seg.translated_text}</p>
+            )}
             {liaison && (
               <div className="mt-2 p-2 rounded-lg bg-emerald-50 border border-emerald-100">
                 <p className="text-xs text-emerald-700 font-medium">💡 连读提示</p>
