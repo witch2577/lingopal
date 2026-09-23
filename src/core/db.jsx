@@ -40,6 +40,10 @@ db.version(6).stores({
   characterSnapshots: 'id',
 });
 
+db.version(7).stores({
+  importedMaterials: 'material_id, source_type, importedAt',
+});
+
 // Seed default user if none exists
 async function ensureDefaultUser() {
   const count = await db.userProfiles.count();
@@ -685,6 +689,25 @@ async function getLessonProgress(userId) {
   return Object.fromEntries(recs.map(r => [r.lessonId, r]));
 }
 
+// ---- Imported Materials helpers ----
+async function saveImportedMaterial(material) {
+  if (!window.db) return false;
+  const rec = { ...material, importedAt: material.importedAt || Date.now() };
+  await db.importedMaterials.put(rec);
+  return true;
+}
+
+async function getImportedMaterials() {
+  if (!window.db) return [];
+  return db.importedMaterials.orderBy('importedAt').reverse().toArray();
+}
+
+async function deleteImportedMaterial(materialId) {
+  if (!window.db) return false;
+  await db.importedMaterials.delete(materialId);
+  return true;
+}
+
 // ---- Export / Import helpers (P2 sync) ----
 async function exportUserData(userId) {
   if (!userId || !window.db) return null;
@@ -762,4 +785,6 @@ Object.assign(window, {
   WEEKLY_GRAMMAR_POOL, WEEKLY_CULTURE_POOL, WEEKLY_VIDEO_POOL,
   // P2 sync
   exportUserData, importUserData,
+  // Imported materials
+  saveImportedMaterial, getImportedMaterials, deleteImportedMaterial,
 });
