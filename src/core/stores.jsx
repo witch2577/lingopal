@@ -508,7 +508,19 @@ const useCharacterStore = create((set, get) => ({
         CharacterSave.loadAll(userId),
         new Promise((_, reject) => setTimeout(() => reject(new Error('loadAll timeout')), 5000))
       ]);
-      set({ config, growth, naming, snapshots, loading: false, initialized: true });
+
+      // Trigger migration notice for users who were migrated from v2→v3
+      let showMigrationNotice = false;
+      try {
+        if (growth && growth._migratedAt) {
+          const alreadyShown = localStorage.getItem('lp_migration_v3_shown');
+          if (!alreadyShown) {
+            showMigrationNotice = true;
+          }
+        }
+      } catch (e) { /* ignore localStorage errors */ }
+
+      set({ config, growth, naming, snapshots, loading: false, initialized: true, showMigrationNotice });
     } catch (e) {
       console.error('[CharacterStore] init error:', e);
       set({
@@ -518,6 +530,7 @@ const useCharacterStore = create((set, get) => ({
         snapshots: [],
         loading: false,
         initialized: true,
+        showMigrationNotice: false,
       });
     }
   },
@@ -544,17 +557,38 @@ const useCharacterStore = create((set, get) => ({
     };
     const stage = getStageByGP(newGP);
     if (stage.stage !== state.growth.currentStage) {
+      const oldStage = state.growth.currentStage;
+      const oldStageKey = typeof getStageKeyByNumber === 'function'
+        ? getStageKeyByNumber(oldStage)
+        : (oldStage === 1 ? 'baby' : oldStage === 2 ? 'toddler' : oldStage === 3 ? 'adult' : 'middleage');
+      const newStageKey = stage.key || (stage.stage === 1 ? 'baby' : stage.stage === 2 ? 'toddler' : stage.stage === 3 ? 'adult' : 'middleage');
+
       newGrowth.currentStage = stage.stage;
       newGrowth.stageName = stage.name;
       newGrowth.stageGPRequired = stage.gpRequired;
       newGrowth.nextStageGP = getNextStage(stage.stage)?.gpRequired || null;
       newGrowth.evolutionHistory = [
         ...(newGrowth.evolutionHistory || []),
-        { from: state.growth.currentStage, to: stage.stage, at: Date.now() },
+        { from: oldStage, to: stage.stage, at: Date.now() },
       ];
+
+      // Cross-stage config migration
+      if (state.config && typeof migrateConfigForStage === 'function' && oldStageKey !== newStageKey) {
+        const migratedConfig = migrateConfigForStage(state.config, oldStageKey, newStageKey);
+        if (migratedConfig !== state.config) {
+          set({ config: migratedConfig });
+          CharacterSave.saveConfig(migratedConfig);
+        }
+      }
     }
     set({ growth: newGrowth });
     CharacterSave.saveGrowth(newGrowth);
+  },
+  dismissMigrationNotice: () => {
+    set({ showMigrationNotice: false });
+    try {
+      localStorage.setItem('lp_migration_v3_shown', '1');
+    } catch (e) { /* ignore */ }
   },
   updateMood: (mood) => {
     const state = get();
