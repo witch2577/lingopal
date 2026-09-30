@@ -1,6 +1,6 @@
 // ========== EvolutionRitual ==========
 // Full-screen evolution ceremony played when GP reaches a stage threshold.
-// Shows baby → next stage transformation animation.
+// Shows stage transformation animation for the 4-stage growth system.
 // Can be skipped. Updates character image after animation.
 
 const { useState, useEffect, useCallback } = React;
@@ -21,7 +21,6 @@ function EvolutionRitual({ evolutionData, onComplete, onSkip }) {
   useEffect(function() {
     if (!evolutionData) return;
 
-    // Animation timeline
     const timers = [];
 
     timers.push(setTimeout(function() {
@@ -67,12 +66,14 @@ function EvolutionRitual({ evolutionData, onComplete, onSkip }) {
 
   if (!evolutionData) return null;
 
-  const fromStage = evolutionData.fromStage || { stage: 1, name: '婴儿期' };
-  const toStage = evolutionData.toStage || { stage: 2, name: '幼儿期' };
+  const fromStage = evolutionData.fromStage || { stage: 1, name: '婴儿(3-5岁)' };
+  const toStage = evolutionData.toStage || { stage: 2, name: '幼儿(10-15岁)' };
 
   const config = useCharacterStore.getState().config || {};
 
-  // Phase-based styles
+  // Determine which renderer to use: baby stage uses BabyCharacterRenderer
+  const isBabyStage = function(stageNum) { return stageNum === 1; };
+
   const overlayOpacity = phase === 'exit' ? 0 : 1;
   const contentScale = phase === 'enter' ? 0.8 : phase === 'exit' ? 0.9 : 1;
   const glowIntensity = phase === 'glow' || phase === 'transform' ? 1 : 0;
@@ -93,7 +94,6 @@ function EvolutionRitual({ evolutionData, onComplete, onSkip }) {
       'data-phase': phase,
     },
     [
-      // Skip button
       React.createElement('button', {
         key: 'skip',
         onClick: handleSkip,
@@ -101,7 +101,6 @@ function EvolutionRitual({ evolutionData, onComplete, onSkip }) {
         'data-testid': 'evolution-skip-btn',
       }, '跳过'),
 
-      // Main content
       React.createElement(
         motion.div,
         {
@@ -112,7 +111,6 @@ function EvolutionRitual({ evolutionData, onComplete, onSkip }) {
           transition: { duration: 0.5, ease: 'easeOut' },
         },
         [
-          // Stage label: "婴儿期 → 幼儿期"
           React.createElement(
             motion.div,
             {
@@ -125,12 +123,10 @@ function EvolutionRitual({ evolutionData, onComplete, onSkip }) {
             fromStage.name + ' → ' + toStage.name
           ),
 
-          // Character transform area
           React.createElement('div', {
             key: 'char-area',
             className: 'relative w-48 h-56 flex items-center justify-center',
           }, [
-            // Glow effect
             React.createElement(motion.div, {
               key: 'glow',
               className: 'absolute inset-0 rounded-full',
@@ -145,7 +141,6 @@ function EvolutionRitual({ evolutionData, onComplete, onSkip }) {
               transition: { duration: 0.8 },
             }),
 
-            // Sparkles during transform
             (phase === 'glow' || phase === 'transform') && React.createElement('div', {
               key: 'sparkles',
               className: 'absolute inset-0 pointer-events-none',
@@ -172,7 +167,6 @@ function EvolutionRitual({ evolutionData, onComplete, onSkip }) {
               }, emoji);
             })),
 
-            // Old character (fades out during transform)
             React.createElement(motion.div, {
               key: 'old-char',
               animate: {
@@ -182,7 +176,7 @@ function EvolutionRitual({ evolutionData, onComplete, onSkip }) {
               },
               transition: { duration: 0.6 },
             },
-              fromStage.stage === 1
+              isBabyStage(fromStage.stage)
                 ? React.createElement(BabyCharacterRenderer, {
                     config: config,
                     width: 160,
@@ -197,7 +191,6 @@ function EvolutionRitual({ evolutionData, onComplete, onSkip }) {
                   })
             ),
 
-            // New character (fades in during reveal)
             showNewStage && React.createElement(motion.div, {
               key: 'new-char',
               className: 'absolute inset-0 flex items-center justify-center',
@@ -205,7 +198,7 @@ function EvolutionRitual({ evolutionData, onComplete, onSkip }) {
               animate: { opacity: 1, scale: 1 },
               transition: { duration: 0.8, ease: 'easeOut' },
             },
-              toStage.stage === 1
+              isBabyStage(toStage.stage)
                 ? React.createElement(BabyCharacterRenderer, {
                     config: config,
                     width: 160,
@@ -221,7 +214,6 @@ function EvolutionRitual({ evolutionData, onComplete, onSkip }) {
             ),
           ]),
 
-          // Evolution message
           React.createElement(
             motion.div,
             {
@@ -248,7 +240,6 @@ function EvolutionRitual({ evolutionData, onComplete, onSkip }) {
             ]
           ),
 
-          // Progress bar for ritual timing
           React.createElement(motion.div, {
             key: 'progress',
             className: 'w-48 h-1 bg-white/20 rounded-full overflow-hidden',
@@ -270,18 +261,12 @@ function EvolutionRitual({ evolutionData, onComplete, onSkip }) {
 
 /**
  * useEvolutionRitual hook - manages evolution state and ritual display.
- * Integrates with CharacterStore's setOnEvolution callback.
- *
- * Usage:
- *   const { EvolutionRitualComponent, registerEvolution } = useEvolutionRitual();
- *   useEffect(() => { registerEvolution(); }, []);
  */
 function useEvolutionRitual() {
   const [evolutionData, setEvolutionData] = useState(null);
   const [ritualComplete, setRitualComplete] = useState(false);
 
   const handleEvolution = useCallback(function(data) {
-    // Block other feedback during evolution
     if (typeof FeedbackEngine !== 'undefined') {
       FeedbackEngine.setEvolutionActive(true);
     }
@@ -295,9 +280,8 @@ function useEvolutionRitual() {
     if (typeof FeedbackEngine !== 'undefined') {
       FeedbackEngine.setEvolutionActive(false);
     }
-    // Refresh character store to ensure stage is updated
     const charState = useCharacterStore.getState();
-    if (charState && charState.growth) {
+    if (charState && charState.growth && typeof getStageByGP === 'function' && typeof getNextStage === 'function') {
       const newStage = getStageByGP(charState.growth.totalGP);
       charState.setGrowth({
         currentStage: newStage.stage,
