@@ -43,6 +43,96 @@ db.version(6).stores({
 db.version(7).stores({
   importedMaterials: 'material_id, source_type, importedAt',
 });
+// ---- v8: Growth system 4-stage migration (2026-09-29) ----
+// Backup table for characterGrowth v7 data before migration
+db.version(8).stores({
+  characterGrowth_v7_backup: '++id',
+}).upgrade(function(tx) {
+  // Self-contained stage definitions (CharacterConfig may not be loaded yet)
+  var STAGE_NAME_MAP = {
+    '婴儿期': '婴儿(3-5岁)',
+    '幼儿期': '幼儿(10-15岁)',
+    '少儿期': '幼儿(10-15岁)',
+    '成年期': '成人(18岁)',
+  };
+  var STAGE_THRESHOLDS = [
+    { stage: 1, name: '婴儿(3-5岁)', gpRequired: 0 },
+    { stage: 2, name: '幼儿(10-15岁)', gpRequired: 50 },
+    { stage: 3, name: '成人(18岁)', gpRequired: 200 },
+    { stage: 4, name: '中青年(30岁)', gpRequired: 600 },
+  ];
+  function getStageByGP(gp) {
+    for (var i = STAGE_THRESHOLDS.length - 1; i >= 0; i--) {
+      if (gp >= STAGE_THRESHOLDS[i].gpRequired) return STAGE_THRESHOLDS[i];
+    }
+    return STAGE_THRESHOLDS[0];
+  }
+  function getNextStage(num) {
+    for (var i = 0; i < STAGE_THRESHOLDS.length; i++) {
+      if (STAGE_THRESHOLDS[i].stage === num + 1) return STAGE_THRESHOLDS[i];
+    }
+    return null;
+  }
+
+  return tx.characterGrowth.toArray().then(function(records) {
+    // Backup all v7 records
+    var backups = records.map(function(r) {
+      return {
+        userId: r.userId,
+        data: r.data,
+        updatedAt: r.updatedAt,
+        _backupAt: Date.now(),
+        _originalId: r.id,
+      };
+    });
+    return tx.characterGrowth_v7_backup.bulkAdd(backups).then(function() {
+      return records;
+    }).catch(function(e) {
+      console.error('[db v8] backup failed:', e);
+      throw e;
+    });
+  }).then(function(records) {
+    return Promise.all(records.map(function(r) {
+      var data = r.data || {};
+      var oldStage = data.currentStage;
+      var oldStageNum = Number(oldStage);
+      // Stage number migration: old 3(child) → new 2(toddler), old 4(adult) → new 3(adult)
+      if (oldStageNum === 3) {
+        data.currentStage = 2;
+      } else if (oldStageNum === 4) {
+        data.currentStage = 3;
+      } else if (typeof oldStageNum !== 'number' || isNaN(oldStageNum) || oldStageNum < 1 || oldStageNum > 4) {
+        // Invalid value fallback to toddler (stage 2)
+        data.currentStage = 2;
+      }
+      // Stage name migration
+      if (STAGE_NAME_MAP[data.stageName]) {
+        data.stageName = STAGE_NAME_MAP[data.stageName];
+      }
+      // Reconcile with GP (auto-promote if GP exceeds current stage threshold)
+      var computed = getStageByGP(data.totalGP || 0);
+      if (computed.stage !== data.currentStage && data.currentStage < computed.stage) {
+        data.currentStage = computed.stage;
+        data.stageName = computed.name;
+      }
+      // Recalculate stage metadata
+      var stageInfo = null;
+      for (var i = 0; i < STAGE_THRESHOLDS.length; i++) {
+        if (STAGE_THRESHOLDS[i].stage === data.currentStage) {
+          stageInfo = STAGE_THRESHOLDS[i];
+          break;
+        }
+      }
+      data.stageGPRequired = stageInfo ? stageInfo.gpRequired : 0;
+      var nextStageInfo = getNextStage(data.currentStage);
+      data.nextStageGP = nextStageInfo ? nextStageInfo.gpRequired : null;
+      data._migratedAt = Date.now();
+      data._v = 3;
+      return tx.characterGrowth.put(r);
+    }));
+  });
+});
+
 
 // Seed default user if none exists
 async function ensureDefaultUser() {
