@@ -305,9 +305,33 @@ function getRequiredAssetPaths(config) {
 }
 
 /**
- * Get available options for a dimension, filtered by gender.
+ * Stage availability map (future-proof: items can declare `stages` array).
+ * Currently: isBaby items are baby-only; everything else is universal.
  */
-function getDimensionOptions(category, gender) {
+function getItemStageAvailability(item) {
+  if (item.stages && Array.isArray(item.stages)) {
+    return item.stages;
+  }
+  if (item.isBaby) {
+    return ['baby'];
+  }
+  // Default: all stages
+  return ['baby', 'toddler', 'adult', 'middleage'];
+}
+
+function isItemAvailableForStage(item, stageKey) {
+  if (!stageKey) return true;
+  const stages = getItemStageAvailability(item);
+  return stages.indexOf(stageKey) !== -1;
+}
+
+/**
+ * Get available options for a dimension, filtered by gender and optionally stage.
+ * @param {string} category - item category
+ * @param {string} gender - 'boy' | 'girl'
+ * @param {string} [stageKey] - optional stage key ('baby'|'toddler'|'adult'|'middleage')
+ */
+function getDimensionOptions(category, gender, stageKey) {
   const key = `${category}:${gender}`;
   const genderItems = CHARACTER_ITEMS_INDEX[key] || [];
   const universalKey = `${category}:universal`;
@@ -317,11 +341,41 @@ function getDimensionOptions(category, gender) {
   const seen = new Set();
   const all = [...genderItems, ...universalItems];
   return all.filter(item => {
+    // Stage filter
+    if (stageKey && !isItemAvailableForStage(item, stageKey)) {
+      return false;
+    }
     const baseId = item.id.replace(/-(boy|girl|universal)$/, '');
     if (seen.has(baseId)) return false;
     seen.add(baseId);
     return true;
   });
+}
+
+/**
+ * Get options UNAVAILABLE for the given stage (for "grayed out" UI).
+ * @param {string} category - item category
+ * @param {string} gender - 'boy' | 'girl'
+ * @param {string} stageKey - stage key
+ */
+function getDimensionUnavailableOptions(category, gender, stageKey) {
+  if (!stageKey) return [];
+  const key = `${category}:${gender}`;
+  const genderItems = CHARACTER_ITEMS_INDEX[key] || [];
+  const universalKey = `${category}:universal`;
+  const universalItems = CHARACTER_ITEMS_INDEX[universalKey] || [];
+
+  const seen = new Set();
+  const unavailable = [];
+  const all = [...genderItems, ...universalItems];
+  for (const item of all) {
+    if (isItemAvailableForStage(item, stageKey)) continue;
+    const baseId = item.id.replace(/-(boy|girl|universal)$/, '');
+    if (seen.has(baseId)) continue;
+    seen.add(baseId);
+    unavailable.push(item);
+  }
+  return unavailable;
 }
 
 Object.assign(window, {
@@ -335,4 +389,7 @@ Object.assign(window, {
   resolveCharacterLayers,
   getRequiredAssetPaths,
   getDimensionOptions,
+  getDimensionUnavailableOptions,
+  isItemAvailableForStage,
+  getItemStageAvailability,
 });
