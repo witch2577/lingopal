@@ -37,6 +37,7 @@ function CharacterRenderer({
   onLoad,
   transitionDuration = 300,
   staticMode,
+  stageKey,
 }) {
   const [layers, setLayers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -69,9 +70,13 @@ function CharacterRenderer({
         const paths = resolvedLayers.map(l => l.item?.path).filter(Boolean);
         const uniquePaths = [...new Set(paths)];
 
-        // Load all in parallel
+        // Load all in parallel — use stage-aware loading when stageKey is provided
+        const useStageLoad = stageKey && typeof CharacterAssetLoader.loadForStage === 'function';
         const svgTexts = await Promise.all(
-          uniquePaths.map(p => CharacterAssetLoader.load(p))
+          uniquePaths.map(p => useStageLoad
+            ? CharacterAssetLoader.loadForStage(p, stageKey)
+            : CharacterAssetLoader.load(p)
+          )
         );
 
         if (cancelled) return;
@@ -117,7 +122,7 @@ function CharacterRenderer({
     loadAll();
 
     return () => { cancelled = true; };
-  }, [config, resolvedLayers, onLoad]);
+  }, [config, resolvedLayers, onLoad, stageKey]);
 
   // Track config changes for transition timing
   useEffect(() => {
