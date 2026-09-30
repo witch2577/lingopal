@@ -2,6 +2,7 @@
 // On-demand SVG part fetching with memory cache.
 // Cache hit = zero network requests.
 // Supports preload, prefetch, and cache introspection.
+// v2: Added stage-based path routing with fallback chain for 4-stage growth system.
 
 const CharacterAssetLoader = {
   _cache: new Map(),        // path -> SVG string
@@ -9,11 +10,13 @@ const CharacterAssetLoader = {
   _fetchCount: 0,           // stats: total fetch calls
   _cacheHitCount: 0,        // stats: cache hits
   _basePath: 'assets/characters/',
+  _placeholderLog: new Set(), // track logged missing assets (prevent spam)
 
   // ---- Core load ----
 
   /**
    * Load a single SVG part. Cache hit returns immediately without network.
+   * Legacy entry point — does NOT apply stage routing.
    */
   async load(path) {
     if (!path) return null;
@@ -34,28 +37,63 @@ const CharacterAssetLoader = {
     return promise;
   },
 
+  /**
+   * Load with stage-aware path routing.
+   * Fallback chain:
+   *   1. {basePath}{stageKey}/{path}  (stage-specific asset)
+   *   2. {basePath}{path}             (legacy path)
+   *   3. {path}.svg if .png failed    (SVG fallback)
+   *   4. Placeholder SVG               (never white screen)
+   */
+  async loadForStage(path, stageKey) {
+    if (!path) return null;
+    if (!stageKey) return this.load(path);
+
+    // 1. Try stage-specific path
+    const stagePath = stageKey + '/' + path;
+    const stageResult = await this.load(stagePath);
+    if (stageResult) return stageResult;
+
+    // 2. Fallback to legacy path
+    const legacyResult = await this.load(path);
+    if (legacyResult) return legacyResult;
+
+    // 3. PNG -> SVG fallback
+    if (path.toLowerCase().endsWith('.png')) {
+      const svgPath = path.replace(/\.png$/i, '.svg');
+      const svgResult = await this.load(svgPath);
+      if (svgResult) return svgResult;
+    }
+
+    // 4. Placeholder (guarantees no white screen)
+    return this._getPlaceholder(path);
+  },
+
   async _fetch(path) {
     const url = this._basePath + path;
 
     // PNG assets: return an <image> SVG element that references the PNG file
-    // The CharacterRenderer can embed this in its parent <svg> via innerHTML
     if (path.toLowerCase().endsWith('.png')) {
       try {
-        // Verify the asset exists by issuing a HEAD request
         const headResp = await fetch(url, { method: 'HEAD' });
         if (!headResp.ok) {
-          console.warn(`[CharacterAssetLoader] PNG fetch failed: ${url} (${headResp.status})`);
+          if (!this._placeholderLog.has(path)) {
+            console.warn('[CharacterAssetLoader] PNG not found: ' + url + ' (' + headResp.status + '), will fallback');
+            this._placeholderLog.add(path);
+          }
           this._loading.delete(path);
           return null;
         }
-        // Return <image> element string for SVG embedding
-        const imageEl = `<image href="${url}" x="0" y="0" width="400" height="600" preserveAspectRatio="xMidYMid meet"/>`;
+        const imageEl = '<image href="' + url + '" x="0" y="0" width="400" height="600" preserveAspectRatio="xMidYMid meet"/>';
         this._cache.set(path, imageEl);
         this._fetchCount++;
         this._loading.delete(path);
         return imageEl;
       } catch (err) {
-        console.warn(`[CharacterAssetLoader] PNG network error: ${url}`, err);
+        if (!this._placeholderLog.has(path)) {
+          console.warn('[CharacterAssetLoader] PNG network error: ' + url, err);
+          this._placeholderLog.add(path);
+        }
         this._loading.delete(path);
         return null;
       }
@@ -65,7 +103,10 @@ const CharacterAssetLoader = {
     try {
       const response = await fetch(url);
       if (!response.ok) {
-        console.warn(`[CharacterAssetLoader] fetch failed: ${url} (${response.status})`);
+        if (!this._placeholderLog.has(path)) {
+          console.warn('[CharacterAssetLoader] SVG not found: ' + url + ' (' + response.status + ')');
+          this._placeholderLog.add(path);
+        }
         this._loading.delete(path);
         return null;
       }
@@ -75,50 +116,76 @@ const CharacterAssetLoader = {
       this._loading.delete(path);
       return svgText;
     } catch (err) {
-      console.warn(`[CharacterAssetLoader] network error: ${url}`, err);
+      if (!this._placeholderLog.has(path)) {
+        console.warn('[CharacterAssetLoader] SVG network error: ' + url, err);
+        this._placeholderLog.add(path);
+      }
       this._loading.delete(path);
       return null;
     }
+  },
+
+  /**
+   * Generate a placeholder SVG element for missing assets.
+   * Prevents white screens by rendering an invisible placeholder.
+   */
+  _getPlaceholder(path) {
+    const parts = path.split('/');
+    const layerHint = parts.length >= 2 ? parts[parts.length - 2] : 'part';
+    const placeholder = '<g data-placeholder="true" data-missing-path="' + path + '" data-layer="' + layerHint + '"></g>';
+    if (!this._placeholderLog.has(path)) {
+      console.warn('[CharacterAssetLoader] Placeholder used for: ' + path);
+      this._placeholderLog.add(path);
+    }
+    return placeholder;
   },
 
   // ---- Batch operations ----
 
   /**
    * Preload all assets required for a given CharacterConfig.
+   * If stageKey is provided, uses stage-aware loading.
    */
-  async preload(config) {
+  async preload(config, stageKey) {
     const paths = getRequiredAssetPaths(config);
     const uniquePaths = [...new Set(paths)];
-    await Promise.all(uniquePaths.map(p => this.load(p)));
+    if (stageKey) {
+      await Promise.all(uniquePaths.map(p => this.loadForStage(p, stageKey)));
+    } else {
+      await Promise.all(uniquePaths.map(p => this.load(p)));
+    }
   },
 
   /**
    * Preload a list of paths explicitly.
    */
-  async preloadPaths(paths) {
+  async preloadPaths(paths, stageKey) {
     const uniquePaths = [...new Set(paths.filter(Boolean))];
-    await Promise.all(uniquePaths.map(p => this.load(p)));
+    if (stageKey) {
+      await Promise.all(uniquePaths.map(p => this.loadForStage(p, stageKey)));
+    } else {
+      await Promise.all(uniquePaths.map(p => this.load(p)));
+    }
   },
 
   /**
    * Prefetch likely-next assets during idle time.
-   * Loads unlocked items of current gender not yet in cache.
    */
-  prefetch(config, batchSize = 5) {
+  prefetch(config, batchSize, stageKey) {
     if (typeof requestIdleCallback === 'function') {
       requestIdleCallback(() => {
-        this._doPrefetch(config, batchSize);
+        this._doPrefetch(config, batchSize, stageKey);
       }, { timeout: 2000 });
     } else {
-      setTimeout(() => this._doPrefetch(config, batchSize), 100);
+      setTimeout(() => this._doPrefetch(config, batchSize, stageKey), 100);
     }
   },
 
-  _doPrefetch(config, batchSize) {
+  _doPrefetch(config, batchSize, stageKey) {
+    batchSize = batchSize || 5;
     const gender = config?.gender || 'girl';
     const unlocked = config?.unlockedItems || [];
 
-    // Gather paths for unlocked items of current gender
     const candidates = CHARACTER_ITEMS.filter(item => {
       if (item.gender !== gender && item.gender !== 'universal') return false;
       if (item.unlockCondition && !unlocked.includes(item.id)) return false;
@@ -126,7 +193,11 @@ const CharacterAssetLoader = {
     });
 
     const toFetch = candidates.slice(0, batchSize).map(i => i.path);
-    toFetch.forEach(p => this.load(p));
+    if (stageKey) {
+      toFetch.forEach(p => this.loadForStage(p, stageKey));
+    } else {
+      toFetch.forEach(p => this.load(p));
+    }
   },
 
   // ---- Cache management ----
@@ -148,11 +219,9 @@ const CharacterAssetLoader = {
     this._loading.clear();
     this._fetchCount = 0;
     this._cacheHitCount = 0;
+    this._placeholderLog.clear();
   },
 
-  /**
-   * Warm cache with inline SVG strings (useful for critical assets).
-   */
   warmCache(path, svgString) {
     this._cache.set(path, svgString);
   },
@@ -165,6 +234,7 @@ const CharacterAssetLoader = {
       fetchCount: this._fetchCount,
       cacheHitCount: this._cacheHitCount,
       inFlight: this._loading.size,
+      placeholders: this._placeholderLog.size,
     };
   },
 
