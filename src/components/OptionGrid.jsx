@@ -1,10 +1,8 @@
 // ========== OptionGrid ==========
 // 展示某个维度下的可选部件网格
 // Props: items, selectedId, onSelect(id), lockedIds, showLock
-
 const { motion } = window.Motion;
-
-function OptionGrid({ items, selectedId, onSelect, lockedIds = [], showLock = true }) {
+function OptionGrid({ items, selectedId, onSelect, lockedIds = [], unavailableIds = [], showLock = true }) {
   if (!items || items.length === 0) {
     return (
       <div className="text-center py-6 text-slate-400 text-sm">
@@ -12,28 +10,27 @@ function OptionGrid({ items, selectedId, onSelect, lockedIds = [], showLock = tr
       </div>
     );
   }
-
   return (
     <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
       {items.map((item) => {
         const isLocked = showLock && lockedIds.includes(item.id);
+        const isUnavailable = unavailableIds.includes(item.id);
         const isSelected = selectedId === item.id;
-
         return (
           <motion.button
             key={item.id}
-            whileTap={isLocked ? {} : { scale: 0.92 }}
+            whileTap={isLocked || isUnavailable ? {} : { scale: 0.92 }}
             onClick={() => {
-              if (!isLocked) onSelect(item.id);
+              if (!isLocked && !isUnavailable) onSelect(item.id);
             }}
             className={`relative flex flex-col items-center gap-1.5 p-2 rounded-xl border-2 transition-all ${
               isSelected
                 ? 'border-brand-400 bg-brand-50/80 shadow-sm'
-                : isLocked
-                  ? 'border-slate-100 bg-slate-50/60 opacity-60 cursor-not-allowed'
+                : isLocked || isUnavailable
+                  ? 'border-slate-100 bg-slate-50/60 opacity-50 grayscale cursor-not-allowed'
                   : 'border-slate-100 bg-white hover:border-brand-200 hover:shadow-sm cursor-pointer'
             }`}
-            disabled={isLocked}
+            disabled={isLocked || isUnavailable}
             aria-label={item.name}
             title={isLocked ? `${item.name}（未解锁）` : item.name}
           >
@@ -85,6 +82,4 @@ function OptionGrid({ items, selectedId, onSelect, lockedIds = [], showLock = tr
     </div>
   );
 }
-
 Object.assign(window, { OptionGrid });
-
