@@ -3,20 +3,18 @@
 // and naming data.  Includes versioned defaults and a v0→v1 migrator.
 // Updated for Task 3: 4-stage growth model (婴儿期→幼儿期→少儿期→成年期)
 // Updated 2026-09-22: add userCreated flag to distinguish auto-generated vs player-created
+// Updated 2026-09-29: new 4-stage model (baby/toddler/adult/middleage), GP thresholds remapped
 const CURRENT_CONFIG_VERSION = 3;
-const CURRENT_GROWTH_VERSION = 2;
+const CURRENT_GROWTH_VERSION = 3;
 const CURRENT_NAMING_VERSION = 1;
+
 // ---- Default CharacterConfig (appearance + shop structure) ----
-// Naming fields are intentionally EMPTY — the UI prompts the user to fill them.
-// userCreated: false means the character was auto-generated and the player
-// has not yet gone through the creation onboarding.
 function getDefaultCharacterConfig() {
   return {
     _v: CURRENT_CONFIG_VERSION,
-    gender: 'girl',              // 'boy' | 'girl'
-    mode: 'child',               // 'child' (养成) | 'avatar' (化身)
-    userCreated: false,          // true after player completes creation onboarding
-    // 捏脸维度
+    gender: 'girl',
+    mode: 'child',
+    userCreated: false,
     faceShape: 'face-oval',
     hairStyle: 'hair-long-straight',
     hairColor: '#2D2D2D',
@@ -25,16 +23,13 @@ function getDefaultCharacterConfig() {
     eyebrow: 'brow-straight',
     skinTone: '#F5D0C5',
     expression: 'expr-smile',
-    // 造型
     top: 'top-sailor',
     bottom: 'bottom-pleated-skirt',
     accessory: null,
     background: 'bg-room',
-    // 命名 / 称呼 — 纯文本，无预设默认值
     characterName: '',
     userNickname: '',
     customTitle: '',
-    // 商城字段 — 本任务只建结构，不实现逻辑
     starCoin: 0,
     purchasedItems: [],
     equippedShopItems: {
@@ -43,18 +38,17 @@ function getDefaultCharacterConfig() {
       accessory: null,
       background: null,
     },
-    // 解锁记录
     unlockedItems: [],
   };
 }
+
 // ---- Default CharacterGrowth (GP / stage / mood) ----
-// Task 3: initial character = infant (婴儿期)
 function getDefaultCharacterGrowth() {
   return {
     _v: CURRENT_GROWTH_VERSION,
     totalGP: 0,
     currentStage: 1,
-    stageName: '婴儿期',
+    stageName: '婴儿(3-5岁)',
     stageGPRequired: 0,
     nextStageGP: 50,
     currentMood: 'happy',
@@ -65,6 +59,7 @@ function getDefaultCharacterGrowth() {
     gpHistory: [],
   };
 }
+
 // ---- Default CharacterNaming (standalone persistence) ----
 function getDefaultCharacterNaming() {
   return {
@@ -76,14 +71,35 @@ function getDefaultCharacterNaming() {
     nicknameHistory: [],
   };
 }
-// ---- Stage definitions (4-stage model, v2.5) ----
-// 婴儿期 → 幼儿期 → 少儿期 → 成年期
+
+// ---- Stage definitions (4-stage model, v3) ----
+// 婴儿(3-5岁) → 幼儿(10-15岁) → 成人(18岁) → 中青年(30岁)
 const CHARACTER_STAGES = [
-  { stage: 1, name: '婴儿期', gpRequired: 0,   key: 'infant',  nextName: '幼儿期' },
-  { stage: 2, name: '幼儿期', gpRequired: 50,   key: 'toddler', nextName: '少儿期' },
-  { stage: 3, name: '少儿期', gpRequired: 200,  key: 'child',   nextName: '成年期' },
-  { stage: 4, name: '成年期', gpRequired: 600,  key: 'adult',   nextName: null },
+  { stage: 1, name: '婴儿(3-5岁)',   gpRequired: 0,   key: 'baby',      nextName: '幼儿(10-15岁)', ageLabel: '3-5岁' },
+  { stage: 2, name: '幼儿(10-15岁)', gpRequired: 50,   key: 'toddler',   nextName: '成人(18岁)',    ageLabel: '10-15岁' },
+  { stage: 3, name: '成人(18岁)',    gpRequired: 200,  key: 'adult',     nextName: '中青年(30岁)',  ageLabel: '18岁' },
+  { stage: 4, name: '中青年(30岁)',  gpRequired: 600,  key: 'middleage', nextName: null,          ageLabel: '30岁' },
 ];
+
+// Reserved stage 5 for future expansion (not exposed to users)
+const RESERVED_STAGE = { stage: 5, name: '成熟期', gpRequired: 1200, key: 'elder', nextName: null, reserved: true };
+
+// Lookup tables for O(1) stage resolution
+const STAGE_KEY_BY_NUM = {};
+const STAGE_NUM_BY_KEY = {};
+CHARACTER_STAGES.forEach(s => {
+  STAGE_KEY_BY_NUM[s.stage] = s.key;
+  STAGE_NUM_BY_KEY[s.key] = s.stage;
+});
+
+function getStageKeyByNumber(stageNum) {
+  return STAGE_KEY_BY_NUM[stageNum] || 'baby';
+}
+
+function getStageNumberByKey(key) {
+  return STAGE_NUM_BY_KEY[key] || 1;
+}
+
 function getStageByGP(gp) {
   for (let i = CHARACTER_STAGES.length - 1; i >= 0; i--) {
     if (gp >= CHARACTER_STAGES[i].gpRequired) {
@@ -92,10 +108,12 @@ function getStageByGP(gp) {
   }
   return CHARACTER_STAGES[0];
 }
+
 function getNextStage(currentStageNum) {
   const next = CHARACTER_STAGES.find(s => s.stage === currentStageNum + 1);
   return next || null;
 }
+
 function getStageProgress(gp) {
   const current = getStageByGP(gp);
   const next = getNextStage(current.stage);
@@ -112,6 +130,60 @@ function getStageProgress(gp) {
     remaining: next.gpRequired - gp,
   };
 }
+
+// middleage封顶: GP continues accumulating but stage does not advance beyond middleage
+function isMaxStage(stageNum) {
+  return stageNum >= CHARACTER_STAGES.length;
+}
+
+// ---- Cross-stage config migration ----
+// When user evolves to a new stage, migrate config:
+// - Same-name option: inherit directly
+// - Mapped option: use mapping table
+// - No match: reset to default for new stage, record old choice
+function migrateConfigForStage(config, oldStageKey, newStageKey) {
+  if (!config || oldStageKey === newStageKey) return config;
+  const newConfig = { ...config };
+  const resets = [];
+
+  const dimensions = ['faceShape', 'hairStyle', 'eyeShape', 'eyebrow', 'expression', 'top', 'bottom', 'accessory', 'background'];
+
+  for (const dim of dimensions) {
+    const value = newConfig[dim];
+    if (!value) continue;
+
+    // Defensive: getDimensionOptions may not be available during early init
+    if (typeof getDimensionOptions !== 'function') continue;
+
+    const options = getDimensionOptions(dim, config.gender, newStageKey);
+    if (!options || options.length === 0) continue;
+
+    const baseValue = value.replace(/-(boy|girl|universal)$/, '');
+    const exists = options.some(opt => {
+      const optBase = opt.id.replace(/-(boy|girl|universal)$/, '');
+      return optBase === baseValue;
+    });
+
+    if (!exists) {
+      const defaultOpt = options[0];
+      const newValue = defaultOpt.id.replace(/-(boy|girl|universal)$/, '');
+      resets.push({ dimension: dim, oldValue: value, newValue });
+      newConfig[dim] = newValue;
+    }
+  }
+
+  if (resets.length > 0) {
+    newConfig._stageMigrationLog = {
+      from: oldStageKey,
+      to: newStageKey,
+      at: Date.now(),
+      resets,
+    };
+  }
+
+  return newConfig;
+}
+
 // ---- Legacy mood (retained for backward compat, overridden by MoodEngine) ----
 const CHARACTER_MOODS = {
   happy:       { key: 'happy',       label: '开心',    daysThreshold: 0 },
@@ -120,7 +192,7 @@ const CHARACTER_MOODS = {
   down:        { key: 'down',        label: '低落',    daysThreshold: 3 },
   asleep:      { key: 'asleep',      label: '沉睡',    daysThreshold: 5 },
 };
-// Legacy calculateMood (kept for migration compat; new code uses MoodEngine)
+
 function calculateMood(lastStudyDate) {
   if (!lastStudyDate) return 'missing_you';
   const today = new Date().toISOString().slice(0, 10);
@@ -134,6 +206,7 @@ function calculateMood(lastStudyDate) {
   if (daysSince >= 1) return 'expectant';
   return 'happy';
 }
+
 // ---- Version migration: v0→v1, v1→v2, v2→v3 ----
 function migrateCharacterConfig(raw) {
   const v = raw?._v || 0;
@@ -168,13 +241,12 @@ function migrateCharacterConfig(raw) {
   }
   if (v < 3) {
     // v2→v3: add userCreated flag
-    // Existing data from before this fix is treated as auto-generated (false)
-    // so that old users are prompted to go through creation / re-create.
     config.userCreated = false;
   }
   config._v = CURRENT_CONFIG_VERSION;
   return config;
 }
+
 function migrateCharacterGrowth(raw) {
   const v = raw?._v || 0;
   if (v >= CURRENT_GROWTH_VERSION) return raw;
@@ -195,22 +267,20 @@ function migrateCharacterGrowth(raw) {
   if (v < 2) {
     // v1→v2: migrate old 5-stage names to 4-stage model
     const stageMap = {
-      '语言学徒': '婴儿期',
-      '入门者': '幼儿期',
-      '行者': '少儿期',
-      '达人': '成年期',
-      '语大师': '成年期',
+      '语言学徒': '婴儿(3-5岁)',
+      '入门者': '幼儿(10-15岁)',
+      '行者': '幼儿(10-15岁)',
+      '达人': '成人(18岁)',
+      '语大师': '成人(18岁)',
     };
     if (stageMap[growth.stageName]) {
       growth.stageName = stageMap[growth.stageName];
     }
-    // Recompute stage from GP to ensure consistency
     const computed = getStageByGP(growth.totalGP);
     growth.currentStage = computed.stage;
     growth.stageName = computed.name;
     growth.stageGPRequired = computed.gpRequired;
     growth.nextStageGP = getNextStage(computed.stage)?.gpRequired || null;
-    // Normalize mood to new state set
     const oldMoodMap = {
       'hungry': 'expectant',
       'sad': 'down',
@@ -220,9 +290,41 @@ function migrateCharacterGrowth(raw) {
       growth.currentMood = oldMoodMap[growth.currentMood];
     }
   }
+  if (v < 3) {
+    // v2→v3: new 4-stage model (baby/toddler/adult/middleage)
+    // Stage name mapping
+    const stageNameMap = {
+      '婴儿期': '婴儿(3-5岁)',
+      '幼儿期': '幼儿(10-15岁)',
+      '少儿期': '幼儿(10-15岁)',
+      '成年期': '成人(18岁)',
+    };
+    // Stage number mapping: old 3(child)→new 2(toddler), old 4(adult)→new 3(adult)
+    const oldStageNum = growth.currentStage;
+    if (oldStageNum === 3) {
+      growth.currentStage = 2;
+    } else if (oldStageNum === 4) {
+      growth.currentStage = 3;
+    }
+    if (stageNameMap[growth.stageName]) {
+      growth.stageName = stageNameMap[growth.stageName];
+    }
+    // Ensure numeric consistency with GP (but preserve migrated stage for capped users)
+    const computed = getStageByGP(growth.totalGP);
+    // Only auto-promote if the user is NOT at middleage already
+    // Old adult users with GP>=600 will naturally promote to middleage on next addGP
+    if (computed.stage !== growth.currentStage && growth.currentStage < computed.stage) {
+      growth.currentStage = computed.stage;
+      growth.stageName = computed.name;
+    }
+    growth.stageGPRequired = CHARACTER_STAGES.find(s => s.stage === growth.currentStage)?.gpRequired || 0;
+    growth.nextStageGP = getNextStage(growth.currentStage)?.gpRequired || null;
+    growth._migratedAt = Date.now();
+  }
   growth._v = CURRENT_GROWTH_VERSION;
   return growth;
 }
+
 function migrateCharacterNaming(raw) {
   const v = raw?._v || 0;
   if (v >= CURRENT_NAMING_VERSION) return raw;
@@ -238,11 +340,14 @@ function migrateCharacterNaming(raw) {
   naming._v = CURRENT_NAMING_VERSION;
   return naming;
 }
+
 // ---- localStorage keys ----
 const LS_KEY_CONFIG = 'lp_character_config';
 const LS_KEY_GROWTH = 'lp_character_growth';
 const LS_KEY_NAMING = 'lp_character_naming';
 const LS_KEY_SNAPSHOTS = 'lp_character_snapshots';
+const LS_KEY_MIGRATION_NOTICE_SHOWN = 'lp_migration_v3_shown';
+
 Object.assign(window, {
   CURRENT_CONFIG_VERSION,
   CURRENT_GROWTH_VERSION,
@@ -251,9 +356,16 @@ Object.assign(window, {
   getDefaultCharacterGrowth,
   getDefaultCharacterNaming,
   CHARACTER_STAGES,
+  RESERVED_STAGE,
+  STAGE_KEY_BY_NUM,
+  STAGE_NUM_BY_KEY,
+  getStageKeyByNumber,
+  getStageNumberByKey,
   getStageByGP,
   getNextStage,
   getStageProgress,
+  isMaxStage,
+  migrateConfigForStage,
   CHARACTER_MOODS,
   calculateMood,
   migrateCharacterConfig,
@@ -263,4 +375,5 @@ Object.assign(window, {
   LS_KEY_GROWTH,
   LS_KEY_NAMING,
   LS_KEY_SNAPSHOTS,
+  LS_KEY_MIGRATION_NOTICE_SHOWN,
 });
