@@ -1,18 +1,17 @@
 // ========== CharacterEditor ==========
 // 捏脸编辑器主界面 — 日系二次元调性
 // 包含：预览区、维度页签、选项网格、配色选择、保存/取消/随机
+// v2: Added stage-aware filtering and cross-stage config inheritance.
 
 const { useState, useEffect, useCallback, useMemo } = React;
 const { motion, AnimatePresence } = window.Motion;
 
-// 可配色的维度映射
 const COLORABLE_DIMENSIONS = {
   hairStyle: { colorKey: 'hairColor', label: '发色' },
   eyeShape: { colorKey: 'eyeColor', label: '瞳色' },
   skinTone: { colorKey: 'skinTone', label: '肤色' },
 };
 
-// 随机颜色池
 const RANDOM_COLORS = {
   hairColor: ['#2D2D2D', '#4A3426', '#8B4513', '#D4A574', '#E8C4C4', '#FFB7C5', '#9370DB', '#4169E1', '#2E8B57', '#FFD700'],
   eyeColor: ['#5D8AA8', '#4A6741', '#8B4513', '#DAA520', '#9370DB', '#708090', '#2F4F4F', '#191970'],
@@ -25,7 +24,6 @@ function CharacterEditor({ onClose, onSave, embedded }) {
   const setConfig = useCharacterStore(s => s.setConfig);
   const storeInitialized = useCharacterStore(s => s.initialized);
 
-  // Editor draft state (preview without saving)
   const [draft, setDraft] = useState(() => storeConfig || getDefaultDraft());
   const [activeCategory, setActiveCategory] = useState('face');
   const [activeDimension, setActiveDimension] = useState('faceShape');
@@ -33,14 +31,25 @@ function CharacterEditor({ onClose, onSave, embedded }) {
   const [showGenderConfirm, setShowGenderConfirm] = useState(false);
   const [pendingGender, setPendingGender] = useState(null);
 
-  // Initialize store if not ready
+  // Derive current stage info from growth
+  const currentStageInfo = useMemo(() => {
+    if (!storeGrowth) return { stage: 1, key: 'baby', name: '婴儿(3-5岁)' };
+    const stageNum = storeGrowth.currentStage || 1;
+    const stageKey = typeof getStageKeyByNumber === 'function'
+      ? getStageKeyByNumber(stageNum)
+      : (stageNum === 1 ? 'baby' : stageNum === 2 ? 'toddler' : stageNum === 3 ? 'adult' : 'middleage');
+    const stageName = storeGrowth.stageName || '婴儿(3-5岁)';
+    return { stage: stageNum, key: stageKey, name: stageName };
+  }, [storeGrowth]);
+
   useEffect(() => {
     if (!storeInitialized) {
-      useCharacterStore.getState().init();
+      if (typeof useCharacterStore !== 'undefined') {
+        useCharacterStore.getState().init();
+      }
     }
   }, [storeInitialized]);
 
-  // Sync draft when store config loads
   useEffect(() => {
     if (storeConfig) {
       setDraft(prev => ({ ...storeConfig, ...prev }));
@@ -51,7 +60,7 @@ function CharacterEditor({ onClose, onSave, embedded }) {
     return {
       gender: 'girl',
       faceShape: 'face-oval',
-      hairStyle: 'hair-long',
+      hairStyle: 'hair-long-straight',
       hairColor: '#2D2D2D',
       eyeShape: 'eye-big',
       eyeColor: '#5D8AA8',
@@ -66,12 +75,10 @@ function CharacterEditor({ onClose, onSave, embedded }) {
     };
   }
 
-  // Update a single dimension
   const updateDimension = useCallback((dimension, value) => {
     setDraft(prev => ({ ...prev, [dimension]: value }));
   }, []);
 
-  // Gender switch with confirmation
   const handleGenderClick = (gender) => {
     if (draft.gender === gender) return;
     setPendingGender(gender);
@@ -80,7 +87,6 @@ function CharacterEditor({ onClose, onSave, embedded }) {
 
   const confirmGenderSwitch = () => {
     if (!pendingGender) return;
-    // Reset to gender-appropriate defaults while preserving colors
     const hairColor = draft.hairColor;
     const eyeColor = draft.eyeColor;
     const skinTone = draft.skinTone;
@@ -104,11 +110,13 @@ function CharacterEditor({ onClose, onSave, embedded }) {
     setPendingGender(null);
   };
 
-  // Randomize config
   const handleRandomize = useCallback(() => {
     const gender = Math.random() > 0.5 ? 'boy' : 'girl';
+    const stageKey = currentStageInfo.key;
     const randomPick = (category) => {
-      const options = getDimensionOptions(category, gender);
+      const options = typeof getDimensionOptions === 'function'
+        ? getDimensionOptions(category, gender, stageKey)
+        : [];
       if (!options.length) return null;
       const pick = options[Math.floor(Math.random() * options.length)];
       return pick.id.replace(/-(boy|girl|universal)$/, '');
@@ -131,21 +139,18 @@ function CharacterEditor({ onClose, onSave, embedded }) {
       background: randomPick('background') || 'bg-room',
     };
     setDraft(newDraft);
-  }, [draft]);
+  }, [draft, currentStageInfo.key]);
 
-  // Save
   const handleSave = useCallback(() => {
     setConfig(draft);
     if (onSave) onSave(draft);
     if (onClose) onClose();
   }, [draft, setConfig, onSave, onClose]);
 
-  // Cancel
   const handleCancel = useCallback(() => {
     if (onClose) onClose();
   }, [onClose]);
 
-  // Resolve locked items
   const lockedIds = useMemo(() => {
     if (!draft.unlockedItems) return [];
     return CHARACTER_ITEMS
@@ -156,13 +161,27 @@ function CharacterEditor({ onClose, onSave, embedded }) {
       .map(item => item.id);
   }, [draft.unlockedItems]);
 
-  // Get options for active dimension
+  // Stage-unavailable items (for grayed-out UI — forward-compatible with OptionGrid)
+  const unavailableIds = useMemo(() => {
+    if (!currentStageInfo.key || typeof getDimensionUnavailableOptions !== 'function') return [];
+    const gender = draft.gender || 'girl';
+    const allUnavailable = [];
+    const dims = ['faceShape', 'hairStyle', 'eyeShape', 'eyebrow', 'expression', 'top', 'bottom', 'accessory', 'background'];
+    for (const dim of dims) {
+      const items = getDimensionUnavailableOptions(dim, gender, currentStageInfo.key);
+      items.forEach(item => allUnavailable.push(item.id));
+    }
+    return allUnavailable;
+  }, [draft.gender, currentStageInfo.key]);
+
+  // Get options for active dimension, filtered by stage
   const dimensionOptions = useMemo(() => {
     const gender = draft.gender || 'girl';
-    // For hairStyle, return only back-layer items as representatives
+    const stageKey = currentStageInfo.key;
     if (activeDimension === 'hairStyle') {
-      const all = getDimensionOptions('hairStyle', gender);
-      // Deduplicate by base id, keep one representative
+      const all = typeof getDimensionOptions === 'function'
+        ? getDimensionOptions('hairStyle', gender, stageKey)
+        : [];
       const seen = new Set();
       return all.filter(item => {
         const base = item.id.replace(/-(boy|girl)(-back|-front)?$/, '');
@@ -172,19 +191,16 @@ function CharacterEditor({ onClose, onSave, embedded }) {
       });
     }
     if (activeDimension === 'skinTone') {
-      // Skin tone is a color picker, not a grid
       return [];
     }
-    return getDimensionOptions(activeDimension, gender);
-  }, [activeDimension, draft.gender]);
+    return typeof getDimensionOptions === 'function'
+      ? getDimensionOptions(activeDimension, gender, stageKey)
+      : [];
+  }, [activeDimension, draft.gender, currentStageInfo.key]);
 
-  // Current selected value for active dimension
   const currentValue = draft[activeDimension];
-
-  // Color picker visibility
   const colorMeta = COLORABLE_DIMENSIONS[activeDimension];
 
-  // Build preview config (child stage for editor)
   const previewConfig = useMemo(() => ({
     ...draft,
     mode: 'child',
@@ -204,7 +220,7 @@ function CharacterEditor({ onClose, onSave, embedded }) {
           <h1 className="text-lg font-bold text-slate-800">角色捏脸</h1>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-xs text-slate-400">少儿期预览</span>
+          <span className="text-xs text-slate-400">{currentStageInfo.name}预览</span>
         </div>
       </div>
 
@@ -212,7 +228,6 @@ function CharacterEditor({ onClose, onSave, embedded }) {
       <div className="flex-1 overflow-hidden flex flex-col lg:flex-row">
         {/* Preview panel */}
         <div className="shrink-0 lg:w-2/5 lg:max-w-sm bg-gradient-to-b from-indigo-50/40 to-pink-50/40 flex flex-col items-center justify-center p-4 relative">
-          {/* Gender switch */}
           <div className="absolute top-3 left-1/2 -translate-x-1/2 flex bg-white/80 backdrop-blur rounded-full p-0.5 shadow-sm border border-slate-100">
             <button
               onClick={() => handleGenderClick('boy')}
@@ -236,7 +251,6 @@ function CharacterEditor({ onClose, onSave, embedded }) {
             </button>
           </div>
 
-          {/* Character preview */}
           <div className="relative w-48 h-72 lg:w-56 lg:h-80">
             {typeof CharacterRenderer !== 'undefined' ? (
               <CharacterRenderer
@@ -245,6 +259,7 @@ function CharacterEditor({ onClose, onSave, embedded }) {
                 height="100%"
                 transitionDuration={300}
                 onLoad={() => setPreviewLoaded(true)}
+                stageKey={currentStageInfo.key}
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-slate-300 text-sm">
@@ -253,7 +268,6 @@ function CharacterEditor({ onClose, onSave, embedded }) {
             )}
           </div>
 
-          {/* Action buttons row */}
           <div className="flex items-center gap-3 mt-3">
             <motion.button
               whileTap={{ scale: 0.9 }}
@@ -276,7 +290,6 @@ function CharacterEditor({ onClose, onSave, embedded }) {
 
         {/* Editor panel */}
         <div className="flex-1 flex flex-col min-h-0 bg-white">
-          {/* Dimension tabs */}
           <div className="shrink-0 px-4 pt-3 pb-2 border-b border-slate-50">
             <DimensionTabs
               activeCategory={activeCategory}
@@ -286,7 +299,6 @@ function CharacterEditor({ onClose, onSave, embedded }) {
             />
           </div>
 
-          {/* Options scroll area */}
           <div className="flex-1 overflow-y-auto px-4 py-4">
             <AnimatePresence mode="wait">
               <motion.div
@@ -296,7 +308,6 @@ function CharacterEditor({ onClose, onSave, embedded }) {
                 exit={{ opacity: 0, x: -8 }}
                 transition={{ duration: 0.2 }}
               >
-                {/* Color picker for colorable dimensions */}
                 {colorMeta && (
                   <div className="mb-4">
                     <ColorPicker
@@ -307,7 +318,6 @@ function CharacterEditor({ onClose, onSave, embedded }) {
                   </div>
                 )}
 
-                {/* Skin tone special case */}
                 {activeDimension === 'skinTone' && (
                   <div className="mb-4">
                     <ColorPicker
@@ -318,13 +328,13 @@ function CharacterEditor({ onClose, onSave, embedded }) {
                   </div>
                 )}
 
-                {/* Option grid */}
                 {activeDimension !== 'skinTone' && (
                   <OptionGrid
                     items={dimensionOptions}
                     selectedId={currentValue}
                     onSelect={(id) => updateDimension(activeDimension, id)}
                     lockedIds={lockedIds}
+                    unavailableIds={unavailableIds}
                     showLock={true}
                   />
                 )}
@@ -334,7 +344,6 @@ function CharacterEditor({ onClose, onSave, embedded }) {
         </div>
       </div>
 
-      {/* Gender switch confirmation modal */}
       <AnimatePresence>
         {showGenderConfirm && (
           <motion.div
@@ -381,4 +390,3 @@ function CharacterEditor({ onClose, onSave, embedded }) {
 }
 
 Object.assign(window, { CharacterEditor });
-
