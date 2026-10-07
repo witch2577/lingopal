@@ -7,7 +7,7 @@
  * - 图片资源：Cache First
  */
 
-const CACHE_VERSION = 'v10.8.0';
+const CACHE_VERSION = 'v10.8.1';
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const CDN_CACHE = `${CACHE_VERSION}-cdn`;
 const IMAGE_CACHE = `${CACHE_VERSION}-images`;
