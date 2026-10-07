@@ -73,16 +73,32 @@ const LanguagePreferences = ({ onBack }) => {
       try {
         const sb = getSupabaseClient?.();
         if (sb) {
-          const { error } = await sb
+          // 第一步：老字段（接口一直正常）——失败仍然提示用户
+          const { error: legacyError } = await sb
             .from('profiles')
             .update({
               target_languages: form.targetLanguages,
-              current_level: form.currentLevel,
               learning_goal: form.learningGoal,
-              default_language: form.defaultLanguage,
             })
             .eq('id', supabaseUser.id);
-          if (error) throw error;
+          if (legacyError) throw legacyError;
+
+          // 第二步：新字段（current_level / default_language）——
+          // 平台侧列暂不可见时静默降级，不弹错误提示；
+          // 接口恢复后下次保存自动同步成功，无需发版
+          try {
+            const { error: newFieldsError } = await sb
+              .from('profiles')
+              .update({
+                current_level: form.currentLevel,
+                default_language: form.defaultLanguage,
+              })
+              .eq('id', supabaseUser.id);
+            if (newFieldsError) throw newFieldsError;
+          } catch (e2) {
+            console.debug('[LanguagePreferences] 新字段云端同步暂不可用，下次保存时自动重试:', e2?.code || e2?.message || e2);
+          }
+
           useAuthStore.setState(state => ({
             supabaseProfile: {
               ...state.supabaseProfile,
