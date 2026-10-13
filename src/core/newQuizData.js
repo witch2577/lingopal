@@ -1,24 +1,2163 @@
 const NEW_QUIZ_DATA = {
-  "ar": {
+"en": {
     "themes": [
       {
         "id": "basic",
         "name": "基础词汇",
-        "color": "#065F46",
+        "color": "#1D4ED8",
         "levels": [
           {
-            "levelId": "ar-basic-04",
+            "levelId": "en-basic-01",
+            "title": "问候与礼貌",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [],
+            "questions": [
+              {
+                "id": "en-t-00",
+                "type": "translate",
+                "question": "你好",
+                "options": [
+                  "goodbye",
+                  "hello",
+                  "sorry",
+                  "please"
+                ],
+                "correctAnswer": "hello",
+                "difficulty": 1
+              },
+              {
+                "id": "en-t-01",
+                "type": "translate",
+                "question": "谢谢",
+                "options": [
+                  "please",
+                  "sorry",
+                  "thanks",
+                  "hello"
+                ],
+                "correctAnswer": "thanks",
+                "difficulty": 1
+              },
+              {
+                "id": "en-t-02",
+                "type": "translate",
+                "question": "对不起",
+                "options": [
+                  "welcome",
+                  "thanks",
+                  "sorry",
+                  "goodbye"
+                ],
+                "correctAnswer": "sorry",
+                "difficulty": 1
+              },
+              {
+                "id": "en-f-00",
+                "type": "fill-blank",
+                "question": "___ afternoon! （下午好）",
+                "options": [
+                  "Good",
+                  "Nice",
+                  "Fine",
+                  "Well"
+                ],
+                "correctAnswer": "Good",
+                "difficulty": 2
+              },
+              {
+                "id": "en-m-00",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "hello",
+                    "你好"
+                  ],
+                  [
+                    "thanks",
+                    "谢谢"
+                  ],
+                  [
+                    "sorry",
+                    "对不起"
+                  ],
+                  [
+                    "goodbye",
+                    "再见"
+                  ]
+                ]
+              },
+              {
+                "id": "en-d-00",
+                "type": "dictation",
+                "question": "听写：请",
+                "correctAnswer": "please",
+                "difficulty": 2,
+                "audioWord": "please"
+              }
+            ]
+          },
+          {
+            "levelId": "en-basic-02",
+            "title": "家庭与人物",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [
+              "en-basic-01"
+            ],
+            "questions": [
+              {
+                "id": "en-t-03",
+                "type": "translate",
+                "question": "母亲",
+                "options": [
+                  "mother",
+                  "father",
+                  "brother",
+                  "sister"
+                ],
+                "correctAnswer": "mother",
+                "difficulty": 1
+              },
+              {
+                "id": "en-t-04",
+                "type": "translate",
+                "question": "儿子",
+                "options": [
+                  "daughter",
+                  "son",
+                  "uncle",
+                  "aunt"
+                ],
+                "correctAnswer": "son",
+                "difficulty": 1
+              },
+              {
+                "id": "en-t-05",
+                "type": "translate",
+                "question": "祖父",
+                "options": [
+                  "grandson",
+                  "grandmother",
+                  "grandfather",
+                  "cousin"
+                ],
+                "correctAnswer": "grandfather",
+                "difficulty": 1
+              },
+              {
+                "id": "en-f-01",
+                "type": "fill-blank",
+                "question": "She is my ___. （她是我的姐姐）",
+                "options": [
+                  "sister",
+                  "brother",
+                  "mother",
+                  "daughter"
+                ],
+                "correctAnswer": "sister",
+                "difficulty": 2
+              },
+              {
+                "id": "en-m-01",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "father",
+                    "父亲"
+                  ],
+                  [
+                    "mother",
+                    "母亲"
+                  ],
+                  [
+                    "brother",
+                    "兄弟"
+                  ],
+                  [
+                    "sister",
+                    "姐妹"
+                  ]
+                ]
+              },
+              {
+                "id": "en-d-01",
+                "type": "dictation",
+                "question": "听写：父亲",
+                "correctAnswer": "father",
+                "difficulty": 2,
+                "audioWord": "father"
+              }
+            ]
+          },
+          {
+            "levelId": "en-basic-03",
             "title": "数字与颜色",
             "timeLimit": 120,
             "minScoreFor1Star": 30,
             "minScoreFor2Star": 50,
             "minScoreFor3Star": 70,
             "prerequisites": [
-              "ar-basic-03"
+              "en-basic-02"
             ],
             "questions": [
               {
-                "id": "ar-t-03",
+                "id": "en-t-06",
+                "type": "translate",
+                "question": "三",
+                "options": [
+                  "two",
+                  "three",
+                  "ten",
+                  "thirteen"
+                ],
+                "correctAnswer": "three",
+                "difficulty": 1
+              },
+              {
+                "id": "en-t-07",
+                "type": "translate",
+                "question": "绿色",
+                "options": [
+                  "gray",
+                  "green",
+                  "great",
+                  "grown"
+                ],
+                "correctAnswer": "green",
+                "difficulty": 1
+              },
+              {
+                "id": "en-f-02",
+                "type": "fill-blank",
+                "question": "I have ___ books. （我有五本书）",
+                "options": [
+                  "four",
+                  "five",
+                  "six",
+                  "nine"
+                ],
+                "correctAnswer": "five",
+                "difficulty": 2
+              },
+              {
+                "id": "en-m-02",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "one",
+                    "一"
+                  ],
+                  [
+                    "red",
+                    "红色"
+                  ],
+                  [
+                    "blue",
+                    "蓝色"
+                  ],
+                  [
+                    "seven",
+                    "七"
+                  ]
+                ]
+              },
+              {
+                "id": "en-d-02",
+                "type": "dictation",
+                "question": "听写：八",
+                "correctAnswer": "eight",
+                "difficulty": 2,
+                "audioWord": "eight"
+              },
+              {
+                "id": "en-r-00",
+                "type": "repeat",
+                "question": "跟读：purple",
+                "correctAnswer": "repeat",
+                "difficulty": 2,
+                "sentence": "purple"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "daily",
+        "name": "日常对话",
+        "color": "#60A5FA",
+        "levels": [
+          {
+            "levelId": "en-daily-01",
+            "title": "自我介绍",
+            "timeLimit": 150,
+            "minScoreFor1Star": 40,
+            "minScoreFor2Star": 60,
+            "minScoreFor3Star": 80,
+            "prerequisites": [],
+            "questions": [
+              {
+                "id": "en-t-08",
+                "type": "translate",
+                "question": "我的名字是…",
+                "options": [
+                  "My name is...",
+                  "I am fine",
+                  "See you later",
+                  "How are you"
+                ],
+                "correctAnswer": "My name is...",
+                "difficulty": 1
+              },
+              {
+                "id": "en-t-09",
+                "type": "translate",
+                "question": "你多大了？",
+                "options": [
+                  "How old are you?",
+                  "How are you?",
+                  "What's your name?",
+                  "Where are you from?"
+                ],
+                "correctAnswer": "How old are you?",
+                "difficulty": 1
+              },
+              {
+                "id": "en-f-03",
+                "type": "fill-blank",
+                "question": "I ___ a student. （我是一名学生）",
+                "options": [
+                  "am",
+                  "is",
+                  "are",
+                  "be"
+                ],
+                "correctAnswer": "am",
+                "difficulty": 2
+              },
+              {
+                "id": "en-m-03",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "My name is...",
+                    "我的名字是…"
+                  ],
+                  [
+                    "I am from...",
+                    "我来自…"
+                  ],
+                  [
+                    "Nice to meet you",
+                    "很高兴认识你"
+                  ],
+                  [
+                    "Where do you live?",
+                    "你住在哪？"
+                  ]
+                ]
+              },
+              {
+                "id": "en-d-03",
+                "type": "dictation",
+                "question": "听写：名字",
+                "correctAnswer": "name",
+                "difficulty": 2,
+                "audioWord": "name"
+              },
+              {
+                "id": "en-r-01",
+                "type": "repeat",
+                "question": "跟读：Nice to meet you",
+                "correctAnswer": "repeat",
+                "difficulty": 2,
+                "sentence": "Nice to meet you"
+              }
+            ]
+          },
+          {
+            "levelId": "en-daily-02",
+            "title": "购物与消费",
+            "timeLimit": 150,
+            "minScoreFor1Star": 40,
+            "minScoreFor2Star": 60,
+            "minScoreFor3Star": 80,
+            "prerequisites": [
+              "en-daily-01"
+            ],
+            "questions": [
+              {
+                "id": "en-t-10",
+                "type": "translate",
+                "question": "多少钱？",
+                "options": [
+                  "How much is it?",
+                  "How many is it?",
+                  "What time is it?",
+                  "Where is it?"
+                ],
+                "correctAnswer": "How much is it?",
+                "difficulty": 1
+              },
+              {
+                "id": "en-t-11",
+                "type": "translate",
+                "question": "太贵了",
+                "options": [
+                  "It's too expensive",
+                  "It's very cheap",
+                  "It's free",
+                  "It's on sale"
+                ],
+                "correctAnswer": "It's too expensive",
+                "difficulty": 1
+              },
+              {
+                "id": "en-t-12",
+                "type": "translate",
+                "question": "我能看看吗？",
+                "options": [
+                  "May I see it?",
+                  "Can I buy it?",
+                  "Do you like it?",
+                  "Is it new?"
+                ],
+                "correctAnswer": "May I see it?",
+                "difficulty": 1
+              },
+              {
+                "id": "en-f-04",
+                "type": "fill-blank",
+                "question": "Can you give me a ___? （能便宜一点吗）",
+                "options": [
+                  "discount",
+                  "dollar",
+                  "dish",
+                  "dress"
+                ],
+                "correctAnswer": "discount",
+                "difficulty": 2
+              },
+              {
+                "id": "en-m-04",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "price",
+                    "价格"
+                  ],
+                  [
+                    "expensive",
+                    "贵的"
+                  ],
+                  [
+                    "cheap",
+                    "便宜的"
+                  ],
+                  [
+                    "discount",
+                    "折扣"
+                  ]
+                ]
+              },
+              {
+                "id": "en-d-04",
+                "type": "dictation",
+                "question": "听写：购物",
+                "correctAnswer": "shopping",
+                "difficulty": 2,
+                "audioWord": "shopping"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "scenario",
+        "name": "场景实战",
+        "color": "#EF4444",
+        "levels": [
+          {
+            "levelId": "en-scenario-01",
+            "title": "交通出行",
+            "timeLimit": 150,
+            "minScoreFor1Star": 40,
+            "minScoreFor2Star": 60,
+            "minScoreFor3Star": 80,
+            "prerequisites": [],
+            "questions": [
+              {
+                "id": "en-t-13",
+                "type": "translate",
+                "question": "地铁站",
+                "options": [
+                  "subway station",
+                  "bus stop",
+                  "train ticket",
+                  "airport"
+                ],
+                "correctAnswer": "subway station",
+                "difficulty": 1
+              },
+              {
+                "id": "en-t-14",
+                "type": "translate",
+                "question": "直走",
+                "options": [
+                  "turn left",
+                  "turn right",
+                  "go straight",
+                  "go back"
+                ],
+                "correctAnswer": "go straight",
+                "difficulty": 1
+              },
+              {
+                "id": "en-f-05",
+                "type": "fill-blank",
+                "question": "I want to go to the ___. （我想去机场）",
+                "options": [
+                  "airport",
+                  "station",
+                  "hospital",
+                  "market"
+                ],
+                "correctAnswer": "airport",
+                "difficulty": 2
+              },
+              {
+                "id": "en-m-05",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "left",
+                    "左"
+                  ],
+                  [
+                    "right",
+                    "右"
+                  ],
+                  [
+                    "bus",
+                    "公交车"
+                  ],
+                  [
+                    "taxi",
+                    "出租车"
+                  ]
+                ]
+              },
+              {
+                "id": "en-d-05",
+                "type": "dictation",
+                "question": "听写：火车",
+                "correctAnswer": "train",
+                "difficulty": 2,
+                "audioWord": "train"
+              },
+              {
+                "id": "en-r-02",
+                "type": "repeat",
+                "question": "跟读：Where is the bus stop?",
+                "correctAnswer": "repeat",
+                "difficulty": 2,
+                "sentence": "Where is the bus stop?"
+              }
+            ]
+          },
+          {
+            "levelId": "en-scenario-02",
+            "title": "酒店与应急",
+            "timeLimit": 150,
+            "minScoreFor1Star": 40,
+            "minScoreFor2Star": 60,
+            "minScoreFor3Star": 80,
+            "prerequisites": [
+              "en-scenario-01"
+            ],
+            "questions": [
+              {
+                "id": "en-t-15",
+                "type": "translate",
+                "question": "我有一个预订",
+                "options": [
+                  "I have a reservation",
+                  "I need a doctor",
+                  "I lost my bag",
+                  "I want to check out"
+                ],
+                "correctAnswer": "I have a reservation",
+                "difficulty": 1
+              },
+              {
+                "id": "en-t-16",
+                "type": "translate",
+                "question": "帮助",
+                "options": [
+                  "help",
+                  "hotel",
+                  "hope",
+                  "home"
+                ],
+                "correctAnswer": "help",
+                "difficulty": 1
+              },
+              {
+                "id": "en-f-06",
+                "type": "fill-blank",
+                "question": "I want to ___ a room. （我想订一个房间）",
+                "options": [
+                  "book",
+                  "look",
+                  "cook",
+                  "take"
+                ],
+                "correctAnswer": "book",
+                "difficulty": 2
+              },
+              {
+                "id": "en-m-06",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "check in",
+                    "入住"
+                  ],
+                  [
+                    "check out",
+                    "退房"
+                  ],
+                  [
+                    "single room",
+                    "单人间"
+                  ],
+                  [
+                    "room key",
+                    "房间钥匙"
+                  ]
+                ]
+              },
+              {
+                "id": "en-d-06",
+                "type": "dictation",
+                "question": "听写：钥匙",
+                "correctAnswer": "key",
+                "difficulty": 2,
+                "audioWord": "key"
+              },
+              {
+                "id": "en-r-03",
+                "type": "repeat",
+                "question": "跟读：Can you help me?",
+                "correctAnswer": "repeat",
+                "difficulty": 2,
+                "sentence": "Can you help me?"
+              }
+            ]
+          },
+          {
+            "levelId": "en-scenario-03",
+            "title": "就医买药",
+            "timeLimit": 150,
+            "minScoreFor1Star": 40,
+            "minScoreFor2Star": 60,
+            "minScoreFor3Star": 80,
+            "prerequisites": [
+              "en-scenario-02"
+            ],
+            "questions": [
+              {
+                "id": "en-t-17",
+                "type": "translate",
+                "question": "我需要看医生",
+                "options": [
+                  "I need to see a doctor",
+                  "I need a room",
+                  "I want to eat",
+                  "I feel happy"
+                ],
+                "correctAnswer": "I need to see a doctor",
+                "difficulty": 1
+              },
+              {
+                "id": "en-t-18",
+                "type": "translate",
+                "question": "头痛",
+                "options": [
+                  "headache",
+                  "toothache",
+                  "backache",
+                  "stomachache"
+                ],
+                "correctAnswer": "headache",
+                "difficulty": 1
+              },
+              {
+                "id": "en-t-19",
+                "type": "translate",
+                "question": "药",
+                "options": [
+                  "medicine",
+                  "medical",
+                  "magazine",
+                  "machine"
+                ],
+                "correctAnswer": "medicine",
+                "difficulty": 1
+              },
+              {
+                "id": "en-f-07",
+                "type": "fill-blank",
+                "question": "My head ___. （我头痛）",
+                "options": [
+                  "hurts",
+                  "hearts",
+                  "heads",
+                  "helps"
+                ],
+                "correctAnswer": "hurts",
+                "difficulty": 2
+              },
+              {
+                "id": "en-f-08",
+                "type": "fill-blank",
+                "question": "I have a ___. （我感冒了）",
+                "options": [
+                  "cold",
+                  "fever",
+                  "cough",
+                  "rest"
+                ],
+                "correctAnswer": "cold",
+                "difficulty": 2
+              },
+              {
+                "id": "en-d-07",
+                "type": "dictation",
+                "question": "听写：发烧",
+                "correctAnswer": "fever",
+                "difficulty": 2,
+                "audioWord": "fever"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "grammar",
+        "name": "语法进阶",
+        "color": "#F59E0B",
+        "levels": [
+          {
+            "levelId": "en-grammar-01",
+            "title": "动词基础",
+            "timeLimit": 150,
+            "minScoreFor1Star": 40,
+            "minScoreFor2Star": 60,
+            "minScoreFor3Star": 80,
+            "prerequisites": [],
+            "questions": [
+              {
+                "id": "en-t-20",
+                "type": "translate",
+                "question": "吃",
+                "options": [
+                  "eat",
+                  "ate",
+                  "eating",
+                  "edible"
+                ],
+                "correctAnswer": "eat",
+                "difficulty": 1
+              },
+              {
+                "id": "en-t-21",
+                "type": "translate",
+                "question": "去了（过去式）",
+                "options": [
+                  "go",
+                  "goes",
+                  "went",
+                  "gone"
+                ],
+                "correctAnswer": "went",
+                "difficulty": 1
+              },
+              {
+                "id": "en-f-09",
+                "type": "fill-blank",
+                "question": "She ___ to school every day. （她每天去上学）",
+                "options": [
+                  "goes",
+                  "go",
+                  "went",
+                  "going"
+                ],
+                "correctAnswer": "goes",
+                "difficulty": 2
+              },
+              {
+                "id": "en-f-10",
+                "type": "fill-blank",
+                "question": "I ___ breakfast this morning. （我今天早上吃了早餐）",
+                "options": [
+                  "ate",
+                  "eat",
+                  "eats",
+                  "eating"
+                ],
+                "correctAnswer": "ate",
+                "difficulty": 2
+              },
+              {
+                "id": "en-m-07",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "go",
+                    "去"
+                  ],
+                  [
+                    "eat",
+                    "吃"
+                  ],
+                  [
+                    "drink",
+                    "喝"
+                  ],
+                  [
+                    "read",
+                    "读"
+                  ]
+                ]
+              },
+              {
+                "id": "en-r-04",
+                "type": "repeat",
+                "question": "跟读：I drink water every day.",
+                "correctAnswer": "repeat",
+                "difficulty": 2,
+                "sentence": "I drink water every day."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "culture",
+        "name": "文化拓展",
+        "color": "#8B5CF6",
+        "levels": [
+          {
+            "levelId": "en-culture-01",
+            "title": "节日与传统",
+            "timeLimit": 150,
+            "minScoreFor1Star": 40,
+            "minScoreFor2Star": 60,
+            "minScoreFor3Star": 80,
+            "prerequisites": [],
+            "questions": [
+              {
+                "id": "en-t-22",
+                "type": "translate",
+                "question": "圣诞节",
+                "options": [
+                  "Christmas",
+                  "Thanksgiving",
+                  "Halloween",
+                  "Easter"
+                ],
+                "correctAnswer": "Christmas",
+                "difficulty": 1
+              },
+              {
+                "id": "en-t-23",
+                "type": "translate",
+                "question": "春节",
+                "options": [
+                  "Spring Festival",
+                  "Mid-Autumn Festival",
+                  "Dragon Boat Festival",
+                  "Lantern Festival"
+                ],
+                "correctAnswer": "Spring Festival",
+                "difficulty": 1
+              },
+              {
+                "id": "en-f-11",
+                "type": "fill-blank",
+                "question": "Merry ___! （圣诞快乐）",
+                "options": [
+                  "Christmas",
+                  "Birthday",
+                  "Halloween",
+                  "Easter"
+                ],
+                "correctAnswer": "Christmas",
+                "difficulty": 2
+              },
+              {
+                "id": "en-m-08",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "Christmas",
+                    "圣诞节"
+                  ],
+                  [
+                    "Halloween",
+                    "万圣节"
+                  ],
+                  [
+                    "Thanksgiving",
+                    "感恩节"
+                  ],
+                  [
+                    "New Year",
+                    "新年"
+                  ]
+                ]
+              },
+              {
+                "id": "en-d-08",
+                "type": "dictation",
+                "question": "听写：节日",
+                "correctAnswer": "festival",
+                "difficulty": 2,
+                "audioWord": "festival"
+              },
+              {
+                "id": "en-r-05",
+                "type": "repeat",
+                "question": "跟读：Happy New Year!",
+                "correctAnswer": "repeat",
+                "difficulty": 2,
+                "sentence": "Happy New Year!"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "ja": {
+    "themes": [
+      {
+        "id": "basic",
+        "name": "基础词汇",
+        "color": "#1E3A8A",
+        "levels": [
+          {
+            "levelId": "ja-basic-01",
+            "title": "问候与礼貌",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [],
+            "questions": [
+              {
+                "id": "ja-t-00",
+                "type": "translate",
+                "question": "你好（白天见面）",
+                "options": [
+                  "こんばんは",
+                  "おはよう",
+                  "こんにちは",
+                  "さようなら"
+                ],
+                "correctAnswer": "こんにちは",
+                "difficulty": 1
+              },
+              {
+                "id": "ja-t-01",
+                "type": "translate",
+                "question": "谢谢",
+                "options": [
+                  "ありがとう",
+                  "すみません",
+                  "こんにちは",
+                  "さようなら"
+                ],
+                "correctAnswer": "ありがとう",
+                "difficulty": 1
+              },
+              {
+                "id": "ja-t-02",
+                "type": "translate",
+                "question": "对不起",
+                "options": [
+                  "すみません",
+                  "ありがとう",
+                  "おはよう",
+                  "ください"
+                ],
+                "correctAnswer": "すみません",
+                "difficulty": 1
+              },
+              {
+                "id": "ja-f-00",
+                "type": "fill-blank",
+                "question": "おはよう___。（早上好）",
+                "options": [
+                  "ございます",
+                  "ありません",
+                  "ください",
+                  "します"
+                ],
+                "correctAnswer": "ございます",
+                "difficulty": 2
+              },
+              {
+                "id": "ja-m-00",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "こんにちは",
+                    "你好"
+                  ],
+                  [
+                    "ありがとう",
+                    "谢谢"
+                  ],
+                  [
+                    "さようなら",
+                    "再见"
+                  ],
+                  [
+                    "おやすみ",
+                    "晚安"
+                  ]
+                ]
+              },
+              {
+                "id": "ja-d-00",
+                "type": "dictation",
+                "question": "听写：请",
+                "correctAnswer": "ください",
+                "difficulty": 2,
+                "audioWord": "kudasai"
+              }
+            ]
+          },
+          {
+            "levelId": "ja-basic-02",
+            "title": "家庭与人物",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [
+              "ja-basic-01"
+            ],
+            "questions": [
+              {
+                "id": "ja-t-03",
+                "type": "translate",
+                "question": "母亲",
+                "options": [
+                  "お母さん",
+                  "お父さん",
+                  "お兄さん",
+                  "お姉さん"
+                ],
+                "correctAnswer": "お母さん",
+                "difficulty": 1
+              },
+              {
+                "id": "ja-t-04",
+                "type": "translate",
+                "question": "哥哥",
+                "options": [
+                  "お兄さん",
+                  "弟さん",
+                  "妹さん",
+                  "お父さん"
+                ],
+                "correctAnswer": "お兄さん",
+                "difficulty": 1
+              },
+              {
+                "id": "ja-t-05",
+                "type": "translate",
+                "question": "老师",
+                "options": [
+                  "先生",
+                  "学生",
+                  "医者",
+                  "店員"
+                ],
+                "correctAnswer": "先生",
+                "difficulty": 1
+              },
+              {
+                "id": "ja-f-01",
+                "type": "fill-blank",
+                "question": "私は学生___。（我是学生）",
+                "options": [
+                  "です",
+                  "ます",
+                  "ました",
+                  "ません"
+                ],
+                "correctAnswer": "です",
+                "difficulty": 2
+              },
+              {
+                "id": "ja-m-01",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "父",
+                    "父亲"
+                  ],
+                  [
+                    "母",
+                    "母亲"
+                  ],
+                  [
+                    "兄",
+                    "哥哥"
+                  ],
+                  [
+                    "姉",
+                    "姐姐"
+                  ]
+                ]
+              },
+              {
+                "id": "ja-d-01",
+                "type": "dictation",
+                "question": "听写：朋友",
+                "correctAnswer": "友達",
+                "difficulty": 2,
+                "audioWord": "tomodachi"
+              }
+            ]
+          },
+          {
+            "levelId": "ja-basic-03",
+            "title": "数字与颜色",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [
+              "ja-basic-02"
+            ],
+            "questions": [
+              {
+                "id": "ja-t-06",
+                "type": "translate",
+                "question": "三个（物品）",
+                "options": [
+                  "二つ",
+                  "三つ",
+                  "四つ",
+                  "五つ"
+                ],
+                "correctAnswer": "三つ",
+                "difficulty": 1
+              },
+              {
+                "id": "ja-t-07",
+                "type": "translate",
+                "question": "红色",
+                "options": [
+                  "赤",
+                  "青",
+                  "白",
+                  "黒"
+                ],
+                "correctAnswer": "赤",
+                "difficulty": 1
+              },
+              {
+                "id": "ja-f-02",
+                "type": "fill-blank",
+                "question": "りんごを___つください。（请给我三个苹果）",
+                "options": [
+                  "三",
+                  "四",
+                  "五",
+                  "二"
+                ],
+                "correctAnswer": "三",
+                "difficulty": 2
+              },
+              {
+                "id": "ja-m-02",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "一",
+                    "1"
+                  ],
+                  [
+                    "赤",
+                    "红色"
+                  ],
+                  [
+                    "青",
+                    "蓝色"
+                  ],
+                  [
+                    "白",
+                    "白色"
+                  ]
+                ]
+              },
+              {
+                "id": "ja-d-02",
+                "type": "dictation",
+                "question": "听写：蓝色",
+                "correctAnswer": "あお",
+                "difficulty": 2,
+                "audioWord": "ao"
+              },
+              {
+                "id": "ja-r-00",
+                "type": "repeat",
+                "question": "跟读：みどり",
+                "correctAnswer": "repeat",
+                "difficulty": 2,
+                "sentence": "みどり"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "daily",
+        "name": "日常对话",
+        "color": "#3B82F6",
+        "levels": [
+          {
+            "levelId": "ja-daily-01",
+            "title": "自我介绍",
+            "timeLimit": 150,
+            "minScoreFor1Star": 40,
+            "minScoreFor2Star": 60,
+            "minScoreFor3Star": 80,
+            "prerequisites": [],
+            "questions": [
+              {
+                "id": "ja-t-08",
+                "type": "translate",
+                "question": "初次见面",
+                "options": [
+                  "はじめまして",
+                  "ありがとう",
+                  "さようなら",
+                  "おやすみ"
+                ],
+                "correctAnswer": "はじめまして",
+                "difficulty": 1
+              },
+              {
+                "id": "ja-t-09",
+                "type": "translate",
+                "question": "请多关照",
+                "options": [
+                  "よろしくお願いします",
+                  "はじめまして",
+                  "お元気ですか",
+                  "すみません"
+                ],
+                "correctAnswer": "よろしくお願いします",
+                "difficulty": 1
+              },
+              {
+                "id": "ja-f-03",
+                "type": "fill-blank",
+                "question": "私は中国人___。（我是中国人）",
+                "options": [
+                  "です",
+                  "ました",
+                  "ません",
+                  "でした"
+                ],
+                "correctAnswer": "です",
+                "difficulty": 2
+              },
+              {
+                "id": "ja-m-03",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "はじめまして",
+                    "初次见面"
+                  ],
+                  [
+                    "よろしくお願いします",
+                    "请多关照"
+                  ],
+                  [
+                    "お名前は？",
+                    "您叫什么名字？"
+                  ],
+                  [
+                    "私は…です",
+                    "我是…"
+                  ]
+                ]
+              },
+              {
+                "id": "ja-d-03",
+                "type": "dictation",
+                "question": "听写：名字",
+                "correctAnswer": "なまえ",
+                "difficulty": 2,
+                "audioWord": "namae"
+              },
+              {
+                "id": "ja-r-01",
+                "type": "repeat",
+                "question": "跟读：はじめまして、よろしくお願いします",
+                "correctAnswer": "repeat",
+                "difficulty": 2,
+                "sentence": "はじめまして、よろしくお願いします"
+              }
+            ]
+          },
+          {
+            "levelId": "ja-daily-02",
+            "title": "购物与消费",
+            "timeLimit": 150,
+            "minScoreFor1Star": 40,
+            "minScoreFor2Star": 60,
+            "minScoreFor3Star": 80,
+            "prerequisites": [
+              "ja-daily-01"
+            ],
+            "questions": [
+              {
+                "id": "ja-t-10",
+                "type": "translate",
+                "question": "多少钱？",
+                "options": [
+                  "いくらですか",
+                  "なんですか",
+                  "どこですか",
+                  "だれですか"
+                ],
+                "correctAnswer": "いくらですか",
+                "difficulty": 1
+              },
+              {
+                "id": "ja-t-11",
+                "type": "translate",
+                "question": "太贵了",
+                "options": [
+                  "高すぎます",
+                  "安すぎます",
+                  "高くないです",
+                  "どうぞ"
+                ],
+                "correctAnswer": "高すぎます",
+                "difficulty": 1
+              },
+              {
+                "id": "ja-t-12",
+                "type": "translate",
+                "question": "请给我这个",
+                "options": [
+                  "これをください",
+                  "それをください",
+                  "あれをください",
+                  "ここです"
+                ],
+                "correctAnswer": "これをください",
+                "difficulty": 1
+              },
+              {
+                "id": "ja-f-04",
+                "type": "fill-blank",
+                "question": "お金を___。（付钱）",
+                "options": [
+                  "払います",
+                  "買います",
+                  "売ります",
+                  "降ります"
+                ],
+                "correctAnswer": "払います",
+                "difficulty": 2
+              },
+              {
+                "id": "ja-m-04",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "いくら",
+                    "多少钱"
+                  ],
+                  [
+                    "高い",
+                    "贵的"
+                  ],
+                  [
+                    "安い",
+                    "便宜的"
+                  ],
+                  [
+                    "無料",
+                    "免费"
+                  ]
+                ]
+              },
+              {
+                "id": "ja-d-04",
+                "type": "dictation",
+                "question": "听写：钱",
+                "correctAnswer": "お金",
+                "difficulty": 2,
+                "audioWord": "okane"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "scenario",
+        "name": "场景实战",
+        "color": "#EF4444",
+        "levels": [
+          {
+            "levelId": "ja-scenario-01",
+            "title": "交通出行",
+            "timeLimit": 150,
+            "minScoreFor1Star": 40,
+            "minScoreFor2Star": 60,
+            "minScoreFor3Star": 80,
+            "prerequisites": [],
+            "questions": [
+              {
+                "id": "ja-t-13",
+                "type": "translate",
+                "question": "车站",
+                "options": [
+                  "駅",
+                  "空港",
+                  "病院",
+                  "銀行"
+                ],
+                "correctAnswer": "駅",
+                "difficulty": 1
+              },
+              {
+                "id": "ja-t-14",
+                "type": "translate",
+                "question": "请直走",
+                "options": [
+                  "まっすぐ行ってください",
+                  "右に曲がってください",
+                  "左に曲がってください",
+                  "止まってください"
+                ],
+                "correctAnswer": "まっすぐ行ってください",
+                "difficulty": 1
+              },
+              {
+                "id": "ja-f-05",
+                "type": "fill-blank",
+                "question": "電車に___。（坐电车）",
+                "options": [
+                  "乗ります",
+                  "降ります",
+                  "待ちます",
+                  "走ります"
+                ],
+                "correctAnswer": "乗ります",
+                "difficulty": 2
+              },
+              {
+                "id": "ja-m-05",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "駅",
+                    "车站"
+                  ],
+                  [
+                    "電車",
+                    "电车"
+                  ],
+                  [
+                    "バス",
+                    "公交车"
+                  ],
+                  [
+                    "飛行機",
+                    "飞机"
+                  ]
+                ]
+              },
+              {
+                "id": "ja-d-05",
+                "type": "dictation",
+                "question": "听写：车票",
+                "correctAnswer": "きっぷ",
+                "difficulty": 2,
+                "audioWord": "kippu"
+              },
+              {
+                "id": "ja-r-02",
+                "type": "repeat",
+                "question": "跟读：駅はどこですか",
+                "correctAnswer": "repeat",
+                "difficulty": 2,
+                "sentence": "駅はどこですか"
+              }
+            ]
+          },
+          {
+            "levelId": "ja-scenario-02",
+            "title": "酒店与应急",
+            "timeLimit": 150,
+            "minScoreFor1Star": 40,
+            "minScoreFor2Star": 60,
+            "minScoreFor3Star": 80,
+            "prerequisites": [
+              "ja-scenario-01"
+            ],
+            "questions": [
+              {
+                "id": "ja-t-15",
+                "type": "translate",
+                "question": "我有预约",
+                "options": [
+                  "予約しています",
+                  "チェックアウトします",
+                  "泊まりません",
+                  "予約していません"
+                ],
+                "correctAnswer": "予約しています",
+                "difficulty": 1
+              },
+              {
+                "id": "ja-t-16",
+                "type": "translate",
+                "question": "帮帮我",
+                "options": [
+                  "助けて",
+                  "待って",
+                  "見て",
+                  "買って"
+                ],
+                "correctAnswer": "助けて",
+                "difficulty": 1
+              },
+              {
+                "id": "ja-f-06",
+                "type": "fill-blank",
+                "question": "部屋を___。（订房间）",
+                "options": [
+                  "予約します",
+                  "掃除します",
+                  "出ます",
+                  "開けます"
+                ],
+                "correctAnswer": "予約します",
+                "difficulty": 2
+              },
+              {
+                "id": "ja-m-06",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "チェックイン",
+                    "入住"
+                  ],
+                  [
+                    "チェックアウト",
+                    "退房"
+                  ],
+                  [
+                    "シングルルーム",
+                    "单人间"
+                  ],
+                  [
+                    "鍵",
+                    "钥匙"
+                  ]
+                ]
+              },
+              {
+                "id": "ja-d-06",
+                "type": "dictation",
+                "question": "听写：房间",
+                "correctAnswer": "部屋",
+                "difficulty": 2,
+                "audioWord": "heya"
+              },
+              {
+                "id": "ja-r-03",
+                "type": "repeat",
+                "question": "跟读：助けてください",
+                "correctAnswer": "repeat",
+                "difficulty": 2,
+                "sentence": "助けてください"
+              }
+            ]
+          },
+          {
+            "levelId": "ja-scenario-03",
+            "title": "就医买药",
+            "timeLimit": 150,
+            "minScoreFor1Star": 40,
+            "minScoreFor2Star": 60,
+            "minScoreFor3Star": 80,
+            "prerequisites": [
+              "ja-scenario-02"
+            ],
+            "questions": [
+              {
+                "id": "ja-t-17",
+                "type": "translate",
+                "question": "我不舒服",
+                "options": [
+                  "気分が悪いです",
+                  "元気です",
+                  "眠いです",
+                  "暑いです"
+                ],
+                "correctAnswer": "気分が悪いです",
+                "difficulty": 1
+              },
+              {
+                "id": "ja-t-18",
+                "type": "translate",
+                "question": "头痛",
+                "options": [
+                  "頭が痛いです",
+                  "お腹が痛いです",
+                  "歯が痛いです",
+                  "喉が痛いです"
+                ],
+                "correctAnswer": "頭が痛いです",
+                "difficulty": 1
+              },
+              {
+                "id": "ja-t-19",
+                "type": "translate",
+                "question": "药",
+                "options": [
+                  "薬",
+                  "病院",
+                  "医者",
+                  "注射"
+                ],
+                "correctAnswer": "薬",
+                "difficulty": 1
+              },
+              {
+                "id": "ja-f-07",
+                "type": "fill-blank",
+                "question": "医者に___。（看医生）",
+                "options": [
+                  "見てもらいます",
+                  "買います",
+                  "飲みます",
+                  "します"
+                ],
+                "correctAnswer": "見てもらいます",
+                "difficulty": 2
+              },
+              {
+                "id": "ja-f-08",
+                "type": "fill-blank",
+                "question": "薬を___。（吃药）",
+                "options": [
+                  "飲みます",
+                  "食べます",
+                  "買います",
+                  "します"
+                ],
+                "correctAnswer": "飲みます",
+                "difficulty": 2
+              },
+              {
+                "id": "ja-d-07",
+                "type": "dictation",
+                "question": "听写：医院",
+                "correctAnswer": "病院",
+                "difficulty": 2,
+                "audioWord": "byouin"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "grammar",
+        "name": "语法进阶",
+        "color": "#F59E0B",
+        "levels": [
+          {
+            "levelId": "ja-grammar-01",
+            "title": "动词基础",
+            "timeLimit": 150,
+            "minScoreFor1Star": 40,
+            "minScoreFor2Star": 60,
+            "minScoreFor3Star": 80,
+            "prerequisites": [],
+            "questions": [
+              {
+                "id": "ja-t-20",
+                "type": "translate",
+                "question": "吃",
+                "options": [
+                  "食べます",
+                  "飲みます",
+                  "買います",
+                  "行きます"
+                ],
+                "correctAnswer": "食べます",
+                "difficulty": 1
+              },
+              {
+                "id": "ja-t-21",
+                "type": "translate",
+                "question": "去了（过去式）",
+                "options": [
+                  "行きます",
+                  "行きました",
+                  "行きません",
+                  "行っています"
+                ],
+                "correctAnswer": "行きました",
+                "difficulty": 1
+              },
+              {
+                "id": "ja-f-09",
+                "type": "fill-blank",
+                "question": "毎日ご飯を___。（每天吃饭）",
+                "options": [
+                  "食べます",
+                  "食べました",
+                  "食べません",
+                  "食べています"
+                ],
+                "correctAnswer": "食べます",
+                "difficulty": 2
+              },
+              {
+                "id": "ja-f-10",
+                "type": "fill-blank",
+                "question": "昨日、映画を___。（昨天看了电影）",
+                "options": [
+                  "見ました",
+                  "見ます",
+                  "見ません",
+                  "見ています"
+                ],
+                "correctAnswer": "見ました",
+                "difficulty": 2
+              },
+              {
+                "id": "ja-m-07",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "食べます",
+                    "吃"
+                  ],
+                  [
+                    "飲みます",
+                    "喝"
+                  ],
+                  [
+                    "行きます",
+                    "去"
+                  ],
+                  [
+                    "読みます",
+                    "读"
+                  ]
+                ]
+              },
+              {
+                "id": "ja-r-04",
+                "type": "repeat",
+                "question": "跟读：毎日水を飲みます",
+                "correctAnswer": "repeat",
+                "difficulty": 2,
+                "sentence": "毎日水を飲みます"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "culture",
+        "name": "文化拓展",
+        "color": "#8B5CF6",
+        "levels": [
+          {
+            "levelId": "ja-culture-01",
+            "title": "节日与传统",
+            "timeLimit": 150,
+            "minScoreFor1Star": 40,
+            "minScoreFor2Star": 60,
+            "minScoreFor3Star": 80,
+            "prerequisites": [],
+            "questions": [
+              {
+                "id": "ja-t-22",
+                "type": "translate",
+                "question": "新年",
+                "options": [
+                  "お正月",
+                  "お盆",
+                  "桜",
+                  "花見"
+                ],
+                "correctAnswer": "お正月",
+                "difficulty": 1
+              },
+              {
+                "id": "ja-t-23",
+                "type": "translate",
+                "question": "赏花",
+                "options": [
+                  "花見",
+                  "月見",
+                  "雪見",
+                  "星見"
+                ],
+                "correctAnswer": "花見",
+                "difficulty": 1
+              },
+              {
+                "id": "ja-f-11",
+                "type": "fill-blank",
+                "question": "お正月に雑煮を___。（新年吃杂煮）",
+                "options": [
+                  "食べます",
+                  "飲みます",
+                  "買います",
+                  "します"
+                ],
+                "correctAnswer": "食べます",
+                "difficulty": 2
+              },
+              {
+                "id": "ja-m-08",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "お正月",
+                    "新年"
+                  ],
+                  [
+                    "お盆",
+                    "盂兰盆节"
+                  ],
+                  [
+                    "クリスマス",
+                    "圣诞节"
+                  ],
+                  [
+                    "花見",
+                    "赏花"
+                  ]
+                ]
+              },
+              {
+                "id": "ja-d-08",
+                "type": "dictation",
+                "question": "听写：樱花",
+                "correctAnswer": "さくら",
+                "difficulty": 2,
+                "audioWord": "sakura"
+              },
+              {
+                "id": "ja-r-05",
+                "type": "repeat",
+                "question": "跟读：良いお年を",
+                "correctAnswer": "repeat",
+                "difficulty": 2,
+                "sentence": "良いお年を"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+
+  "ar": {
+    "themes": [
+      {
+        "id": "basic",
+        "name": "基础词汇",
+        "color": "#1D4ED8",
+        "levels": [
+          {
+            "levelId": "ar-basic-01",
+            "title": "问候与礼貌",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [],
+            "questions": [
+              {
+                "id": "ar-basic-01-01",
+                "type": "translate",
+                "question": "你好",
+                "options": [
+                  "مرحبا",
+                  "لا",
+                  "شكرا",
+                  "صباح الخير"
+                ],
+                "correctAnswer": "مرحبا",
+                "difficulty": 1
+              },
+              {
+                "id": "ar-basic-01-02",
+                "type": "translate",
+                "question": "谢谢",
+                "options": [
+                  "شكرا",
+                  "لا",
+                  "من فضلك",
+                  "مع السلامة"
+                ],
+                "correctAnswer": "شكرا",
+                "difficulty": 1
+              },
+              {
+                "id": "ar-basic-01-03",
+                "type": "translate",
+                "question": "再见",
+                "options": [
+                  "مع السلامة",
+                  "شكرا",
+                  "صباح الخير",
+                  "مرحبا"
+                ],
+                "correctAnswer": "مع السلامة",
+                "difficulty": 1
+              },
+              {
+                "id": "ar-basic-01-04",
+                "type": "fill-blank",
+                "question": "___ (请)",
+                "options": [
+                  "من فضلك",
+                  "لا",
+                  "صباح الخير",
+                  "نعم"
+                ],
+                "correctAnswer": "من فضلك",
+                "difficulty": 2
+              },
+              {
+                "id": "ar-basic-01-05",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "مرحبا",
+                    "你好"
+                  ],
+                  [
+                    "شكرا",
+                    "谢谢"
+                  ],
+                  [
+                    "مع السلامة",
+                    "再见"
+                  ],
+                  [
+                    "من فضلك",
+                    "请"
+                  ]
+                ]
+              },
+              {
+                "id": "ar-basic-01-06",
+                "type": "dictation",
+                "question": "听写：是",
+                "correctAnswer": "نعم",
+                "difficulty": 2,
+                "audioWord": "na'am"
+              }
+            ]
+          },
+          {
+            "levelId": "ar-basic-02",
+            "title": "家庭与人物",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [
+              "ar-basic-01"
+            ],
+            "questions": [
+              {
+                "id": "ar-basic-02-01",
+                "type": "translate",
+                "question": "父亲",
+                "options": [
+                  "أب",
+                  "أم",
+                  "ابنة",
+                  "ابن"
+                ],
+                "correctAnswer": "أب",
+                "difficulty": 1
+              },
+              {
+                "id": "ar-basic-02-02",
+                "type": "translate",
+                "question": "母亲",
+                "options": [
+                  "أم",
+                  "أب",
+                  "جدة",
+                  "جد"
+                ],
+                "correctAnswer": "أم",
+                "difficulty": 1
+              },
+              {
+                "id": "ar-basic-02-03",
+                "type": "translate",
+                "question": "兄弟",
+                "options": [
+                  "أخ",
+                  "أم",
+                  "جدة",
+                  "ابنة"
+                ],
+                "correctAnswer": "أخ",
+                "difficulty": 1
+              },
+              {
+                "id": "ar-basic-02-04",
+                "type": "fill-blank",
+                "question": "___ (姐妹)",
+                "options": [
+                  "أخت",
+                  "ابنة",
+                  "أب",
+                  "جدة"
+                ],
+                "correctAnswer": "أخت",
+                "difficulty": 2
+              },
+              {
+                "id": "ar-basic-02-05",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "أب",
+                    "父亲"
+                  ],
+                  [
+                    "أم",
+                    "母亲"
+                  ],
+                  [
+                    "أخ",
+                    "兄弟"
+                  ],
+                  [
+                    "أخت",
+                    "姐妹"
+                  ]
+                ]
+              },
+              {
+                "id": "ar-basic-02-06",
+                "type": "dictation",
+                "question": "听写：女儿",
+                "correctAnswer": "ابنة",
+                "difficulty": 2,
+                "audioWord": "ibna"
+              }
+            ]
+          },
+          {
+            "levelId": "ar-basic-03",
+            "title": "数字与颜色",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [
+              "ar-basic-02"
+            ],
+            "questions": [
+              {
+                "id": "ar-basic-03-01",
                 "type": "translate",
                 "question": "是",
                 "options": [
@@ -31,7 +2170,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ar-f-04",
+                "id": "ar-basic-03-02",
                 "type": "fill-blank",
                 "question": "___ (不是)",
                 "options": [
@@ -44,7 +2183,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "ar-t-05",
+                "id": "ar-basic-03-03",
                 "type": "translate",
                 "question": "再见",
                 "options": [
@@ -57,7 +2196,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ar-m-03",
+                "id": "ar-basic-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -82,7 +2221,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "ar-d-07",
+                "id": "ar-basic-03-05",
                 "type": "dictation",
                 "question": "听写：一",
                 "correctAnswer": "واحد",
@@ -90,7 +2229,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "wahid"
               },
               {
-                "id": "ar-r-08",
+                "id": "ar-basic-03-06",
                 "type": "repeat",
                 "question": "跟读：اثنان",
                 "correctAnswer": "repeat",
@@ -104,11 +2243,11 @@ const NEW_QUIZ_DATA = {
       {
         "id": "daily",
         "name": "日常对话",
-        "color": "#10B981",
+        "color": "#60A5FA",
         "levels": [
           {
             "levelId": "ar-daily-02",
-            "title": "自我介绍",
+            "title": "购物与消费",
             "timeLimit": 150,
             "minScoreFor1Star": 40,
             "minScoreFor2Star": 60,
@@ -116,7 +2255,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "ar-t-00",
+                "id": "ar-daily-02-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -129,7 +2268,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ar-f-01",
+                "id": "ar-daily-02-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -142,7 +2281,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "ar-t-02",
+                "id": "ar-daily-02-03",
                 "type": "translate",
                 "question": "你好吗？",
                 "options": [
@@ -155,7 +2294,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ar-m-00",
+                "id": "ar-daily-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -180,7 +2319,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "ar-d-04",
+                "id": "ar-daily-02-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "كم السعر؟",
@@ -188,7 +2327,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "kam as-sa'r"
               },
               {
-                "id": "ar-r-05",
+                "id": "ar-daily-02-06",
                 "type": "repeat",
                 "question": "跟读：أريد هذا",
                 "correctAnswer": "repeat",
@@ -209,7 +2348,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "ar-t-00",
+                "id": "ar-daily-03-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -222,7 +2361,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ar-f-01",
+                "id": "ar-daily-03-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -235,7 +2374,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "ar-t-02",
+                "id": "ar-daily-03-03",
                 "type": "translate",
                 "question": "你好吗？",
                 "options": [
@@ -248,7 +2387,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ar-m-00",
+                "id": "ar-daily-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -273,7 +2412,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "ar-d-04",
+                "id": "ar-daily-03-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "كم السعر؟",
@@ -281,7 +2420,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "kam as-sa'r"
               },
               {
-                "id": "ar-r-05",
+                "id": "ar-daily-03-06",
                 "type": "repeat",
                 "question": "跟读：أريد هذا",
                 "correctAnswer": "repeat",
@@ -307,7 +2446,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "ar-t-00",
+                "id": "ar-scenario-01-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -320,7 +2459,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ar-f-01",
+                "id": "ar-scenario-01-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -333,7 +2472,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "ar-t-02",
+                "id": "ar-scenario-01-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -346,7 +2485,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ar-m-00",
+                "id": "ar-scenario-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -371,7 +2510,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "ar-d-04",
+                "id": "ar-scenario-01-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "حجز فندق",
@@ -379,7 +2518,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "hajz funduq"
               },
               {
-                "id": "ar-r-05",
+                "id": "ar-scenario-01-06",
                 "type": "repeat",
                 "question": "跟读：غرفة فردية",
                 "correctAnswer": "repeat",
@@ -400,7 +2539,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "ar-t-00",
+                "id": "ar-scenario-02-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -413,7 +2552,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ar-f-01",
+                "id": "ar-scenario-02-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -426,7 +2565,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "ar-t-02",
+                "id": "ar-scenario-02-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -439,7 +2578,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ar-m-00",
+                "id": "ar-scenario-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -464,7 +2603,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "ar-d-04",
+                "id": "ar-scenario-02-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "حجز فندق",
@@ -472,7 +2611,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "hajz funduq"
               },
               {
-                "id": "ar-r-05",
+                "id": "ar-scenario-02-06",
                 "type": "repeat",
                 "question": "跟读：غرفة فردية",
                 "correctAnswer": "repeat",
@@ -493,7 +2632,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "ar-t-00",
+                "id": "ar-scenario-03-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -506,7 +2645,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ar-f-01",
+                "id": "ar-scenario-03-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -519,7 +2658,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "ar-t-02",
+                "id": "ar-scenario-03-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -532,7 +2671,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ar-m-00",
+                "id": "ar-scenario-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -557,7 +2696,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "ar-d-04",
+                "id": "ar-scenario-03-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "حجز فندق",
@@ -565,7 +2704,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "hajz funduq"
               },
               {
-                "id": "ar-r-05",
+                "id": "ar-scenario-03-06",
                 "type": "repeat",
                 "question": "跟读：غرفة فردية",
                 "correctAnswer": "repeat",
@@ -591,7 +2730,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "ar-t-00",
+                "id": "ar-grammar-01-01",
                 "type": "translate",
                 "question": "去（过去式）",
                 "options": [
@@ -604,7 +2743,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ar-f-01",
+                "id": "ar-grammar-01-02",
                 "type": "fill-blank",
                 "question": "___ (他去)",
                 "options": [
@@ -617,7 +2756,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "ar-t-02",
+                "id": "ar-grammar-01-03",
                 "type": "translate",
                 "question": "我去",
                 "options": [
@@ -630,7 +2769,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ar-m-00",
+                "id": "ar-grammar-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -655,7 +2794,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "ar-d-04",
+                "id": "ar-grammar-01-05",
                 "type": "dictation",
                 "question": "听写：是",
                 "correctAnswer": "يكون",
@@ -663,7 +2802,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "yakun"
               },
               {
-                "id": "ar-r-05",
+                "id": "ar-grammar-01-06",
                 "type": "repeat",
                 "question": "跟读：أكل",
                 "correctAnswer": "repeat",
@@ -689,7 +2828,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "ar-t-00",
+                "id": "ar-culture-01-01",
                 "type": "translate",
                 "question": "开斋节",
                 "options": [
@@ -702,7 +2841,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ar-f-01",
+                "id": "ar-culture-01-02",
                 "type": "fill-blank",
                 "question": "___ (宰牲节)",
                 "options": [
@@ -715,7 +2854,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "ar-t-02",
+                "id": "ar-culture-01-03",
                 "type": "translate",
                 "question": "椰枣",
                 "options": [
@@ -728,7 +2867,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ar-m-00",
+                "id": "ar-culture-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -753,7 +2892,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "ar-d-00",
+                "id": "ar-culture-01-05",
                 "type": "dictation",
                 "question": "听写：开斋节",
                 "correctAnswer": "عيد الفطر",
@@ -761,7 +2900,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "eid al-fitr"
               },
               {
-                "id": "ar-r-01",
+                "id": "ar-culture-01-06",
                 "type": "repeat",
                 "question": "跟读：عيد الأضحى",
                 "correctAnswer": "repeat",
@@ -779,21 +2918,117 @@ const NEW_QUIZ_DATA = {
       {
         "id": "basic",
         "name": "基础词汇",
-        "color": "#1E3A8A",
+        "color": "#1D4ED8",
         "levels": [
           {
-            "levelId": "de-basic-04",
+            "levelId": "de-basic-01",
+            "title": "问候与礼貌",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [],
+            "questions": [
+              {
+                "id": "de-basic-01-01",
+                "type": "translate",
+                "question": "你好",
+                "options": [
+                  "Hallo",
+                  "Auf Wiedersehen",
+                  "Nein",
+                  "Ja"
+                ],
+                "correctAnswer": "Hallo",
+                "difficulty": 1
+              },
+              {
+                "id": "de-basic-01-02",
+                "type": "translate",
+                "question": "谢谢",
+                "options": [
+                  "Danke",
+                  "Entschuldigung",
+                  "Auf Wiedersehen",
+                  "Guten Morgen"
+                ],
+                "correctAnswer": "Danke",
+                "difficulty": 1
+              },
+              {
+                "id": "de-basic-01-03",
+                "type": "translate",
+                "question": "再见",
+                "options": [
+                  "Auf Wiedersehen",
+                  "Ja",
+                  "Bitte",
+                  "Hallo"
+                ],
+                "correctAnswer": "Auf Wiedersehen",
+                "difficulty": 1
+              },
+              {
+                "id": "de-basic-01-04",
+                "type": "fill-blank",
+                "question": "___ (请)",
+                "options": [
+                  "Bitte",
+                  "Guten Morgen",
+                  "Danke",
+                  "Entschuldigung"
+                ],
+                "correctAnswer": "Bitte",
+                "difficulty": 2
+              },
+              {
+                "id": "de-basic-01-05",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "Hallo",
+                    "你好"
+                  ],
+                  [
+                    "Danke",
+                    "谢谢"
+                  ],
+                  [
+                    "Auf Wiedersehen",
+                    "再见"
+                  ],
+                  [
+                    "Bitte",
+                    "请"
+                  ]
+                ]
+              },
+              {
+                "id": "de-basic-01-06",
+                "type": "dictation",
+                "question": "听写：是",
+                "correctAnswer": "Ja",
+                "difficulty": 2,
+                "audioWord": "Ja"
+              }
+            ]
+          },
+          {
+            "levelId": "de-basic-02",
             "title": "家庭与人物",
             "timeLimit": 120,
             "minScoreFor1Star": 30,
             "minScoreFor2Star": 50,
             "minScoreFor3Star": 70,
             "prerequisites": [
-              "de-basic-02"
+              "de-basic-01"
             ],
             "questions": [
               {
-                "id": "de-b-03-1",
+                "id": "de-basic-02-01",
                 "type": "translate",
                 "question": "妈妈",
                 "options": [
@@ -806,7 +3041,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "de-b-03-2",
+                "id": "de-basic-02-02",
                 "type": "translate",
                 "question": "朋友",
                 "options": [
@@ -819,7 +3054,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "de-b-03-3",
+                "id": "de-basic-02-03",
                 "type": "fill-blank",
                 "question": "Wo ist die ___?（妈妈在哪里？）",
                 "options": [
@@ -832,7 +3067,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "de-b-03-4",
+                "id": "de-basic-02-04",
                 "type": "match",
                 "question": "亲属配对",
                 "correctAnswer": "match",
@@ -857,7 +3092,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "de-b-03-5",
+                "id": "de-basic-02-05",
                 "type": "translate",
                 "question": "家人",
                 "options": [
@@ -870,12 +3105,105 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "de-b-03-6",
+                "id": "de-basic-02-06",
                 "type": "dictation",
                 "question": "听写：朋友",
                 "correctAnswer": "Freund",
                 "difficulty": 2,
                 "audioWord": "freund"
+              }
+            ]
+          },
+          {
+            "levelId": "de-basic-03",
+            "title": "数字与颜色",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [
+              "de-basic-02"
+            ],
+            "questions": [
+              {
+                "id": "de-basic-03-01",
+                "type": "translate",
+                "question": "一",
+                "options": [
+                  "eins",
+                  "vier",
+                  "grün",
+                  "drei"
+                ],
+                "correctAnswer": "eins",
+                "difficulty": 1
+              },
+              {
+                "id": "de-basic-03-02",
+                "type": "translate",
+                "question": "二",
+                "options": [
+                  "zwei",
+                  "drei",
+                  "vier",
+                  "eins"
+                ],
+                "correctAnswer": "zwei",
+                "difficulty": 1
+              },
+              {
+                "id": "de-basic-03-03",
+                "type": "fill-blank",
+                "question": "___ (三)",
+                "options": [
+                  "drei",
+                  "eins",
+                  "fünf",
+                  "grün"
+                ],
+                "correctAnswer": "drei",
+                "difficulty": 2
+              },
+              {
+                "id": "de-basic-03-04",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "eins",
+                    "一"
+                  ],
+                  [
+                    "zwei",
+                    "二"
+                  ],
+                  [
+                    "drei",
+                    "三"
+                  ],
+                  [
+                    "vier",
+                    "四"
+                  ]
+                ]
+              },
+              {
+                "id": "de-basic-03-05",
+                "type": "dictation",
+                "question": "听写：五",
+                "correctAnswer": "fünf",
+                "difficulty": 2,
+                "audioWord": "fünf"
+              },
+              {
+                "id": "de-basic-03-06",
+                "type": "repeat",
+                "question": "跟读：红色",
+                "correctAnswer": "repeat",
+                "difficulty": 2,
+                "sentence": "rot"
               }
             ]
           }
@@ -884,201 +3212,194 @@ const NEW_QUIZ_DATA = {
       {
         "id": "daily",
         "name": "日常对话",
-        "color": "#3B82F6",
+        "color": "#60A5FA",
         "levels": [
           {
-            "levelId": "de-basic-05",
-            "title": "家庭与人物",
-            "timeLimit": 120,
-            "minScoreFor1Star": 30,
-            "minScoreFor2Star": 50,
-            "minScoreFor3Star": 70,
-            "prerequisites": [
-              "it-basic-02"
-            ],
+            "levelId": "de-daily-01",
+            "title": "自我介绍",
+            "timeLimit": 150,
+            "minScoreFor1Star": 40,
+            "minScoreFor2Star": 60,
+            "minScoreFor3Star": 80,
+            "prerequisites": [],
             "questions": [
               {
-                "id": "it-b-03-1",
+                "id": "de-daily-01-01",
                 "type": "translate",
-                "question": "妈妈",
+                "question": "我的名字是…",
                 "options": [
-                  "mamma",
-                  "爸爸",
-                  "哥哥",
-                  "姐姐"
+                  "Mein Name ist...",
+                  "Freut mich",
+                  "Ich bin Student",
+                  "Wo wohnst du?"
                 ],
-                "correctAnswer": "mamma",
+                "correctAnswer": "Mein Name ist...",
                 "difficulty": 1
               },
               {
-                "id": "it-b-03-2",
+                "id": "de-daily-01-02",
                 "type": "translate",
-                "question": "朋友",
+                "question": "你多大了？",
                 "options": [
-                  "amico",
-                  "敌人",
-                  "陌生人",
-                  "邻居"
+                  "Wie alt bist du?",
+                  "Freut mich",
+                  "Mein Name ist...",
+                  "Ich bin Student"
                 ],
-                "correctAnswer": "amico",
+                "correctAnswer": "Wie alt bist du?",
                 "difficulty": 1
               },
               {
-                "id": "it-b-03-3",
+                "id": "de-daily-01-03",
                 "type": "fill-blank",
-                "question": "Dov'è la ___?（妈妈在哪里？）",
+                "question": "___ (我来自…)",
                 "options": [
-                  "mamma",
-                  "papà",
-                  "sorella",
-                  "fratello"
+                  "Ich komme aus...",
+                  "Wo wohnst du?",
+                  "Mein Name ist...",
+                  "Wie alt bist du?"
                 ],
-                "correctAnswer": "mamma",
+                "correctAnswer": "Ich komme aus...",
                 "difficulty": 2
               },
               {
-                "id": "it-b-03-4",
+                "id": "de-daily-01-04",
                 "type": "match",
-                "question": "亲属配对",
+                "question": "词汇配对",
                 "correctAnswer": "match",
                 "difficulty": 2,
                 "pairs": [
                   [
-                    "mamma",
-                    "妈妈"
+                    "Mein Name ist...",
+                    "我的名字是…"
                   ],
                   [
-                    "爸爸",
-                    "爸爸"
+                    "Wie alt bist du?",
+                    "你多大了？"
                   ],
                   [
-                    "哥哥",
-                    "哥哥"
+                    "Ich komme aus...",
+                    "我来自…"
                   ],
                   [
-                    "姐姐",
-                    "姐姐"
+                    "Freut mich",
+                    "很高兴认识你"
                   ]
                 ]
               },
               {
-                "id": "it-b-03-5",
-                "type": "translate",
-                "question": "家人",
-                "options": [
-                  "Familie",
-                  "Freund",
-                  "Lehrer",
-                  "Klassenkamerad"
-                ],
-                "correctAnswer": "Familie",
-                "difficulty": 1
+                "id": "de-daily-01-05",
+                "type": "dictation",
+                "question": "听写：你住在哪？",
+                "correctAnswer": "Wo wohnst du?",
+                "difficulty": 2,
+                "audioWord": "Wo wohnst du"
               },
               {
-                "id": "it-b-03-6",
-                "type": "dictation",
-                "question": "听写：朋友",
-                "correctAnswer": "amico",
+                "id": "de-daily-01-06",
+                "type": "repeat",
+                "question": "跟读：我是一名学生",
+                "correctAnswer": "repeat",
                 "difficulty": 2,
-                "audioWord": "amico"
+                "sentence": "Ich bin Student"
               }
             ]
           },
           {
-            "levelId": "de-basic-06",
-            "title": "家庭与人物",
-            "timeLimit": 120,
-            "minScoreFor1Star": 30,
-            "minScoreFor2Star": 50,
-            "minScoreFor3Star": 70,
+            "levelId": "de-daily-02",
+            "title": "购物与消费",
+            "timeLimit": 150,
+            "minScoreFor1Star": 40,
+            "minScoreFor2Star": 60,
+            "minScoreFor3Star": 80,
             "prerequisites": [
-              "ar-basic-02"
+              "de-daily-01"
             ],
             "questions": [
               {
-                "id": "ar-b-03-1",
+                "id": "de-daily-02-01",
                 "type": "translate",
-                "question": "妈妈",
+                "question": "多少钱？",
                 "options": [
-                  "أم",
-                  "أب",
-                  "أخ",
-                  "أخت"
+                  "Wie viel kostet das?",
+                  "Das ist zu teuer",
+                  "Rabatt",
+                  "Preis"
                 ],
-                "correctAnswer": "أم",
+                "correctAnswer": "Wie viel kostet das?",
                 "difficulty": 1
               },
               {
-                "id": "ar-b-03-2",
+                "id": "de-daily-02-02",
                 "type": "translate",
-                "question": "朋友",
+                "question": "太贵了",
                 "options": [
-                  "صديق",
-                  "عدو",
-                  "غريب",
-                  "جار"
+                  "Das ist zu teuer",
+                  "Kann ich das sehen?",
+                  "Rabatt",
+                  "Preis"
                 ],
-                "correctAnswer": "صديق",
+                "correctAnswer": "Das ist zu teuer",
                 "difficulty": 1
               },
               {
-                "id": "ar-b-03-3",
+                "id": "de-daily-02-03",
+                "type": "translate",
+                "question": "便宜的",
+                "options": [
+                  "billig",
+                  "Das ist zu teuer",
+                  "Wie viel kostet das?",
+                  "Preis"
+                ],
+                "correctAnswer": "billig",
+                "difficulty": 1
+              },
+              {
+                "id": "de-daily-02-04",
                 "type": "fill-blank",
-                "question": "أين ___؟（你妈妈在哪里？）",
+                "question": "___ (折扣)",
                 "options": [
-                  "أمك",
-                  "أبك",
-                  "أختك",
-                  "أخوك"
+                  "Rabatt",
+                  "Das ist zu teuer",
+                  "billig",
+                  "Wie viel kostet das?"
                 ],
-                "correctAnswer": "أمك",
+                "correctAnswer": "Rabatt",
                 "difficulty": 2
               },
               {
-                "id": "ar-b-03-4",
+                "id": "de-daily-02-05",
                 "type": "match",
-                "question": "亲属配对",
+                "question": "词汇配对",
                 "correctAnswer": "match",
                 "difficulty": 2,
                 "pairs": [
                   [
-                    "أم",
-                    "妈妈"
+                    "Wie viel kostet das?",
+                    "多少钱？"
                   ],
                   [
-                    "爸爸",
-                    "爸爸"
+                    "Das ist zu teuer",
+                    "太贵了"
                   ],
                   [
-                    "哥哥",
-                    "哥哥"
+                    "billig",
+                    "便宜的"
                   ],
                   [
-                    "姐姐",
-                    "姐姐"
+                    "Rabatt",
+                    "折扣"
                   ]
                 ]
               },
               {
-                "id": "ar-b-03-5",
-                "type": "translate",
-                "question": "家人",
-                "options": [
-                  "عائلة",
-                  "صديق",
-                  "معلم",
-                  "زميل"
-                ],
-                "correctAnswer": "عائلة",
-                "difficulty": 1
-              },
-              {
-                "id": "ar-b-03-6",
+                "id": "de-daily-02-06",
                 "type": "dictation",
-                "question": "听写：朋友",
-                "correctAnswer": "صديق",
+                "question": "听写：我能看看吗？",
+                "correctAnswer": "Kann ich das sehen?",
                 "difficulty": 2,
-                "audioWord": "sadiq"
+                "audioWord": "Kann ich das sehen"
               }
             ]
           }
@@ -1099,7 +3420,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "de-t-00",
+                "id": "de-scenario-01-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -1112,7 +3433,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "de-f-01",
+                "id": "de-scenario-01-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -1125,7 +3446,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "de-t-02",
+                "id": "de-scenario-01-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -1138,7 +3459,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "de-m-00",
+                "id": "de-scenario-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -1163,7 +3484,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "de-d-04",
+                "id": "de-scenario-01-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "ein hotel buchen",
@@ -1171,7 +3492,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "ein hotel buchen"
               },
               {
-                "id": "de-r-05",
+                "id": "de-scenario-01-06",
                 "type": "repeat",
                 "question": "跟读：einzelzimmer",
                 "correctAnswer": "repeat",
@@ -1192,7 +3513,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "de-t-00",
+                "id": "de-scenario-02-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -1205,7 +3526,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "de-f-01",
+                "id": "de-scenario-02-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -1218,7 +3539,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "de-t-02",
+                "id": "de-scenario-02-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -1231,7 +3552,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "de-m-00",
+                "id": "de-scenario-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -1256,7 +3577,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "de-d-04",
+                "id": "de-scenario-02-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "ein hotel buchen",
@@ -1264,7 +3585,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "ein hotel buchen"
               },
               {
-                "id": "de-r-05",
+                "id": "de-scenario-02-06",
                 "type": "repeat",
                 "question": "跟读：einzelzimmer",
                 "correctAnswer": "repeat",
@@ -1285,7 +3606,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "de-t-00",
+                "id": "de-scenario-03-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -1298,7 +3619,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "de-f-01",
+                "id": "de-scenario-03-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -1311,7 +3632,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "de-t-02",
+                "id": "de-scenario-03-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -1324,7 +3645,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "de-m-00",
+                "id": "de-scenario-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -1349,7 +3670,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "de-d-04",
+                "id": "de-scenario-03-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "ein hotel buchen",
@@ -1357,7 +3678,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "ein hotel buchen"
               },
               {
-                "id": "de-r-05",
+                "id": "de-scenario-03-06",
                 "type": "repeat",
                 "question": "跟读：einzelzimmer",
                 "correctAnswer": "repeat",
@@ -1383,7 +3704,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "de-t-00",
+                "id": "de-grammar-01-01",
                 "type": "translate",
                 "question": "去（原形）",
                 "options": [
@@ -1396,7 +3717,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "de-f-01",
+                "id": "de-grammar-01-02",
                 "type": "fill-blank",
                 "question": "___ (我去)",
                 "options": [
@@ -1409,7 +3730,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "de-t-02",
+                "id": "de-grammar-01-03",
                 "type": "translate",
                 "question": "他/她去",
                 "options": [
@@ -1422,7 +3743,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "de-m-00",
+                "id": "de-grammar-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -1447,7 +3768,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "de-d-04",
+                "id": "de-grammar-01-05",
                 "type": "dictation",
                 "question": "听写：是",
                 "correctAnswer": "bin/ist/sind",
@@ -1455,7 +3776,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "bin ist sind"
               },
               {
-                "id": "de-r-05",
+                "id": "de-grammar-01-06",
                 "type": "repeat",
                 "question": "跟读：essen",
                 "correctAnswer": "repeat",
@@ -1481,7 +3802,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "de-t-00",
+                "id": "de-culture-01-01",
                 "type": "translate",
                 "question": "慕尼黑啤酒节",
                 "options": [
@@ -1494,7 +3815,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "de-f-01",
+                "id": "de-culture-01-02",
                 "type": "fill-blank",
                 "question": "___ (圣诞节)",
                 "options": [
@@ -1507,7 +3828,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "de-t-02",
+                "id": "de-culture-01-03",
                 "type": "translate",
                 "question": "碱水结",
                 "options": [
@@ -1520,7 +3841,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "de-m-00",
+                "id": "de-culture-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -1545,7 +3866,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "de-d-00",
+                "id": "de-culture-01-05",
                 "type": "dictation",
                 "question": "听写：慕尼黑啤酒节",
                 "correctAnswer": "oktoberfest",
@@ -1553,7 +3874,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "oktoberfest"
               },
               {
-                "id": "de-r-01",
+                "id": "de-culture-01-06",
                 "type": "repeat",
                 "question": "跟读：weihnachten",
                 "correctAnswer": "repeat",
@@ -1570,11 +3891,11 @@ const NEW_QUIZ_DATA = {
     "themes": [
       {
         "id": "basic",
-        "name": "希腊语基础词汇",
-        "color": "#0891B2",
+        "name": "基础词汇",
+        "color": "#1D4ED8",
         "levels": [
           {
-            "levelId": "el-basic-04",
+            "levelId": "el-basic-01",
             "title": "问候与礼貌",
             "timeLimit": 120,
             "minScoreFor1Star": 30,
@@ -1583,7 +3904,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "el-t-03",
+                "id": "el-basic-01-01",
                 "type": "translate",
                 "question": "是",
                 "options": [
@@ -1596,7 +3917,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "el-f-04",
+                "id": "el-basic-01-02",
                 "type": "fill-blank",
                 "question": "___ (不是)",
                 "options": [
@@ -1609,7 +3930,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "el-t-05",
+                "id": "el-basic-01-03",
                 "type": "translate",
                 "question": "再见",
                 "options": [
@@ -1622,7 +3943,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "el-m-03",
+                "id": "el-basic-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -1647,7 +3968,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "el-d-07",
+                "id": "el-basic-01-05",
                 "type": "dictation",
                 "question": "听写：一",
                 "correctAnswer": "ένα",
@@ -1655,12 +3976,203 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "ena"
               },
               {
-                "id": "el-r-08",
+                "id": "el-basic-01-06",
                 "type": "repeat",
                 "question": "跟读：δύο",
                 "correctAnswer": "repeat",
                 "difficulty": 2,
                 "sentence": "δύο"
+              }
+            ]
+          },
+          {
+            "levelId": "el-basic-02",
+            "title": "家庭与人物",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [
+              "el-basic-01"
+            ],
+            "questions": [
+              {
+                "id": "el-basic-02-01",
+                "type": "translate",
+                "question": "父亲",
+                "options": [
+                  "πατέρας",
+                  "γιαγιά",
+                  "αδερφός",
+                  "μητέρα"
+                ],
+                "correctAnswer": "πατέρας",
+                "difficulty": 1
+              },
+              {
+                "id": "el-basic-02-02",
+                "type": "translate",
+                "question": "母亲",
+                "options": [
+                  "μητέρα",
+                  "γιος",
+                  "αδερφή",
+                  "γιαγιά"
+                ],
+                "correctAnswer": "μητέρα",
+                "difficulty": 1
+              },
+              {
+                "id": "el-basic-02-03",
+                "type": "translate",
+                "question": "兄弟",
+                "options": [
+                  "αδερφός",
+                  "παππούς",
+                  "αδερφή",
+                  "μητέρα"
+                ],
+                "correctAnswer": "αδερφός",
+                "difficulty": 1
+              },
+              {
+                "id": "el-basic-02-04",
+                "type": "fill-blank",
+                "question": "___ (姐妹)",
+                "options": [
+                  "αδερφή",
+                  "αδερφός",
+                  "γιαγιά",
+                  "μητέρα"
+                ],
+                "correctAnswer": "αδερφή",
+                "difficulty": 2
+              },
+              {
+                "id": "el-basic-02-05",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "πατέρας",
+                    "父亲"
+                  ],
+                  [
+                    "μητέρα",
+                    "母亲"
+                  ],
+                  [
+                    "αδερφός",
+                    "兄弟"
+                  ],
+                  [
+                    "αδερφή",
+                    "姐妹"
+                  ]
+                ]
+              },
+              {
+                "id": "el-basic-02-06",
+                "type": "dictation",
+                "question": "听写：女儿",
+                "correctAnswer": "κόρη",
+                "difficulty": 2,
+                "audioWord": "kori"
+              }
+            ]
+          },
+          {
+            "levelId": "el-basic-03",
+            "title": "数字与颜色",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [
+              "el-basic-02"
+            ],
+            "questions": [
+              {
+                "id": "el-basic-03-01",
+                "type": "translate",
+                "question": "一",
+                "options": [
+                  "ένα",
+                  "μπλε",
+                  "τέσσερα",
+                  "δύο"
+                ],
+                "correctAnswer": "ένα",
+                "difficulty": 1
+              },
+              {
+                "id": "el-basic-03-02",
+                "type": "translate",
+                "question": "二",
+                "options": [
+                  "δύο",
+                  "κόκκινο",
+                  "μπλε",
+                  "τρία"
+                ],
+                "correctAnswer": "δύο",
+                "difficulty": 1
+              },
+              {
+                "id": "el-basic-03-03",
+                "type": "fill-blank",
+                "question": "___ (三)",
+                "options": [
+                  "τρία",
+                  "κόκκινο",
+                  "μπλε",
+                  "δύο"
+                ],
+                "correctAnswer": "τρία",
+                "difficulty": 2
+              },
+              {
+                "id": "el-basic-03-04",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "ένα",
+                    "一"
+                  ],
+                  [
+                    "δύο",
+                    "二"
+                  ],
+                  [
+                    "τρία",
+                    "三"
+                  ],
+                  [
+                    "τέσσερα",
+                    "四"
+                  ]
+                ]
+              },
+              {
+                "id": "el-basic-03-05",
+                "type": "dictation",
+                "question": "听写：五",
+                "correctAnswer": "πέντε",
+                "difficulty": 2,
+                "audioWord": "pente"
+              },
+              {
+                "id": "el-basic-03-06",
+                "type": "repeat",
+                "question": "跟读：红色",
+                "correctAnswer": "repeat",
+                "difficulty": 2,
+                "sentence": "κόκκινο"
               }
             ]
           }
@@ -1669,11 +4181,11 @@ const NEW_QUIZ_DATA = {
       {
         "id": "daily",
         "name": "日常对话",
-        "color": "#06B6D4",
+        "color": "#60A5FA",
         "levels": [
           {
             "levelId": "el-daily-02",
-            "title": "自我介绍",
+            "title": "购物与消费",
             "timeLimit": 150,
             "minScoreFor1Star": 40,
             "minScoreFor2Star": 60,
@@ -1681,7 +4193,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "el-t-00",
+                "id": "el-daily-02-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -1694,7 +4206,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "el-f-01",
+                "id": "el-daily-02-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -1707,7 +4219,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "el-t-02",
+                "id": "el-daily-02-03",
                 "type": "translate",
                 "question": "你好吗？",
                 "options": [
@@ -1720,7 +4232,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "el-m-00",
+                "id": "el-daily-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -1745,7 +4257,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "el-d-04",
+                "id": "el-daily-02-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "πόσο κάνει?",
@@ -1753,7 +4265,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "poso kanei"
               },
               {
-                "id": "el-r-05",
+                "id": "el-daily-02-06",
                 "type": "repeat",
                 "question": "跟读：θέλω αυτό",
                 "correctAnswer": "repeat",
@@ -1774,7 +4286,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "el-t-00",
+                "id": "el-daily-03-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -1787,7 +4299,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "el-f-01",
+                "id": "el-daily-03-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -1800,7 +4312,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "el-t-02",
+                "id": "el-daily-03-03",
                 "type": "translate",
                 "question": "你好吗？",
                 "options": [
@@ -1813,7 +4325,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "el-m-00",
+                "id": "el-daily-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -1838,7 +4350,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "el-d-04",
+                "id": "el-daily-03-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "πόσο κάνει?",
@@ -1846,7 +4358,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "poso kanei"
               },
               {
-                "id": "el-r-05",
+                "id": "el-daily-03-06",
                 "type": "repeat",
                 "question": "跟读：θέλω αυτό",
                 "correctAnswer": "repeat",
@@ -1872,7 +4384,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "el-t-00",
+                "id": "el-scenario-01-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -1885,7 +4397,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "el-f-01",
+                "id": "el-scenario-01-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -1898,7 +4410,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "el-t-02",
+                "id": "el-scenario-01-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -1911,7 +4423,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "el-m-00",
+                "id": "el-scenario-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -1936,7 +4448,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "el-d-04",
+                "id": "el-scenario-01-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "κράτηση ξενοδοχείου",
@@ -1944,7 +4456,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "kratisi xenodochiou"
               },
               {
-                "id": "el-r-05",
+                "id": "el-scenario-01-06",
                 "type": "repeat",
                 "question": "跟读：μονόκλινο δωμάτιο",
                 "correctAnswer": "repeat",
@@ -1965,7 +4477,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "el-t-00",
+                "id": "el-scenario-02-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -1978,7 +4490,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "el-f-01",
+                "id": "el-scenario-02-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -1991,7 +4503,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "el-t-02",
+                "id": "el-scenario-02-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -2004,7 +4516,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "el-m-00",
+                "id": "el-scenario-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -2029,7 +4541,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "el-d-04",
+                "id": "el-scenario-02-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "κράτηση ξενοδοχείου",
@@ -2037,7 +4549,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "kratisi xenodochiou"
               },
               {
-                "id": "el-r-05",
+                "id": "el-scenario-02-06",
                 "type": "repeat",
                 "question": "跟读：μονόκλινο δωμάτιο",
                 "correctAnswer": "repeat",
@@ -2058,7 +4570,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "el-t-00",
+                "id": "el-scenario-03-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -2071,7 +4583,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "el-f-01",
+                "id": "el-scenario-03-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -2084,7 +4596,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "el-t-02",
+                "id": "el-scenario-03-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -2097,7 +4609,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "el-m-00",
+                "id": "el-scenario-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -2122,7 +4634,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "el-d-04",
+                "id": "el-scenario-03-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "κράτηση ξενοδοχείου",
@@ -2130,7 +4642,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "kratisi xenodochiou"
               },
               {
-                "id": "el-r-05",
+                "id": "el-scenario-03-06",
                 "type": "repeat",
                 "question": "跟读：μονόκλινο δωμάτιο",
                 "correctAnswer": "repeat",
@@ -2156,7 +4668,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "el-t-00",
+                "id": "el-grammar-01-01",
                 "type": "translate",
                 "question": "去（原形）",
                 "options": [
@@ -2169,7 +4681,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "el-f-01",
+                "id": "el-grammar-01-02",
                 "type": "fill-blank",
                 "question": "___ (我去)",
                 "options": [
@@ -2182,7 +4694,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "el-t-02",
+                "id": "el-grammar-01-03",
                 "type": "translate",
                 "question": "他去",
                 "options": [
@@ -2195,7 +4707,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "el-m-00",
+                "id": "el-grammar-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -2220,7 +4732,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "el-d-04",
+                "id": "el-grammar-01-05",
                 "type": "dictation",
                 "question": "听写：是",
                 "correctAnswer": "είμαι/είναι",
@@ -2228,7 +4740,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "eimai einai"
               },
               {
-                "id": "el-r-05",
+                "id": "el-grammar-01-06",
                 "type": "repeat",
                 "question": "跟读：τρώω",
                 "correctAnswer": "repeat",
@@ -2254,7 +4766,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "el-t-00",
+                "id": "el-culture-01-01",
                 "type": "translate",
                 "question": "圣诞节",
                 "options": [
@@ -2267,7 +4779,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "el-f-01",
+                "id": "el-culture-01-02",
                 "type": "fill-blank",
                 "question": "___ (复活节)",
                 "options": [
@@ -2280,7 +4792,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "el-t-02",
+                "id": "el-culture-01-03",
                 "type": "translate",
                 "question": "木莎卡",
                 "options": [
@@ -2293,7 +4805,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "el-m-00",
+                "id": "el-culture-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -2318,7 +4830,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "el-d-00",
+                "id": "el-culture-01-05",
                 "type": "dictation",
                 "question": "听写：圣诞节",
                 "correctAnswer": "χριστούγεννα",
@@ -2326,7 +4838,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "christougenna"
               },
               {
-                "id": "el-r-01",
+                "id": "el-culture-01-06",
                 "type": "repeat",
                 "question": "跟读：πάσχα",
                 "correctAnswer": "repeat",
@@ -2344,21 +4856,19 @@ const NEW_QUIZ_DATA = {
       {
         "id": "basic",
         "name": "基础词汇",
-        "color": "#F59E0B",
+        "color": "#1D4ED8",
         "levels": [
           {
-            "levelId": "es-basic-04",
+            "levelId": "es-basic-03",
             "title": "数字与颜色",
             "timeLimit": 120,
             "minScoreFor1Star": 30,
             "minScoreFor2Star": 50,
             "minScoreFor3Star": 70,
-            "prerequisites": [
-              "es-basic-03"
-            ],
+            "prerequisites": [],
             "questions": [
               {
-                "id": "es-t-03",
+                "id": "es-basic-03-01",
                 "type": "translate",
                 "question": "是",
                 "options": [
@@ -2371,7 +4881,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "es-f-04",
+                "id": "es-basic-03-02",
                 "type": "fill-blank",
                 "question": "___ (不是)",
                 "options": [
@@ -2384,7 +4894,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "es-t-05",
+                "id": "es-basic-03-03",
                 "type": "translate",
                 "question": "再见",
                 "options": [
@@ -2397,7 +4907,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "es-m-03",
+                "id": "es-basic-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -2422,7 +4932,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "es-d-07",
+                "id": "es-basic-03-05",
                 "type": "dictation",
                 "question": "听写：一",
                 "correctAnswer": "uno",
@@ -2430,7 +4940,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "uno"
               },
               {
-                "id": "es-r-08",
+                "id": "es-basic-03-06",
                 "type": "repeat",
                 "question": "跟读：dos",
                 "correctAnswer": "repeat",
@@ -2444,11 +4954,11 @@ const NEW_QUIZ_DATA = {
       {
         "id": "daily",
         "name": "日常对话",
-        "color": "#6366F1",
+        "color": "#60A5FA",
         "levels": [
           {
             "levelId": "es-daily-02",
-            "title": "自我介绍",
+            "title": "购物与消费",
             "timeLimit": 150,
             "minScoreFor1Star": 40,
             "minScoreFor2Star": 60,
@@ -2456,7 +4966,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "es-t-00",
+                "id": "es-daily-02-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -2469,7 +4979,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "es-f-01",
+                "id": "es-daily-02-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -2482,7 +4992,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "es-t-02",
+                "id": "es-daily-02-03",
                 "type": "translate",
                 "question": "你好吗？",
                 "options": [
@@ -2495,7 +5005,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "es-m-00",
+                "id": "es-daily-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -2520,7 +5030,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "es-d-04",
+                "id": "es-daily-02-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "¿Cuánto cuesta?",
@@ -2528,7 +5038,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "cuánto cuesta"
               },
               {
-                "id": "es-r-05",
+                "id": "es-daily-02-06",
                 "type": "repeat",
                 "question": "跟读：Quiero esto",
                 "correctAnswer": "repeat",
@@ -2549,7 +5059,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "es-t-00",
+                "id": "es-daily-03-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -2562,7 +5072,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "es-f-01",
+                "id": "es-daily-03-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -2575,7 +5085,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "es-t-02",
+                "id": "es-daily-03-03",
                 "type": "translate",
                 "question": "你好吗？",
                 "options": [
@@ -2588,7 +5098,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "es-m-00",
+                "id": "es-daily-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -2613,7 +5123,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "es-d-04",
+                "id": "es-daily-03-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "¿Cuánto cuesta?",
@@ -2621,7 +5131,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "cuánto cuesta"
               },
               {
-                "id": "es-r-05",
+                "id": "es-daily-03-06",
                 "type": "repeat",
                 "question": "跟读：Quiero esto",
                 "correctAnswer": "repeat",
@@ -2647,7 +5157,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "es-t-00",
+                "id": "es-scenario-01-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -2660,7 +5170,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "es-f-01",
+                "id": "es-scenario-01-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -2673,7 +5183,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "es-t-02",
+                "id": "es-scenario-01-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -2686,7 +5196,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "es-m-00",
+                "id": "es-scenario-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -2711,7 +5221,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "es-d-04",
+                "id": "es-scenario-01-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "Reservar un hotel",
@@ -2719,7 +5229,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "reservar un hotel"
               },
               {
-                "id": "es-r-05",
+                "id": "es-scenario-01-06",
                 "type": "repeat",
                 "question": "跟读：Habitación individual",
                 "correctAnswer": "repeat",
@@ -2740,7 +5250,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "es-t-00",
+                "id": "es-scenario-02-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -2753,7 +5263,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "es-f-01",
+                "id": "es-scenario-02-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -2766,7 +5276,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "es-t-02",
+                "id": "es-scenario-02-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -2779,7 +5289,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "es-m-00",
+                "id": "es-scenario-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -2804,7 +5314,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "es-d-04",
+                "id": "es-scenario-02-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "Reservar un hotel",
@@ -2812,7 +5322,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "reservar un hotel"
               },
               {
-                "id": "es-r-05",
+                "id": "es-scenario-02-06",
                 "type": "repeat",
                 "question": "跟读：Habitación individual",
                 "correctAnswer": "repeat",
@@ -2833,7 +5343,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "es-t-00",
+                "id": "es-scenario-03-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -2846,7 +5356,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "es-f-01",
+                "id": "es-scenario-03-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -2859,7 +5369,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "es-t-02",
+                "id": "es-scenario-03-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -2872,7 +5382,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "es-m-00",
+                "id": "es-scenario-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -2897,7 +5407,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "es-d-04",
+                "id": "es-scenario-03-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "Reservar un hotel",
@@ -2905,7 +5415,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "reservar un hotel"
               },
               {
-                "id": "es-r-05",
+                "id": "es-scenario-03-06",
                 "type": "repeat",
                 "question": "跟读：Habitación individual",
                 "correctAnswer": "repeat",
@@ -2931,7 +5441,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "es-t-00",
+                "id": "es-grammar-01-01",
                 "type": "translate",
                 "question": "吃（原形）",
                 "options": [
@@ -2944,7 +5454,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "es-f-01",
+                "id": "es-grammar-01-02",
                 "type": "fill-blank",
                 "question": "___ (我吃)",
                 "options": [
@@ -2957,7 +5467,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "es-t-02",
+                "id": "es-grammar-01-03",
                 "type": "translate",
                 "question": "他/她吃",
                 "options": [
@@ -2970,7 +5480,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "es-m-00",
+                "id": "es-grammar-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -2995,7 +5505,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "es-d-04",
+                "id": "es-grammar-01-05",
                 "type": "dictation",
                 "question": "听写：我是/去（过去式）",
                 "correctAnswer": "fui",
@@ -3003,7 +5513,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "fui"
               },
               {
-                "id": "es-r-05",
+                "id": "es-grammar-01-06",
                 "type": "repeat",
                 "question": "跟读：ir",
                 "correctAnswer": "repeat",
@@ -3024,7 +5534,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "es-t-00",
+                "id": "es-grammar-02-01",
                 "type": "translate",
                 "question": "吃（原形）",
                 "options": [
@@ -3037,7 +5547,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "es-f-01",
+                "id": "es-grammar-02-02",
                 "type": "fill-blank",
                 "question": "___ (我吃)",
                 "options": [
@@ -3050,7 +5560,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "es-t-02",
+                "id": "es-grammar-02-03",
                 "type": "translate",
                 "question": "他/她吃",
                 "options": [
@@ -3063,7 +5573,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "es-m-00",
+                "id": "es-grammar-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -3088,7 +5598,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "es-d-04",
+                "id": "es-grammar-02-05",
                 "type": "dictation",
                 "question": "听写：我是/去（过去式）",
                 "correctAnswer": "fui",
@@ -3096,7 +5606,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "fui"
               },
               {
-                "id": "es-r-05",
+                "id": "es-grammar-02-06",
                 "type": "repeat",
                 "question": "跟读：ir",
                 "correctAnswer": "repeat",
@@ -3122,7 +5632,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "es-t-00",
+                "id": "es-culture-01-01",
                 "type": "translate",
                 "question": "圣诞节",
                 "options": [
@@ -3135,7 +5645,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "es-f-01",
+                "id": "es-culture-01-02",
                 "type": "fill-blank",
                 "question": "___ (亡灵节)",
                 "options": [
@@ -3148,7 +5658,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "es-t-02",
+                "id": "es-culture-01-03",
                 "type": "translate",
                 "question": "弗拉门戈",
                 "options": [
@@ -3161,7 +5671,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "es-m-00",
+                "id": "es-culture-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -3186,7 +5696,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "es-d-00",
+                "id": "es-culture-01-05",
                 "type": "dictation",
                 "question": "听写：圣诞节",
                 "correctAnswer": "Navidad",
@@ -3194,7 +5704,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "Navidad"
               },
               {
-                "id": "es-r-01",
+                "id": "es-culture-01-06",
                 "type": "repeat",
                 "question": "跟读：Día de los Muertos",
                 "correctAnswer": "repeat",
@@ -3215,7 +5725,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "es-t-00",
+                "id": "es-culture-02-01",
                 "type": "translate",
                 "question": "圣诞节",
                 "options": [
@@ -3228,7 +5738,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "es-f-01",
+                "id": "es-culture-02-02",
                 "type": "fill-blank",
                 "question": "___ (亡灵节)",
                 "options": [
@@ -3241,7 +5751,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "es-t-02",
+                "id": "es-culture-02-03",
                 "type": "translate",
                 "question": "弗拉门戈",
                 "options": [
@@ -3254,7 +5764,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "es-m-00",
+                "id": "es-culture-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -3279,7 +5789,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "es-d-00",
+                "id": "es-culture-02-05",
                 "type": "dictation",
                 "question": "听写：圣诞节",
                 "correctAnswer": "Navidad",
@@ -3287,7 +5797,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "Navidad"
               },
               {
-                "id": "es-r-01",
+                "id": "es-culture-02-06",
                 "type": "repeat",
                 "question": "跟读：Día de los Muertos",
                 "correctAnswer": "repeat",
@@ -3308,7 +5818,7 @@ const NEW_QUIZ_DATA = {
         "color": "#1D4ED8",
         "levels": [
           {
-            "levelId": "fr-basic-04",
+            "levelId": "fr-basic-01",
             "title": "问候与礼貌",
             "timeLimit": 120,
             "minScoreFor1Star": 30,
@@ -3317,7 +5827,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "fr-t-03",
+                "id": "fr-basic-01-01",
                 "type": "translate",
                 "question": "是",
                 "options": [
@@ -3330,7 +5840,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "fr-f-04",
+                "id": "fr-basic-01-02",
                 "type": "fill-blank",
                 "question": "___ (不是)",
                 "options": [
@@ -3343,7 +5853,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "fr-t-05",
+                "id": "fr-basic-01-03",
                 "type": "translate",
                 "question": "再见",
                 "options": [
@@ -3356,7 +5866,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "fr-m-03",
+                "id": "fr-basic-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -3381,7 +5891,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "fr-d-07",
+                "id": "fr-basic-01-05",
                 "type": "dictation",
                 "question": "听写：一",
                 "correctAnswer": "un",
@@ -3389,12 +5899,203 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "un"
               },
               {
-                "id": "fr-r-08",
+                "id": "fr-basic-01-06",
                 "type": "repeat",
                 "question": "跟读：deux",
                 "correctAnswer": "repeat",
                 "difficulty": 2,
                 "sentence": "deux"
+              }
+            ]
+          },
+          {
+            "levelId": "fr-basic-02",
+            "title": "家庭与人物",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [
+              "fr-basic-01"
+            ],
+            "questions": [
+              {
+                "id": "fr-basic-02-01",
+                "type": "translate",
+                "question": "父亲",
+                "options": [
+                  "père",
+                  "frère",
+                  "fils",
+                  "grand-père"
+                ],
+                "correctAnswer": "père",
+                "difficulty": 1
+              },
+              {
+                "id": "fr-basic-02-02",
+                "type": "translate",
+                "question": "母亲",
+                "options": [
+                  "mère",
+                  "sœur",
+                  "grand-père",
+                  "fille"
+                ],
+                "correctAnswer": "mère",
+                "difficulty": 1
+              },
+              {
+                "id": "fr-basic-02-03",
+                "type": "translate",
+                "question": "兄弟",
+                "options": [
+                  "frère",
+                  "mère",
+                  "grand-père",
+                  "sœur"
+                ],
+                "correctAnswer": "frère",
+                "difficulty": 1
+              },
+              {
+                "id": "fr-basic-02-04",
+                "type": "fill-blank",
+                "question": "___ (姐妹)",
+                "options": [
+                  "sœur",
+                  "grand-mère",
+                  "père",
+                  "mère"
+                ],
+                "correctAnswer": "sœur",
+                "difficulty": 2
+              },
+              {
+                "id": "fr-basic-02-05",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "père",
+                    "父亲"
+                  ],
+                  [
+                    "mère",
+                    "母亲"
+                  ],
+                  [
+                    "frère",
+                    "兄弟"
+                  ],
+                  [
+                    "sœur",
+                    "姐妹"
+                  ]
+                ]
+              },
+              {
+                "id": "fr-basic-02-06",
+                "type": "dictation",
+                "question": "听写：女儿",
+                "correctAnswer": "fille",
+                "difficulty": 2,
+                "audioWord": "fille"
+              }
+            ]
+          },
+          {
+            "levelId": "fr-basic-03",
+            "title": "数字与颜色",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [
+              "fr-basic-02"
+            ],
+            "questions": [
+              {
+                "id": "fr-basic-03-01",
+                "type": "translate",
+                "question": "一",
+                "options": [
+                  "un",
+                  "vert",
+                  "deux",
+                  "quatre"
+                ],
+                "correctAnswer": "un",
+                "difficulty": 1
+              },
+              {
+                "id": "fr-basic-03-02",
+                "type": "translate",
+                "question": "二",
+                "options": [
+                  "deux",
+                  "cinq",
+                  "quatre",
+                  "un"
+                ],
+                "correctAnswer": "deux",
+                "difficulty": 1
+              },
+              {
+                "id": "fr-basic-03-03",
+                "type": "fill-blank",
+                "question": "___ (三)",
+                "options": [
+                  "trois",
+                  "deux",
+                  "rouge",
+                  "quatre"
+                ],
+                "correctAnswer": "trois",
+                "difficulty": 2
+              },
+              {
+                "id": "fr-basic-03-04",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "un",
+                    "一"
+                  ],
+                  [
+                    "deux",
+                    "二"
+                  ],
+                  [
+                    "trois",
+                    "三"
+                  ],
+                  [
+                    "quatre",
+                    "四"
+                  ]
+                ]
+              },
+              {
+                "id": "fr-basic-03-05",
+                "type": "dictation",
+                "question": "听写：五",
+                "correctAnswer": "cinq",
+                "difficulty": 2,
+                "audioWord": "cinq"
+              },
+              {
+                "id": "fr-basic-03-06",
+                "type": "repeat",
+                "question": "跟读：红色",
+                "correctAnswer": "repeat",
+                "difficulty": 2,
+                "sentence": "rouge"
               }
             ]
           }
@@ -3407,7 +6108,7 @@ const NEW_QUIZ_DATA = {
         "levels": [
           {
             "levelId": "fr-daily-02",
-            "title": "自我介绍",
+            "title": "购物与消费",
             "timeLimit": 150,
             "minScoreFor1Star": 40,
             "minScoreFor2Star": 60,
@@ -3415,7 +6116,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "fr-t-00",
+                "id": "fr-daily-02-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -3428,7 +6129,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "fr-f-01",
+                "id": "fr-daily-02-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -3441,7 +6142,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "fr-t-02",
+                "id": "fr-daily-02-03",
                 "type": "translate",
                 "question": "您好吗？",
                 "options": [
@@ -3454,7 +6155,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "fr-m-00",
+                "id": "fr-daily-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -3479,7 +6180,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "fr-d-04",
+                "id": "fr-daily-02-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "combien ça coûte?",
@@ -3487,7 +6188,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "combien ca coute"
               },
               {
-                "id": "fr-r-05",
+                "id": "fr-daily-02-06",
                 "type": "repeat",
                 "question": "跟读：je veux ceci",
                 "correctAnswer": "repeat",
@@ -3508,7 +6209,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "fr-t-00",
+                "id": "fr-daily-03-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -3521,7 +6222,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "fr-f-01",
+                "id": "fr-daily-03-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -3534,7 +6235,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "fr-t-02",
+                "id": "fr-daily-03-03",
                 "type": "translate",
                 "question": "您好吗？",
                 "options": [
@@ -3547,7 +6248,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "fr-m-00",
+                "id": "fr-daily-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -3572,7 +6273,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "fr-d-04",
+                "id": "fr-daily-03-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "combien ça coûte?",
@@ -3580,7 +6281,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "combien ca coute"
               },
               {
-                "id": "fr-r-05",
+                "id": "fr-daily-03-06",
                 "type": "repeat",
                 "question": "跟读：je veux ceci",
                 "correctAnswer": "repeat",
@@ -3606,7 +6307,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "fr-t-00",
+                "id": "fr-scenario-01-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -3619,7 +6320,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "fr-f-01",
+                "id": "fr-scenario-01-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -3632,7 +6333,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "fr-t-02",
+                "id": "fr-scenario-01-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -3645,7 +6346,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "fr-m-00",
+                "id": "fr-scenario-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -3670,7 +6371,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "fr-d-04",
+                "id": "fr-scenario-01-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "réserver un hôtel",
@@ -3678,7 +6379,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "reserver un hotel"
               },
               {
-                "id": "fr-r-05",
+                "id": "fr-scenario-01-06",
                 "type": "repeat",
                 "question": "跟读：chambre individuelle",
                 "correctAnswer": "repeat",
@@ -3699,7 +6400,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "fr-t-00",
+                "id": "fr-scenario-02-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -3712,7 +6413,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "fr-f-01",
+                "id": "fr-scenario-02-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -3725,7 +6426,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "fr-t-02",
+                "id": "fr-scenario-02-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -3738,7 +6439,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "fr-m-00",
+                "id": "fr-scenario-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -3763,7 +6464,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "fr-d-04",
+                "id": "fr-scenario-02-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "réserver un hôtel",
@@ -3771,7 +6472,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "reserver un hotel"
               },
               {
-                "id": "fr-r-05",
+                "id": "fr-scenario-02-06",
                 "type": "repeat",
                 "question": "跟读：chambre individuelle",
                 "correctAnswer": "repeat",
@@ -3792,7 +6493,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "fr-t-00",
+                "id": "fr-scenario-03-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -3805,7 +6506,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "fr-f-01",
+                "id": "fr-scenario-03-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -3818,7 +6519,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "fr-t-02",
+                "id": "fr-scenario-03-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -3831,7 +6532,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "fr-m-00",
+                "id": "fr-scenario-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -3856,7 +6557,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "fr-d-04",
+                "id": "fr-scenario-03-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "réserver un hôtel",
@@ -3864,7 +6565,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "reserver un hotel"
               },
               {
-                "id": "fr-r-05",
+                "id": "fr-scenario-03-06",
                 "type": "repeat",
                 "question": "跟读：chambre individuelle",
                 "correctAnswer": "repeat",
@@ -3890,7 +6591,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "fr-t-00",
+                "id": "fr-grammar-01-01",
                 "type": "translate",
                 "question": "去（原形）",
                 "options": [
@@ -3903,7 +6604,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "fr-f-01",
+                "id": "fr-grammar-01-02",
                 "type": "fill-blank",
                 "question": "___ (我去)",
                 "options": [
@@ -3916,7 +6617,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "fr-t-02",
+                "id": "fr-grammar-01-03",
                 "type": "translate",
                 "question": "他/她去",
                 "options": [
@@ -3929,7 +6630,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "fr-m-00",
+                "id": "fr-grammar-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -3954,7 +6655,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "fr-d-04",
+                "id": "fr-grammar-01-05",
                 "type": "dictation",
                 "question": "听写：是",
                 "correctAnswer": "je suis/il est",
@@ -3962,7 +6663,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "je suis il est"
               },
               {
-                "id": "fr-r-05",
+                "id": "fr-grammar-01-06",
                 "type": "repeat",
                 "question": "跟读：manger",
                 "correctAnswer": "repeat",
@@ -3988,7 +6689,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "fr-t-00",
+                "id": "fr-culture-01-01",
                 "type": "translate",
                 "question": "圣诞节",
                 "options": [
@@ -4001,7 +6702,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "fr-f-01",
+                "id": "fr-culture-01-02",
                 "type": "fill-blank",
                 "question": "___ (巴士底日)",
                 "options": [
@@ -4014,7 +6715,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "fr-t-02",
+                "id": "fr-culture-01-03",
                 "type": "translate",
                 "question": "牛角包",
                 "options": [
@@ -4027,7 +6728,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "fr-m-00",
+                "id": "fr-culture-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -4052,7 +6753,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "fr-d-00",
+                "id": "fr-culture-01-05",
                 "type": "dictation",
                 "question": "听写：圣诞节",
                 "correctAnswer": "noël",
@@ -4060,7 +6761,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "noel"
               },
               {
-                "id": "fr-r-01",
+                "id": "fr-culture-01-06",
                 "type": "repeat",
                 "question": "跟读：bastille",
                 "correctAnswer": "repeat",
@@ -4078,10 +6779,10 @@ const NEW_QUIZ_DATA = {
       {
         "id": "basic",
         "name": "基础词汇",
-        "color": "#7C3AED",
+        "color": "#1D4ED8",
         "levels": [
           {
-            "levelId": "hi-basic-04",
+            "levelId": "hi-basic-01",
             "title": "问候与礼貌",
             "timeLimit": 120,
             "minScoreFor1Star": 30,
@@ -4090,7 +6791,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "hi-t-03",
+                "id": "hi-basic-01-01",
                 "type": "translate",
                 "question": "是",
                 "options": [
@@ -4103,7 +6804,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "hi-f-04",
+                "id": "hi-basic-01-02",
                 "type": "fill-blank",
                 "question": "___ (不是)",
                 "options": [
@@ -4116,7 +6817,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "hi-t-05",
+                "id": "hi-basic-01-03",
                 "type": "translate",
                 "question": "再见",
                 "options": [
@@ -4129,7 +6830,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "hi-m-03",
+                "id": "hi-basic-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -4154,7 +6855,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "hi-d-07",
+                "id": "hi-basic-01-05",
                 "type": "dictation",
                 "question": "听写：一",
                 "correctAnswer": "एक",
@@ -4162,12 +6863,203 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "ek"
               },
               {
-                "id": "hi-r-08",
+                "id": "hi-basic-01-06",
                 "type": "repeat",
                 "question": "跟读：दो",
                 "correctAnswer": "repeat",
                 "difficulty": 2,
                 "sentence": "दो"
+              }
+            ]
+          },
+          {
+            "levelId": "hi-basic-02",
+            "title": "家庭与人物",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [
+              "hi-basic-01"
+            ],
+            "questions": [
+              {
+                "id": "hi-basic-02-01",
+                "type": "translate",
+                "question": "父亲",
+                "options": [
+                  "पिता",
+                  "भाई",
+                  "दादा",
+                  "बेटा"
+                ],
+                "correctAnswer": "पिता",
+                "difficulty": 1
+              },
+              {
+                "id": "hi-basic-02-02",
+                "type": "translate",
+                "question": "母亲",
+                "options": [
+                  "माँ",
+                  "बेटा",
+                  "दादा",
+                  "दादी"
+                ],
+                "correctAnswer": "माँ",
+                "difficulty": 1
+              },
+              {
+                "id": "hi-basic-02-03",
+                "type": "translate",
+                "question": "兄弟",
+                "options": [
+                  "भाई",
+                  "माँ",
+                  "बहन",
+                  "दादी"
+                ],
+                "correctAnswer": "भाई",
+                "difficulty": 1
+              },
+              {
+                "id": "hi-basic-02-04",
+                "type": "fill-blank",
+                "question": "___ (姐妹)",
+                "options": [
+                  "बहन",
+                  "माँ",
+                  "दादा",
+                  "बेटी"
+                ],
+                "correctAnswer": "बहन",
+                "difficulty": 2
+              },
+              {
+                "id": "hi-basic-02-05",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "पिता",
+                    "父亲"
+                  ],
+                  [
+                    "माँ",
+                    "母亲"
+                  ],
+                  [
+                    "भाई",
+                    "兄弟"
+                  ],
+                  [
+                    "बहन",
+                    "姐妹"
+                  ]
+                ]
+              },
+              {
+                "id": "hi-basic-02-06",
+                "type": "dictation",
+                "question": "听写：女儿",
+                "correctAnswer": "बेटी",
+                "difficulty": 2,
+                "audioWord": "beti"
+              }
+            ]
+          },
+          {
+            "levelId": "hi-basic-03",
+            "title": "数字与颜色",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [
+              "hi-basic-02"
+            ],
+            "questions": [
+              {
+                "id": "hi-basic-03-01",
+                "type": "translate",
+                "question": "一",
+                "options": [
+                  "एक",
+                  "लाल",
+                  "चार",
+                  "हरा"
+                ],
+                "correctAnswer": "एक",
+                "difficulty": 1
+              },
+              {
+                "id": "hi-basic-03-02",
+                "type": "translate",
+                "question": "二",
+                "options": [
+                  "दो",
+                  "पाँच",
+                  "लाल",
+                  "हरा"
+                ],
+                "correctAnswer": "दो",
+                "difficulty": 1
+              },
+              {
+                "id": "hi-basic-03-03",
+                "type": "fill-blank",
+                "question": "___ (三)",
+                "options": [
+                  "तीन",
+                  "चार",
+                  "दो",
+                  "नीला"
+                ],
+                "correctAnswer": "तीन",
+                "difficulty": 2
+              },
+              {
+                "id": "hi-basic-03-04",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "एक",
+                    "一"
+                  ],
+                  [
+                    "दो",
+                    "二"
+                  ],
+                  [
+                    "तीन",
+                    "三"
+                  ],
+                  [
+                    "चार",
+                    "四"
+                  ]
+                ]
+              },
+              {
+                "id": "hi-basic-03-05",
+                "type": "dictation",
+                "question": "听写：五",
+                "correctAnswer": "पाँच",
+                "difficulty": 2,
+                "audioWord": "paanch"
+              },
+              {
+                "id": "hi-basic-03-06",
+                "type": "repeat",
+                "question": "跟读：红色",
+                "correctAnswer": "repeat",
+                "difficulty": 2,
+                "sentence": "लाल"
               }
             ]
           }
@@ -4176,11 +7068,11 @@ const NEW_QUIZ_DATA = {
       {
         "id": "daily",
         "name": "日常对话",
-        "color": "#A78BFA",
+        "color": "#60A5FA",
         "levels": [
           {
             "levelId": "hi-daily-02",
-            "title": "自我介绍",
+            "title": "购物与消费",
             "timeLimit": 150,
             "minScoreFor1Star": 40,
             "minScoreFor2Star": 60,
@@ -4188,7 +7080,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "hi-t-00",
+                "id": "hi-daily-02-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -4201,7 +7093,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "hi-f-01",
+                "id": "hi-daily-02-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -4214,7 +7106,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "hi-t-02",
+                "id": "hi-daily-02-03",
                 "type": "translate",
                 "question": "您好吗？",
                 "options": [
@@ -4227,7 +7119,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "hi-m-00",
+                "id": "hi-daily-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -4252,7 +7144,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "hi-d-04",
+                "id": "hi-daily-02-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "यह कितने का है?",
@@ -4260,7 +7152,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "yeh kitne ka hai"
               },
               {
-                "id": "hi-r-05",
+                "id": "hi-daily-02-06",
                 "type": "repeat",
                 "question": "跟读：मुझे यह चाहिए",
                 "correctAnswer": "repeat",
@@ -4281,7 +7173,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "hi-t-00",
+                "id": "hi-daily-03-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -4294,7 +7186,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "hi-f-01",
+                "id": "hi-daily-03-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -4307,7 +7199,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "hi-t-02",
+                "id": "hi-daily-03-03",
                 "type": "translate",
                 "question": "您好吗？",
                 "options": [
@@ -4320,7 +7212,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "hi-m-00",
+                "id": "hi-daily-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -4345,7 +7237,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "hi-d-04",
+                "id": "hi-daily-03-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "यह कितने का है?",
@@ -4353,7 +7245,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "yeh kitne ka hai"
               },
               {
-                "id": "hi-r-05",
+                "id": "hi-daily-03-06",
                 "type": "repeat",
                 "question": "跟读：मुझे यह चाहिए",
                 "correctAnswer": "repeat",
@@ -4379,7 +7271,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "hi-t-00",
+                "id": "hi-scenario-01-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -4392,7 +7284,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "hi-f-01",
+                "id": "hi-scenario-01-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -4405,7 +7297,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "hi-t-02",
+                "id": "hi-scenario-01-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -4418,7 +7310,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "hi-m-00",
+                "id": "hi-scenario-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -4443,7 +7335,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "hi-d-04",
+                "id": "hi-scenario-01-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "होटल बुक करना",
@@ -4451,7 +7343,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "hotel book karna"
               },
               {
-                "id": "hi-r-05",
+                "id": "hi-scenario-01-06",
                 "type": "repeat",
                 "question": "跟读：एकल कमरा",
                 "correctAnswer": "repeat",
@@ -4472,7 +7364,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "hi-t-00",
+                "id": "hi-scenario-02-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -4485,7 +7377,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "hi-f-01",
+                "id": "hi-scenario-02-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -4498,7 +7390,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "hi-t-02",
+                "id": "hi-scenario-02-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -4511,7 +7403,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "hi-m-00",
+                "id": "hi-scenario-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -4536,7 +7428,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "hi-d-04",
+                "id": "hi-scenario-02-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "होटल बुक करना",
@@ -4544,7 +7436,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "hotel book karna"
               },
               {
-                "id": "hi-r-05",
+                "id": "hi-scenario-02-06",
                 "type": "repeat",
                 "question": "跟读：एकल कमरा",
                 "correctAnswer": "repeat",
@@ -4565,7 +7457,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "hi-t-00",
+                "id": "hi-scenario-03-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -4578,7 +7470,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "hi-f-01",
+                "id": "hi-scenario-03-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -4591,7 +7483,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "hi-t-02",
+                "id": "hi-scenario-03-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -4604,7 +7496,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "hi-m-00",
+                "id": "hi-scenario-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -4629,7 +7521,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "hi-d-04",
+                "id": "hi-scenario-03-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "होटल बुक करना",
@@ -4637,7 +7529,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "hotel book karna"
               },
               {
-                "id": "hi-r-05",
+                "id": "hi-scenario-03-06",
                 "type": "repeat",
                 "question": "跟读：एकल कमरा",
                 "correctAnswer": "repeat",
@@ -4663,7 +7555,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "hi-t-00",
+                "id": "hi-grammar-01-01",
                 "type": "translate",
                 "question": "去（原形）",
                 "options": [
@@ -4676,7 +7568,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "hi-f-01",
+                "id": "hi-grammar-01-02",
                 "type": "fill-blank",
                 "question": "___ (我去)",
                 "options": [
@@ -4689,7 +7581,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "hi-t-02",
+                "id": "hi-grammar-01-03",
                 "type": "translate",
                 "question": "他去",
                 "options": [
@@ -4702,7 +7594,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "hi-m-00",
+                "id": "hi-grammar-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -4727,7 +7619,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "hi-d-04",
+                "id": "hi-grammar-01-05",
                 "type": "dictation",
                 "question": "听写：是",
                 "correctAnswer": "हूँ/है",
@@ -4735,7 +7627,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "hoon hai"
               },
               {
-                "id": "hi-r-05",
+                "id": "hi-grammar-01-06",
                 "type": "repeat",
                 "question": "跟读：खाना",
                 "correctAnswer": "repeat",
@@ -4761,7 +7653,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "hi-t-00",
+                "id": "hi-culture-01-01",
                 "type": "translate",
                 "question": "排灯节",
                 "options": [
@@ -4774,7 +7666,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "hi-f-01",
+                "id": "hi-culture-01-02",
                 "type": "fill-blank",
                 "question": "___ (洒红节)",
                 "options": [
@@ -4787,7 +7679,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "hi-t-02",
+                "id": "hi-culture-01-03",
                 "type": "translate",
                 "question": "咖喱角",
                 "options": [
@@ -4800,7 +7692,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "hi-m-00",
+                "id": "hi-culture-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -4825,7 +7717,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "hi-d-00",
+                "id": "hi-culture-01-05",
                 "type": "dictation",
                 "question": "听写：排灯节",
                 "correctAnswer": "दीवाली",
@@ -4833,7 +7725,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "diwali"
               },
               {
-                "id": "hi-r-01",
+                "id": "hi-culture-01-06",
                 "type": "repeat",
                 "question": "跟读：होली",
                 "correctAnswer": "repeat",
@@ -4851,21 +7743,215 @@ const NEW_QUIZ_DATA = {
       {
         "id": "basic",
         "name": "基础词汇",
-        "color": "#047857",
+        "color": "#1D4ED8",
         "levels": [
           {
-            "levelId": "it-basic-04",
+            "levelId": "it-basic-01",
+            "title": "问候与礼貌",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [],
+            "questions": [
+              {
+                "id": "it-basic-01-01",
+                "type": "translate",
+                "question": "你好",
+                "options": [
+                  "Ciao",
+                  "Sì",
+                  "Scusa",
+                  "Grazie"
+                ],
+                "correctAnswer": "Ciao",
+                "difficulty": 1
+              },
+              {
+                "id": "it-basic-01-02",
+                "type": "translate",
+                "question": "谢谢",
+                "options": [
+                  "Grazie",
+                  "Buongiorno",
+                  "Ciao",
+                  "No"
+                ],
+                "correctAnswer": "Grazie",
+                "difficulty": 1
+              },
+              {
+                "id": "it-basic-01-03",
+                "type": "translate",
+                "question": "再见",
+                "options": [
+                  "Arrivederci",
+                  "Grazie",
+                  "No",
+                  "Buongiorno"
+                ],
+                "correctAnswer": "Arrivederci",
+                "difficulty": 1
+              },
+              {
+                "id": "it-basic-01-04",
+                "type": "fill-blank",
+                "question": "___ (请)",
+                "options": [
+                  "Per favore",
+                  "Buongiorno",
+                  "No",
+                  "Scusa"
+                ],
+                "correctAnswer": "Per favore",
+                "difficulty": 2
+              },
+              {
+                "id": "it-basic-01-05",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "Ciao",
+                    "你好"
+                  ],
+                  [
+                    "Grazie",
+                    "谢谢"
+                  ],
+                  [
+                    "Arrivederci",
+                    "再见"
+                  ],
+                  [
+                    "Per favore",
+                    "请"
+                  ]
+                ]
+              },
+              {
+                "id": "it-basic-01-06",
+                "type": "dictation",
+                "question": "听写：是",
+                "correctAnswer": "Sì",
+                "difficulty": 2,
+                "audioWord": "Sì"
+              }
+            ]
+          },
+          {
+            "levelId": "it-basic-02",
+            "title": "家庭与人物",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [
+              "it-basic-01"
+            ],
+            "questions": [
+              {
+                "id": "it-basic-02-01",
+                "type": "translate",
+                "question": "父亲",
+                "options": [
+                  "padre",
+                  "figlia",
+                  "madre",
+                  "figlio"
+                ],
+                "correctAnswer": "padre",
+                "difficulty": 1
+              },
+              {
+                "id": "it-basic-02-02",
+                "type": "translate",
+                "question": "母亲",
+                "options": [
+                  "madre",
+                  "figlio",
+                  "figlia",
+                  "nonna"
+                ],
+                "correctAnswer": "madre",
+                "difficulty": 1
+              },
+              {
+                "id": "it-basic-02-03",
+                "type": "translate",
+                "question": "兄弟",
+                "options": [
+                  "fratello",
+                  "figlia",
+                  "sorella",
+                  "nonna"
+                ],
+                "correctAnswer": "fratello",
+                "difficulty": 1
+              },
+              {
+                "id": "it-basic-02-04",
+                "type": "fill-blank",
+                "question": "___ (姐妹)",
+                "options": [
+                  "sorella",
+                  "nonna",
+                  "padre",
+                  "nonno"
+                ],
+                "correctAnswer": "sorella",
+                "difficulty": 2
+              },
+              {
+                "id": "it-basic-02-05",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "padre",
+                    "父亲"
+                  ],
+                  [
+                    "madre",
+                    "母亲"
+                  ],
+                  [
+                    "fratello",
+                    "兄弟"
+                  ],
+                  [
+                    "sorella",
+                    "姐妹"
+                  ]
+                ]
+              },
+              {
+                "id": "it-basic-02-06",
+                "type": "dictation",
+                "question": "听写：女儿",
+                "correctAnswer": "figlia",
+                "difficulty": 2,
+                "audioWord": "figlia"
+              }
+            ]
+          },
+          {
+            "levelId": "it-basic-03",
             "title": "数字与颜色",
             "timeLimit": 120,
             "minScoreFor1Star": 30,
             "minScoreFor2Star": 50,
             "minScoreFor3Star": 70,
             "prerequisites": [
-              "it-basic-03"
+              "it-basic-02"
             ],
             "questions": [
               {
-                "id": "it-t-03",
+                "id": "it-basic-03-01",
                 "type": "translate",
                 "question": "是",
                 "options": [
@@ -4878,7 +7964,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "it-f-04",
+                "id": "it-basic-03-02",
                 "type": "fill-blank",
                 "question": "___ (不是)",
                 "options": [
@@ -4891,7 +7977,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "it-t-05",
+                "id": "it-basic-03-03",
                 "type": "translate",
                 "question": "再见",
                 "options": [
@@ -4904,7 +7990,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "it-m-03",
+                "id": "it-basic-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -4929,7 +8015,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "it-d-07",
+                "id": "it-basic-03-05",
                 "type": "dictation",
                 "question": "听写：一",
                 "correctAnswer": "uno",
@@ -4937,7 +8023,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "uno"
               },
               {
-                "id": "it-r-08",
+                "id": "it-basic-03-06",
                 "type": "repeat",
                 "question": "跟读：due",
                 "correctAnswer": "repeat",
@@ -4951,11 +8037,11 @@ const NEW_QUIZ_DATA = {
       {
         "id": "daily",
         "name": "日常对话",
-        "color": "#34D399",
+        "color": "#60A5FA",
         "levels": [
           {
             "levelId": "it-daily-02",
-            "title": "自我介绍",
+            "title": "购物与消费",
             "timeLimit": 150,
             "minScoreFor1Star": 40,
             "minScoreFor2Star": 60,
@@ -4963,7 +8049,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "it-t-00",
+                "id": "it-daily-02-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -4976,7 +8062,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "it-f-01",
+                "id": "it-daily-02-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -4989,7 +8075,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "it-t-02",
+                "id": "it-daily-02-03",
                 "type": "translate",
                 "question": "你好吗？",
                 "options": [
@@ -5002,7 +8088,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "it-m-00",
+                "id": "it-daily-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -5027,7 +8113,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "it-d-04",
+                "id": "it-daily-02-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "quanto costa?",
@@ -5035,7 +8121,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "quanto costa"
               },
               {
-                "id": "it-r-05",
+                "id": "it-daily-02-06",
                 "type": "repeat",
                 "question": "跟读：vorrei questo",
                 "correctAnswer": "repeat",
@@ -5056,7 +8142,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "it-t-00",
+                "id": "it-daily-03-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -5069,7 +8155,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "it-f-01",
+                "id": "it-daily-03-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -5082,7 +8168,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "it-t-02",
+                "id": "it-daily-03-03",
                 "type": "translate",
                 "question": "你好吗？",
                 "options": [
@@ -5095,7 +8181,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "it-m-00",
+                "id": "it-daily-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -5120,7 +8206,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "it-d-04",
+                "id": "it-daily-03-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "quanto costa?",
@@ -5128,7 +8214,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "quanto costa"
               },
               {
-                "id": "it-r-05",
+                "id": "it-daily-03-06",
                 "type": "repeat",
                 "question": "跟读：vorrei questo",
                 "correctAnswer": "repeat",
@@ -5154,7 +8240,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "it-t-00",
+                "id": "it-scenario-01-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -5167,7 +8253,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "it-f-01",
+                "id": "it-scenario-01-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -5180,7 +8266,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "it-t-02",
+                "id": "it-scenario-01-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -5193,7 +8279,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "it-m-00",
+                "id": "it-scenario-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -5218,7 +8304,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "it-d-04",
+                "id": "it-scenario-01-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "prenotare un albergo",
@@ -5226,7 +8312,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "prenotare un albergo"
               },
               {
-                "id": "it-r-05",
+                "id": "it-scenario-01-06",
                 "type": "repeat",
                 "question": "跟读：camera singola",
                 "correctAnswer": "repeat",
@@ -5247,7 +8333,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "it-t-00",
+                "id": "it-scenario-02-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -5260,7 +8346,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "it-f-01",
+                "id": "it-scenario-02-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -5273,7 +8359,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "it-t-02",
+                "id": "it-scenario-02-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -5286,7 +8372,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "it-m-00",
+                "id": "it-scenario-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -5311,7 +8397,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "it-d-04",
+                "id": "it-scenario-02-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "prenotare un albergo",
@@ -5319,7 +8405,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "prenotare un albergo"
               },
               {
-                "id": "it-r-05",
+                "id": "it-scenario-02-06",
                 "type": "repeat",
                 "question": "跟读：camera singola",
                 "correctAnswer": "repeat",
@@ -5340,7 +8426,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "it-t-00",
+                "id": "it-scenario-03-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -5353,7 +8439,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "it-f-01",
+                "id": "it-scenario-03-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -5366,7 +8452,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "it-t-02",
+                "id": "it-scenario-03-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -5379,7 +8465,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "it-m-00",
+                "id": "it-scenario-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -5404,7 +8490,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "it-d-04",
+                "id": "it-scenario-03-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "prenotare un albergo",
@@ -5412,7 +8498,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "prenotare un albergo"
               },
               {
-                "id": "it-r-05",
+                "id": "it-scenario-03-06",
                 "type": "repeat",
                 "question": "跟读：camera singola",
                 "correctAnswer": "repeat",
@@ -5438,7 +8524,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "it-t-00",
+                "id": "it-grammar-01-01",
                 "type": "translate",
                 "question": "去（原形）",
                 "options": [
@@ -5451,7 +8537,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "it-f-01",
+                "id": "it-grammar-01-02",
                 "type": "fill-blank",
                 "question": "___ (我去)",
                 "options": [
@@ -5464,7 +8550,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "it-t-02",
+                "id": "it-grammar-01-03",
                 "type": "translate",
                 "question": "他/她去",
                 "options": [
@@ -5477,7 +8563,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "it-m-00",
+                "id": "it-grammar-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -5502,7 +8588,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "it-d-04",
+                "id": "it-grammar-01-05",
                 "type": "dictation",
                 "question": "听写：是",
                 "correctAnswer": "sono/è",
@@ -5510,7 +8596,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "sono e"
               },
               {
-                "id": "it-r-05",
+                "id": "it-grammar-01-06",
                 "type": "repeat",
                 "question": "跟读：mangiare",
                 "correctAnswer": "repeat",
@@ -5536,7 +8622,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "it-t-00",
+                "id": "it-culture-01-01",
                 "type": "translate",
                 "question": "圣诞节",
                 "options": [
@@ -5549,7 +8635,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "it-f-01",
+                "id": "it-culture-01-02",
                 "type": "fill-blank",
                 "question": "___ (狂欢节)",
                 "options": [
@@ -5562,7 +8648,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "it-t-02",
+                "id": "it-culture-01-03",
                 "type": "translate",
                 "question": "披萨",
                 "options": [
@@ -5575,7 +8661,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "it-m-00",
+                "id": "it-culture-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -5600,7 +8686,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "it-d-00",
+                "id": "it-culture-01-05",
                 "type": "dictation",
                 "question": "听写：圣诞节",
                 "correctAnswer": "natale",
@@ -5608,7 +8694,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "natale"
               },
               {
-                "id": "it-r-01",
+                "id": "it-culture-01-06",
                 "type": "repeat",
                 "question": "跟读：carnevale",
                 "correctAnswer": "repeat",
@@ -5624,9 +8710,112 @@ const NEW_QUIZ_DATA = {
   "ko": {
     "themes": [
       {
+        "id": "basic",
+        "name": "基础词汇",
+        "color": "#1D4ED8",
+        "levels": [
+          {
+            "levelId": "ko-basic-01",
+            "title": "问候与礼貌",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [],
+            "questions": [
+              {
+                "id": "ko-basic-01-01",
+                "type": "translate",
+                "question": "你好",
+                "options": [
+                  "안녕하세요",
+                  "아니요",
+                  "네",
+                  "제발"
+                ],
+                "correctAnswer": "안녕하세요",
+                "difficulty": 1
+              },
+              {
+                "id": "ko-basic-01-02",
+                "type": "translate",
+                "question": "谢谢",
+                "options": [
+                  "감사합니다",
+                  "좋은 아침",
+                  "아니요",
+                  "제발"
+                ],
+                "correctAnswer": "감사합니다",
+                "difficulty": 1
+              },
+              {
+                "id": "ko-basic-01-03",
+                "type": "translate",
+                "question": "再见",
+                "options": [
+                  "안녕히 가세요",
+                  "안녕하세요",
+                  "제발",
+                  "죄송합니다"
+                ],
+                "correctAnswer": "안녕히 가세요",
+                "difficulty": 1
+              },
+              {
+                "id": "ko-basic-01-04",
+                "type": "fill-blank",
+                "question": "___ (请)",
+                "options": [
+                  "제발",
+                  "감사합니다",
+                  "죄송합니다",
+                  "안녕하세요"
+                ],
+                "correctAnswer": "제발",
+                "difficulty": 2
+              },
+              {
+                "id": "ko-basic-01-05",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "안녕하세요",
+                    "你好"
+                  ],
+                  [
+                    "감사합니다",
+                    "谢谢"
+                  ],
+                  [
+                    "안녕히 가세요",
+                    "再见"
+                  ],
+                  [
+                    "제발",
+                    "请"
+                  ]
+                ]
+              },
+              {
+                "id": "ko-basic-01-06",
+                "type": "dictation",
+                "question": "听写：是",
+                "correctAnswer": "네",
+                "difficulty": 2,
+                "audioWord": "ne"
+              }
+            ]
+          }
+        ]
+      },
+      {
         "id": "daily",
         "name": "日常对话",
-        "color": "#6366F1",
+        "color": "#60A5FA",
         "levels": [
           {
             "levelId": "ko-daily-03",
@@ -5638,7 +8827,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "ko-t-00",
+                "id": "ko-daily-03-01",
                 "type": "translate",
                 "question": "初次见面",
                 "options": [
@@ -5651,7 +8840,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ko-f-01",
+                "id": "ko-daily-03-02",
                 "type": "fill-blank",
                 "question": "___ (我是…)",
                 "options": [
@@ -5664,7 +8853,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "ko-t-02",
+                "id": "ko-daily-03-03",
                 "type": "translate",
                 "question": "您好吗？",
                 "options": [
@@ -5677,7 +8866,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ko-m-00",
+                "id": "ko-daily-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -5702,7 +8891,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "ko-d-04",
+                "id": "ko-daily-03-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "얼마예요",
@@ -5710,7 +8899,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "eolmayeyo"
               },
               {
-                "id": "ko-r-05",
+                "id": "ko-daily-03-06",
                 "type": "repeat",
                 "question": "跟读：이것 주세요",
                 "correctAnswer": "repeat",
@@ -5731,7 +8920,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "ko-t-00",
+                "id": "ko-daily-04-01",
                 "type": "translate",
                 "question": "初次见面",
                 "options": [
@@ -5744,7 +8933,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ko-f-01",
+                "id": "ko-daily-04-02",
                 "type": "fill-blank",
                 "question": "___ (我是…)",
                 "options": [
@@ -5757,7 +8946,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "ko-t-02",
+                "id": "ko-daily-04-03",
                 "type": "translate",
                 "question": "您好吗？",
                 "options": [
@@ -5770,7 +8959,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ko-m-00",
+                "id": "ko-daily-04-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -5795,7 +8984,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "ko-d-04",
+                "id": "ko-daily-04-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "얼마예요",
@@ -5803,7 +8992,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "eolmayeyo"
               },
               {
-                "id": "ko-r-05",
+                "id": "ko-daily-04-06",
                 "type": "repeat",
                 "question": "跟读：이것 주세요",
                 "correctAnswer": "repeat",
@@ -5829,7 +9018,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "ko-t-00",
+                "id": "ko-scenario-01-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -5842,7 +9031,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ko-f-01",
+                "id": "ko-scenario-01-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -5855,7 +9044,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "ko-t-02",
+                "id": "ko-scenario-01-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -5868,7 +9057,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ko-m-00",
+                "id": "ko-scenario-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -5893,7 +9082,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "ko-d-04",
+                "id": "ko-scenario-01-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "호텔을 예약해요",
@@ -5901,7 +9090,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "hotereul yeyakaeyo"
               },
               {
-                "id": "ko-r-05",
+                "id": "ko-scenario-01-06",
                 "type": "repeat",
                 "question": "跟读：싱글룸",
                 "correctAnswer": "repeat",
@@ -5922,7 +9111,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "ko-t-00",
+                "id": "ko-scenario-02-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -5935,7 +9124,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ko-f-01",
+                "id": "ko-scenario-02-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -5948,7 +9137,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "ko-t-02",
+                "id": "ko-scenario-02-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -5961,7 +9150,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ko-m-00",
+                "id": "ko-scenario-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -5986,7 +9175,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "ko-d-04",
+                "id": "ko-scenario-02-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "호텔을 예약해요",
@@ -5994,7 +9183,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "hotereul yeyakaeyo"
               },
               {
-                "id": "ko-r-05",
+                "id": "ko-scenario-02-06",
                 "type": "repeat",
                 "question": "跟读：싱글룸",
                 "correctAnswer": "repeat",
@@ -6015,7 +9204,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "ko-t-00",
+                "id": "ko-scenario-03-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -6028,7 +9217,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ko-f-01",
+                "id": "ko-scenario-03-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -6041,7 +9230,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "ko-t-02",
+                "id": "ko-scenario-03-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -6054,7 +9243,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ko-m-00",
+                "id": "ko-scenario-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -6079,7 +9268,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "ko-d-04",
+                "id": "ko-scenario-03-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "호텔을 예약해요",
@@ -6087,7 +9276,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "hotereul yeyakaeyo"
               },
               {
-                "id": "ko-r-05",
+                "id": "ko-scenario-03-06",
                 "type": "repeat",
                 "question": "跟读：싱글룸",
                 "correctAnswer": "repeat",
@@ -6113,7 +9302,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "ko-t-00",
+                "id": "ko-grammar-01-01",
                 "type": "translate",
                 "question": "吃（非敬语）",
                 "options": [
@@ -6126,7 +9315,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ko-f-01",
+                "id": "ko-grammar-01-02",
                 "type": "fill-blank",
                 "question": "___ (吃了（过去式）)",
                 "options": [
@@ -6139,7 +9328,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "ko-t-02",
+                "id": "ko-grammar-01-03",
                 "type": "translate",
                 "question": "去",
                 "options": [
@@ -6152,7 +9341,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ko-m-00",
+                "id": "ko-grammar-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -6177,7 +9366,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "ko-d-04",
+                "id": "ko-grammar-01-05",
                 "type": "dictation",
                 "question": "听写：是",
                 "correctAnswer": "이에요/예요",
@@ -6185,7 +9374,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "ieyo yeyo"
               },
               {
-                "id": "ko-r-05",
+                "id": "ko-grammar-01-06",
                 "type": "repeat",
                 "question": "跟读：이었어요/였어요",
                 "correctAnswer": "repeat",
@@ -6206,7 +9395,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "ko-t-00",
+                "id": "ko-grammar-02-01",
                 "type": "translate",
                 "question": "吃（非敬语）",
                 "options": [
@@ -6219,7 +9408,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ko-f-01",
+                "id": "ko-grammar-02-02",
                 "type": "fill-blank",
                 "question": "___ (吃了（过去式）)",
                 "options": [
@@ -6232,7 +9421,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "ko-t-02",
+                "id": "ko-grammar-02-03",
                 "type": "translate",
                 "question": "去",
                 "options": [
@@ -6245,7 +9434,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ko-m-00",
+                "id": "ko-grammar-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -6270,7 +9459,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "ko-d-04",
+                "id": "ko-grammar-02-05",
                 "type": "dictation",
                 "question": "听写：是",
                 "correctAnswer": "이에요/예요",
@@ -6278,7 +9467,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "ieyo yeyo"
               },
               {
-                "id": "ko-r-05",
+                "id": "ko-grammar-02-06",
                 "type": "repeat",
                 "question": "跟读：이었어요/였어요",
                 "correctAnswer": "repeat",
@@ -6304,7 +9493,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "ko-t-00",
+                "id": "ko-culture-01-01",
                 "type": "translate",
                 "question": "春节/新年",
                 "options": [
@@ -6317,7 +9506,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ko-f-01",
+                "id": "ko-culture-01-02",
                 "type": "fill-blank",
                 "question": "___ (中秋节)",
                 "options": [
@@ -6330,7 +9519,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "ko-t-02",
+                "id": "ko-culture-01-03",
                 "type": "translate",
                 "question": "韩服",
                 "options": [
@@ -6343,7 +9532,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ko-m-00",
+                "id": "ko-culture-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -6368,7 +9557,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "ko-d-00",
+                "id": "ko-culture-01-05",
                 "type": "dictation",
                 "question": "听写：春节/新年",
                 "correctAnswer": "설날",
@@ -6376,7 +9565,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "seollal"
               },
               {
-                "id": "ko-r-01",
+                "id": "ko-culture-01-06",
                 "type": "repeat",
                 "question": "跟读：추석",
                 "correctAnswer": "repeat",
@@ -6397,7 +9586,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "ko-t-00",
+                "id": "ko-culture-02-01",
                 "type": "translate",
                 "question": "春节/新年",
                 "options": [
@@ -6410,7 +9599,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ko-f-01",
+                "id": "ko-culture-02-02",
                 "type": "fill-blank",
                 "question": "___ (中秋节)",
                 "options": [
@@ -6423,7 +9612,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "ko-t-02",
+                "id": "ko-culture-02-03",
                 "type": "translate",
                 "question": "韩服",
                 "options": [
@@ -6436,7 +9625,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ko-m-00",
+                "id": "ko-culture-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -6461,7 +9650,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "ko-d-00",
+                "id": "ko-culture-02-05",
                 "type": "dictation",
                 "question": "听写：春节/新年",
                 "correctAnswer": "설날",
@@ -6469,7 +9658,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "seollal"
               },
               {
-                "id": "ko-r-01",
+                "id": "ko-culture-02-06",
                 "type": "repeat",
                 "question": "跟读：추석",
                 "correctAnswer": "repeat",
@@ -6486,11 +9675,11 @@ const NEW_QUIZ_DATA = {
     "themes": [
       {
         "id": "basic",
-        "name": "荷兰语基础词汇",
-        "color": "#F59E0B",
+        "name": "基础词汇",
+        "color": "#1D4ED8",
         "levels": [
           {
-            "levelId": "nl-basic-04",
+            "levelId": "nl-basic-01",
             "title": "问候与礼貌",
             "timeLimit": 120,
             "minScoreFor1Star": 30,
@@ -6499,7 +9688,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "nl-t-03",
+                "id": "nl-basic-01-01",
                 "type": "translate",
                 "question": "是",
                 "options": [
@@ -6512,7 +9701,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "nl-f-04",
+                "id": "nl-basic-01-02",
                 "type": "fill-blank",
                 "question": "___ (不是)",
                 "options": [
@@ -6525,7 +9714,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "nl-t-05",
+                "id": "nl-basic-01-03",
                 "type": "translate",
                 "question": "再见",
                 "options": [
@@ -6538,7 +9727,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "nl-m-03",
+                "id": "nl-basic-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -6563,7 +9752,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "nl-d-07",
+                "id": "nl-basic-01-05",
                 "type": "dictation",
                 "question": "听写：一",
                 "correctAnswer": "een",
@@ -6571,12 +9760,203 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "een"
               },
               {
-                "id": "nl-r-08",
+                "id": "nl-basic-01-06",
                 "type": "repeat",
                 "question": "跟读：twee",
                 "correctAnswer": "repeat",
                 "difficulty": 2,
                 "sentence": "twee"
+              }
+            ]
+          },
+          {
+            "levelId": "nl-basic-02",
+            "title": "家庭与人物",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [
+              "nl-basic-01"
+            ],
+            "questions": [
+              {
+                "id": "nl-basic-02-01",
+                "type": "translate",
+                "question": "父亲",
+                "options": [
+                  "vader",
+                  "opa",
+                  "oma",
+                  "zus"
+                ],
+                "correctAnswer": "vader",
+                "difficulty": 1
+              },
+              {
+                "id": "nl-basic-02-02",
+                "type": "translate",
+                "question": "母亲",
+                "options": [
+                  "moeder",
+                  "dochter",
+                  "broer",
+                  "oma"
+                ],
+                "correctAnswer": "moeder",
+                "difficulty": 1
+              },
+              {
+                "id": "nl-basic-02-03",
+                "type": "translate",
+                "question": "兄弟",
+                "options": [
+                  "broer",
+                  "vader",
+                  "opa",
+                  "zus"
+                ],
+                "correctAnswer": "broer",
+                "difficulty": 1
+              },
+              {
+                "id": "nl-basic-02-04",
+                "type": "fill-blank",
+                "question": "___ (姐妹)",
+                "options": [
+                  "zus",
+                  "oma",
+                  "opa",
+                  "dochter"
+                ],
+                "correctAnswer": "zus",
+                "difficulty": 2
+              },
+              {
+                "id": "nl-basic-02-05",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "vader",
+                    "父亲"
+                  ],
+                  [
+                    "moeder",
+                    "母亲"
+                  ],
+                  [
+                    "broer",
+                    "兄弟"
+                  ],
+                  [
+                    "zus",
+                    "姐妹"
+                  ]
+                ]
+              },
+              {
+                "id": "nl-basic-02-06",
+                "type": "dictation",
+                "question": "听写：女儿",
+                "correctAnswer": "dochter",
+                "difficulty": 2,
+                "audioWord": "dochter"
+              }
+            ]
+          },
+          {
+            "levelId": "nl-basic-03",
+            "title": "数字与颜色",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [
+              "nl-basic-02"
+            ],
+            "questions": [
+              {
+                "id": "nl-basic-03-01",
+                "type": "translate",
+                "question": "一",
+                "options": [
+                  "een",
+                  "rood",
+                  "drie",
+                  "blauw"
+                ],
+                "correctAnswer": "een",
+                "difficulty": 1
+              },
+              {
+                "id": "nl-basic-03-02",
+                "type": "translate",
+                "question": "二",
+                "options": [
+                  "twee",
+                  "vier",
+                  "drie",
+                  "rood"
+                ],
+                "correctAnswer": "twee",
+                "difficulty": 1
+              },
+              {
+                "id": "nl-basic-03-03",
+                "type": "fill-blank",
+                "question": "___ (三)",
+                "options": [
+                  "drie",
+                  "groen",
+                  "rood",
+                  "een"
+                ],
+                "correctAnswer": "drie",
+                "difficulty": 2
+              },
+              {
+                "id": "nl-basic-03-04",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "een",
+                    "一"
+                  ],
+                  [
+                    "twee",
+                    "二"
+                  ],
+                  [
+                    "drie",
+                    "三"
+                  ],
+                  [
+                    "vier",
+                    "四"
+                  ]
+                ]
+              },
+              {
+                "id": "nl-basic-03-05",
+                "type": "dictation",
+                "question": "听写：五",
+                "correctAnswer": "vijf",
+                "difficulty": 2,
+                "audioWord": "vijf"
+              },
+              {
+                "id": "nl-basic-03-06",
+                "type": "repeat",
+                "question": "跟读：红色",
+                "correctAnswer": "repeat",
+                "difficulty": 2,
+                "sentence": "rood"
               }
             ]
           }
@@ -6585,11 +9965,11 @@ const NEW_QUIZ_DATA = {
       {
         "id": "daily",
         "name": "日常对话",
-        "color": "#FBBF24",
+        "color": "#60A5FA",
         "levels": [
           {
             "levelId": "nl-daily-02",
-            "title": "自我介绍",
+            "title": "购物与消费",
             "timeLimit": 150,
             "minScoreFor1Star": 40,
             "minScoreFor2Star": 60,
@@ -6597,7 +9977,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "nl-t-00",
+                "id": "nl-daily-02-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -6610,7 +9990,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "nl-f-01",
+                "id": "nl-daily-02-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -6623,7 +10003,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "nl-t-02",
+                "id": "nl-daily-02-03",
                 "type": "translate",
                 "question": "你好吗？",
                 "options": [
@@ -6636,7 +10016,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "nl-m-00",
+                "id": "nl-daily-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -6661,7 +10041,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "nl-d-04",
+                "id": "nl-daily-02-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "hoeveel kost dit?",
@@ -6669,7 +10049,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "hoeveel kost dit"
               },
               {
-                "id": "nl-r-05",
+                "id": "nl-daily-02-06",
                 "type": "repeat",
                 "question": "跟读：ik wil dit",
                 "correctAnswer": "repeat",
@@ -6690,7 +10070,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "nl-t-00",
+                "id": "nl-daily-03-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -6703,7 +10083,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "nl-f-01",
+                "id": "nl-daily-03-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -6716,7 +10096,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "nl-t-02",
+                "id": "nl-daily-03-03",
                 "type": "translate",
                 "question": "你好吗？",
                 "options": [
@@ -6729,7 +10109,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "nl-m-00",
+                "id": "nl-daily-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -6754,7 +10134,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "nl-d-04",
+                "id": "nl-daily-03-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "hoeveel kost dit?",
@@ -6762,7 +10142,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "hoeveel kost dit"
               },
               {
-                "id": "nl-r-05",
+                "id": "nl-daily-03-06",
                 "type": "repeat",
                 "question": "跟读：ik wil dit",
                 "correctAnswer": "repeat",
@@ -6788,7 +10168,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "nl-t-00",
+                "id": "nl-scenario-01-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -6801,7 +10181,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "nl-f-01",
+                "id": "nl-scenario-01-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -6814,7 +10194,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "nl-t-02",
+                "id": "nl-scenario-01-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -6827,7 +10207,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "nl-m-00",
+                "id": "nl-scenario-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -6852,7 +10232,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "nl-d-04",
+                "id": "nl-scenario-01-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "een hotel boeken",
@@ -6860,7 +10240,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "een hotel boeken"
               },
               {
-                "id": "nl-r-05",
+                "id": "nl-scenario-01-06",
                 "type": "repeat",
                 "question": "跟读：eenpersoonskamer",
                 "correctAnswer": "repeat",
@@ -6881,7 +10261,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "nl-t-00",
+                "id": "nl-scenario-02-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -6894,7 +10274,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "nl-f-01",
+                "id": "nl-scenario-02-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -6907,7 +10287,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "nl-t-02",
+                "id": "nl-scenario-02-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -6920,7 +10300,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "nl-m-00",
+                "id": "nl-scenario-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -6945,7 +10325,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "nl-d-04",
+                "id": "nl-scenario-02-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "een hotel boeken",
@@ -6953,7 +10333,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "een hotel boeken"
               },
               {
-                "id": "nl-r-05",
+                "id": "nl-scenario-02-06",
                 "type": "repeat",
                 "question": "跟读：eenpersoonskamer",
                 "correctAnswer": "repeat",
@@ -6974,7 +10354,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "nl-t-00",
+                "id": "nl-scenario-03-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -6987,7 +10367,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "nl-f-01",
+                "id": "nl-scenario-03-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -7000,7 +10380,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "nl-t-02",
+                "id": "nl-scenario-03-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -7013,7 +10393,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "nl-m-00",
+                "id": "nl-scenario-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -7038,7 +10418,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "nl-d-04",
+                "id": "nl-scenario-03-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "een hotel boeken",
@@ -7046,7 +10426,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "een hotel boeken"
               },
               {
-                "id": "nl-r-05",
+                "id": "nl-scenario-03-06",
                 "type": "repeat",
                 "question": "跟读：eenpersoonskamer",
                 "correctAnswer": "repeat",
@@ -7072,7 +10452,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "nl-t-00",
+                "id": "nl-grammar-01-01",
                 "type": "translate",
                 "question": "去（原形）",
                 "options": [
@@ -7085,7 +10465,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "nl-f-01",
+                "id": "nl-grammar-01-02",
                 "type": "fill-blank",
                 "question": "___ (我去)",
                 "options": [
@@ -7098,7 +10478,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "nl-t-02",
+                "id": "nl-grammar-01-03",
                 "type": "translate",
                 "question": "他去",
                 "options": [
@@ -7111,7 +10491,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "nl-m-00",
+                "id": "nl-grammar-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -7136,7 +10516,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "nl-d-04",
+                "id": "nl-grammar-01-05",
                 "type": "dictation",
                 "question": "听写：是",
                 "correctAnswer": "ben/is/zijn",
@@ -7144,7 +10524,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "ben is zijn"
               },
               {
-                "id": "nl-r-05",
+                "id": "nl-grammar-01-06",
                 "type": "repeat",
                 "question": "跟读：eten",
                 "correctAnswer": "repeat",
@@ -7170,7 +10550,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "nl-t-00",
+                "id": "nl-culture-01-01",
                 "type": "translate",
                 "question": "圣诞节",
                 "options": [
@@ -7183,7 +10563,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "nl-f-01",
+                "id": "nl-culture-01-02",
                 "type": "fill-blank",
                 "question": "___ (国王节)",
                 "options": [
@@ -7196,7 +10576,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "nl-t-02",
+                "id": "nl-culture-01-03",
                 "type": "translate",
                 "question": "糖浆华夫饼",
                 "options": [
@@ -7209,7 +10589,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "nl-m-00",
+                "id": "nl-culture-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -7234,7 +10614,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "nl-d-00",
+                "id": "nl-culture-01-05",
                 "type": "dictation",
                 "question": "听写：圣诞节",
                 "correctAnswer": "kerstmis",
@@ -7242,7 +10622,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "kerstmis"
               },
               {
-                "id": "nl-r-01",
+                "id": "nl-culture-01-06",
                 "type": "repeat",
                 "question": "跟读：koningsdag",
                 "correctAnswer": "repeat",
@@ -7259,11 +10639,11 @@ const NEW_QUIZ_DATA = {
     "themes": [
       {
         "id": "basic",
-        "name": "波兰语基础词汇",
-        "color": "#DC2626",
+        "name": "基础词汇",
+        "color": "#1D4ED8",
         "levels": [
           {
-            "levelId": "pl-basic-04",
+            "levelId": "pl-basic-01",
             "title": "问候与礼貌",
             "timeLimit": 120,
             "minScoreFor1Star": 30,
@@ -7272,7 +10652,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "pl-t-03",
+                "id": "pl-basic-01-01",
                 "type": "translate",
                 "question": "是",
                 "options": [
@@ -7285,7 +10665,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pl-f-04",
+                "id": "pl-basic-01-02",
                 "type": "fill-blank",
                 "question": "___ (不是)",
                 "options": [
@@ -7298,7 +10678,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "pl-t-05",
+                "id": "pl-basic-01-03",
                 "type": "translate",
                 "question": "再见",
                 "options": [
@@ -7311,7 +10691,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pl-m-03",
+                "id": "pl-basic-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -7336,7 +10716,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "pl-d-07",
+                "id": "pl-basic-01-05",
                 "type": "dictation",
                 "question": "听写：一",
                 "correctAnswer": "jeden",
@@ -7344,12 +10724,203 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "jeden"
               },
               {
-                "id": "pl-r-08",
+                "id": "pl-basic-01-06",
                 "type": "repeat",
                 "question": "跟读：dwa",
                 "correctAnswer": "repeat",
                 "difficulty": 2,
                 "sentence": "dwa"
+              }
+            ]
+          },
+          {
+            "levelId": "pl-basic-02",
+            "title": "家庭与人物",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [
+              "pl-basic-01"
+            ],
+            "questions": [
+              {
+                "id": "pl-basic-02-01",
+                "type": "translate",
+                "question": "父亲",
+                "options": [
+                  "ojciec",
+                  "córka",
+                  "siostra",
+                  "syn"
+                ],
+                "correctAnswer": "ojciec",
+                "difficulty": 1
+              },
+              {
+                "id": "pl-basic-02-02",
+                "type": "translate",
+                "question": "母亲",
+                "options": [
+                  "matka",
+                  "ojciec",
+                  "babcia",
+                  "siostra"
+                ],
+                "correctAnswer": "matka",
+                "difficulty": 1
+              },
+              {
+                "id": "pl-basic-02-03",
+                "type": "translate",
+                "question": "兄弟",
+                "options": [
+                  "brat",
+                  "babcia",
+                  "siostra",
+                  "matka"
+                ],
+                "correctAnswer": "brat",
+                "difficulty": 1
+              },
+              {
+                "id": "pl-basic-02-04",
+                "type": "fill-blank",
+                "question": "___ (姐妹)",
+                "options": [
+                  "siostra",
+                  "ojciec",
+                  "matka",
+                  "córka"
+                ],
+                "correctAnswer": "siostra",
+                "difficulty": 2
+              },
+              {
+                "id": "pl-basic-02-05",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "ojciec",
+                    "父亲"
+                  ],
+                  [
+                    "matka",
+                    "母亲"
+                  ],
+                  [
+                    "brat",
+                    "兄弟"
+                  ],
+                  [
+                    "siostra",
+                    "姐妹"
+                  ]
+                ]
+              },
+              {
+                "id": "pl-basic-02-06",
+                "type": "dictation",
+                "question": "听写：女儿",
+                "correctAnswer": "córka",
+                "difficulty": 2,
+                "audioWord": "córka"
+              }
+            ]
+          },
+          {
+            "levelId": "pl-basic-03",
+            "title": "数字与颜色",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [
+              "pl-basic-02"
+            ],
+            "questions": [
+              {
+                "id": "pl-basic-03-01",
+                "type": "translate",
+                "question": "一",
+                "options": [
+                  "jeden",
+                  "dwa",
+                  "zielony",
+                  "pięć"
+                ],
+                "correctAnswer": "jeden",
+                "difficulty": 1
+              },
+              {
+                "id": "pl-basic-03-02",
+                "type": "translate",
+                "question": "二",
+                "options": [
+                  "dwa",
+                  "zielony",
+                  "jeden",
+                  "czerwony"
+                ],
+                "correctAnswer": "dwa",
+                "difficulty": 1
+              },
+              {
+                "id": "pl-basic-03-03",
+                "type": "fill-blank",
+                "question": "___ (三)",
+                "options": [
+                  "trzy",
+                  "zielony",
+                  "dwa",
+                  "niebieski"
+                ],
+                "correctAnswer": "trzy",
+                "difficulty": 2
+              },
+              {
+                "id": "pl-basic-03-04",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "jeden",
+                    "一"
+                  ],
+                  [
+                    "dwa",
+                    "二"
+                  ],
+                  [
+                    "trzy",
+                    "三"
+                  ],
+                  [
+                    "cztery",
+                    "四"
+                  ]
+                ]
+              },
+              {
+                "id": "pl-basic-03-05",
+                "type": "dictation",
+                "question": "听写：五",
+                "correctAnswer": "pięć",
+                "difficulty": 2,
+                "audioWord": "piec"
+              },
+              {
+                "id": "pl-basic-03-06",
+                "type": "repeat",
+                "question": "跟读：红色",
+                "correctAnswer": "repeat",
+                "difficulty": 2,
+                "sentence": "czerwony"
               }
             ]
           }
@@ -7358,11 +10929,11 @@ const NEW_QUIZ_DATA = {
       {
         "id": "daily",
         "name": "日常对话",
-        "color": "#EF4444",
+        "color": "#60A5FA",
         "levels": [
           {
             "levelId": "pl-daily-02",
-            "title": "自我介绍",
+            "title": "购物与消费",
             "timeLimit": 150,
             "minScoreFor1Star": 40,
             "minScoreFor2Star": 60,
@@ -7370,7 +10941,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "pl-t-00",
+                "id": "pl-daily-02-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -7383,7 +10954,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pl-f-01",
+                "id": "pl-daily-02-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -7396,7 +10967,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "pl-t-02",
+                "id": "pl-daily-02-03",
                 "type": "translate",
                 "question": "你好吗？",
                 "options": [
@@ -7409,7 +10980,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pl-m-00",
+                "id": "pl-daily-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -7434,7 +11005,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "pl-d-04",
+                "id": "pl-daily-02-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "ile to kosztuje?",
@@ -7442,7 +11013,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "ile to kosztuje"
               },
               {
-                "id": "pl-r-05",
+                "id": "pl-daily-02-06",
                 "type": "repeat",
                 "question": "跟读：chcę to",
                 "correctAnswer": "repeat",
@@ -7463,7 +11034,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "pl-t-00",
+                "id": "pl-daily-03-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -7476,7 +11047,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pl-f-01",
+                "id": "pl-daily-03-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -7489,7 +11060,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "pl-t-02",
+                "id": "pl-daily-03-03",
                 "type": "translate",
                 "question": "你好吗？",
                 "options": [
@@ -7502,7 +11073,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pl-m-00",
+                "id": "pl-daily-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -7527,7 +11098,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "pl-d-04",
+                "id": "pl-daily-03-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "ile to kosztuje?",
@@ -7535,7 +11106,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "ile to kosztuje"
               },
               {
-                "id": "pl-r-05",
+                "id": "pl-daily-03-06",
                 "type": "repeat",
                 "question": "跟读：chcę to",
                 "correctAnswer": "repeat",
@@ -7561,7 +11132,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "pl-t-00",
+                "id": "pl-scenario-01-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -7574,7 +11145,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pl-f-01",
+                "id": "pl-scenario-01-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -7587,7 +11158,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "pl-t-02",
+                "id": "pl-scenario-01-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -7600,7 +11171,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pl-m-00",
+                "id": "pl-scenario-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -7625,7 +11196,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "pl-d-04",
+                "id": "pl-scenario-01-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "zarezerwować hotel",
@@ -7633,7 +11204,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "zarezerwowac hotel"
               },
               {
-                "id": "pl-r-05",
+                "id": "pl-scenario-01-06",
                 "type": "repeat",
                 "question": "跟读：pokój jednoosobowy",
                 "correctAnswer": "repeat",
@@ -7654,7 +11225,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "pl-t-00",
+                "id": "pl-scenario-02-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -7667,7 +11238,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pl-f-01",
+                "id": "pl-scenario-02-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -7680,7 +11251,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "pl-t-02",
+                "id": "pl-scenario-02-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -7693,7 +11264,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pl-m-00",
+                "id": "pl-scenario-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -7718,7 +11289,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "pl-d-04",
+                "id": "pl-scenario-02-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "zarezerwować hotel",
@@ -7726,7 +11297,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "zarezerwowac hotel"
               },
               {
-                "id": "pl-r-05",
+                "id": "pl-scenario-02-06",
                 "type": "repeat",
                 "question": "跟读：pokój jednoosobowy",
                 "correctAnswer": "repeat",
@@ -7747,7 +11318,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "pl-t-00",
+                "id": "pl-scenario-03-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -7760,7 +11331,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pl-f-01",
+                "id": "pl-scenario-03-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -7773,7 +11344,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "pl-t-02",
+                "id": "pl-scenario-03-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -7786,7 +11357,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pl-m-00",
+                "id": "pl-scenario-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -7811,7 +11382,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "pl-d-04",
+                "id": "pl-scenario-03-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "zarezerwować hotel",
@@ -7819,7 +11390,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "zarezerwowac hotel"
               },
               {
-                "id": "pl-r-05",
+                "id": "pl-scenario-03-06",
                 "type": "repeat",
                 "question": "跟读：pokój jednoosobowy",
                 "correctAnswer": "repeat",
@@ -7845,7 +11416,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "pl-t-00",
+                "id": "pl-grammar-01-01",
                 "type": "translate",
                 "question": "去（原形）",
                 "options": [
@@ -7858,7 +11429,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pl-f-01",
+                "id": "pl-grammar-01-02",
                 "type": "fill-blank",
                 "question": "___ (我去)",
                 "options": [
@@ -7871,7 +11442,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "pl-t-02",
+                "id": "pl-grammar-01-03",
                 "type": "translate",
                 "question": "他去",
                 "options": [
@@ -7884,7 +11455,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pl-m-00",
+                "id": "pl-grammar-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -7909,7 +11480,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "pl-d-04",
+                "id": "pl-grammar-01-05",
                 "type": "dictation",
                 "question": "听写：是",
                 "correctAnswer": "jestem/jest",
@@ -7917,7 +11488,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "jestem jest"
               },
               {
-                "id": "pl-r-05",
+                "id": "pl-grammar-01-06",
                 "type": "repeat",
                 "question": "跟读：jeść",
                 "correctAnswer": "repeat",
@@ -7943,7 +11514,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "pl-t-00",
+                "id": "pl-culture-01-01",
                 "type": "translate",
                 "question": "圣诞节",
                 "options": [
@@ -7956,7 +11527,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pl-f-01",
+                "id": "pl-culture-01-02",
                 "type": "fill-blank",
                 "question": "___ (复活节)",
                 "options": [
@@ -7969,7 +11540,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "pl-t-02",
+                "id": "pl-culture-01-03",
                 "type": "translate",
                 "question": "波兰饺子",
                 "options": [
@@ -7982,7 +11553,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pl-m-00",
+                "id": "pl-culture-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -8007,7 +11578,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "pl-d-00",
+                "id": "pl-culture-01-05",
                 "type": "dictation",
                 "question": "听写：圣诞节",
                 "correctAnswer": "boże narodzenie",
@@ -8015,7 +11586,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "boze narodzenie"
               },
               {
-                "id": "pl-r-01",
+                "id": "pl-culture-01-06",
                 "type": "repeat",
                 "question": "跟读：wielkanoc",
                 "correctAnswer": "repeat",
@@ -8033,10 +11604,10 @@ const NEW_QUIZ_DATA = {
       {
         "id": "basic",
         "name": "基础词汇",
-        "color": "#B45309",
+        "color": "#1D4ED8",
         "levels": [
           {
-            "levelId": "pt-basic-04",
+            "levelId": "pt-basic-01",
             "title": "问候与礼貌",
             "timeLimit": 120,
             "minScoreFor1Star": 30,
@@ -8045,7 +11616,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "pt-t-03",
+                "id": "pt-basic-01-01",
                 "type": "translate",
                 "question": "是",
                 "options": [
@@ -8058,7 +11629,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pt-f-04",
+                "id": "pt-basic-01-02",
                 "type": "fill-blank",
                 "question": "___ (不是)",
                 "options": [
@@ -8071,7 +11642,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "pt-t-05",
+                "id": "pt-basic-01-03",
                 "type": "translate",
                 "question": "再见",
                 "options": [
@@ -8084,7 +11655,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pt-m-03",
+                "id": "pt-basic-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -8109,7 +11680,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "pt-d-07",
+                "id": "pt-basic-01-05",
                 "type": "dictation",
                 "question": "听写：一",
                 "correctAnswer": "um",
@@ -8117,12 +11688,203 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "um"
               },
               {
-                "id": "pt-r-08",
+                "id": "pt-basic-01-06",
                 "type": "repeat",
                 "question": "跟读：dois",
                 "correctAnswer": "repeat",
                 "difficulty": 2,
                 "sentence": "dois"
+              }
+            ]
+          },
+          {
+            "levelId": "pt-basic-02",
+            "title": "家庭与人物",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [
+              "pt-basic-01"
+            ],
+            "questions": [
+              {
+                "id": "pt-basic-02-01",
+                "type": "translate",
+                "question": "父亲",
+                "options": [
+                  "pai",
+                  "avô",
+                  "filho",
+                  "filha"
+                ],
+                "correctAnswer": "pai",
+                "difficulty": 1
+              },
+              {
+                "id": "pt-basic-02-02",
+                "type": "translate",
+                "question": "母亲",
+                "options": [
+                  "mãe",
+                  "irmão",
+                  "irmã",
+                  "filha"
+                ],
+                "correctAnswer": "mãe",
+                "difficulty": 1
+              },
+              {
+                "id": "pt-basic-02-03",
+                "type": "translate",
+                "question": "兄弟",
+                "options": [
+                  "irmão",
+                  "avó",
+                  "filha",
+                  "filho"
+                ],
+                "correctAnswer": "irmão",
+                "difficulty": 1
+              },
+              {
+                "id": "pt-basic-02-04",
+                "type": "fill-blank",
+                "question": "___ (姐妹)",
+                "options": [
+                  "irmã",
+                  "mãe",
+                  "filha",
+                  "avó"
+                ],
+                "correctAnswer": "irmã",
+                "difficulty": 2
+              },
+              {
+                "id": "pt-basic-02-05",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "pai",
+                    "父亲"
+                  ],
+                  [
+                    "mãe",
+                    "母亲"
+                  ],
+                  [
+                    "irmão",
+                    "兄弟"
+                  ],
+                  [
+                    "irmã",
+                    "姐妹"
+                  ]
+                ]
+              },
+              {
+                "id": "pt-basic-02-06",
+                "type": "dictation",
+                "question": "听写：女儿",
+                "correctAnswer": "filha",
+                "difficulty": 2,
+                "audioWord": "filha"
+              }
+            ]
+          },
+          {
+            "levelId": "pt-basic-03",
+            "title": "数字与颜色",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [
+              "pt-basic-02"
+            ],
+            "questions": [
+              {
+                "id": "pt-basic-03-01",
+                "type": "translate",
+                "question": "一",
+                "options": [
+                  "um",
+                  "azul",
+                  "quatro",
+                  "cinco"
+                ],
+                "correctAnswer": "um",
+                "difficulty": 1
+              },
+              {
+                "id": "pt-basic-03-02",
+                "type": "translate",
+                "question": "二",
+                "options": [
+                  "dois",
+                  "azul",
+                  "verde",
+                  "quatro"
+                ],
+                "correctAnswer": "dois",
+                "difficulty": 1
+              },
+              {
+                "id": "pt-basic-03-03",
+                "type": "fill-blank",
+                "question": "___ (三)",
+                "options": [
+                  "três",
+                  "cinco",
+                  "vermelho",
+                  "verde"
+                ],
+                "correctAnswer": "três",
+                "difficulty": 2
+              },
+              {
+                "id": "pt-basic-03-04",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "um",
+                    "一"
+                  ],
+                  [
+                    "dois",
+                    "二"
+                  ],
+                  [
+                    "três",
+                    "三"
+                  ],
+                  [
+                    "quatro",
+                    "四"
+                  ]
+                ]
+              },
+              {
+                "id": "pt-basic-03-05",
+                "type": "dictation",
+                "question": "听写：五",
+                "correctAnswer": "cinco",
+                "difficulty": 2,
+                "audioWord": "cinco"
+              },
+              {
+                "id": "pt-basic-03-06",
+                "type": "repeat",
+                "question": "跟读：红色",
+                "correctAnswer": "repeat",
+                "difficulty": 2,
+                "sentence": "vermelho"
               }
             ]
           }
@@ -8131,11 +11893,11 @@ const NEW_QUIZ_DATA = {
       {
         "id": "daily",
         "name": "日常对话",
-        "color": "#F59E0B",
+        "color": "#60A5FA",
         "levels": [
           {
             "levelId": "pt-daily-02",
-            "title": "自我介绍",
+            "title": "购物与消费",
             "timeLimit": 150,
             "minScoreFor1Star": 40,
             "minScoreFor2Star": 60,
@@ -8143,7 +11905,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "pt-t-00",
+                "id": "pt-daily-02-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -8156,7 +11918,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pt-f-01",
+                "id": "pt-daily-02-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -8169,7 +11931,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "pt-t-02",
+                "id": "pt-daily-02-03",
                 "type": "translate",
                 "question": "您好吗？",
                 "options": [
@@ -8182,7 +11944,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pt-m-00",
+                "id": "pt-daily-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -8207,7 +11969,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "pt-d-04",
+                "id": "pt-daily-02-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "quanto custa?",
@@ -8215,7 +11977,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "quanto custa"
               },
               {
-                "id": "pt-r-05",
+                "id": "pt-daily-02-06",
                 "type": "repeat",
                 "question": "跟读：eu quero isso",
                 "correctAnswer": "repeat",
@@ -8236,7 +11998,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "pt-t-00",
+                "id": "pt-daily-03-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -8249,7 +12011,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pt-f-01",
+                "id": "pt-daily-03-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -8262,7 +12024,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "pt-t-02",
+                "id": "pt-daily-03-03",
                 "type": "translate",
                 "question": "您好吗？",
                 "options": [
@@ -8275,7 +12037,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pt-m-00",
+                "id": "pt-daily-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -8300,7 +12062,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "pt-d-04",
+                "id": "pt-daily-03-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "quanto custa?",
@@ -8308,7 +12070,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "quanto custa"
               },
               {
-                "id": "pt-r-05",
+                "id": "pt-daily-03-06",
                 "type": "repeat",
                 "question": "跟读：eu quero isso",
                 "correctAnswer": "repeat",
@@ -8334,7 +12096,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "pt-t-00",
+                "id": "pt-scenario-01-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -8347,7 +12109,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pt-f-01",
+                "id": "pt-scenario-01-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -8360,7 +12122,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "pt-t-02",
+                "id": "pt-scenario-01-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -8373,7 +12135,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pt-m-00",
+                "id": "pt-scenario-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -8398,7 +12160,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "pt-d-04",
+                "id": "pt-scenario-01-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "reservar um hotel",
@@ -8406,7 +12168,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "reservar um hotel"
               },
               {
-                "id": "pt-r-05",
+                "id": "pt-scenario-01-06",
                 "type": "repeat",
                 "question": "跟读：quarto individual",
                 "correctAnswer": "repeat",
@@ -8427,7 +12189,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "pt-t-00",
+                "id": "pt-scenario-02-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -8440,7 +12202,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pt-f-01",
+                "id": "pt-scenario-02-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -8453,7 +12215,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "pt-t-02",
+                "id": "pt-scenario-02-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -8466,7 +12228,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pt-m-00",
+                "id": "pt-scenario-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -8491,7 +12253,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "pt-d-04",
+                "id": "pt-scenario-02-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "reservar um hotel",
@@ -8499,7 +12261,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "reservar um hotel"
               },
               {
-                "id": "pt-r-05",
+                "id": "pt-scenario-02-06",
                 "type": "repeat",
                 "question": "跟读：quarto individual",
                 "correctAnswer": "repeat",
@@ -8520,7 +12282,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "pt-t-00",
+                "id": "pt-scenario-03-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -8533,7 +12295,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pt-f-01",
+                "id": "pt-scenario-03-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -8546,7 +12308,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "pt-t-02",
+                "id": "pt-scenario-03-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -8559,7 +12321,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pt-m-00",
+                "id": "pt-scenario-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -8584,7 +12346,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "pt-d-04",
+                "id": "pt-scenario-03-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "reservar um hotel",
@@ -8592,7 +12354,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "reservar um hotel"
               },
               {
-                "id": "pt-r-05",
+                "id": "pt-scenario-03-06",
                 "type": "repeat",
                 "question": "跟读：quarto individual",
                 "correctAnswer": "repeat",
@@ -8618,7 +12380,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "pt-t-00",
+                "id": "pt-grammar-01-01",
                 "type": "translate",
                 "question": "去（原形）",
                 "options": [
@@ -8631,7 +12393,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pt-f-01",
+                "id": "pt-grammar-01-02",
                 "type": "fill-blank",
                 "question": "___ (我去)",
                 "options": [
@@ -8644,7 +12406,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "pt-t-02",
+                "id": "pt-grammar-01-03",
                 "type": "translate",
                 "question": "他/她去",
                 "options": [
@@ -8657,7 +12419,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pt-m-00",
+                "id": "pt-grammar-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -8682,7 +12444,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "pt-d-04",
+                "id": "pt-grammar-01-05",
                 "type": "dictation",
                 "question": "听写：是",
                 "correctAnswer": "sou/é",
@@ -8690,7 +12452,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "sou e"
               },
               {
-                "id": "pt-r-05",
+                "id": "pt-grammar-01-06",
                 "type": "repeat",
                 "question": "跟读：comer",
                 "correctAnswer": "repeat",
@@ -8716,7 +12478,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "pt-t-00",
+                "id": "pt-culture-01-01",
                 "type": "translate",
                 "question": "圣诞节",
                 "options": [
@@ -8729,7 +12491,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pt-f-01",
+                "id": "pt-culture-01-02",
                 "type": "fill-blank",
                 "question": "___ (狂欢节)",
                 "options": [
@@ -8742,7 +12504,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "pt-t-02",
+                "id": "pt-culture-01-03",
                 "type": "translate",
                 "question": "酥饼",
                 "options": [
@@ -8755,7 +12517,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "pt-m-00",
+                "id": "pt-culture-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -8780,7 +12542,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "pt-d-00",
+                "id": "pt-culture-01-05",
                 "type": "dictation",
                 "question": "听写：圣诞节",
                 "correctAnswer": "natal",
@@ -8788,7 +12550,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "natal"
               },
               {
-                "id": "pt-r-01",
+                "id": "pt-culture-01-06",
                 "type": "repeat",
                 "question": "跟读：carnaval",
                 "correctAnswer": "repeat",
@@ -8806,10 +12568,10 @@ const NEW_QUIZ_DATA = {
       {
         "id": "basic",
         "name": "基础词汇",
-        "color": "#6366F1",
+        "color": "#1D4ED8",
         "levels": [
           {
-            "levelId": "ru-basic-04",
+            "levelId": "ru-basic-01",
             "title": "问候与礼貌",
             "timeLimit": 120,
             "minScoreFor1Star": 30,
@@ -8818,7 +12580,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "ru-t-03",
+                "id": "ru-basic-01-01",
                 "type": "translate",
                 "question": "是",
                 "options": [
@@ -8831,7 +12593,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ru-f-04",
+                "id": "ru-basic-01-02",
                 "type": "fill-blank",
                 "question": "___ (不是)",
                 "options": [
@@ -8844,7 +12606,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "ru-t-05",
+                "id": "ru-basic-01-03",
                 "type": "translate",
                 "question": "再见",
                 "options": [
@@ -8857,7 +12619,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ru-m-03",
+                "id": "ru-basic-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -8882,7 +12644,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "ru-d-07",
+                "id": "ru-basic-01-05",
                 "type": "dictation",
                 "question": "听写：一",
                 "correctAnswer": "один",
@@ -8890,7 +12652,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "odin"
               },
               {
-                "id": "ru-r-08",
+                "id": "ru-basic-01-06",
                 "type": "repeat",
                 "question": "跟读：два",
                 "correctAnswer": "repeat",
@@ -8904,11 +12666,11 @@ const NEW_QUIZ_DATA = {
       {
         "id": "daily",
         "name": "日常对话",
-        "color": "#6366F1",
+        "color": "#60A5FA",
         "levels": [
           {
             "levelId": "ru-daily-02",
-            "title": "自我介绍",
+            "title": "购物与消费",
             "timeLimit": 150,
             "minScoreFor1Star": 40,
             "minScoreFor2Star": 60,
@@ -8916,7 +12678,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "ru-t-00",
+                "id": "ru-daily-02-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -8929,7 +12691,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ru-f-01",
+                "id": "ru-daily-02-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -8942,7 +12704,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "ru-t-02",
+                "id": "ru-daily-02-03",
                 "type": "translate",
                 "question": "你好吗？",
                 "options": [
@@ -8955,7 +12717,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ru-m-00",
+                "id": "ru-daily-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -8980,7 +12742,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "ru-d-04",
+                "id": "ru-daily-02-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "Сколько стоит?",
@@ -8988,7 +12750,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "skolko stoit"
               },
               {
-                "id": "ru-r-05",
+                "id": "ru-daily-02-06",
                 "type": "repeat",
                 "question": "跟读：Я хочу это",
                 "correctAnswer": "repeat",
@@ -9009,7 +12771,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "ru-t-00",
+                "id": "ru-daily-03-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -9022,7 +12784,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ru-f-01",
+                "id": "ru-daily-03-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -9035,7 +12797,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "ru-t-02",
+                "id": "ru-daily-03-03",
                 "type": "translate",
                 "question": "你好吗？",
                 "options": [
@@ -9048,7 +12810,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ru-m-00",
+                "id": "ru-daily-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -9073,7 +12835,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "ru-d-04",
+                "id": "ru-daily-03-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "Сколько стоит?",
@@ -9081,7 +12843,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "skolko stoit"
               },
               {
-                "id": "ru-r-05",
+                "id": "ru-daily-03-06",
                 "type": "repeat",
                 "question": "跟读：Я хочу это",
                 "correctAnswer": "repeat",
@@ -9107,7 +12869,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "ru-t-00",
+                "id": "ru-scenario-01-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -9120,7 +12882,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ru-f-01",
+                "id": "ru-scenario-01-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -9133,7 +12895,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "ru-t-02",
+                "id": "ru-scenario-01-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -9146,7 +12908,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ru-m-00",
+                "id": "ru-scenario-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -9171,7 +12933,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "ru-d-04",
+                "id": "ru-scenario-01-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "Забронировать отель",
@@ -9179,7 +12941,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "zabronirovat otyel"
               },
               {
-                "id": "ru-r-05",
+                "id": "ru-scenario-01-06",
                 "type": "repeat",
                 "question": "跟读：Одноместный номер",
                 "correctAnswer": "repeat",
@@ -9200,7 +12962,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "ru-t-00",
+                "id": "ru-scenario-02-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -9213,7 +12975,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ru-f-01",
+                "id": "ru-scenario-02-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -9226,7 +12988,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "ru-t-02",
+                "id": "ru-scenario-02-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -9239,7 +13001,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ru-m-00",
+                "id": "ru-scenario-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -9264,7 +13026,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "ru-d-04",
+                "id": "ru-scenario-02-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "Забронировать отель",
@@ -9272,7 +13034,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "zabronirovat otyel"
               },
               {
-                "id": "ru-r-05",
+                "id": "ru-scenario-02-06",
                 "type": "repeat",
                 "question": "跟读：Одноместный номер",
                 "correctAnswer": "repeat",
@@ -9293,7 +13055,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "ru-t-00",
+                "id": "ru-scenario-03-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -9306,7 +13068,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ru-f-01",
+                "id": "ru-scenario-03-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -9319,7 +13081,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "ru-t-02",
+                "id": "ru-scenario-03-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -9332,7 +13094,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ru-m-00",
+                "id": "ru-scenario-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -9357,7 +13119,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "ru-d-04",
+                "id": "ru-scenario-03-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "Забронировать отель",
@@ -9365,7 +13127,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "zabronirovat otyel"
               },
               {
-                "id": "ru-r-05",
+                "id": "ru-scenario-03-06",
                 "type": "repeat",
                 "question": "跟读：Одноместный номер",
                 "correctAnswer": "repeat",
@@ -9391,7 +13153,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "ru-t-00",
+                "id": "ru-grammar-01-01",
                 "type": "translate",
                 "question": "去（原形）",
                 "options": [
@@ -9404,7 +13166,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ru-f-01",
+                "id": "ru-grammar-01-02",
                 "type": "fill-blank",
                 "question": "___ (我去)",
                 "options": [
@@ -9417,20 +13179,20 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "ru-t-02",
+                "id": "ru-grammar-01-03",
                 "type": "translate",
-                "question": "他/她去",
+                "question": "我去",
                 "options": [
                   "иду",
                   "есть",
                   "идёт",
-                  "есть"
+                  "идёшь"
                 ],
-                "correctAnswer": "идёт",
+                "correctAnswer": "иду",
                 "difficulty": 1
               },
               {
-                "id": "ru-m-00",
+                "id": "ru-grammar-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -9455,7 +13217,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "ru-d-04",
+                "id": "ru-grammar-01-05",
                 "type": "dictation",
                 "question": "听写：是/有",
                 "correctAnswer": "есть",
@@ -9463,7 +13225,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "yest"
               },
               {
-                "id": "ru-r-05",
+                "id": "ru-grammar-01-06",
                 "type": "repeat",
                 "question": "跟读：есть",
                 "correctAnswer": "repeat",
@@ -9484,7 +13246,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "ru-t-00",
+                "id": "ru-grammar-02-01",
                 "type": "translate",
                 "question": "去（原形）",
                 "options": [
@@ -9497,7 +13259,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ru-f-01",
+                "id": "ru-grammar-02-02",
                 "type": "fill-blank",
                 "question": "___ (我去)",
                 "options": [
@@ -9510,20 +13272,20 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "ru-t-02",
+                "id": "ru-grammar-02-03",
                 "type": "translate",
                 "question": "他/她去",
                 "options": [
                   "идёт",
                   "есть",
-                  "есть",
-                  "быть"
+                  "быть",
+                  "идут"
                 ],
                 "correctAnswer": "идёт",
                 "difficulty": 1
               },
               {
-                "id": "ru-m-00",
+                "id": "ru-grammar-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -9548,7 +13310,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "ru-d-04",
+                "id": "ru-grammar-02-05",
                 "type": "dictation",
                 "question": "听写：是/有",
                 "correctAnswer": "есть",
@@ -9556,7 +13318,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "yest"
               },
               {
-                "id": "ru-r-05",
+                "id": "ru-grammar-02-06",
                 "type": "repeat",
                 "question": "跟读：есть",
                 "correctAnswer": "repeat",
@@ -9582,7 +13344,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "ru-t-00",
+                "id": "ru-culture-01-01",
                 "type": "translate",
                 "question": "新年",
                 "options": [
@@ -9595,7 +13357,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ru-f-01",
+                "id": "ru-culture-01-02",
                 "type": "fill-blank",
                 "question": "___ (谢肉节)",
                 "options": [
@@ -9608,7 +13370,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "ru-t-02",
+                "id": "ru-culture-01-03",
                 "type": "translate",
                 "question": "巴拉莱卡琴",
                 "options": [
@@ -9621,7 +13383,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ru-m-00",
+                "id": "ru-culture-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -9646,7 +13408,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "ru-d-00",
+                "id": "ru-culture-01-05",
                 "type": "dictation",
                 "question": "听写：新年",
                 "correctAnswer": "Новый год",
@@ -9654,7 +13416,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "Novyy god"
               },
               {
-                "id": "ru-r-01",
+                "id": "ru-culture-01-06",
                 "type": "repeat",
                 "question": "跟读：Масленица",
                 "correctAnswer": "repeat",
@@ -9675,7 +13437,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "ru-t-00",
+                "id": "ru-culture-02-01",
                 "type": "translate",
                 "question": "新年",
                 "options": [
@@ -9688,7 +13450,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ru-f-01",
+                "id": "ru-culture-02-02",
                 "type": "fill-blank",
                 "question": "___ (谢肉节)",
                 "options": [
@@ -9701,7 +13463,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "ru-t-02",
+                "id": "ru-culture-02-03",
                 "type": "translate",
                 "question": "巴拉莱卡琴",
                 "options": [
@@ -9714,7 +13476,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "ru-m-00",
+                "id": "ru-culture-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -9739,7 +13501,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "ru-d-00",
+                "id": "ru-culture-02-05",
                 "type": "dictation",
                 "question": "听写：新年",
                 "correctAnswer": "Новый год",
@@ -9747,7 +13509,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "Novyy god"
               },
               {
-                "id": "ru-r-01",
+                "id": "ru-culture-02-06",
                 "type": "repeat",
                 "question": "跟读：Масленица",
                 "correctAnswer": "repeat",
@@ -9764,11 +13526,11 @@ const NEW_QUIZ_DATA = {
     "themes": [
       {
         "id": "basic",
-        "name": "泰语基础词汇",
-        "color": "#1E3A8A",
+        "name": "基础词汇",
+        "color": "#1D4ED8",
         "levels": [
           {
-            "levelId": "th-basic-04",
+            "levelId": "th-basic-01",
             "title": "问候与礼貌",
             "timeLimit": 120,
             "minScoreFor1Star": 30,
@@ -9777,7 +13539,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "th-t-03",
+                "id": "th-basic-01-01",
                 "type": "translate",
                 "question": "是",
                 "options": [
@@ -9790,7 +13552,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "th-f-04",
+                "id": "th-basic-01-02",
                 "type": "fill-blank",
                 "question": "___ (不是)",
                 "options": [
@@ -9803,7 +13565,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "th-t-05",
+                "id": "th-basic-01-03",
                 "type": "translate",
                 "question": "再见",
                 "options": [
@@ -9816,7 +13578,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "th-m-03",
+                "id": "th-basic-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -9841,7 +13603,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "th-d-07",
+                "id": "th-basic-01-05",
                 "type": "dictation",
                 "question": "听写：一",
                 "correctAnswer": "หนึ่ง",
@@ -9849,12 +13611,203 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "nueng"
               },
               {
-                "id": "th-r-08",
+                "id": "th-basic-01-06",
                 "type": "repeat",
                 "question": "跟读：สอง",
                 "correctAnswer": "repeat",
                 "difficulty": 2,
                 "sentence": "สอง"
+              }
+            ]
+          },
+          {
+            "levelId": "th-basic-02",
+            "title": "家庭与人物",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [
+              "th-basic-01"
+            ],
+            "questions": [
+              {
+                "id": "th-basic-02-01",
+                "type": "translate",
+                "question": "父亲",
+                "options": [
+                  "พ่อ",
+                  "แม่",
+                  "พี่ชาย",
+                  "ปู่"
+                ],
+                "correctAnswer": "พ่อ",
+                "difficulty": 1
+              },
+              {
+                "id": "th-basic-02-02",
+                "type": "translate",
+                "question": "母亲",
+                "options": [
+                  "แม่",
+                  "พ่อ",
+                  "พี่สาว",
+                  "ย่า"
+                ],
+                "correctAnswer": "แม่",
+                "difficulty": 1
+              },
+              {
+                "id": "th-basic-02-03",
+                "type": "translate",
+                "question": "兄弟",
+                "options": [
+                  "พี่ชาย",
+                  "ลูกสาว",
+                  "ย่า",
+                  "แม่"
+                ],
+                "correctAnswer": "พี่ชาย",
+                "difficulty": 1
+              },
+              {
+                "id": "th-basic-02-04",
+                "type": "fill-blank",
+                "question": "___ (姐妹)",
+                "options": [
+                  "พี่สาว",
+                  "ลูกสาว",
+                  "แม่",
+                  "พ่อ"
+                ],
+                "correctAnswer": "พี่สาว",
+                "difficulty": 2
+              },
+              {
+                "id": "th-basic-02-05",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "พ่อ",
+                    "父亲"
+                  ],
+                  [
+                    "แม่",
+                    "母亲"
+                  ],
+                  [
+                    "พี่ชาย",
+                    "兄弟"
+                  ],
+                  [
+                    "พี่สาว",
+                    "姐妹"
+                  ]
+                ]
+              },
+              {
+                "id": "th-basic-02-06",
+                "type": "dictation",
+                "question": "听写：女儿",
+                "correctAnswer": "ลูกสาว",
+                "difficulty": 2,
+                "audioWord": "luk sao"
+              }
+            ]
+          },
+          {
+            "levelId": "th-basic-03",
+            "title": "数字与颜色",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [
+              "th-basic-02"
+            ],
+            "questions": [
+              {
+                "id": "th-basic-03-01",
+                "type": "translate",
+                "question": "一",
+                "options": [
+                  "หนึ่ง",
+                  "สอง",
+                  "สีน้ำเงิน",
+                  "สีเขียว"
+                ],
+                "correctAnswer": "หนึ่ง",
+                "difficulty": 1
+              },
+              {
+                "id": "th-basic-03-02",
+                "type": "translate",
+                "question": "二",
+                "options": [
+                  "สอง",
+                  "สาม",
+                  "หนึ่ง",
+                  "สีน้ำเงิน"
+                ],
+                "correctAnswer": "สอง",
+                "difficulty": 1
+              },
+              {
+                "id": "th-basic-03-03",
+                "type": "fill-blank",
+                "question": "___ (三)",
+                "options": [
+                  "สาม",
+                  "สีเขียว",
+                  "สี่",
+                  "หนึ่ง"
+                ],
+                "correctAnswer": "สาม",
+                "difficulty": 2
+              },
+              {
+                "id": "th-basic-03-04",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "หนึ่ง",
+                    "一"
+                  ],
+                  [
+                    "สอง",
+                    "二"
+                  ],
+                  [
+                    "สาม",
+                    "三"
+                  ],
+                  [
+                    "สี่",
+                    "四"
+                  ]
+                ]
+              },
+              {
+                "id": "th-basic-03-05",
+                "type": "dictation",
+                "question": "听写：五",
+                "correctAnswer": "ห้า",
+                "difficulty": 2,
+                "audioWord": "ha"
+              },
+              {
+                "id": "th-basic-03-06",
+                "type": "repeat",
+                "question": "跟读：红色",
+                "correctAnswer": "repeat",
+                "difficulty": 2,
+                "sentence": "สีแดง"
               }
             ]
           }
@@ -9863,11 +13816,11 @@ const NEW_QUIZ_DATA = {
       {
         "id": "daily",
         "name": "日常对话",
-        "color": "#3B82F6",
+        "color": "#60A5FA",
         "levels": [
           {
             "levelId": "th-daily-02",
-            "title": "自我介绍",
+            "title": "购物与消费",
             "timeLimit": 150,
             "minScoreFor1Star": 40,
             "minScoreFor2Star": 60,
@@ -9875,7 +13828,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "th-t-00",
+                "id": "th-daily-02-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -9888,7 +13841,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "th-f-01",
+                "id": "th-daily-02-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -9901,7 +13854,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "th-t-02",
+                "id": "th-daily-02-03",
                 "type": "translate",
                 "question": "你好吗？",
                 "options": [
@@ -9914,7 +13867,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "th-m-00",
+                "id": "th-daily-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -9939,7 +13892,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "th-d-04",
+                "id": "th-daily-02-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "เท่าไหร่",
@@ -9947,7 +13900,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "thao rai"
               },
               {
-                "id": "th-r-05",
+                "id": "th-daily-02-06",
                 "type": "repeat",
                 "question": "跟读：เอาอันนี้",
                 "correctAnswer": "repeat",
@@ -9968,7 +13921,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "th-t-00",
+                "id": "th-daily-03-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -9981,7 +13934,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "th-f-01",
+                "id": "th-daily-03-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -9994,7 +13947,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "th-t-02",
+                "id": "th-daily-03-03",
                 "type": "translate",
                 "question": "你好吗？",
                 "options": [
@@ -10007,7 +13960,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "th-m-00",
+                "id": "th-daily-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -10032,7 +13985,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "th-d-04",
+                "id": "th-daily-03-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "เท่าไหร่",
@@ -10040,7 +13993,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "thao rai"
               },
               {
-                "id": "th-r-05",
+                "id": "th-daily-03-06",
                 "type": "repeat",
                 "question": "跟读：เอาอันนี้",
                 "correctAnswer": "repeat",
@@ -10066,7 +14019,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "th-t-00",
+                "id": "th-scenario-01-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -10079,7 +14032,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "th-f-01",
+                "id": "th-scenario-01-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -10092,7 +14045,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "th-t-02",
+                "id": "th-scenario-01-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -10105,7 +14058,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "th-m-00",
+                "id": "th-scenario-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -10130,7 +14083,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "th-d-04",
+                "id": "th-scenario-01-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "จองโรงแรม",
@@ -10138,7 +14091,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "jong rong raem"
               },
               {
-                "id": "th-r-05",
+                "id": "th-scenario-01-06",
                 "type": "repeat",
                 "question": "跟读：ห้องเดี่ยว",
                 "correctAnswer": "repeat",
@@ -10159,7 +14112,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "th-t-00",
+                "id": "th-scenario-02-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -10172,7 +14125,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "th-f-01",
+                "id": "th-scenario-02-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -10185,7 +14138,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "th-t-02",
+                "id": "th-scenario-02-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -10198,7 +14151,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "th-m-00",
+                "id": "th-scenario-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -10223,7 +14176,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "th-d-04",
+                "id": "th-scenario-02-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "จองโรงแรม",
@@ -10231,7 +14184,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "jong rong raem"
               },
               {
-                "id": "th-r-05",
+                "id": "th-scenario-02-06",
                 "type": "repeat",
                 "question": "跟读：ห้องเดี่ยว",
                 "correctAnswer": "repeat",
@@ -10252,7 +14205,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "th-t-00",
+                "id": "th-scenario-03-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -10265,7 +14218,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "th-f-01",
+                "id": "th-scenario-03-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -10278,7 +14231,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "th-t-02",
+                "id": "th-scenario-03-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -10291,7 +14244,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "th-m-00",
+                "id": "th-scenario-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -10316,7 +14269,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "th-d-04",
+                "id": "th-scenario-03-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "จองโรงแรม",
@@ -10324,7 +14277,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "jong rong raem"
               },
               {
-                "id": "th-r-05",
+                "id": "th-scenario-03-06",
                 "type": "repeat",
                 "question": "跟读：ห้องเดี่ยว",
                 "correctAnswer": "repeat",
@@ -10350,7 +14303,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "th-t-00",
+                "id": "th-grammar-01-01",
                 "type": "translate",
                 "question": "去",
                 "options": [
@@ -10363,7 +14316,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "th-f-01",
+                "id": "th-grammar-01-02",
                 "type": "fill-blank",
                 "question": "___ (吃)",
                 "options": [
@@ -10376,7 +14329,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "th-t-02",
+                "id": "th-grammar-01-03",
                 "type": "translate",
                 "question": "是",
                 "options": [
@@ -10389,7 +14342,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "th-m-00",
+                "id": "th-grammar-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -10414,7 +14367,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "th-d-04",
+                "id": "th-grammar-01-05",
                 "type": "dictation",
                 "question": "听写：有",
                 "correctAnswer": "มี",
@@ -10422,7 +14375,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "mee"
               },
               {
-                "id": "th-r-05",
+                "id": "th-grammar-01-06",
                 "type": "repeat",
                 "question": "跟读：ได้",
                 "correctAnswer": "repeat",
@@ -10448,7 +14401,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "th-t-00",
+                "id": "th-culture-01-01",
                 "type": "translate",
                 "question": "泼水节",
                 "options": [
@@ -10461,7 +14414,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "th-f-01",
+                "id": "th-culture-01-02",
                 "type": "fill-blank",
                 "question": "___ (水灯节)",
                 "options": [
@@ -10474,7 +14427,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "th-t-02",
+                "id": "th-culture-01-03",
                 "type": "translate",
                 "question": "冬阴功",
                 "options": [
@@ -10487,7 +14440,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "th-m-00",
+                "id": "th-culture-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -10512,7 +14465,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "th-d-00",
+                "id": "th-culture-01-05",
                 "type": "dictation",
                 "question": "听写：泼水节",
                 "correctAnswer": "สงกรานต์",
@@ -10520,7 +14473,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "songkran"
               },
               {
-                "id": "th-r-01",
+                "id": "th-culture-01-06",
                 "type": "repeat",
                 "question": "跟读：ลอยกระทง",
                 "correctAnswer": "repeat",
@@ -10537,11 +14490,11 @@ const NEW_QUIZ_DATA = {
     "themes": [
       {
         "id": "basic",
-        "name": "土耳其语基础词汇",
-        "color": "#7C3AED",
+        "name": "基础词汇",
+        "color": "#1D4ED8",
         "levels": [
           {
-            "levelId": "tr-basic-04",
+            "levelId": "tr-basic-01",
             "title": "问候与礼貌",
             "timeLimit": 120,
             "minScoreFor1Star": 30,
@@ -10550,7 +14503,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "tr-t-03",
+                "id": "tr-basic-01-01",
                 "type": "translate",
                 "question": "是",
                 "options": [
@@ -10563,7 +14516,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "tr-f-04",
+                "id": "tr-basic-01-02",
                 "type": "fill-blank",
                 "question": "___ (不是)",
                 "options": [
@@ -10576,7 +14529,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "tr-t-05",
+                "id": "tr-basic-01-03",
                 "type": "translate",
                 "question": "再见",
                 "options": [
@@ -10589,7 +14542,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "tr-m-03",
+                "id": "tr-basic-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -10614,7 +14567,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "tr-d-07",
+                "id": "tr-basic-01-05",
                 "type": "dictation",
                 "question": "听写：一",
                 "correctAnswer": "bir",
@@ -10622,12 +14575,203 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "bir"
               },
               {
-                "id": "tr-r-08",
+                "id": "tr-basic-01-06",
                 "type": "repeat",
                 "question": "跟读：iki",
                 "correctAnswer": "repeat",
                 "difficulty": 2,
                 "sentence": "iki"
+              }
+            ]
+          },
+          {
+            "levelId": "tr-basic-02",
+            "title": "家庭与人物",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [
+              "tr-basic-01"
+            ],
+            "questions": [
+              {
+                "id": "tr-basic-02-01",
+                "type": "translate",
+                "question": "父亲",
+                "options": [
+                  "baba",
+                  "kız",
+                  "erkek kardeş",
+                  "kız kardeş"
+                ],
+                "correctAnswer": "baba",
+                "difficulty": 1
+              },
+              {
+                "id": "tr-basic-02-02",
+                "type": "translate",
+                "question": "母亲",
+                "options": [
+                  "anne",
+                  "dede",
+                  "oğul",
+                  "erkek kardeş"
+                ],
+                "correctAnswer": "anne",
+                "difficulty": 1
+              },
+              {
+                "id": "tr-basic-02-03",
+                "type": "translate",
+                "question": "兄弟",
+                "options": [
+                  "erkek kardeş",
+                  "kız",
+                  "anne",
+                  "nine"
+                ],
+                "correctAnswer": "erkek kardeş",
+                "difficulty": 1
+              },
+              {
+                "id": "tr-basic-02-04",
+                "type": "fill-blank",
+                "question": "___ (姐妹)",
+                "options": [
+                  "kız kardeş",
+                  "kız",
+                  "oğul",
+                  "anne"
+                ],
+                "correctAnswer": "kız kardeş",
+                "difficulty": 2
+              },
+              {
+                "id": "tr-basic-02-05",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "baba",
+                    "父亲"
+                  ],
+                  [
+                    "anne",
+                    "母亲"
+                  ],
+                  [
+                    "erkek kardeş",
+                    "兄弟"
+                  ],
+                  [
+                    "kız kardeş",
+                    "姐妹"
+                  ]
+                ]
+              },
+              {
+                "id": "tr-basic-02-06",
+                "type": "dictation",
+                "question": "听写：女儿",
+                "correctAnswer": "kız",
+                "difficulty": 2,
+                "audioWord": "kiz"
+              }
+            ]
+          },
+          {
+            "levelId": "tr-basic-03",
+            "title": "数字与颜色",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [
+              "tr-basic-02"
+            ],
+            "questions": [
+              {
+                "id": "tr-basic-03-01",
+                "type": "translate",
+                "question": "一",
+                "options": [
+                  "bir",
+                  "yeşil",
+                  "beş",
+                  "mavi"
+                ],
+                "correctAnswer": "bir",
+                "difficulty": 1
+              },
+              {
+                "id": "tr-basic-03-02",
+                "type": "translate",
+                "question": "二",
+                "options": [
+                  "iki",
+                  "üç",
+                  "bir",
+                  "mavi"
+                ],
+                "correctAnswer": "iki",
+                "difficulty": 1
+              },
+              {
+                "id": "tr-basic-03-03",
+                "type": "fill-blank",
+                "question": "___ (三)",
+                "options": [
+                  "üç",
+                  "mavi",
+                  "beş",
+                  "dört"
+                ],
+                "correctAnswer": "üç",
+                "difficulty": 2
+              },
+              {
+                "id": "tr-basic-03-04",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "bir",
+                    "一"
+                  ],
+                  [
+                    "iki",
+                    "二"
+                  ],
+                  [
+                    "üç",
+                    "三"
+                  ],
+                  [
+                    "dört",
+                    "四"
+                  ]
+                ]
+              },
+              {
+                "id": "tr-basic-03-05",
+                "type": "dictation",
+                "question": "听写：五",
+                "correctAnswer": "beş",
+                "difficulty": 2,
+                "audioWord": "bes"
+              },
+              {
+                "id": "tr-basic-03-06",
+                "type": "repeat",
+                "question": "跟读：红色",
+                "correctAnswer": "repeat",
+                "difficulty": 2,
+                "sentence": "kırmızı"
               }
             ]
           }
@@ -10636,11 +14780,11 @@ const NEW_QUIZ_DATA = {
       {
         "id": "daily",
         "name": "日常对话",
-        "color": "#8B5CF6",
+        "color": "#60A5FA",
         "levels": [
           {
             "levelId": "tr-daily-02",
-            "title": "自我介绍",
+            "title": "购物与消费",
             "timeLimit": 150,
             "minScoreFor1Star": 40,
             "minScoreFor2Star": 60,
@@ -10648,7 +14792,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "tr-t-00",
+                "id": "tr-daily-02-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -10661,7 +14805,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "tr-f-01",
+                "id": "tr-daily-02-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -10674,7 +14818,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "tr-t-02",
+                "id": "tr-daily-02-03",
                 "type": "translate",
                 "question": "您好吗？",
                 "options": [
@@ -10687,7 +14831,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "tr-m-00",
+                "id": "tr-daily-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -10712,7 +14856,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "tr-d-04",
+                "id": "tr-daily-02-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "bu ne kadar?",
@@ -10720,7 +14864,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "bu ne kadar"
               },
               {
-                "id": "tr-r-05",
+                "id": "tr-daily-02-06",
                 "type": "repeat",
                 "question": "跟读：bunu istiyorum",
                 "correctAnswer": "repeat",
@@ -10741,7 +14885,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "tr-t-00",
+                "id": "tr-daily-03-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -10754,7 +14898,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "tr-f-01",
+                "id": "tr-daily-03-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -10767,7 +14911,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "tr-t-02",
+                "id": "tr-daily-03-03",
                 "type": "translate",
                 "question": "您好吗？",
                 "options": [
@@ -10780,7 +14924,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "tr-m-00",
+                "id": "tr-daily-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -10805,7 +14949,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "tr-d-04",
+                "id": "tr-daily-03-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "bu ne kadar?",
@@ -10813,7 +14957,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "bu ne kadar"
               },
               {
-                "id": "tr-r-05",
+                "id": "tr-daily-03-06",
                 "type": "repeat",
                 "question": "跟读：bunu istiyorum",
                 "correctAnswer": "repeat",
@@ -10839,7 +14983,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "tr-t-00",
+                "id": "tr-scenario-01-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -10852,7 +14996,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "tr-f-01",
+                "id": "tr-scenario-01-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -10865,7 +15009,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "tr-t-02",
+                "id": "tr-scenario-01-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -10878,7 +15022,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "tr-m-00",
+                "id": "tr-scenario-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -10903,7 +15047,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "tr-d-04",
+                "id": "tr-scenario-01-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "otel rezervasyonu",
@@ -10911,7 +15055,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "otel rezervasyonu"
               },
               {
-                "id": "tr-r-05",
+                "id": "tr-scenario-01-06",
                 "type": "repeat",
                 "question": "跟读：tek kişilik oda",
                 "correctAnswer": "repeat",
@@ -10932,7 +15076,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "tr-t-00",
+                "id": "tr-scenario-02-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -10945,7 +15089,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "tr-f-01",
+                "id": "tr-scenario-02-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -10958,7 +15102,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "tr-t-02",
+                "id": "tr-scenario-02-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -10971,7 +15115,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "tr-m-00",
+                "id": "tr-scenario-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -10996,7 +15140,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "tr-d-04",
+                "id": "tr-scenario-02-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "otel rezervasyonu",
@@ -11004,7 +15148,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "otel rezervasyonu"
               },
               {
-                "id": "tr-r-05",
+                "id": "tr-scenario-02-06",
                 "type": "repeat",
                 "question": "跟读：tek kişilik oda",
                 "correctAnswer": "repeat",
@@ -11025,7 +15169,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "tr-t-00",
+                "id": "tr-scenario-03-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -11038,7 +15182,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "tr-f-01",
+                "id": "tr-scenario-03-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -11051,7 +15195,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "tr-t-02",
+                "id": "tr-scenario-03-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -11064,7 +15208,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "tr-m-00",
+                "id": "tr-scenario-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -11089,7 +15233,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "tr-d-04",
+                "id": "tr-scenario-03-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "otel rezervasyonu",
@@ -11097,7 +15241,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "otel rezervasyonu"
               },
               {
-                "id": "tr-r-05",
+                "id": "tr-scenario-03-06",
                 "type": "repeat",
                 "question": "跟读：tek kişilik oda",
                 "correctAnswer": "repeat",
@@ -11123,7 +15267,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "tr-t-00",
+                "id": "tr-grammar-01-01",
                 "type": "translate",
                 "question": "去（原形）",
                 "options": [
@@ -11136,7 +15280,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "tr-f-01",
+                "id": "tr-grammar-01-02",
                 "type": "fill-blank",
                 "question": "___ (我去)",
                 "options": [
@@ -11149,7 +15293,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "tr-t-02",
+                "id": "tr-grammar-01-03",
                 "type": "translate",
                 "question": "他去",
                 "options": [
@@ -11162,7 +15306,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "tr-m-00",
+                "id": "tr-grammar-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -11187,7 +15331,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "tr-d-04",
+                "id": "tr-grammar-01-05",
                 "type": "dictation",
                 "question": "听写：是",
                 "correctAnswer": "im/iz/sin",
@@ -11195,7 +15339,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "im iz sin"
               },
               {
-                "id": "tr-r-05",
+                "id": "tr-grammar-01-06",
                 "type": "repeat",
                 "question": "跟读：yemek",
                 "correctAnswer": "repeat",
@@ -11221,7 +15365,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "tr-t-00",
+                "id": "tr-culture-01-01",
                 "type": "translate",
                 "question": "开斋节",
                 "options": [
@@ -11234,7 +15378,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "tr-f-01",
+                "id": "tr-culture-01-02",
                 "type": "fill-blank",
                 "question": "___ (宰牲节)",
                 "options": [
@@ -11247,7 +15391,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "tr-t-02",
+                "id": "tr-culture-01-03",
                 "type": "translate",
                 "question": "巴克拉瓦",
                 "options": [
@@ -11260,7 +15404,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "tr-m-00",
+                "id": "tr-culture-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -11285,7 +15429,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "tr-d-00",
+                "id": "tr-culture-01-05",
                 "type": "dictation",
                 "question": "听写：开斋节",
                 "correctAnswer": "ramazan bayramı",
@@ -11293,7 +15437,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "ramazan bayrami"
               },
               {
-                "id": "tr-r-01",
+                "id": "tr-culture-01-06",
                 "type": "repeat",
                 "question": "跟读：kurban bayramı",
                 "correctAnswer": "repeat",
@@ -11310,11 +15454,11 @@ const NEW_QUIZ_DATA = {
     "themes": [
       {
         "id": "basic",
-        "name": "越南语基础词汇",
+        "name": "基础词汇",
         "color": "#1D4ED8",
         "levels": [
           {
-            "levelId": "vi-basic-04",
+            "levelId": "vi-basic-01",
             "title": "问候与礼貌",
             "timeLimit": 120,
             "minScoreFor1Star": 30,
@@ -11323,7 +15467,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "vi-t-03",
+                "id": "vi-basic-01-01",
                 "type": "translate",
                 "question": "是",
                 "options": [
@@ -11336,7 +15480,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "vi-f-04",
+                "id": "vi-basic-01-02",
                 "type": "fill-blank",
                 "question": "___ (不是)",
                 "options": [
@@ -11349,7 +15493,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "vi-t-05",
+                "id": "vi-basic-01-03",
                 "type": "translate",
                 "question": "再见",
                 "options": [
@@ -11362,7 +15506,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "vi-m-03",
+                "id": "vi-basic-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -11387,7 +15531,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "vi-d-07",
+                "id": "vi-basic-01-05",
                 "type": "dictation",
                 "question": "听写：一",
                 "correctAnswer": "một",
@@ -11395,12 +15539,203 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "mot"
               },
               {
-                "id": "vi-r-08",
+                "id": "vi-basic-01-06",
                 "type": "repeat",
                 "question": "跟读：hai",
                 "correctAnswer": "repeat",
                 "difficulty": 2,
                 "sentence": "hai"
+              }
+            ]
+          },
+          {
+            "levelId": "vi-basic-02",
+            "title": "家庭与人物",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [
+              "vi-basic-01"
+            ],
+            "questions": [
+              {
+                "id": "vi-basic-02-01",
+                "type": "translate",
+                "question": "父亲",
+                "options": [
+                  "bố",
+                  "con trai",
+                  "bà",
+                  "ông"
+                ],
+                "correctAnswer": "bố",
+                "difficulty": 1
+              },
+              {
+                "id": "vi-basic-02-02",
+                "type": "translate",
+                "question": "母亲",
+                "options": [
+                  "mẹ",
+                  "bà",
+                  "ông",
+                  "bố"
+                ],
+                "correctAnswer": "mẹ",
+                "difficulty": 1
+              },
+              {
+                "id": "vi-basic-02-03",
+                "type": "translate",
+                "question": "兄弟",
+                "options": [
+                  "anh/em trai",
+                  "ông",
+                  "bà",
+                  "bố"
+                ],
+                "correctAnswer": "anh/em trai",
+                "difficulty": 1
+              },
+              {
+                "id": "vi-basic-02-04",
+                "type": "fill-blank",
+                "question": "___ (姐妹)",
+                "options": [
+                  "chị/em gái",
+                  "bố",
+                  "con trai",
+                  "anh/em trai"
+                ],
+                "correctAnswer": "chị/em gái",
+                "difficulty": 2
+              },
+              {
+                "id": "vi-basic-02-05",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "bố",
+                    "父亲"
+                  ],
+                  [
+                    "mẹ",
+                    "母亲"
+                  ],
+                  [
+                    "anh/em trai",
+                    "兄弟"
+                  ],
+                  [
+                    "chị/em gái",
+                    "姐妹"
+                  ]
+                ]
+              },
+              {
+                "id": "vi-basic-02-06",
+                "type": "dictation",
+                "question": "听写：女儿",
+                "correctAnswer": "con gái",
+                "difficulty": 2,
+                "audioWord": "con gai"
+              }
+            ]
+          },
+          {
+            "levelId": "vi-basic-03",
+            "title": "数字与颜色",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [
+              "vi-basic-02"
+            ],
+            "questions": [
+              {
+                "id": "vi-basic-03-01",
+                "type": "translate",
+                "question": "一",
+                "options": [
+                  "một",
+                  "màu xanh lá",
+                  "hai",
+                  "ba"
+                ],
+                "correctAnswer": "một",
+                "difficulty": 1
+              },
+              {
+                "id": "vi-basic-03-02",
+                "type": "translate",
+                "question": "二",
+                "options": [
+                  "hai",
+                  "ba",
+                  "màu xanh lá",
+                  "màu đỏ"
+                ],
+                "correctAnswer": "hai",
+                "difficulty": 1
+              },
+              {
+                "id": "vi-basic-03-03",
+                "type": "fill-blank",
+                "question": "___ (三)",
+                "options": [
+                  "ba",
+                  "năm",
+                  "hai",
+                  "màu xanh lá"
+                ],
+                "correctAnswer": "ba",
+                "difficulty": 2
+              },
+              {
+                "id": "vi-basic-03-04",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "một",
+                    "一"
+                  ],
+                  [
+                    "hai",
+                    "二"
+                  ],
+                  [
+                    "ba",
+                    "三"
+                  ],
+                  [
+                    "bốn",
+                    "四"
+                  ]
+                ]
+              },
+              {
+                "id": "vi-basic-03-05",
+                "type": "dictation",
+                "question": "听写：五",
+                "correctAnswer": "năm",
+                "difficulty": 2,
+                "audioWord": "nam"
+              },
+              {
+                "id": "vi-basic-03-06",
+                "type": "repeat",
+                "question": "跟读：红色",
+                "correctAnswer": "repeat",
+                "difficulty": 2,
+                "sentence": "màu đỏ"
               }
             ]
           }
@@ -11409,11 +15744,11 @@ const NEW_QUIZ_DATA = {
       {
         "id": "daily",
         "name": "日常对话",
-        "color": "#3B82F6",
+        "color": "#60A5FA",
         "levels": [
           {
             "levelId": "vi-daily-02",
-            "title": "自我介绍",
+            "title": "购物与消费",
             "timeLimit": 150,
             "minScoreFor1Star": 40,
             "minScoreFor2Star": 60,
@@ -11421,7 +15756,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "vi-t-00",
+                "id": "vi-daily-02-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -11434,7 +15769,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "vi-f-01",
+                "id": "vi-daily-02-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -11447,7 +15782,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "vi-t-02",
+                "id": "vi-daily-02-03",
                 "type": "translate",
                 "question": "你好吗？",
                 "options": [
@@ -11460,7 +15795,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "vi-m-00",
+                "id": "vi-daily-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -11485,7 +15820,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "vi-d-04",
+                "id": "vi-daily-02-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "bao nhiêu tiền?",
@@ -11493,7 +15828,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "bao nhieu tien"
               },
               {
-                "id": "vi-r-05",
+                "id": "vi-daily-02-06",
                 "type": "repeat",
                 "question": "跟读：tôi muốn cái này",
                 "correctAnswer": "repeat",
@@ -11514,7 +15849,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "vi-t-00",
+                "id": "vi-daily-03-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -11527,7 +15862,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "vi-f-01",
+                "id": "vi-daily-03-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -11540,7 +15875,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "vi-t-02",
+                "id": "vi-daily-03-03",
                 "type": "translate",
                 "question": "你好吗？",
                 "options": [
@@ -11553,7 +15888,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "vi-m-00",
+                "id": "vi-daily-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -11578,7 +15913,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "vi-d-04",
+                "id": "vi-daily-03-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "bao nhiêu tiền?",
@@ -11586,7 +15921,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "bao nhieu tien"
               },
               {
-                "id": "vi-r-05",
+                "id": "vi-daily-03-06",
                 "type": "repeat",
                 "question": "跟读：tôi muốn cái này",
                 "correctAnswer": "repeat",
@@ -11612,7 +15947,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "vi-t-00",
+                "id": "vi-scenario-01-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -11625,7 +15960,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "vi-f-01",
+                "id": "vi-scenario-01-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -11638,7 +15973,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "vi-t-02",
+                "id": "vi-scenario-01-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -11651,7 +15986,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "vi-m-00",
+                "id": "vi-scenario-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -11676,7 +16011,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "vi-d-04",
+                "id": "vi-scenario-01-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "đặt phòng khách sạn",
@@ -11684,7 +16019,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "dat phong khach san"
               },
               {
-                "id": "vi-r-05",
+                "id": "vi-scenario-01-06",
                 "type": "repeat",
                 "question": "跟读：phòng đơn",
                 "correctAnswer": "repeat",
@@ -11705,7 +16040,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "vi-t-00",
+                "id": "vi-scenario-02-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -11718,7 +16053,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "vi-f-01",
+                "id": "vi-scenario-02-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -11731,7 +16066,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "vi-t-02",
+                "id": "vi-scenario-02-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -11744,7 +16079,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "vi-m-00",
+                "id": "vi-scenario-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -11769,7 +16104,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "vi-d-04",
+                "id": "vi-scenario-02-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "đặt phòng khách sạn",
@@ -11777,7 +16112,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "dat phong khach san"
               },
               {
-                "id": "vi-r-05",
+                "id": "vi-scenario-02-06",
                 "type": "repeat",
                 "question": "跟读：phòng đơn",
                 "correctAnswer": "repeat",
@@ -11798,7 +16133,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "vi-t-00",
+                "id": "vi-scenario-03-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -11811,7 +16146,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "vi-f-01",
+                "id": "vi-scenario-03-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -11824,7 +16159,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "vi-t-02",
+                "id": "vi-scenario-03-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -11837,7 +16172,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "vi-m-00",
+                "id": "vi-scenario-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -11862,7 +16197,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "vi-d-04",
+                "id": "vi-scenario-03-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "đặt phòng khách sạn",
@@ -11870,7 +16205,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "dat phong khach san"
               },
               {
-                "id": "vi-r-05",
+                "id": "vi-scenario-03-06",
                 "type": "repeat",
                 "question": "跟读：phòng đơn",
                 "correctAnswer": "repeat",
@@ -11896,7 +16231,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "vi-t-00",
+                "id": "vi-grammar-01-01",
                 "type": "translate",
                 "question": "去",
                 "options": [
@@ -11909,7 +16244,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "vi-f-01",
+                "id": "vi-grammar-01-02",
                 "type": "fill-blank",
                 "question": "___ (吃)",
                 "options": [
@@ -11922,7 +16257,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "vi-t-02",
+                "id": "vi-grammar-01-03",
                 "type": "translate",
                 "question": "是",
                 "options": [
@@ -11935,7 +16270,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "vi-m-00",
+                "id": "vi-grammar-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -11960,7 +16295,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "vi-d-04",
+                "id": "vi-grammar-01-05",
                 "type": "dictation",
                 "question": "听写：在",
                 "correctAnswer": "ở",
@@ -11968,7 +16303,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "o"
               },
               {
-                "id": "vi-r-05",
+                "id": "vi-grammar-01-06",
                 "type": "repeat",
                 "question": "跟读：được",
                 "correctAnswer": "repeat",
@@ -11994,7 +16329,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "vi-t-00",
+                "id": "vi-culture-01-01",
                 "type": "translate",
                 "question": "春节",
                 "options": [
@@ -12007,7 +16342,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "vi-f-01",
+                "id": "vi-culture-01-02",
                 "type": "fill-blank",
                 "question": "___ (中秋节)",
                 "options": [
@@ -12020,7 +16355,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "vi-t-02",
+                "id": "vi-culture-01-03",
                 "type": "translate",
                 "question": "河粉",
                 "options": [
@@ -12033,7 +16368,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "vi-m-00",
+                "id": "vi-culture-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -12058,7 +16393,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "vi-d-00",
+                "id": "vi-culture-01-05",
                 "type": "dictation",
                 "question": "听写：春节",
                 "correctAnswer": "tết",
@@ -12066,7 +16401,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "tet"
               },
               {
-                "id": "vi-r-01",
+                "id": "vi-culture-01-06",
                 "type": "repeat",
                 "question": "跟读：trung thu",
                 "correctAnswer": "repeat",
@@ -12096,7 +16431,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "yue-t-03",
+                "id": "yue-basic-04-01",
                 "type": "translate",
                 "question": "是",
                 "options": [
@@ -12109,7 +16444,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "yue-f-04",
+                "id": "yue-basic-04-02",
                 "type": "fill-blank",
                 "question": "___ (不是)",
                 "options": [
@@ -12122,7 +16457,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "yue-t-05",
+                "id": "yue-basic-04-03",
                 "type": "translate",
                 "question": "晚安",
                 "options": [
@@ -12135,7 +16470,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "yue-m-03",
+                "id": "yue-basic-04-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -12160,7 +16495,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "yue-d-07",
+                "id": "yue-basic-04-05",
                 "type": "dictation",
                 "question": "听写：一",
                 "correctAnswer": "一",
@@ -12168,12 +16503,105 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "jat1"
               },
               {
-                "id": "yue-r-08",
+                "id": "yue-basic-04-06",
                 "type": "repeat",
                 "question": "跟读：二",
                 "correctAnswer": "repeat",
                 "difficulty": 2,
                 "sentence": "二"
+              }
+            ]
+          },
+          {
+            "levelId": "yue-basic-05",
+            "title": "颜色与形状",
+            "timeLimit": 120,
+            "minScoreFor1Star": 30,
+            "minScoreFor2Star": 50,
+            "minScoreFor3Star": 70,
+            "prerequisites": [
+              "yue-basic-04"
+            ],
+            "questions": [
+              {
+                "id": "yue-basic-05-01",
+                "type": "translate",
+                "question": "红色",
+                "options": [
+                  "红色",
+                  "蓝色",
+                  "绿色",
+                  "黄色"
+                ],
+                "correctAnswer": "红色",
+                "difficulty": 1
+              },
+              {
+                "id": "yue-basic-05-02",
+                "type": "fill-blank",
+                "question": "___ (蓝色)",
+                "options": [
+                  "红色",
+                  "蓝色",
+                  "绿色",
+                  "黄色"
+                ],
+                "correctAnswer": "蓝色",
+                "difficulty": 2
+              },
+              {
+                "id": "yue-basic-05-03",
+                "type": "translate",
+                "question": "圆形",
+                "options": [
+                  "圆形",
+                  "方形",
+                  "三角形",
+                  "长方形"
+                ],
+                "correctAnswer": "圆形",
+                "difficulty": 1
+              },
+              {
+                "id": "yue-basic-05-04",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "红色",
+                    "红色"
+                  ],
+                  [
+                    "蓝色",
+                    "蓝色"
+                  ],
+                  [
+                    "圆形",
+                    "圆形"
+                  ],
+                  [
+                    "方形",
+                    "方形"
+                  ]
+                ]
+              },
+              {
+                "id": "yue-basic-05-05",
+                "type": "dictation",
+                "question": "听写：绿色",
+                "correctAnswer": "绿色",
+                "difficulty": 2,
+                "audioWord": "luk6 sik1"
+              },
+              {
+                "id": "yue-basic-05-06",
+                "type": "repeat",
+                "question": "跟读：黄色",
+                "correctAnswer": "repeat",
+                "difficulty": 2,
+                "sentence": "黄色"
               }
             ]
           }
@@ -12194,7 +16622,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "yue-t-00",
+                "id": "yue-daily-02-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -12207,7 +16635,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "yue-f-01",
+                "id": "yue-daily-02-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -12220,7 +16648,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "yue-t-02",
+                "id": "yue-daily-02-03",
                 "type": "translate",
                 "question": "你好吗？",
                 "options": [
@@ -12233,7 +16661,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "yue-m-00",
+                "id": "yue-daily-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -12258,7 +16686,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "yue-d-04",
+                "id": "yue-daily-02-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "几钱呀？",
@@ -12266,7 +16694,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "gei2 cin2 aa3"
               },
               {
-                "id": "yue-r-05",
+                "id": "yue-daily-02-06",
                 "type": "repeat",
                 "question": "跟读：我要呢个",
                 "correctAnswer": "repeat",
@@ -12287,7 +16715,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "yue-t-00",
+                "id": "yue-daily-03-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -12300,7 +16728,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "yue-f-01",
+                "id": "yue-daily-03-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -12313,7 +16741,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "yue-t-02",
+                "id": "yue-daily-03-03",
                 "type": "translate",
                 "question": "你好吗？",
                 "options": [
@@ -12326,7 +16754,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "yue-m-00",
+                "id": "yue-daily-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -12351,7 +16779,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "yue-d-04",
+                "id": "yue-daily-03-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "几钱呀？",
@@ -12359,12 +16787,105 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "gei2 cin2 aa3"
               },
               {
-                "id": "yue-r-05",
+                "id": "yue-daily-03-06",
                 "type": "repeat",
                 "question": "跟读：我要呢个",
                 "correctAnswer": "repeat",
                 "difficulty": 2,
                 "sentence": "我要呢个"
+              }
+            ]
+          },
+          {
+            "levelId": "yue-daily-04",
+            "title": "餐厅与点餐",
+            "timeLimit": 150,
+            "minScoreFor1Star": 40,
+            "minScoreFor2Star": 60,
+            "minScoreFor3Star": 80,
+            "prerequisites": [
+              "yue-daily-03"
+            ],
+            "questions": [
+              {
+                "id": "yue-daily-04-01",
+                "type": "translate",
+                "question": "俾张餐牌我",
+                "options": [
+                  "俾张餐牌我",
+                  "埋单",
+                  "几钱呀？",
+                  "我叫做..."
+                ],
+                "correctAnswer": "俾张餐牌我",
+                "difficulty": 1
+              },
+              {
+                "id": "yue-daily-04-02",
+                "type": "fill-blank",
+                "question": "___ (埋单)",
+                "options": [
+                  "俾张餐牌我",
+                  "埋单",
+                  "几钱呀？",
+                  "平啲得唔得呀？"
+                ],
+                "correctAnswer": "埋单",
+                "difficulty": 2
+              },
+              {
+                "id": "yue-daily-04-03",
+                "type": "translate",
+                "question": "太好食喇",
+                "options": [
+                  "太好食喇",
+                  "我荡失路喇",
+                  "太贵喇",
+                  "平啲得唔得呀？"
+                ],
+                "correctAnswer": "太好食喇",
+                "difficulty": 1
+              },
+              {
+                "id": "yue-daily-04-04",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "俾张餐牌我",
+                    "给我菜单"
+                  ],
+                  [
+                    "埋单",
+                    "结账"
+                  ],
+                  [
+                    "太好食喇",
+                    "太好吃了"
+                  ],
+                  [
+                    "平啲得唔得呀？",
+                    "能便宜点吗？"
+                  ]
+                ]
+              },
+              {
+                "id": "yue-daily-04-05",
+                "type": "dictation",
+                "question": "听写：我唔要辣",
+                "correctAnswer": "我唔要辣",
+                "difficulty": 2,
+                "audioWord": "ngo5 m4 jiu3 laat6"
+              },
+              {
+                "id": "yue-daily-04-06",
+                "type": "repeat",
+                "question": "跟读：一杯冻柠茶",
+                "correctAnswer": "repeat",
+                "difficulty": 2,
+                "sentence": "一杯冻柠茶"
               }
             ]
           }
@@ -12385,7 +16906,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "yue-t-00",
+                "id": "yue-scenario-01-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -12398,7 +16919,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "yue-f-01",
+                "id": "yue-scenario-01-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -12411,7 +16932,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "yue-t-02",
+                "id": "yue-scenario-01-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -12424,7 +16945,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "yue-m-00",
+                "id": "yue-scenario-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -12449,7 +16970,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "yue-d-04",
+                "id": "yue-scenario-01-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "订酒店",
@@ -12457,7 +16978,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "deng6 zau2 dim3"
               },
               {
-                "id": "yue-r-05",
+                "id": "yue-scenario-01-06",
                 "type": "repeat",
                 "question": "跟读：单人房",
                 "correctAnswer": "repeat",
@@ -12478,7 +16999,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "yue-t-00",
+                "id": "yue-scenario-02-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -12491,7 +17012,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "yue-f-01",
+                "id": "yue-scenario-02-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -12504,7 +17025,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "yue-t-02",
+                "id": "yue-scenario-02-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -12517,7 +17038,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "yue-m-00",
+                "id": "yue-scenario-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -12542,7 +17063,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "yue-d-04",
+                "id": "yue-scenario-02-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "订酒店",
@@ -12550,7 +17071,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "deng6 zau2 dim3"
               },
               {
-                "id": "yue-r-05",
+                "id": "yue-scenario-02-06",
                 "type": "repeat",
                 "question": "跟读：单人房",
                 "correctAnswer": "repeat",
@@ -12571,7 +17092,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "yue-t-00",
+                "id": "yue-scenario-03-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -12584,7 +17105,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "yue-f-01",
+                "id": "yue-scenario-03-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -12597,7 +17118,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "yue-t-02",
+                "id": "yue-scenario-03-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -12610,7 +17131,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "yue-m-00",
+                "id": "yue-scenario-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -12635,7 +17156,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "yue-d-04",
+                "id": "yue-scenario-03-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "订酒店",
@@ -12643,7 +17164,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "deng6 zau2 dim3"
               },
               {
-                "id": "yue-r-05",
+                "id": "yue-scenario-03-06",
                 "type": "repeat",
                 "question": "跟读：单人房",
                 "correctAnswer": "repeat",
@@ -12669,7 +17190,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "yue-t-00",
+                "id": "yue-grammar-01-01",
                 "type": "translate",
                 "question": "去",
                 "options": [
@@ -12682,7 +17203,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "yue-f-01",
+                "id": "yue-grammar-01-02",
                 "type": "fill-blank",
                 "question": "___ (吃)",
                 "options": [
@@ -12695,7 +17216,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "yue-t-02",
+                "id": "yue-grammar-01-03",
                 "type": "translate",
                 "question": "是",
                 "options": [
@@ -12708,7 +17229,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "yue-m-00",
+                "id": "yue-grammar-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -12733,7 +17254,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "yue-d-04",
+                "id": "yue-grammar-01-05",
                 "type": "dictation",
                 "question": "听写：没有",
                 "correctAnswer": "冇",
@@ -12741,7 +17262,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "mou5"
               },
               {
-                "id": "yue-r-05",
+                "id": "yue-grammar-01-06",
                 "type": "repeat",
                 "question": "跟读：得",
                 "correctAnswer": "repeat",
@@ -12767,7 +17288,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "yue-t-00",
+                "id": "yue-culture-01-01",
                 "type": "translate",
                 "question": "农历新年",
                 "options": [
@@ -12780,7 +17301,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "yue-f-01",
+                "id": "yue-culture-01-02",
                 "type": "fill-blank",
                 "question": "___ (中秋节)",
                 "options": [
@@ -12793,7 +17314,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "yue-t-02",
+                "id": "yue-culture-01-03",
                 "type": "translate",
                 "question": "点心",
                 "options": [
@@ -12806,7 +17327,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "yue-m-00",
+                "id": "yue-culture-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -12831,7 +17352,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "yue-d-00",
+                "id": "yue-culture-01-05",
                 "type": "dictation",
                 "question": "听写：农历新年",
                 "correctAnswer": "农历新年",
@@ -12839,7 +17360,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "nung4 lik3 san1 nin4"
               },
               {
-                "id": "yue-r-01",
+                "id": "yue-culture-01-06",
                 "type": "repeat",
                 "question": "跟读：中秋",
                 "correctAnswer": "repeat",
@@ -12869,7 +17390,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "zh-CN-t-06",
+                "id": "zh-CN-basic-01-01",
                 "type": "translate",
                 "question": "Please",
                 "options": [
@@ -12882,7 +17403,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-CN-f-07",
+                "id": "zh-CN-basic-01-02",
                 "type": "fill-blank",
                 "question": "___ (One)",
                 "options": [
@@ -12895,7 +17416,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-CN-t-08",
+                "id": "zh-CN-basic-01-03",
                 "type": "translate",
                 "question": "Two",
                 "options": [
@@ -12908,7 +17429,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-CN-m-06",
+                "id": "zh-CN-basic-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -12933,7 +17454,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-CN-d-10",
+                "id": "zh-CN-basic-01-05",
                 "type": "dictation",
                 "question": "听写：Four",
                 "correctAnswer": "四",
@@ -12941,7 +17462,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "sì"
               },
               {
-                "id": "zh-CN-r-11",
+                "id": "zh-CN-basic-01-06",
                 "type": "repeat",
                 "question": "跟读：五",
                 "correctAnswer": "repeat",
@@ -12962,7 +17483,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "zh-CN-t-12",
+                "id": "zh-CN-basic-02-01",
                 "type": "translate",
                 "question": "Red",
                 "options": [
@@ -12975,7 +17496,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-CN-f-13",
+                "id": "zh-CN-basic-02-02",
                 "type": "fill-blank",
                 "question": "___ (Blue)",
                 "options": [
@@ -12988,7 +17509,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-CN-t-14",
+                "id": "zh-CN-basic-02-03",
                 "type": "translate",
                 "question": "Green",
                 "options": [
@@ -13001,7 +17522,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-CN-m-12",
+                "id": "zh-CN-basic-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -13026,7 +17547,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-CN-d-16",
+                "id": "zh-CN-basic-02-05",
                 "type": "dictation",
                 "question": "听写：Black",
                 "correctAnswer": "黑色",
@@ -13034,7 +17555,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "hēisè"
               },
               {
-                "id": "zh-CN-r-17",
+                "id": "zh-CN-basic-02-06",
                 "type": "repeat",
                 "question": "跟读：白色",
                 "correctAnswer": "repeat",
@@ -13055,7 +17576,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "zh-CN-t-18",
+                "id": "zh-CN-basic-03-01",
                 "type": "translate",
                 "question": "Apple",
                 "options": [
@@ -13068,7 +17589,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-CN-f-19",
+                "id": "zh-CN-basic-03-02",
                 "type": "fill-blank",
                 "question": "___ (Bread)",
                 "options": [
@@ -13081,7 +17602,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-CN-t-20",
+                "id": "zh-CN-basic-03-03",
                 "type": "translate",
                 "question": "Water",
                 "options": [
@@ -13094,7 +17615,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-CN-m-18",
+                "id": "zh-CN-basic-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -13119,7 +17640,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-CN-d-22",
+                "id": "zh-CN-basic-03-05",
                 "type": "dictation",
                 "question": "听写：Mother",
                 "correctAnswer": "妈妈",
@@ -13127,7 +17648,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "māma"
               },
               {
-                "id": "zh-CN-r-23",
+                "id": "zh-CN-basic-03-06",
                 "type": "repeat",
                 "question": "跟读：爸爸",
                 "correctAnswer": "repeat",
@@ -13148,7 +17669,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "zh-CN-t-03",
+                "id": "zh-CN-basic-04-01",
                 "type": "translate",
                 "question": "Yes",
                 "options": [
@@ -13161,7 +17682,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-CN-f-04",
+                "id": "zh-CN-basic-04-02",
                 "type": "fill-blank",
                 "question": "___ (No)",
                 "options": [
@@ -13174,7 +17695,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-CN-t-05",
+                "id": "zh-CN-basic-04-03",
                 "type": "translate",
                 "question": "Goodbye",
                 "options": [
@@ -13187,7 +17708,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-CN-m-03",
+                "id": "zh-CN-basic-04-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -13212,7 +17733,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-CN-d-07",
+                "id": "zh-CN-basic-04-05",
                 "type": "dictation",
                 "question": "听写：One",
                 "correctAnswer": "一",
@@ -13220,7 +17741,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "yī"
               },
               {
-                "id": "zh-CN-r-08",
+                "id": "zh-CN-basic-04-06",
                 "type": "repeat",
                 "question": "跟读：二",
                 "correctAnswer": "repeat",
@@ -13246,7 +17767,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "zh-CN-t-00",
+                "id": "zh-CN-daily-01-01",
                 "type": "translate",
                 "question": "My name is...",
                 "options": [
@@ -13259,7 +17780,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-CN-f-01",
+                "id": "zh-CN-daily-01-02",
                 "type": "fill-blank",
                 "question": "___ (Nice to meet you)",
                 "options": [
@@ -13272,7 +17793,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-CN-t-02",
+                "id": "zh-CN-daily-01-03",
                 "type": "translate",
                 "question": "How are you?",
                 "options": [
@@ -13285,7 +17806,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-CN-m-00",
+                "id": "zh-CN-daily-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -13310,7 +17831,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-CN-d-04",
+                "id": "zh-CN-daily-01-05",
                 "type": "dictation",
                 "question": "听写：How much is this?",
                 "correctAnswer": "这个多少钱？",
@@ -13318,7 +17839,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "zhège duōshao qián"
               },
               {
-                "id": "zh-CN-r-05",
+                "id": "zh-CN-daily-01-06",
                 "type": "repeat",
                 "question": "跟读：我要这个",
                 "correctAnswer": "repeat",
@@ -13339,7 +17860,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "zh-CN-t-00",
+                "id": "zh-CN-daily-02-01",
                 "type": "translate",
                 "question": "My name is...",
                 "options": [
@@ -13352,7 +17873,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-CN-f-01",
+                "id": "zh-CN-daily-02-02",
                 "type": "fill-blank",
                 "question": "___ (Nice to meet you)",
                 "options": [
@@ -13365,7 +17886,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-CN-t-02",
+                "id": "zh-CN-daily-02-03",
                 "type": "translate",
                 "question": "How are you?",
                 "options": [
@@ -13378,7 +17899,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-CN-m-00",
+                "id": "zh-CN-daily-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -13403,7 +17924,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-CN-d-04",
+                "id": "zh-CN-daily-02-05",
                 "type": "dictation",
                 "question": "听写：How much is this?",
                 "correctAnswer": "这个多少钱？",
@@ -13411,7 +17932,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "zhège duōshao qián"
               },
               {
-                "id": "zh-CN-r-05",
+                "id": "zh-CN-daily-02-06",
                 "type": "repeat",
                 "question": "跟读：我要这个",
                 "correctAnswer": "repeat",
@@ -13432,7 +17953,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "zh-CN-t-00",
+                "id": "zh-CN-daily-03-01",
                 "type": "translate",
                 "question": "My name is...",
                 "options": [
@@ -13445,7 +17966,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-CN-f-01",
+                "id": "zh-CN-daily-03-02",
                 "type": "fill-blank",
                 "question": "___ (Nice to meet you)",
                 "options": [
@@ -13458,7 +17979,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-CN-t-02",
+                "id": "zh-CN-daily-03-03",
                 "type": "translate",
                 "question": "How are you?",
                 "options": [
@@ -13471,7 +17992,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-CN-m-00",
+                "id": "zh-CN-daily-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -13496,7 +18017,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-CN-d-04",
+                "id": "zh-CN-daily-03-05",
                 "type": "dictation",
                 "question": "听写：How much is this?",
                 "correctAnswer": "这个多少钱？",
@@ -13504,7 +18025,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "zhège duōshao qián"
               },
               {
-                "id": "zh-CN-r-05",
+                "id": "zh-CN-daily-03-06",
                 "type": "repeat",
                 "question": "跟读：我要这个",
                 "correctAnswer": "repeat",
@@ -13530,7 +18051,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "zh-CN-t-00",
+                "id": "zh-CN-scenario-01-01",
                 "type": "translate",
                 "question": "Where is the subway?",
                 "options": [
@@ -13543,7 +18064,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-CN-f-01",
+                "id": "zh-CN-scenario-01-02",
                 "type": "fill-blank",
                 "question": "___ (Take a taxi)",
                 "options": [
@@ -13556,7 +18077,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-CN-t-02",
+                "id": "zh-CN-scenario-01-03",
                 "type": "translate",
                 "question": "I need a doctor",
                 "options": [
@@ -13569,7 +18090,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-CN-m-00",
+                "id": "zh-CN-scenario-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -13594,7 +18115,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-CN-d-04",
+                "id": "zh-CN-scenario-01-05",
                 "type": "dictation",
                 "question": "听写：Hotel reservation",
                 "correctAnswer": "预订酒店",
@@ -13602,7 +18123,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "yùdìng jiǔdiàn"
               },
               {
-                "id": "zh-CN-r-05",
+                "id": "zh-CN-scenario-01-06",
                 "type": "repeat",
                 "question": "跟读：单人间",
                 "correctAnswer": "repeat",
@@ -13623,7 +18144,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "zh-CN-t-00",
+                "id": "zh-CN-scenario-02-01",
                 "type": "translate",
                 "question": "Where is the subway?",
                 "options": [
@@ -13636,7 +18157,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-CN-f-01",
+                "id": "zh-CN-scenario-02-02",
                 "type": "fill-blank",
                 "question": "___ (Take a taxi)",
                 "options": [
@@ -13649,7 +18170,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-CN-t-02",
+                "id": "zh-CN-scenario-02-03",
                 "type": "translate",
                 "question": "I need a doctor",
                 "options": [
@@ -13662,7 +18183,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-CN-m-00",
+                "id": "zh-CN-scenario-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -13687,7 +18208,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-CN-d-04",
+                "id": "zh-CN-scenario-02-05",
                 "type": "dictation",
                 "question": "听写：Hotel reservation",
                 "correctAnswer": "预订酒店",
@@ -13695,7 +18216,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "yùdìng jiǔdiàn"
               },
               {
-                "id": "zh-CN-r-05",
+                "id": "zh-CN-scenario-02-06",
                 "type": "repeat",
                 "question": "跟读：单人间",
                 "correctAnswer": "repeat",
@@ -13716,7 +18237,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "zh-CN-t-00",
+                "id": "zh-CN-scenario-03-01",
                 "type": "translate",
                 "question": "Where is the subway?",
                 "options": [
@@ -13729,7 +18250,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-CN-f-01",
+                "id": "zh-CN-scenario-03-02",
                 "type": "fill-blank",
                 "question": "___ (Take a taxi)",
                 "options": [
@@ -13742,7 +18263,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-CN-t-02",
+                "id": "zh-CN-scenario-03-03",
                 "type": "translate",
                 "question": "I need a doctor",
                 "options": [
@@ -13755,7 +18276,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-CN-m-00",
+                "id": "zh-CN-scenario-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -13780,7 +18301,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-CN-d-04",
+                "id": "zh-CN-scenario-03-05",
                 "type": "dictation",
                 "question": "听写：Hotel reservation",
                 "correctAnswer": "预订酒店",
@@ -13788,7 +18309,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "yùdìng jiǔdiàn"
               },
               {
-                "id": "zh-CN-r-05",
+                "id": "zh-CN-scenario-03-06",
                 "type": "repeat",
                 "question": "跟读：单人间",
                 "correctAnswer": "repeat",
@@ -13814,7 +18335,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "zh-CN-t-00",
+                "id": "zh-CN-grammar-01-01",
                 "type": "translate",
                 "question": "be (am/is/are)",
                 "options": [
@@ -13827,7 +18348,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-CN-f-01",
+                "id": "zh-CN-grammar-01-02",
                 "type": "fill-blank",
                 "question": "___ (at/in)",
                 "options": [
@@ -13840,7 +18361,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-CN-t-02",
+                "id": "zh-CN-grammar-01-03",
                 "type": "translate",
                 "question": "have",
                 "options": [
@@ -13853,7 +18374,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-CN-m-00",
+                "id": "zh-CN-grammar-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -13878,7 +18399,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-CN-d-04",
+                "id": "zh-CN-grammar-01-05",
                 "type": "dictation",
                 "question": "听写：question particle",
                 "correctAnswer": "吗",
@@ -13886,7 +18407,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "ma"
               },
               {
-                "id": "zh-CN-r-05",
+                "id": "zh-CN-grammar-01-06",
                 "type": "repeat",
                 "question": "跟读：呢",
                 "correctAnswer": "repeat",
@@ -13907,7 +18428,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "zh-CN-t-00",
+                "id": "zh-CN-grammar-02-01",
                 "type": "translate",
                 "question": "be (am/is/are)",
                 "options": [
@@ -13920,7 +18441,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-CN-f-01",
+                "id": "zh-CN-grammar-02-02",
                 "type": "fill-blank",
                 "question": "___ (at/in)",
                 "options": [
@@ -13933,7 +18454,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-CN-t-02",
+                "id": "zh-CN-grammar-02-03",
                 "type": "translate",
                 "question": "have",
                 "options": [
@@ -13946,7 +18467,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-CN-m-00",
+                "id": "zh-CN-grammar-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -13971,7 +18492,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-CN-d-04",
+                "id": "zh-CN-grammar-02-05",
                 "type": "dictation",
                 "question": "听写：question particle",
                 "correctAnswer": "吗",
@@ -13979,7 +18500,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "ma"
               },
               {
-                "id": "zh-CN-r-05",
+                "id": "zh-CN-grammar-02-06",
                 "type": "repeat",
                 "question": "跟读：呢",
                 "correctAnswer": "repeat",
@@ -14005,7 +18526,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "zh-CN-t-00",
+                "id": "zh-CN-culture-01-01",
                 "type": "translate",
                 "question": "Spring Festival",
                 "options": [
@@ -14018,7 +18539,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-CN-f-01",
+                "id": "zh-CN-culture-01-02",
                 "type": "fill-blank",
                 "question": "___ (Mid-Autumn Festival)",
                 "options": [
@@ -14031,7 +18552,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-CN-t-02",
+                "id": "zh-CN-culture-01-03",
                 "type": "translate",
                 "question": "Dumplings",
                 "options": [
@@ -14044,7 +18565,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-CN-m-00",
+                "id": "zh-CN-culture-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -14069,7 +18590,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-CN-d-00",
+                "id": "zh-CN-culture-01-05",
                 "type": "dictation",
                 "question": "听写：Spring Festival",
                 "correctAnswer": "春节",
@@ -14077,7 +18598,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "Chūnjié"
               },
               {
-                "id": "zh-CN-r-01",
+                "id": "zh-CN-culture-01-06",
                 "type": "repeat",
                 "question": "跟读：中秋节",
                 "correctAnswer": "repeat",
@@ -14098,7 +18619,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "zh-CN-t-00",
+                "id": "zh-CN-culture-02-01",
                 "type": "translate",
                 "question": "Spring Festival",
                 "options": [
@@ -14111,7 +18632,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-CN-f-01",
+                "id": "zh-CN-culture-02-02",
                 "type": "fill-blank",
                 "question": "___ (Mid-Autumn Festival)",
                 "options": [
@@ -14124,7 +18645,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-CN-t-02",
+                "id": "zh-CN-culture-02-03",
                 "type": "translate",
                 "question": "Dumplings",
                 "options": [
@@ -14137,7 +18658,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-CN-m-00",
+                "id": "zh-CN-culture-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -14162,7 +18683,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-CN-d-00",
+                "id": "zh-CN-culture-02-05",
                 "type": "dictation",
                 "question": "听写：Spring Festival",
                 "correctAnswer": "春节",
@@ -14170,7 +18691,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "Chūnjié"
               },
               {
-                "id": "zh-CN-r-01",
+                "id": "zh-CN-culture-02-06",
                 "type": "repeat",
                 "question": "跟读：中秋节",
                 "correctAnswer": "repeat",
@@ -14200,7 +18721,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "zh-DB-t-00",
+                "id": "zh-DB-daily-01-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -14213,7 +18734,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-DB-f-01",
+                "id": "zh-DB-daily-01-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -14226,7 +18747,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-DB-t-02",
+                "id": "zh-DB-daily-01-03",
                 "type": "translate",
                 "question": "你好吗？",
                 "options": [
@@ -14239,7 +18760,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-DB-m-00",
+                "id": "zh-DB-daily-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -14264,7 +18785,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-DB-d-04",
+                "id": "zh-DB-daily-01-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "多钱儿？",
@@ -14272,7 +18793,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "duo1 qian2 er5"
               },
               {
-                "id": "zh-DB-r-05",
+                "id": "zh-DB-daily-01-06",
                 "type": "repeat",
                 "question": "跟读：我要这个",
                 "correctAnswer": "repeat",
@@ -14293,7 +18814,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "zh-DB-t-00",
+                "id": "zh-DB-daily-02-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -14306,7 +18827,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-DB-f-01",
+                "id": "zh-DB-daily-02-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -14319,7 +18840,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-DB-t-02",
+                "id": "zh-DB-daily-02-03",
                 "type": "translate",
                 "question": "你好吗？",
                 "options": [
@@ -14332,7 +18853,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-DB-m-00",
+                "id": "zh-DB-daily-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -14357,7 +18878,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-DB-d-04",
+                "id": "zh-DB-daily-02-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "多钱儿？",
@@ -14365,7 +18886,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "duo1 qian2 er5"
               },
               {
-                "id": "zh-DB-r-05",
+                "id": "zh-DB-daily-02-06",
                 "type": "repeat",
                 "question": "跟读：我要这个",
                 "correctAnswer": "repeat",
@@ -14386,7 +18907,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "zh-DB-t-00",
+                "id": "zh-DB-daily-03-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -14399,7 +18920,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-DB-f-01",
+                "id": "zh-DB-daily-03-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -14412,7 +18933,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-DB-t-02",
+                "id": "zh-DB-daily-03-03",
                 "type": "translate",
                 "question": "你好吗？",
                 "options": [
@@ -14425,7 +18946,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-DB-m-00",
+                "id": "zh-DB-daily-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -14450,7 +18971,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-DB-d-04",
+                "id": "zh-DB-daily-03-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "多钱儿？",
@@ -14458,12 +18979,105 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "duo1 qian2 er5"
               },
               {
-                "id": "zh-DB-r-05",
+                "id": "zh-DB-daily-03-06",
                 "type": "repeat",
                 "question": "跟读：我要这个",
                 "correctAnswer": "repeat",
                 "difficulty": 2,
                 "sentence": "我要这个"
+              }
+            ]
+          },
+          {
+            "levelId": "zh-DB-daily-04",
+            "title": "餐厅与点餐",
+            "timeLimit": 150,
+            "minScoreFor1Star": 40,
+            "minScoreFor2Star": 60,
+            "minScoreFor3Star": 80,
+            "prerequisites": [
+              "zh-DB-daily-03"
+            ],
+            "questions": [
+              {
+                "id": "zh-DB-daily-04-01",
+                "type": "translate",
+                "question": "给我菜单",
+                "options": [
+                  "给我菜单",
+                  "买单",
+                  "多少钱？",
+                  "我叫做..."
+                ],
+                "correctAnswer": "给我菜单",
+                "difficulty": 1
+              },
+              {
+                "id": "zh-DB-daily-04-02",
+                "type": "fill-blank",
+                "question": "___ (买单)",
+                "options": [
+                  "给我菜单",
+                  "买单",
+                  "多少钱？",
+                  "便宜点行不？"
+                ],
+                "correctAnswer": "买单",
+                "difficulty": 2
+              },
+              {
+                "id": "zh-DB-daily-04-03",
+                "type": "translate",
+                "question": "太好吃了",
+                "options": [
+                  "太好吃了",
+                  "我迷路了",
+                  "太贵了",
+                  "便宜点行不？"
+                ],
+                "correctAnswer": "太好吃了",
+                "difficulty": 1
+              },
+              {
+                "id": "zh-DB-daily-04-04",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "给我菜单",
+                    "给我菜单"
+                  ],
+                  [
+                    "买单",
+                    "买单"
+                  ],
+                  [
+                    "太好吃了",
+                    "太好吃了"
+                  ],
+                  [
+                    "便宜点行不？",
+                    "能便宜点吗？"
+                  ]
+                ]
+              },
+              {
+                "id": "zh-DB-daily-04-05",
+                "type": "dictation",
+                "question": "听写：我不要辣的",
+                "correctAnswer": "我不要辣的",
+                "difficulty": 2,
+                "audioWord": "wo bu yao la de"
+              },
+              {
+                "id": "zh-DB-daily-04-06",
+                "type": "repeat",
+                "question": "跟读：来碗大碴子粥",
+                "correctAnswer": "repeat",
+                "difficulty": 2,
+                "sentence": "来碗大碴子粥"
               }
             ]
           }
@@ -14484,7 +19098,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "zh-DB-t-00",
+                "id": "zh-DB-scenario-01-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -14497,7 +19111,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-DB-f-01",
+                "id": "zh-DB-scenario-01-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -14510,7 +19124,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-DB-t-02",
+                "id": "zh-DB-scenario-01-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -14523,7 +19137,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-DB-m-00",
+                "id": "zh-DB-scenario-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -14548,7 +19162,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-DB-d-04",
+                "id": "zh-DB-scenario-01-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "订宾馆",
@@ -14556,7 +19170,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "ding4 bin1 guan3"
               },
               {
-                "id": "zh-DB-r-05",
+                "id": "zh-DB-scenario-01-06",
                 "type": "repeat",
                 "question": "跟读：单人间",
                 "correctAnswer": "repeat",
@@ -14577,7 +19191,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "zh-DB-t-00",
+                "id": "zh-DB-scenario-02-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -14590,7 +19204,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-DB-f-01",
+                "id": "zh-DB-scenario-02-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -14603,7 +19217,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-DB-t-02",
+                "id": "zh-DB-scenario-02-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -14616,7 +19230,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-DB-m-00",
+                "id": "zh-DB-scenario-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -14641,7 +19255,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-DB-d-04",
+                "id": "zh-DB-scenario-02-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "订宾馆",
@@ -14649,7 +19263,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "ding4 bin1 guan3"
               },
               {
-                "id": "zh-DB-r-05",
+                "id": "zh-DB-scenario-02-06",
                 "type": "repeat",
                 "question": "跟读：单人间",
                 "correctAnswer": "repeat",
@@ -14670,7 +19284,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "zh-DB-t-00",
+                "id": "zh-DB-scenario-03-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -14683,7 +19297,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-DB-f-01",
+                "id": "zh-DB-scenario-03-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -14696,7 +19310,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-DB-t-02",
+                "id": "zh-DB-scenario-03-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -14709,7 +19323,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-DB-m-00",
+                "id": "zh-DB-scenario-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -14734,7 +19348,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-DB-d-04",
+                "id": "zh-DB-scenario-03-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "订宾馆",
@@ -14742,7 +19356,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "ding4 bin1 guan3"
               },
               {
-                "id": "zh-DB-r-05",
+                "id": "zh-DB-scenario-03-06",
                 "type": "repeat",
                 "question": "跟读：单人间",
                 "correctAnswer": "repeat",
@@ -14768,7 +19382,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "zh-DB-t-00",
+                "id": "zh-DB-grammar-01-01",
                 "type": "translate",
                 "question": "去",
                 "options": [
@@ -14781,7 +19395,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-DB-f-01",
+                "id": "zh-DB-grammar-01-02",
                 "type": "fill-blank",
                 "question": "___ (吃)",
                 "options": [
@@ -14794,7 +19408,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-DB-t-02",
+                "id": "zh-DB-grammar-01-03",
                 "type": "translate",
                 "question": "是",
                 "options": [
@@ -14807,7 +19421,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-DB-m-00",
+                "id": "zh-DB-grammar-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -14832,7 +19446,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-DB-d-04",
+                "id": "zh-DB-grammar-01-05",
                 "type": "dictation",
                 "question": "听写：有",
                 "correctAnswer": "有",
@@ -14840,12 +19454,105 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "you3"
               },
               {
-                "id": "zh-DB-r-05",
+                "id": "zh-DB-grammar-01-06",
                 "type": "repeat",
                 "question": "跟读：行",
                 "correctAnswer": "repeat",
                 "difficulty": 2,
                 "sentence": "行"
+              }
+            ]
+          },
+          {
+            "levelId": "zh-DB-grammar-02",
+            "title": "形容词与副词",
+            "timeLimit": 150,
+            "minScoreFor1Star": 40,
+            "minScoreFor2Star": 60,
+            "minScoreFor3Star": 80,
+            "prerequisites": [
+              "zh-DB-grammar-01"
+            ],
+            "questions": [
+              {
+                "id": "zh-DB-grammar-02-01",
+                "type": "translate",
+                "question": "大的",
+                "options": [
+                  "大的",
+                  "小的",
+                  "好的",
+                  "坏的"
+                ],
+                "correctAnswer": "大的",
+                "difficulty": 1
+              },
+              {
+                "id": "zh-DB-grammar-02-02",
+                "type": "fill-blank",
+                "question": "___ (小的)",
+                "options": [
+                  "大的",
+                  "小的",
+                  "好的",
+                  "坏的"
+                ],
+                "correctAnswer": "小的",
+                "difficulty": 2
+              },
+              {
+                "id": "zh-DB-grammar-02-03",
+                "type": "translate",
+                "question": "很",
+                "options": [
+                  "很",
+                  "不",
+                  "也",
+                  "都"
+                ],
+                "correctAnswer": "很",
+                "difficulty": 1
+              },
+              {
+                "id": "zh-DB-grammar-02-04",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "大的",
+                    "大的"
+                  ],
+                  [
+                    "小的",
+                    "小的"
+                  ],
+                  [
+                    "很",
+                    "很"
+                  ],
+                  [
+                    "不",
+                    "不"
+                  ]
+                ]
+              },
+              {
+                "id": "zh-DB-grammar-02-05",
+                "type": "dictation",
+                "question": "听写：好的",
+                "correctAnswer": "好的",
+                "difficulty": 2,
+                "audioWord": "hao de"
+              },
+              {
+                "id": "zh-DB-grammar-02-06",
+                "type": "repeat",
+                "question": "跟读：不行",
+                "correctAnswer": "repeat",
+                "difficulty": 2,
+                "sentence": "不行"
               }
             ]
           }
@@ -14866,7 +19573,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "zh-DB-t-00",
+                "id": "zh-DB-culture-01-01",
                 "type": "translate",
                 "question": "过年",
                 "options": [
@@ -14879,7 +19586,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-DB-f-01",
+                "id": "zh-DB-culture-01-02",
                 "type": "fill-blank",
                 "question": "___ (中秋节)",
                 "options": [
@@ -14892,7 +19599,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-DB-t-02",
+                "id": "zh-DB-culture-01-03",
                 "type": "translate",
                 "question": "饺子",
                 "options": [
@@ -14905,7 +19612,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-DB-m-00",
+                "id": "zh-DB-culture-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -14930,7 +19637,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-DB-d-00",
+                "id": "zh-DB-culture-01-05",
                 "type": "dictation",
                 "question": "听写：过年",
                 "correctAnswer": "过年",
@@ -14938,7 +19645,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "guo4 nian2"
               },
               {
-                "id": "zh-DB-r-01",
+                "id": "zh-DB-culture-01-06",
                 "type": "repeat",
                 "question": "跟读：中秋",
                 "correctAnswer": "repeat",
@@ -14968,7 +19675,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "zh-SC-t-00",
+                "id": "zh-SC-daily-01-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -14981,7 +19688,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-SC-f-01",
+                "id": "zh-SC-daily-01-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -14994,7 +19701,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-SC-t-02",
+                "id": "zh-SC-daily-01-03",
                 "type": "translate",
                 "question": "你好吗？",
                 "options": [
@@ -15007,7 +19714,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-SC-m-00",
+                "id": "zh-SC-daily-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -15032,7 +19739,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-SC-d-04",
+                "id": "zh-SC-daily-01-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "好多钱？",
@@ -15040,7 +19747,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "hao3 duo1 qian2"
               },
               {
-                "id": "zh-SC-r-05",
+                "id": "zh-SC-daily-01-06",
                 "type": "repeat",
                 "question": "跟读：我要这个",
                 "correctAnswer": "repeat",
@@ -15061,7 +19768,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "zh-SC-t-00",
+                "id": "zh-SC-daily-02-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -15074,7 +19781,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-SC-f-01",
+                "id": "zh-SC-daily-02-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -15087,7 +19794,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-SC-t-02",
+                "id": "zh-SC-daily-02-03",
                 "type": "translate",
                 "question": "你好吗？",
                 "options": [
@@ -15100,7 +19807,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-SC-m-00",
+                "id": "zh-SC-daily-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -15125,7 +19832,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-SC-d-04",
+                "id": "zh-SC-daily-02-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "好多钱？",
@@ -15133,7 +19840,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "hao3 duo1 qian2"
               },
               {
-                "id": "zh-SC-r-05",
+                "id": "zh-SC-daily-02-06",
                 "type": "repeat",
                 "question": "跟读：我要这个",
                 "correctAnswer": "repeat",
@@ -15154,7 +19861,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "zh-SC-t-00",
+                "id": "zh-SC-daily-03-01",
                 "type": "translate",
                 "question": "我叫…",
                 "options": [
@@ -15167,7 +19874,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-SC-f-01",
+                "id": "zh-SC-daily-03-02",
                 "type": "fill-blank",
                 "question": "___ (很高兴认识你)",
                 "options": [
@@ -15180,7 +19887,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-SC-t-02",
+                "id": "zh-SC-daily-03-03",
                 "type": "translate",
                 "question": "你好吗？",
                 "options": [
@@ -15193,7 +19900,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-SC-m-00",
+                "id": "zh-SC-daily-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -15218,7 +19925,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-SC-d-04",
+                "id": "zh-SC-daily-03-05",
                 "type": "dictation",
                 "question": "听写：多少钱？",
                 "correctAnswer": "好多钱？",
@@ -15226,12 +19933,105 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "hao3 duo1 qian2"
               },
               {
-                "id": "zh-SC-r-05",
+                "id": "zh-SC-daily-03-06",
                 "type": "repeat",
                 "question": "跟读：我要这个",
                 "correctAnswer": "repeat",
                 "difficulty": 2,
                 "sentence": "我要这个"
+              }
+            ]
+          },
+          {
+            "levelId": "zh-SC-daily-04",
+            "title": "餐厅与点餐",
+            "timeLimit": 150,
+            "minScoreFor1Star": 40,
+            "minScoreFor2Star": 60,
+            "minScoreFor3Star": 80,
+            "prerequisites": [
+              "zh-SC-daily-03"
+            ],
+            "questions": [
+              {
+                "id": "zh-SC-daily-04-01",
+                "type": "translate",
+                "question": "把菜单给我",
+                "options": [
+                  "把菜单给我",
+                  "结账",
+                  "好多钱？",
+                  "我叫..."
+                ],
+                "correctAnswer": "把菜单给我",
+                "difficulty": 1
+              },
+              {
+                "id": "zh-SC-daily-04-02",
+                "type": "fill-blank",
+                "question": "___ (结账)",
+                "options": [
+                  "把菜单给我",
+                  "结账",
+                  "好多钱？",
+                  "相因点嘛"
+                ],
+                "correctAnswer": "结账",
+                "difficulty": 2
+              },
+              {
+                "id": "zh-SC-daily-04-03",
+                "type": "translate",
+                "question": "太好吃了",
+                "options": [
+                  "太好吃了",
+                  "我搞不醒豁了",
+                  "太贵了",
+                  "相因点嘛"
+                ],
+                "correctAnswer": "太好吃了",
+                "difficulty": 1
+              },
+              {
+                "id": "zh-SC-daily-04-04",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "把菜单给我",
+                    "给我菜单"
+                  ],
+                  [
+                    "结账",
+                    "买单"
+                  ],
+                  [
+                    "太好吃了",
+                    "太好吃了"
+                  ],
+                  [
+                    "相因点嘛",
+                    "便宜点好吗"
+                  ]
+                ]
+              },
+              {
+                "id": "zh-SC-daily-04-05",
+                "type": "dictation",
+                "question": "听写：我不要海椒",
+                "correctAnswer": "我不要海椒",
+                "difficulty": 2,
+                "audioWord": "wo bu yao hai jiao"
+              },
+              {
+                "id": "zh-SC-daily-04-06",
+                "type": "repeat",
+                "question": "跟读：来碗抄手",
+                "correctAnswer": "repeat",
+                "difficulty": 2,
+                "sentence": "来碗抄手"
               }
             ]
           }
@@ -15252,7 +20052,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "zh-SC-t-00",
+                "id": "zh-SC-scenario-01-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -15265,7 +20065,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-SC-f-01",
+                "id": "zh-SC-scenario-01-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -15278,7 +20078,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-SC-t-02",
+                "id": "zh-SC-scenario-01-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -15291,7 +20091,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-SC-m-00",
+                "id": "zh-SC-scenario-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -15316,7 +20116,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-SC-d-04",
+                "id": "zh-SC-scenario-01-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "订酒店",
@@ -15324,7 +20124,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "ding4 jiu3 dian4"
               },
               {
-                "id": "zh-SC-r-05",
+                "id": "zh-SC-scenario-01-06",
                 "type": "repeat",
                 "question": "跟读：单人间",
                 "correctAnswer": "repeat",
@@ -15345,7 +20145,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "zh-SC-t-00",
+                "id": "zh-SC-scenario-02-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -15358,7 +20158,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-SC-f-01",
+                "id": "zh-SC-scenario-02-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -15371,7 +20171,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-SC-t-02",
+                "id": "zh-SC-scenario-02-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -15384,7 +20184,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-SC-m-00",
+                "id": "zh-SC-scenario-02-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -15409,7 +20209,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-SC-d-04",
+                "id": "zh-SC-scenario-02-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "订酒店",
@@ -15417,7 +20217,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "ding4 jiu3 dian4"
               },
               {
-                "id": "zh-SC-r-05",
+                "id": "zh-SC-scenario-02-06",
                 "type": "repeat",
                 "question": "跟读：单人间",
                 "correctAnswer": "repeat",
@@ -15438,7 +20238,7 @@ const NEW_QUIZ_DATA = {
             ],
             "questions": [
               {
-                "id": "zh-SC-t-00",
+                "id": "zh-SC-scenario-03-01",
                 "type": "translate",
                 "question": "地铁站在哪里？",
                 "options": [
@@ -15451,7 +20251,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-SC-f-01",
+                "id": "zh-SC-scenario-03-02",
                 "type": "fill-blank",
                 "question": "___ (坐出租车)",
                 "options": [
@@ -15464,7 +20264,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-SC-t-02",
+                "id": "zh-SC-scenario-03-03",
                 "type": "translate",
                 "question": "我需要医生",
                 "options": [
@@ -15477,7 +20277,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-SC-m-00",
+                "id": "zh-SC-scenario-03-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -15502,7 +20302,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-SC-d-04",
+                "id": "zh-SC-scenario-03-05",
                 "type": "dictation",
                 "question": "听写：预订酒店",
                 "correctAnswer": "订酒店",
@@ -15510,7 +20310,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "ding4 jiu3 dian4"
               },
               {
-                "id": "zh-SC-r-05",
+                "id": "zh-SC-scenario-03-06",
                 "type": "repeat",
                 "question": "跟读：单人间",
                 "correctAnswer": "repeat",
@@ -15536,7 +20336,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "zh-SC-t-00",
+                "id": "zh-SC-grammar-01-01",
                 "type": "translate",
                 "question": "去",
                 "options": [
@@ -15549,7 +20349,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-SC-f-01",
+                "id": "zh-SC-grammar-01-02",
                 "type": "fill-blank",
                 "question": "___ (吃)",
                 "options": [
@@ -15562,7 +20362,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-SC-t-02",
+                "id": "zh-SC-grammar-01-03",
                 "type": "translate",
                 "question": "是",
                 "options": [
@@ -15575,7 +20375,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-SC-m-00",
+                "id": "zh-SC-grammar-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -15600,7 +20400,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-SC-d-04",
+                "id": "zh-SC-grammar-01-05",
                 "type": "dictation",
                 "question": "听写：有",
                 "correctAnswer": "有",
@@ -15608,7 +20408,100 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "you3"
               },
               {
-                "id": "zh-SC-r-05",
+                "id": "zh-SC-grammar-01-06",
+                "type": "repeat",
+                "question": "跟读：要得",
+                "correctAnswer": "repeat",
+                "difficulty": 2,
+                "sentence": "要得"
+              }
+            ]
+          },
+          {
+            "levelId": "zh-SC-grammar-02",
+            "title": "形容词与副词",
+            "timeLimit": 150,
+            "minScoreFor1Star": 40,
+            "minScoreFor2Star": 60,
+            "minScoreFor3Star": 80,
+            "prerequisites": [
+              "zh-SC-grammar-01"
+            ],
+            "questions": [
+              {
+                "id": "zh-SC-grammar-02-01",
+                "type": "translate",
+                "question": "大的",
+                "options": [
+                  "大的",
+                  "小的",
+                  "好的",
+                  "坏的"
+                ],
+                "correctAnswer": "大的",
+                "difficulty": 1
+              },
+              {
+                "id": "zh-SC-grammar-02-02",
+                "type": "fill-blank",
+                "question": "___ (小的)",
+                "options": [
+                  "大的",
+                  "小的",
+                  "好的",
+                  "坏的"
+                ],
+                "correctAnswer": "小的",
+                "difficulty": 2
+              },
+              {
+                "id": "zh-SC-grammar-02-03",
+                "type": "translate",
+                "question": "很",
+                "options": [
+                  "很",
+                  "不",
+                  "也",
+                  "都"
+                ],
+                "correctAnswer": "很",
+                "difficulty": 1
+              },
+              {
+                "id": "zh-SC-grammar-02-04",
+                "type": "match",
+                "question": "词汇配对",
+                "correctAnswer": "match",
+                "difficulty": 2,
+                "pairs": [
+                  [
+                    "大的",
+                    "大的"
+                  ],
+                  [
+                    "小的",
+                    "小的"
+                  ],
+                  [
+                    "很",
+                    "很"
+                  ],
+                  [
+                    "不",
+                    "不"
+                  ]
+                ]
+              },
+              {
+                "id": "zh-SC-grammar-02-05",
+                "type": "dictation",
+                "question": "听写：好的",
+                "correctAnswer": "好的",
+                "difficulty": 2,
+                "audioWord": "hao de"
+              },
+              {
+                "id": "zh-SC-grammar-02-06",
                 "type": "repeat",
                 "question": "跟读：要得",
                 "correctAnswer": "repeat",
@@ -15634,7 +20527,7 @@ const NEW_QUIZ_DATA = {
             "prerequisites": [],
             "questions": [
               {
-                "id": "zh-SC-t-00",
+                "id": "zh-SC-culture-01-01",
                 "type": "translate",
                 "question": "过年",
                 "options": [
@@ -15647,7 +20540,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-SC-f-01",
+                "id": "zh-SC-culture-01-02",
                 "type": "fill-blank",
                 "question": "___ (中秋节)",
                 "options": [
@@ -15660,7 +20553,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 2
               },
               {
-                "id": "zh-SC-t-02",
+                "id": "zh-SC-culture-01-03",
                 "type": "translate",
                 "question": "火锅",
                 "options": [
@@ -15673,7 +20566,7 @@ const NEW_QUIZ_DATA = {
                 "difficulty": 1
               },
               {
-                "id": "zh-SC-m-00",
+                "id": "zh-SC-culture-01-04",
                 "type": "match",
                 "question": "词汇配对",
                 "correctAnswer": "match",
@@ -15698,7 +20591,7 @@ const NEW_QUIZ_DATA = {
                 ]
               },
               {
-                "id": "zh-SC-d-00",
+                "id": "zh-SC-culture-01-05",
                 "type": "dictation",
                 "question": "听写：过年",
                 "correctAnswer": "过年",
@@ -15706,7 +20599,7 @@ const NEW_QUIZ_DATA = {
                 "audioWord": "guo4 nian2"
               },
               {
-                "id": "zh-SC-r-01",
+                "id": "zh-SC-culture-01-06",
                 "type": "repeat",
                 "question": "跟读：中秋",
                 "correctAnswer": "repeat",
