@@ -121,7 +121,7 @@ const SentenceSelection = () => {
         <Card className="flex flex-col gap-3">
           <h3 className="text-sm font-semibold text-theme-secondary">选择语言</h3>
           <div className="flex gap-2 flex-wrap">
-            {['en', 'ja'].map(code => (
+            {Object.keys(SENTENCE_SELECTION_DATA).filter(code => SENTENCE_SELECTION_DATA[code]).map(code => (
               <button
                 key={code}
                 onClick={() => useWrittenStore.getState().setLanguage(code)}
@@ -159,10 +159,7 @@ const SentenceSelection = () => {
           开始练习
         </Button>
 
-        <div className="flex items-center gap-2 text-xs text-amber-600 bg-amber-50 px-3 py-2 rounded-lg">
-          <Icon name="alert-circle" size={14} />
-          <span>演示数据 — 题目为示例内容</span>
-        </div>
+
       </div>
     );
   }
@@ -317,3 +314,4 @@ const SentenceSelection = () => {
 };
 
 Object.assign(window, { SentenceSelection });
+
