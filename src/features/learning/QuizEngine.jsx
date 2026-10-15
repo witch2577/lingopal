@@ -32,14 +32,16 @@ const QuizEngine = ({ level, onFinish }) => {
 
   // Timer
   useEffect(() => {
-    startLevel(level);
+    if (level && typeof level.timeLimit === 'number') {
+      startLevel(level);
+    }
   }, [level]);
 
   useEffect(() => {
-    if (!timeRemaining || timeRemaining <= 0) return;
+    if (!Number.isFinite(timeRemaining) || timeRemaining <= 0) return;
     const timer = setInterval(() => {
       // BUGFIX: use functional update to avoid stale closure over timeRemaining
-      setTimeRemaining(prev => Math.max(0, prev - 1));
+      setTimeRemaining(prev => Number.isFinite(prev) ? Math.max(0, prev - 1) : 0);
     }, 1000);
     return () => clearInterval(timer);
   }, [timeRemaining, setTimeRemaining]);
@@ -427,7 +429,7 @@ const QuizEngine = ({ level, onFinish }) => {
           timeRemaining <= 10 ? 'bg-red-100 text-red-600' : 'bg-amber-50 text-amber-600'
         }`}>
           <Icon name="clock" size={14} />
-          {Math.floor(timeRemaining / 60)}:{(timeRemaining % 60).toString().padStart(2, '0')}
+          {Number.isFinite(timeRemaining) ? `${Math.floor(timeRemaining / 60)}:${(timeRemaining % 60).toString().padStart(2, '0')}` : '0:00'}
         </div>
         <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-brand-50 text-brand-600 text-xs font-semibold flex-shrink-0">
           <Icon name="zap" size={14} />
@@ -775,3 +777,4 @@ const QuizEngine = ({ level, onFinish }) => {
 };
 
 Object.assign(window, { QuizEngine });
+
