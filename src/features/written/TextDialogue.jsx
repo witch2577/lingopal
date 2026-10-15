@@ -168,10 +168,7 @@ const TextDialogue = () => {
           ))}
         </div>
 
-        <div className="flex items-center gap-2 text-xs text-amber-600 bg-amber-50 px-3 py-2 rounded-lg">
-          <Icon name="alert-circle" size={14} />
-          <span>演示数据 — 对话场景为示例内容</span>
-        </div>
+
       </div>
     );
   }
@@ -305,3 +302,4 @@ const TextDialogue = () => {
 };
 
 Object.assign(window, { TextDialogue });
+
